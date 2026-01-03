@@ -52,6 +52,10 @@ def pbPokemonScreen
 end
 
 #-------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------
 # [V22 Port] Refresh Following Pokemon after Evolution
 # patched into PokemonEvolutionScene
 #-------------------------------------------------------------------------------
@@ -110,8 +114,17 @@ end
 #-------------------------------------------------------------------------------
 class Scene_Map
   alias __followingpkmn__update update unless method_defined?(:__followingpkmn__update)
-  def update
-    __followingpkmn__update
+  def update(*args)
+    __followingpkmn__update(*args)
+    [:ACTION, :SPECIAL, :AUX1, :AUX2].each do |k|
+      if Input.trigger?(k)
+        pbMessage("Triggered: #{k}")
+      end
+    end
+    t_key = FollowingPkmn::TOGGLE_FOLLOWER_KEY
+    if FollowingPkmn.can_check? && (Input.trigger?(t_key) || (Input.const_defined?(t_key) && Input.trigger?(Input.const_get(t_key))) rescue false)
+      FollowingPkmn.toggle
+    end
     if $PokemonGlobal.call_refresh[0]
       FollowingPkmn.refresh($PokemonGlobal.call_refresh[1])
       $PokemonGlobal.call_refresh = false

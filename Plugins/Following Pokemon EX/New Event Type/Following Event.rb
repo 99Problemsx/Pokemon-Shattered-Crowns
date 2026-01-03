@@ -307,6 +307,54 @@ class Game_FollowingPkmn < Game_Follower
     ret = super
     return ret + 1
   end
+
+  #-----------------------------------------------------------------------------
+  # Adjust screen_x to account for visual offset (prevents overlap)
+  #-----------------------------------------------------------------------------
+  def screen_x(*args)
+    ret = super(*args)
+    return ret unless FollowingPkmn.active?
+    
+    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
+    pkmn = FollowingPkmn.get_pokemon
+    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+    end
+    
+    # Move opposite to facing direction to "push away" from what it's facing (usually player)
+    # Check passability to ensure we don't visual clip into walls
+    case self.direction
+    when 4 # Facing Left -> Move Right
+      ret += offset if self.map.passable?(self.x, self.y, 6)
+    when 6 # Facing Right -> Move Left
+      ret -= offset if self.map.passable?(self.x, self.y, 4)
+    end
+    return ret
+  end
+
+  #-----------------------------------------------------------------------------
+  # Adjust screen_y to account for visual offset (prevents overlap)
+  #-----------------------------------------------------------------------------
+  def screen_y(*args)
+    ret = super(*args)
+    return ret unless FollowingPkmn.active?
+
+    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
+    pkmn = FollowingPkmn.get_pokemon
+    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+    end
+    
+    # Move opposite to facing direction to "push away" from what it's facing (usually player)
+    # Check passability to ensure we don't visual clip into walls
+    case self.direction
+    when 2 # Facing Down -> Move Up
+      ret -= offset if self.map.passable?(self.x, self.y, 8)
+    when 8 # Facing Up -> Move Down
+      ret += offset if self.map.passable?(self.x, self.y, 2)
+    end
+    return ret
+  end
   #-----------------------------------------------------------------------------
 end
 
@@ -394,9 +442,9 @@ end
 # Ensure the follower only moves when the player moves exactly one tile
 #-------------------------------------------------------------------------------
 class Scene_Map
-  alias __followingpkmn__update update unless method_defined?(:__followingpkmn__update)
+  alias __followingevent__update update unless method_defined?(:__followingevent__update)
   def update(*args)
-    super(*args)
+    __followingevent__update(*args)
     if $game_player.moving?
       $game_temp.followers.move_followers
       $game_temp.followers.turn_followers

@@ -207,17 +207,16 @@ class Battle
     if @opponent && @opponent.is_a?(Array)
       @opponent.each_with_index do |trainer, i|
         next unless trainer
-        scale_trainer_party(i) if trainer.party
+        scale_trainer_party(trainer) if trainer.party
       end
     elsif @opponent
-      scale_trainer_party(1) if @opponent.party
+      scale_trainer_party(@opponent) if @opponent.party
     end
   end
   
   private
   
-  def scale_trainer_party(side_index)
-    trainer = pbGetOwnerFromBattlerIndex(pbGetBattlerFromSideAndIndex(side_index, 0))
+  def scale_trainer_party(trainer)
     return unless trainer
     
     echoln "[Challenge Modes] Scaling trainer: #{trainer.name}"
@@ -267,6 +266,9 @@ class Battle
         echoln "[Challenge Modes]   Added extra Pokemon: #{extra_pkmn.name} Lv.#{extra_pkmn.level}"
       end
     end
+    
+    # Assign the scaled party back to the trainer
+    trainer.party.replace(scaled_party)
     
     # Better items for trainer
     if ChallengeModes::TRAINER_SCALING[:better_items]

@@ -88,7 +88,7 @@ end unless defined?(OptionsCategories)
 MenuHandlers.add(:options_menu, :follower_toggle, {
   "name"        => _INTL("Following Pokemon"),
   "order"       => 10,
-  "type"        => :array,
+  "type"        => EnumOption,
   "parameters"  => [_INTL("On"), _INTL("Off")],
   "description" => _INTL("Let the first Pokemon in your party follow you in the overworld."),
   "category"    => OptionsCategories::PLUGINS,

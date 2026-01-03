@@ -165,8 +165,9 @@ module ChallengeModes
         need_refresh = true
       elsif Input.trigger?(Input::USE)
         command = cmdwindow.index
-        break if command == ChallengeModes::RULES.values.length
+        break if command == rules.length
         rule = rules[command]
+        next unless rule
         updated = false
         if selected_rules.include?(rule)
           selected_rules.delete(rule)
@@ -180,7 +181,7 @@ module ChallengeModes
               !(catch_clauses + permafaint_dependent + [:GAME_OVER_WHITEOUT] + special_modes).include?(rule) ||
               special_modes.include?(rule)
           selected_rules.push(rule)
-          selected_rules.push(:GAME_OVER_WHITEOUT) if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT) && !special_modes.include?(rule)
+          selected_rules.push(:GAME_OVER_WHITEOUT) if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT) && !special_modes.include?(rule) && rule != :TRAINER_SCALING
           updated = true
         end
         if !updated
@@ -240,9 +241,9 @@ module ChallengeModes
       end
     end
     rule_text  = ""
-    if rules.include?(:GAME_OVER_WHITEOUT) || !rules.include?(:PERMAFAINT)
+    if rules.include?(:GAME_OVER_WHITEOUT)
       rule_text += "- " + _INTL(ChallengeModes::RULES[:GAME_OVER_WHITEOUT][:desc])
-    else
+    elsif rules.include?(:PERMAFAINT)
       rule_text += "- " + _INTL("If all your party Pokémon faint in battle, you will be allowed to continue the challenge with unfainted Pokémon from your PC.")
       rule_text += "\n- " + _INTL("If all the Pokémon in your Party and PC faint, you will lose the challenge.")
     end

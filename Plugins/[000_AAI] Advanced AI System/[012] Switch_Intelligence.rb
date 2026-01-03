@@ -592,10 +592,33 @@ class Battle::AI
       echoln "  • #{pkmn.name}: Matchup = #{matchup_score}"
     end
     
-    # Filter reserved Pokemon if other options exist
-    if reserved_idx >= 0 && available_switches.length > 1
-      available_switches.reject! { |item| item[2] == reserved_idx }
-      echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from options"
+    # Filter reserved Pokemon
+    # 1. If we have multiple options, always save the Ace
+    # 2. If we only have the Ace left:
+    #    - If VOLUNTARY switch (user not fainted), save the Ace (stay in and die)
+    #    - If FORCED switch (user fainted), we must use the Ace (no choice)
+    
+    is_voluntary_switch = user && !user.fainted?
+    
+    if reserved_idx >= 0
+      should_filter = false
+      
+      if available_switches.length > 1
+        should_filter = true
+      elsif is_voluntary_switch && available_switches.length == 1
+        # Strict Mode: Don't bring out Ace to save a dying mon
+        should_filter = true
+        echoln "  [AAI] ReserveLastPokemon: Blocking voluntary switch to Ace"
+      end
+      
+      if should_filter
+        available_switches.reject! { |item| item[2] == reserved_idx }
+        if available_switches.empty?
+          echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded (No other options)"
+        else
+          echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from options"
+        end
+      end
     end
     
     if available_switches.empty?
