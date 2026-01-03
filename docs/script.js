@@ -1,52 +1,93 @@
 // ========================================
-// Pokemon Shattered Crowns - Website Scripts
+// Pokemon Shattered Crowns - Enhanced Scripts
+// Modern, Smooth, Interactive
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation scroll effect
-    const navbar = document.querySelector('.navbar');
+    
+    // ========================================
+    // Loading Screen
+    // ========================================
+    const loadingScreen = document.getElementById('loading');
+    
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            loadingScreen.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            initAnimations();
+        }, 1800);
+    });
+    
+    // ========================================
+    // Particle System
+    // ========================================
+    function createParticles() {
+        const container = document.getElementById('particles');
+        if (!container) return;
+        
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+            particle.style.animationDelay = (Math.random() * 20) + 's';
+            particle.style.opacity = Math.random() * 0.3 + 0.1;
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            
+            const colors = ['#7c3aed', '#ec4899', '#06b6d4'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            container.appendChild(particle);
+        }
+    }
+    
+    createParticles();
+    
+    // ========================================
+    // Navigation
+    // ========================================
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    // Scroll effect
+    let lastScroll = 0;
     
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+        
+        lastScroll = currentScroll;
     });
     
     // Mobile menu toggle
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
     navToggle.addEventListener('click', function() {
+        navToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
-        
-        // Animate hamburger to X
-        const spans = navToggle.querySelectorAll('span');
-        if (navMenu.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
     });
     
-    // Close mobile menu when clicking a link
+    // Close menu on link click
     const navLinks = navMenu.querySelectorAll('a');
     navLinks.forEach(function(link) {
         link.addEventListener('click', function() {
+            navToggle.classList.remove('active');
             navMenu.classList.remove('active');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
+            document.body.style.overflow = 'auto';
         });
     });
     
-    // Smooth scroll for anchor links
+    // ========================================
+    // Smooth Scroll
+    // ========================================
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -64,110 +105,270 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Intersection Observer for animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.act-card, .feature-card, .character-card');
-    animatedElements.forEach(function(el) {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // Add visible class styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .act-card.visible,
-        .feature-card.visible,
-        .character-card.visible {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Staggered animation for cards
-    const cardGroups = [
-        document.querySelectorAll('.act-card'),
-        document.querySelectorAll('.feature-card'),
-        document.querySelectorAll('.character-card')
-    ];
-    
-    cardGroups.forEach(function(group) {
-        group.forEach(function(card, index) {
-            card.style.transitionDelay = (index * 0.1) + 's';
-        });
-    });
-    
-    // Stats counter animation
-    const stats = document.querySelectorAll('.stat-number');
-    let statsAnimated = false;
-    
+    // ========================================
+    // Stats Counter Animation
+    // ========================================
     function animateStats() {
-        if (statsAnimated) return;
+        const stats = document.querySelectorAll('.stat[data-value]');
         
         stats.forEach(function(stat) {
-            const target = stat.textContent.replace('+', '');
-            const isNumber = !isNaN(parseInt(target));
+            const value = parseInt(stat.getAttribute('data-value'));
+            const numberEl = stat.querySelector('.stat-number');
             
-            if (isNumber) {
-                const finalValue = parseInt(target);
-                const hasPlus = stat.textContent.includes('+');
-                let current = 0;
-                const increment = finalValue / 50;
-                const duration = 1500;
-                const stepTime = duration / 50;
-                
-                const counter = setInterval(function() {
-                    current += increment;
-                    if (current >= finalValue) {
-                        current = finalValue;
-                        clearInterval(counter);
+            if (!numberEl || numberEl.dataset.animated) return;
+            numberEl.dataset.animated = 'true';
+            
+            const duration = 2000;
+            const steps = 60;
+            const increment = value / steps;
+            let current = 0;
+            const stepTime = duration / steps;
+            
+            const counter = setInterval(function() {
+                current += increment;
+                if (current >= value) {
+                    current = value;
+                    clearInterval(counter);
+                }
+                numberEl.textContent = Math.floor(current);
+            }, stepTime);
+        });
+    }
+    
+    // ========================================
+    // Scroll Animations
+    // ========================================
+    function initAnimations() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -100px 0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger stats animation when hero stats come into view
+                    if (entry.target.classList.contains('hero-stats')) {
+                        animateStats();
                     }
-                    stat.textContent = Math.floor(current) + (hasPlus ? '+' : '');
-                }, stepTime);
-            }
+                }
+            });
+        }, observerOptions);
+        
+        // Elements to animate
+        const animatedElements = [
+            '.section-header',
+            '.story-intro-card',
+            '.story-text',
+            '.threat-card',
+            '.warning-card',
+            '.act-card',
+            '.feature-card',
+            '.character-card',
+            '.legendary-card',
+            '.main-quote',
+            '.gallery-item',
+            '.download-wrapper',
+            '.hero-stats'
+        ];
+        
+        animatedElements.forEach(function(selector) {
+            document.querySelectorAll(selector).forEach(function(el) {
+                el.classList.add('animate-on-scroll');
+                observer.observe(el);
+            });
         });
         
-        statsAnimated = true;
-    }
-    
-    // Trigger stats animation when hero is in view
-    const heroObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                setTimeout(animateStats, 500);
-            }
+        // Stagger animation delays for cards
+        const cardGroups = [
+            { selector: '.act-card', delay: 0.1 },
+            { selector: '.feature-card', delay: 0.1 },
+            { selector: '.character-card', delay: 0.15 },
+            { selector: '.legendary-card', delay: 0.1 },
+            { selector: '.gallery-item', delay: 0.05 }
+        ];
+        
+        cardGroups.forEach(function(group) {
+            document.querySelectorAll(group.selector).forEach(function(card, index) {
+                card.style.transitionDelay = (index * group.delay) + 's';
+            });
         });
-    }, { threshold: 0.5 });
-    
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) {
-        heroObserver.observe(heroStats);
     }
     
-    // Parallax effect for hero background
+    // ========================================
+    // Back to Top Button
+    // ========================================
+    const backToTop = document.getElementById('backToTop');
+    
     window.addEventListener('scroll', function() {
-        const hero = document.querySelector('.hero-bg');
-        if (hero) {
-            const scrolled = window.pageYOffset;
-            hero.style.transform = 'translateY(' + (scrolled * 0.3) + 'px)';
+        if (window.pageYOffset > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
         }
     });
     
-    console.log('Pokemon Shattered Crowns website loaded successfully!');
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // ========================================
+    // Parallax Effects
+    // ========================================
+    let ticking = false;
+    
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                const scrolled = window.pageYOffset;
+                
+                // Hero parallax
+                const heroOrbs = document.querySelector('.hero-orbs');
+                if (heroOrbs && scrolled < window.innerHeight) {
+                    heroOrbs.style.transform = 'translateY(' + (scrolled * 0.3) + 'px)';
+                }
+                
+                // Hero content parallax
+                const heroContent = document.querySelector('.hero-content');
+                if (heroContent && scrolled < window.innerHeight) {
+                    heroContent.style.transform = 'translateY(' + (scrolled * 0.15) + 'px)';
+                    heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
+                }
+                
+                ticking = false;
+            });
+            
+            ticking = true;
+        }
+    });
+    
+    // ========================================
+    // Character Card Hover Effects
+    // ========================================
+    const characterCards = document.querySelectorAll('.character-card');
+    
+    characterCards.forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-8px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        });
+    });
+    
+    // ========================================
+    // Timeline Animation
+    // ========================================
+    const timelineLine = document.querySelector('.timeline-line');
+    
+    if (timelineLine) {
+        const actCards = document.querySelectorAll('.act-card');
+        
+        window.addEventListener('scroll', function() {
+            const timelineRect = document.querySelector('.acts-timeline').getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            if (timelineRect.top < windowHeight && timelineRect.bottom > 0) {
+                const progress = Math.min(1, Math.max(0, (windowHeight - timelineRect.top) / (timelineRect.height + windowHeight)));
+                timelineLine.style.background = 'linear-gradient(to bottom, var(--color-primary) 0%, var(--color-secondary) ' + (progress * 100) + '%, var(--color-border) ' + (progress * 100) + '%, var(--color-border) 100%)';
+            }
+        });
+    }
+    
+    // ========================================
+    // Typing Effect for Quote
+    // ========================================
+    const quoteSection = document.querySelector('.quote-section');
+    let quoteAnimated = false;
+    
+    if (quoteSection) {
+        const quoteObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !quoteAnimated) {
+                    quoteAnimated = true;
+                    const quoteText = quoteSection.querySelector('.main-quote p');
+                    if (quoteText) {
+                        quoteText.style.animation = 'fadeInUp 1s ease forwards';
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        quoteObserver.observe(quoteSection);
+    }
+    
+    // ========================================
+    // Download Button Ripple Effect
+    // ========================================
+    const downloadBtn = document.querySelector('.btn-download');
+    
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            ripple.style.cssText = 'position: absolute; background: rgba(255,255,255,0.3); border-radius: 50%; pointer-events: none; transform: scale(0); animation: ripple 0.6s ease-out;';
+            
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(function() {
+                ripple.remove();
+            }, 600);
+        });
+        
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = '@keyframes ripple { to { transform: scale(4); opacity: 0; } }';
+        document.head.appendChild(style);
+    }
+    
+    // ========================================
+    // Keyboard Navigation
+    // ========================================
+    document.addEventListener('keydown', function(e) {
+        // ESC closes mobile menu
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // ========================================
+    // Prefers Reduced Motion
+    // ========================================
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    if (prefersReducedMotion.matches) {
+        // Disable animations for users who prefer reduced motion
+        document.documentElement.style.scrollBehavior = 'auto';
+        
+        const particles = document.getElementById('particles');
+        if (particles) {
+            particles.style.display = 'none';
+        }
+    }
+    
+    console.log('Pokemon Shattered Crowns - Website Loaded Successfully!');
 });
