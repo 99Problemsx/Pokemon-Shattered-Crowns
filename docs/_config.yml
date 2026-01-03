@@ -1,0 +1,29 @@
+# GitHub Pages Configuration
+# Pokemon Shattered Crowns
+
+title: Pokemon Shattered Crowns
+description: An epic story-driven Pokemon fan game featuring 55 chapters, 700+ cutscenes, and a complete narrative experience.
+url: https://99problemsx.github.io
+baseurl: /Pokemon-Shattered-Crowns
+
+# Theme settings (not using Jekyll theme, custom HTML)
+theme: null
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from build
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include files
+include:
+  - index.html
+  - style.css
+  - script.js
