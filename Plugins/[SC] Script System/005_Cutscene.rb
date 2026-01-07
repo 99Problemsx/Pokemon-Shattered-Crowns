@@ -277,6 +277,28 @@ module GameData
       # Save current BGM to restore after cutscene
       @saved_bgm = $game_system.playing_bgm
       
+      # Pre-process steps to chain consecutive messages
+      @steps.each_with_index do |step, i|
+        # Only process text steps
+        next unless [:message, :dialogue].include?(step[:type])
+        
+        # Look ahead for the next step
+        next_step = @steps[i + 1]
+        next unless next_step
+        
+        # If next step is also text, chain them
+        if [:message, :dialogue].include?(next_step[:type])
+          # Ensure we don't modify frozen strings or create duplicates
+          text = step[:text].is_a?(String) ? step[:text].dup : step[:text].to_s
+          
+          # Add \1 if it's not already there
+          unless text.end_with?("\\1")
+            text += "\\1"
+            step[:text] = text
+          end
+        end
+      end
+      
       @steps.each do |step|
         execute_step(step)
       end

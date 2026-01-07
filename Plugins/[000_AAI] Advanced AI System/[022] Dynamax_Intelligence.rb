@@ -6,18 +6,44 @@
 class Battle::AI
   # Checks if Dynamax should be used
   def should_dynamax?(user, skill)
-    return false unless skill >= 95
-    return false unless AdvancedAI.dbk_enabled?(:dynamax)
-    return false unless user.can_dynamax?
-    return false if user.dynamax?
+    AdvancedAI.log("should_dynamax? called for #{user.name} (skill #{skill})", "Dynamax")
     
+    if skill < 95
+      AdvancedAI.log("  ❌ Skill too low (#{skill} < 95)", "Dynamax")
+      return false
+    end
+    
+    unless AdvancedAI.dbk_enabled?(:dynamax)
+      AdvancedAI.log("  ❌ DBK Dynamax not enabled", "Dynamax")
+      return false
+    end
+    
+    # Check if Dynamax is available for this battler
+    # Note: user is an AIBattler, so we use the battle's method with the index
+    unless @battle.pbCanDynamax?(user.index)
+      AdvancedAI.log("  ❌ @battle.pbCanDynamax? returned false", "Dynamax")
+      return false
+    end
+    
+    if user.dynamax?
+      AdvancedAI.log("  ❌ Already Dynamaxed", "Dynamax")
+      return false
+    end
+    
+    AdvancedAI.log("  ✅ All checks passed - calculating score", "Dynamax")
     score = calculate_dynamax_score(user, skill)
+    
+    # Wild Pokemon bonus (for testing/balance)
+    if @battle.wildBattle?
+      score += 10
+      AdvancedAI.log("  Wild Pokemon bonus: +10", "Dynamax")
+    end
     
     AdvancedAI.log("Dynamax score for #{user.pbThis}: #{score}", "Dynamax")
     
     # Thresholds
     return true if score >= 100  # Excellent
-    return true if score >= 70   # Strong
+    return true if score >= 70   # Strong  
     return true if score >= 50 && remaining_pokemon_count(user) <= 2  # Good + few remaining
     
     return false
@@ -101,7 +127,8 @@ class Battle::AI
       
       user.moves.each do |move|
         next unless move && move.damagingMove?
-        type_mod = pbCalcTypeMod(move.type, target, user)
+        # Calculate type effectiveness: move type vs target's types
+        type_mod = Effectiveness.calculate(move.type, target.types[0], target.types[1])
         score += 5 if Effectiveness.super_effective?(type_mod)
       end
     end
@@ -208,7 +235,8 @@ class Battle::AI
     # Better Dynamax Candidates?
     better_candidates = party.count do |pkmn|
       next false if !pkmn || pkmn.fainted? || pkmn.egg?
-      next false if @battle.pbFindBattler(pkmn.index, user.index)
+      # Skip if this Pokemon is currently in battle
+      next false if pkmn == user.pokemon
       
       # Higher Attack or Special Attack
       pkmn.attack > user.attack || pkmn.spatk > user.spatk
@@ -253,7 +281,7 @@ class Battle::AI
     end
     
     # Field Effect Control
-    if @battle.field.effects[PBEffects::Terrain] != :None
+    if @battle.field.terrain != :None
       score += 5
     end
     
@@ -283,7 +311,10 @@ end
 class Battle::Battler
   def can_dynamax?
     return false unless defined?(Battle::Scene::USE_DYNAMAX_GRAPHICS)
-    return @battle.pbCanDynamax?(@index)
+    # Check if battle allows Dynamax OR if this Pokemon has dynamax_lvl (wild Pokemon)
+    return true if @battle.pbCanDynamax?(@index)
+    return true if @pokemon &&  @pokemon.dynamax_lvl && @pokemon.dynamax_lvl > 0
+    return false
   end
   
   def dynamax?
@@ -300,6 +331,90 @@ class Battle::Battler
     return false unless gmax?
     # Simplified G-Max Move Check
     return true
+  end
+end
+
+# Extended AIBattler Methods for Dynamax
+class Battle::AI::AIBattler
+  def dynamax?
+    return @battler.dynamax? if @battler.respond_to?(:dynamax?)
+    return false
+  end
+  
+  def gmax?
+    return @battler.gmax? if @battler.respond_to?(:gmax?)
+    return false
+  end
+  
+  def gmax_move?(type_symbol)
+    return @battler.gmax_move?(type_symbol) if @battler.respond_to?(:gmax_move?)
+    return false
+  end
+  
+  # Delegate common battler methods used in scoring
+  def hp
+    return @battler.hp if @battler
+    return 0
+  end
+  
+  def totalhp
+    return @battler.totalhp if @battler
+    return 1
+  end
+  
+  def item
+    return @battler.item if @battler.respond_to?(:item)
+    return nil
+  end
+  
+  def item_id
+    return @battler.item_id if @battler.respond_to?(:item_id)
+    return nil
+  end
+  
+  def moves
+    return @battler.moves if @battler
+    return []
+  end
+  
+  def stages
+    return @battler.stages if @battler.respond_to?(:stages)
+    return {}
+  end
+  
+  def pbSpeed
+    return @battler.pbSpeed if @battler.respond_to?(:pbSpeed)
+    return 0
+  end
+  
+  def attack
+    return @battler.attack if @battler.respond_to?(:attack)
+    return 0
+  end
+  
+  def defense
+    return @battler.defense if @battler.respond_to?(:defense)
+    return 0
+  end
+  
+  def spatk
+    return @battler.spatk if @battler.respond_to?(:spatk)
+    return 0
+  end
+  
+  def spdef
+    return @battler.spdef if @battler.respond_to?(:spdef)
+    return 0
+  end
+  
+  def pbThis(lowercase = false)
+    return @battler.pbThis(lowercase) if @battler.respond_to?(:pbThis)
+    return "Pokemon"
+  end
+  
+  def name
+    return @battler.name if @battler.respond_to?(:name)
+    return "Pokemon"
   end
 end
 

@@ -28,24 +28,35 @@ class Battle::AI
   # with different signatures depending on context
   alias aai_pbGetMoveScore pbGetMoveScore
   def pbGetMoveScore(*args)
-    # Call original with all arguments
-    base_score = aai_pbGetMoveScore(*args)
-    
     # Extract parameters based on what was passed
     # DBK calls this with 0 args (no target) or 1 arg ([target])
     target_array = args[0] if args.length > 0
     target = target_array&.first if target_array.is_a?(Array)
     
-    # Get skill from trainer (AITrainer has @skill attribute)
-    skill = @trainer&.skill || 100
+    # Get skill from trainer OR wild Pokemon setting
+    if @trainer
+      skill = @trainer.skill
+    else
+      # Wild Pokemon - check if AI is enabled
+      return aai_pbGetMoveScore(*args) unless AdvancedAI::ENABLE_WILD_POKEMON_AI
+      skill = AdvancedAI::WILD_POKEMON_SKILL_LEVEL
+      # If skill is 0, use vanilla random behavior
+      return aai_pbGetMoveScore(*args) if skill == 0
+    end
     
-    # Apply Advanced AI enhancements if qualified
-    return base_score unless AdvancedAI.qualifies_for_advanced_ai?(skill)
-    return base_score unless @move # Need move context
+    # Check qualification First
+    unless AdvancedAI.qualifies_for_advanced_ai?(skill)
+      return aai_pbGetMoveScore(*args)
+    end
+
+    # Need move context for advanced scoring
+    return aai_pbGetMoveScore(*args) unless @move
     
-    score = base_score
+    # Use Advanced AI Scoring if qualified
+    # This replaces the vanilla base score with our intelligent scoring
+    score = score_move_advanced(@move, @user, target, skill)
     
-    # Apply Advanced AI scoring modifiers
+    # Apply Advanced AI enhancements (Layers on top of base advanced score)
     score = apply_advanced_modifiers(score, @move, @user, target, skill)
     
     return score

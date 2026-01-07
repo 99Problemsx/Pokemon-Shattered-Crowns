@@ -22,6 +22,20 @@ module AdvancedAI
   DEBUG_MODE = true
   
   # ============================================================================
+  # WILD POKEMON AI SETTINGS
+  # ============================================================================
+  
+  # Enable smart AI for wild Pokemon (uses move scoring instead of random selection)
+  ENABLE_WILD_POKEMON_AI = true
+  
+  # Skill level for wild Pokemon when AI is enabled (0-100)
+  # 0     = Random moves (vanilla behavior)
+  # 50-69 = Core AI features
+  # 70-84 = Advanced features  
+  # 85+   = Expert AI (includes gimmicks)
+  WILD_POKEMON_SKILL_LEVEL = 100
+  
+  # ============================================================================
   # SKILL LEVEL THRESHOLDS
   # ============================================================================
   
@@ -143,6 +157,7 @@ module AdvancedAI
   # Check if Advanced AI is active
   def self.active?
     return false unless ENABLED
+    return true if DEBUG_MODE  # Auto-activate in debug mode
     return true if defined?(Settings::CHALLENGE_MODE) && Settings::CHALLENGE_MODE && ACTIVATE_WITH_CHALLENGE_MODES
     return @manually_activated || false
   end
@@ -218,20 +233,22 @@ module AdvancedAI
       return true if plugin_id && PluginManager.installed?(plugin_id)
     end
     
-    # 2. Fallback to constant checks
+    # 2. Fallback to method/constant checks
     case plugin
     when :mega_evolution
       return true # Built-in to Essentials, always available if item held
     when :dynamax
-      return defined?(Battle::Scene::USE_DYNAMAX_GRAPHICS)
+      # Check if Dynamax methods exist (more reliable than constants)
+      return defined?(Battle) && Battle.instance_methods.include?(:pbCanDynamax?)
     when :terastallization
-      return defined?(Settings::TERASTALLIZE_TRIGGER_KEY)
+      # Check if Terastallization methods exist
+      return defined?(Battle) && Battle.instance_methods.include?(:pbCanTerastallize?)
     when :z_moves
       return defined?(Settings::ZMOVE_TRIGGER_KEY)
     when :raid_battles
-      return defined?(Battle::RAID_MECHANICS)
+      return defined?(Battle) && Battle.instance_methods.include?(:pbRaidBattle?)
     when :sos_battles
-      return defined?(Battle::SOS_MECHANICS)
+      return defined?(Battle) && Battle.instance_methods.include?(:pbSOSBattle?)
     else
       return false
     end
@@ -240,7 +257,7 @@ module AdvancedAI
   # Debug logging
   def self.log(message, category = "AI")
     return unless DEBUG_MODE
-    Console.echo_li("[#{category}] #{message}")
+    Console.echoln_li("[#{category}] #{message}")
   end
 end
 

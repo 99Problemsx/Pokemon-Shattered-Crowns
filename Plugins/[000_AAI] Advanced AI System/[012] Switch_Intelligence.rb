@@ -101,7 +101,13 @@ class Battle::AI
     # If better_score is 0, it means either no switches exist OR the best switch isn't significantly better
     if better_score <= 0
       score -= 15
-      echoln("  [10/10] No Better Option (malus): -15")
+      echoln("  [10/11] No Better Option (malus): -15")
+    end
+    
+    # 11. PENALTY: Can KO Opponent (-60 Points)
+    if can_ko_opponent?(user)
+      score -= 60
+      echoln("  [11/11] Can Secure KO (malus): -60")
     end
     
     echoln "  ─────────────────────────────────────"
@@ -135,6 +141,7 @@ class Battle::AI
       # Offensive Threat (Opponent can hit User super effectively)
       target.moves.each do |move|
         next unless move
+        next unless move.damagingMove?  # Skip status moves like Hypnosis
         next unless move.type # Fix ArgumentError
         type_mod = Effectiveness.calculate(move.type, *my_types)
         if Effectiveness.super_effective?(type_mod)
@@ -156,6 +163,7 @@ class Battle::AI
       # STAB Disadvantage
       target.moves.each do |move|
         next unless move
+        next unless move.damagingMove?  # Skip status moves
         next unless move.type # Fix ArgumentError
         if target.pbHasType?(move.type)  # STAB
           type_mod = Effectiveness.calculate(move.type, *my_types)
@@ -640,6 +648,62 @@ class Battle::AI
   
   private
   
+  # Calculate estimated incoming damage from a move
+  # Returns damage as a percentage of switch_pkmn's total HP (0.0 to 1.0+)
+  def calculate_incoming_damage(switch_pkmn, move, attacker)
+    return 0.0 unless switch_pkmn && move && attacker
+    return 0.0 unless move.damagingMove?
+    return 0.0 unless move.power && move.power > 0
+    
+    # Get move type (handle Move objects vs data)
+    move_type = move.pbCalcType(attacker) rescue move.type
+    return 0.0 unless move_type
+    
+    # Get types for effectiveness calculation
+    switch_types = [switch_pkmn.types[0], switch_pkmn.types[1]].compact
+    return 0.0 if switch_types.empty?
+    
+    # Type effectiveness
+    effectiveness = Effectiveness.calculate(move_type, *switch_types)
+    return 0.0 if Effectiveness.ineffective?(effectiveness)
+    
+    effectiveness_multiplier = if Effectiveness.super_effective?(effectiveness)
+      2.0
+    elsif Effectiveness.not_very_effective?(effectiveness)
+      0.5
+    else
+      1.0
+    end
+    
+    # STAB bonus
+    stab = attacker.pbHasType?(move_type) ? 1.5 : 1.0
+    
+    # Select correct offensive/defensive stats based on move category
+    if move.physicalMove?
+      atk_stat = attacker.attack
+      def_stat = switch_pkmn.defense
+    elsif move.specialMove?
+      atk_stat = attacker.spatk
+      def_stat = switch_pkmn.spdef
+    else
+      return 0.0  # Status move or unknown category
+    end
+    
+    # Prevent division by zero
+    def_stat = [def_stat, 1].max
+    
+    # Simplified damage formula (conservative estimate)
+    # Real: ((2*Level/5 + 2) * Power * A/D / 50 + 2) * Modifiers
+    # Simplified: (A * Power / D) * STAB * Effectiveness * 0.85 (average roll)
+    base_damage = (atk_stat.to_f * move.power) / def_stat
+    estimated_damage = base_damage * stab * effectiveness_multiplier * 0.85
+    
+    # Return as percentage of switch_pkmn's HP
+    damage_percent = estimated_damage / [switch_pkmn.totalhp, 1].max
+    
+    return damage_percent
+  end
+  
   # Detailed Matchup Evaluation for Switch Selection
   def evaluate_switch_matchup_detailed(switch_pkmn, current_user)
     score = 0
@@ -648,6 +712,21 @@ class Battle::AI
     return 0 unless switch_pkmn && switch_pkmn.types
     switch_types = [switch_pkmn.types[0], switch_pkmn.types[1]].compact
     return 0 if switch_types.empty? || switch_types.any?(&:nil?)
+    
+    # Check if current user is "already doomed" (will faint next turn)
+    # If so, we should minimize damage on switch-in rather than avoid all OHKOs
+    current_is_doomed = false
+    if current_user && !current_user.fainted?
+      @battle.allOtherSideBattlers(current_user.index).each do |target|
+        next unless target && !target.fainted?
+        # Doomed if: Low HP AND slower than opponent
+        hp_percent = current_user.hp.to_f / current_user.totalhp
+        if hp_percent < 0.30 && target.pbSpeed > current_user.pbSpeed
+          current_is_doomed = true
+          break
+        end
+      end
+    end
     
     # Analyze against all opponents
     @battle.allOtherSideBattlers(current_user.index).each do |target|
@@ -669,12 +748,40 @@ class Battle::AI
         
         eff = Effectiveness.calculate(move_type, *switch_types)
         
+        # Calculate actual damage to properly assess safety
+        damage_percent = calculate_incoming_damage(switch_pkmn, move, target)
+        
+        # Type effectiveness scoring (base scoring)
         if Effectiveness.ineffective?(eff)
           score += 40
         elsif Effectiveness.not_very_effective?(eff)
           score += 15
         elsif Effectiveness.super_effective?(eff)
           score -= 25
+        end
+        
+        # Damage-based penalties (critical for survival)
+        # If current user is already doomed, we want to MINIMIZE damage, not avoid all OHKOs
+        if current_is_doomed
+          # In "doomed" scenario: Pick the switch that takes LEAST damage
+          # Convert damage to a penalty (higher damage = worse score)
+          damage_penalty = (damage_percent * 50).to_i  # Scale: 100% damage = -50 points
+          score -= damage_penalty
+          echoln "    ⚠️  DAMAGE: #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-#{damage_penalty}]"
+        else
+          # Normal scenario: Penalize based on OHKO/2HKO thresholds
+          if damage_percent >= 0.85
+            # Likely OHKO - this is a FATAL switch!
+            score -= 60
+            echoln "    ⚠️  OHKO RISK: #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-60]"
+          elsif damage_percent >= 0.45
+            # Likely 2HKO - risky switch
+            score -= 30
+            echoln "    ⚠️  2HKO RISK: #{move.name} (~#{(damage_percent * 100).to_i}% HP) [-30]"
+          elsif damage_percent >= 0.30
+            # Moderate damage - somewhat risky
+            score -= 10
+          end
         end
       end
       
@@ -763,6 +870,84 @@ class Battle::AI
     else
       return :balanced
     end
+  end
+  
+  # Check if current Pokemon can KO any opponent
+  # Enhanced: Also considers if user can strike FIRST (speed/priority)
+  def can_ko_opponent?(user)
+    return false unless user && !user.fainted?
+    
+    @battle.allOtherSideBattlers(user.index).each do |target|
+      next unless target && !target.fainted?
+      
+      user.moves.each do |move|
+        next unless move && move.damagingMove?
+        next unless move.type
+        
+        # Check type effectiveness
+        type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true))
+        next if Effectiveness.ineffective?(type_mod)  # Can't KO with immune move
+        
+        # STAB bonus
+        stab = user.pbHasType?(move.type) ? 1.5 : 1.0
+        
+        # Choose attack stat based on move category
+        if move.physicalMove?
+          atk = user.attack
+          def_stat = target.defense
+        else
+          atk = user.spatk
+          def_stat = target.spdef
+        end
+        
+        # Simplified damage formula (conservative estimate)
+        # Real formula: ((2*Level/5 + 2) * Power * A/D / 50 + 2) * Modifiers
+        # Simplified: (A * Power / D) * STAB * Effectiveness / 100
+        base_damage = (atk * move.power) / [def_stat, 1].max
+        effectiveness_multiplier = Effectiveness.super_effective?(type_mod) ? 2.0 : 
+                                   Effectiveness.not_very_effective?(type_mod) ? 0.5 : 1.0
+        estimated_damage = (base_damage * stab * effectiveness_multiplier) / 100
+        
+        # Can KO? Add small buffer for random damage rolls
+        if estimated_damage >= target.hp * 0.85
+          # Additional check: Can we strike FIRST?
+          # This is critical when both Pokemon are in KO range
+          move_priority = move.priority || 0
+          
+          # If we have priority advantage, we can KO first
+          return true if move_priority > 0
+          
+          # If equal priority, check speed
+          if move_priority == 0
+            # We can KO first if we're faster
+            return true if user.pbSpeed > target.pbSpeed
+            
+            # Even if slower, if opponent CAN'T KO us back, still worth staying
+            # (This handles the "I can 2HKO them but they can't touch me" scenario)
+            opponent_can_ko_us = target.moves.any? do |opp_move|
+              next false unless opp_move && opp_move.damagingMove?
+              opp_type_mod = Effectiveness.calculate(opp_move.type, *user.pbTypes(true)) rescue 1.0
+              next false if Effectiveness.ineffective?(opp_type_mod)
+              
+              opp_stab = target.pbHasType?(opp_move.type) ? 1.5 : 1.0
+              opp_atk = opp_move.physicalMove? ? target.attack : target.spatk
+              our_def = opp_move.physicalMove? ? user.defense : user.spdef
+              
+              opp_damage = (opp_atk * opp_move.power) / [our_def, 1].max
+              opp_eff_mult = Effectiveness.super_effective?(opp_type_mod) ? 2.0 :
+                             Effectiveness.not_very_effective?(opp_type_mod) ? 0.5 : 1.0
+              opp_estimated = (opp_damage * opp_stab * opp_eff_mult) / 100
+              
+              opp_estimated >= user.hp * 0.85
+            end
+            
+            return true unless opponent_can_ko_us
+          end
+        end
+      end
+    end
+    
+    return false
   end
 end
 

@@ -70,7 +70,7 @@ class Battle::AI
   
   # Type Effectiveness
   def score_type_effectiveness(move, user, target)
-    type_mod = pbCalcTypeMod(move.type, target, user)
+    type_mod = Effectiveness.calculate(move.type, target.types[0], target.types[1])
     
     if Effectiveness.super_effective?(type_mod)
       return 40
@@ -290,7 +290,9 @@ class Battle::AI
   
   # Accuracy
   def score_accuracy(move, skill)
-    accuracy = move.accuracy
+    # Use raw accuracy to avoid AIMove#accuracy crash (needs battler which might be nil)
+    # If move is AIMove (wrapper), get inner move. If regular Move, use it directly.
+    accuracy = move.respond_to?(:move) ? move.move.accuracy : move.accuracy
     return 0 if accuracy == 0  # Never-miss moves
     
     if accuracy < 70
@@ -353,7 +355,7 @@ class Battle::AI
     atk = move.physicalMove? ? user.attack : user.spatk
     defense = move.physicalMove? ? target.defense : target.spdef
     
-    type_mod = pbCalcTypeMod(move.type, target, user)
+    type_mod = Effectiveness.calculate(move.type, target.types[0], target.types[1])
     stab = user.pbHasType?(move.type) ? 1.5 : 1.0
     
     damage = ((2 * user.level / 5.0 + 2) * bp * atk / defense / 50 + 2)
@@ -373,7 +375,7 @@ class Battle::AI
     # Type Matchup Check
     target.moves.each do |move|
       next unless move && move.damagingMove?
-      type_mod = pbCalcTypeMod(move.type, user, target)
+      type_mod = Effectiveness.calculate(move.type, user.types[0], user.types[1])
       return false if Effectiveness.super_effective?(type_mod)
     end
     

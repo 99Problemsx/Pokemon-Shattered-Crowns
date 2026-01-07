@@ -1,0 +1,6 @@
+Name       = Ball Overworld Effects
+Version    = 1.0
+Essentials = 21.1
+Requires   = Following Pokemon EX, 2.4.1
+Credits    = Following Pokémon EX creators (base work), and Maker Black for this port
+

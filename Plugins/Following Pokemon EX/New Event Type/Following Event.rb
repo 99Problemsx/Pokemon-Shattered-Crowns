@@ -440,14 +440,18 @@ end
 
 #-------------------------------------------------------------------------------
 # Ensure the follower only moves when the player moves exactly one tile
+# DISABLED: This was causing followers to teleport/stutter on bridges because
+# it updates on EVERY frame during movement animation instead of only when
+# the player completes a tile. The follower system already handles updates
+# properly via follow_leader's leader position tracking.
 #-------------------------------------------------------------------------------
-class Scene_Map
-  alias __followingevent__update update unless method_defined?(:__followingevent__update)
-  def update(*args)
-    __followingevent__update(*args)
-    if $game_player.moving?
-      $game_temp.followers.move_followers
-      $game_temp.followers.turn_followers
-    end
-  end
-end
+# class Scene_Map
+#   alias __followingevent__update update unless method_defined?(:__followingevent__update)
+#   def update(*args)
+#     __followingevent__update(*args)
+#     if $game_player.moving?
+#       $game_temp.followers.move_followers
+#       $game_temp.followers.turn_followers
+#     end
+#   end
+# end

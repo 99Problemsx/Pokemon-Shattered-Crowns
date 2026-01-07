@@ -242,7 +242,7 @@ class Battle::AI
   def type_disadvantage?(user, opponent)
     opponent.moves.any? do |move|
       next false unless move && move.damagingMove?
-      type_mod = pbCalcTypeMod(move.type, user, opponent)
+      type_mod = Effectiveness.calculate(move.type, user.pbTypes[0], user.pbTypes[1])
       Effectiveness.super_effective?(type_mod)
     end
   end

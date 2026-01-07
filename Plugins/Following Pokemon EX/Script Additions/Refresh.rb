@@ -44,11 +44,16 @@ end
 
 #-------------------------------------------------------------------------------
 # [V22 Port] Refresh Following Pokemon after Party Screen closes
+# This patches the PokemonPartyScreen class directly to ensure compatibility
+# with Modular UI Scenes plugin which overrides the global pbPokemonScreen
 #-------------------------------------------------------------------------------
-alias __followingpkmn__pbPokemonScreen pbPokemonScreen unless defined?(__followingpkmn__pbPokemonScreen)
-def pbPokemonScreen
-  __followingpkmn__pbPokemonScreen
-  FollowingPkmn.refresh(false)
+class PokemonPartyScreen
+  alias __followingpkmn__pbPokemonScreen pbPokemonScreen unless method_defined?(:__followingpkmn__pbPokemonScreen)
+  def pbPokemonScreen
+    ret = __followingpkmn__pbPokemonScreen
+    FollowingPkmn.refresh(false) if defined?(FollowingPkmn)
+    return ret
+  end
 end
 
 #-------------------------------------------------------------------------------
@@ -88,7 +93,6 @@ def pbHatch(*args)
   FollowingPkmn.refresh(false)
   return ret
 end
-
 #-------------------------------------------------------------------------------
 # [V22 Port] Refresh Following Pokemon after Bag (Item Choice)
 #-------------------------------------------------------------------------------
@@ -116,15 +120,34 @@ class Scene_Map
   alias __followingpkmn__update update unless method_defined?(:__followingpkmn__update)
   def update(*args)
     __followingpkmn__update(*args)
-    [:ACTION, :SPECIAL, :AUX1, :AUX2].each do |k|
-      if Input.trigger?(k)
-        pbMessage("Triggered: #{k}")
-      end
-    end
     t_key = FollowingPkmn::TOGGLE_FOLLOWER_KEY
-    if FollowingPkmn.can_check? && (Input.trigger?(t_key) || (Input.const_defined?(t_key) && Input.trigger?(Input.const_get(t_key))) rescue false)
+    if t_key && FollowingPkmn.can_check? && Input.trigger?(t_key)
       FollowingPkmn.toggle
     end
+    
+    # Quick party cycling with W/S/A keys
+    if FollowingPkmn.can_check? && $player && $player.party.length >= 2
+      if !$game_temp.in_battle && !$game_temp.in_menu && !$game_player.moving?
+        # S key - Rotate party forward (first Pokemon goes to end)
+        forward_key = FollowingPkmn::CYCLE_PARTY_FORWARD_KEY
+        if forward_key && Input.trigger?(forward_key)
+          first_pkmn = $player.party.shift
+          $player.party.push(first_pkmn)
+          pbSEPlay("GUI party switch") rescue pbSEPlay("Choose")
+          FollowingPkmn.refresh(true) if defined?(FollowingPkmn)
+        end
+        
+        # W key - Rotate party backward (last Pokemon goes to first)
+        backward_key = FollowingPkmn::CYCLE_PARTY_BACKWARD_KEY
+        if backward_key && Input.trigger?(backward_key)
+          last_pkmn = $player.party.pop
+          $player.party.unshift(last_pkmn)
+          pbSEPlay("GUI party switch") rescue pbSEPlay("Choose")
+          FollowingPkmn.refresh(true) if defined?(FollowingPkmn)
+        end
+      end
+    end
+    
     if $PokemonGlobal.call_refresh[0]
       FollowingPkmn.refresh($PokemonGlobal.call_refresh[1])
       $PokemonGlobal.call_refresh = false

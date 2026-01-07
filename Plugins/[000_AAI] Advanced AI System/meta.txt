@@ -1,4 +1,4 @@
 Name         = Advanced AI System
-Version      = 1.5.3
+Version      = 1.5.7
 Essentials   = 21.1
 Credits      = Nononever

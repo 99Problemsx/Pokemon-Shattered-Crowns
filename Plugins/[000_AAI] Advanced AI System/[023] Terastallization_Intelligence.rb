@@ -6,12 +6,36 @@
 class Battle::AI
   # Checks if Terastallize should be used
   def should_terastallize?(user, skill)
-    return false unless skill >= 100
-    return false unless AdvancedAI.dbk_enabled?(:terastallization)
-    return false unless user.can_terastallize?
-    return false if user.tera?
+    AdvancedAI.log("should_terastallize? called for #{user.battler.name} (skill #{skill})", "Tera")
+    
+    unless skill >= 100
+      AdvancedAI.log("  ❌ Skill too low (#{skill} < 100)", "Tera")
+      return false
+    end
+    
+    unless AdvancedAI.dbk_enabled?(:terastallization)
+      AdvancedAI.log("  ❌ Terastallization not enabled", "Tera")
+      return false
+    end
+    
+    # Note: user is an AIBattler, so we use the battle's method with the index
+    unless @battle.pbCanTerastallize?(user.index)
+      AdvancedAI.log("  ❌ @battle.pbCanTerastallize? returned false", "Tera")
+      return false
+    end
+    
+    if user.tera?
+      AdvancedAI.log("  ❌ Already Terastallized", "Tera")
+      return false
+    end
     
     score = calculate_tera_score(user, skill)
+    
+    # Wild Pokemon bonus (for testing/balance)
+    if @battle.wildBattle?
+      score += 10
+      AdvancedAI.log("  Wild Pokemon Tera bonus: +10", "Tera")
+    end
     
     AdvancedAI.log("Tera score for #{user.pbThis}: #{score}", "Tera")
     
@@ -92,7 +116,7 @@ class Battle::AI
         @battle.allOtherSideBattlers(user.index).each do |target|
           next unless target && !target.fainted?
           
-          type_mod = pbCalcTypeMod(tera_type, target, user)
+          type_mod = Effectiveness.calculate(tera_type, target.pbTypes[0], target.pbTypes[1])
           score += 10 if Effectiveness.super_effective?(type_mod)
         end
       end
@@ -106,7 +130,7 @@ class Battle::AI
         next unless move && move.damagingMove?
         
         # Resistance after Tera
-        current_mod = pbCalcTypeMod(move.type, user, target)
+        current_mod = Effectiveness.calculate(move.type, user.pbTypes[0], user.pbTypes[1])
         tera_mod = Effectiveness.calculate(move.type, tera_type, nil)
         
         if Effectiveness.super_effective?(current_mod) && Effectiveness.not_very_effective?(tera_mod)
@@ -211,7 +235,6 @@ class Battle::AI
     # Better Tera Candidates?
     better_candidates = party.count do |pkmn|
       next false if !pkmn || pkmn.fainted? || pkmn.egg?
-      next false if @battle.pbFindBattler(pkmn.index, user.index)
       next false unless pkmn.tera_type
       
       # Higher Offense or better Tera Synergy
@@ -275,6 +298,19 @@ class Battle::Battler
   def tera_type
     return nil unless defined?(Settings::TERASTALLIZE_TRIGGER_KEY)
     return @pokemon.tera_type if @pokemon
+    return nil
+  end
+end
+
+# Extended AIBattler Methods for Terastallization
+class Battle::AI::AIBattler
+  def tera?
+    return @battler.tera? if @battler.respond_to?(:tera?)
+    return false
+  end
+  
+  def tera_type
+    return @battler.tera_type if @battler.respond_to?(:tera_type)
     return nil
   end
 end

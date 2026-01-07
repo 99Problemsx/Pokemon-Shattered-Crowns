@@ -24,11 +24,13 @@ BaseMoney = 60
 Name = Rival
 Gender = Male
 BaseMoney = 16
+SkillLevel = 80
 #-------------------------------
 [RIVAL2]
 Name = Rival
 Gender = Male
 BaseMoney = 36
+SkillLevel = 95
 #-------------------------------
 [AROMALADY]
 Name = Aroma Lady

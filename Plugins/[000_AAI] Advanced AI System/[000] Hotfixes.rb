@@ -45,12 +45,79 @@ puts "[Advanced AI] Battle::AI.launcherBattle? defined: #{Battle::AI.method_defi
 
 if defined?(Battle::AI::AIMove)
   class Battle::AI::AIMove
+    attr_reader :move # Expose underlying move safely
+    
     alias original_battler battler if method_defined?(:battler)
     
     def battler
       return original_battler if respond_to?(:original_battler)
       return @battler if instance_variable_defined?(:@battler)
       return nil
+    end
+    
+    # Explicitly delegate common category checks to avoid method_missing weirdness
+    # Use safe checks that work with all Battle::Move subclasses
+    def physical?
+      return @move.physicalMove? if @move && @move.respond_to?(:physicalMove?)
+      return @move.physical? if @move && @move.respond_to?(:physical?)
+      return false
+    end
+    
+    def special?
+      return @move.specialMove? if @move && @move.respond_to?(:specialMove?)
+      return @move.special? if @move && @move.respond_to?(:special?)
+      return false
+    end
+    
+    def status?
+      return @move.statusMove? if @move && @move.respond_to?(:statusMove?)
+      return @move.status? if @move && @move.respond_to?(:status?)
+      return false
+    end
+    
+    def damagingMove?
+      return @move.damagingMove? if @move && @move.respond_to?(:damagingMove?)
+      return !status?
+    end
+    
+    def statusMove?
+      return @move.statusMove? if @move && @move.respond_to?(:statusMove?)
+      return status?
+    end
+
+    # Delegate missing methods to the underlying @move object
+    # This fixes NoMethodError for power, multiHitMove?, etc.
+    def method_missing(method_name, *args, &block)
+      if @move && @move.respond_to?(method_name)
+        return @move.send(method_name, *args, &block)
+      end
+      super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      (@move && @move.respond_to?(method_name, include_private)) || super
+    end
+  end
+end
+
+#===============================================================================
+# AIBattler Compatibility
+#===============================================================================
+# Problem: AIBattler wrapper missing common battler methods
+# Solution: Delegate to underlying @battler
+#===============================================================================
+
+if defined?(Battle::AI::AIBattler)
+  class Battle::AI::AIBattler
+    # Delegate ability/item checks to underlying battler
+    def hasActiveAbility?(ability)
+      return @battler.hasActiveAbility?(ability) if @battler
+      return false
+    end
+    
+    def hasActiveItem?(item)
+      return @battler.hasActiveItem?(item) if @battler
+      return false
     end
   end
 end

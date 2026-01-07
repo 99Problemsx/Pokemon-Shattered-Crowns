@@ -88,6 +88,10 @@ module SCScripts
     MET_ALDRIC                   = 133
     FIRST_DREAM                  = 134
     MET_RAGNAR                   = 135
+    WAKE_UP_EVENT_PLAYED         = 136
+    ARRIVED_DAWNHAVEN            = 137
+    CULT_ATTACK_SEEN             = 138
+    LEFT_DAWNHAVEN               = 139
     
     #---------------------------------------------------------------------------
     # Challenge Mode Switches (140+)
@@ -97,7 +101,113 @@ module SCScripts
     NO_BATTLE_ITEMS              = 142
     RANDOMIZER_MODE              = 143
     EXP_SHARE_ALL                = 144
-    ARRIVED_DAWNHAVEN            = 145
+    
+    #---------------------------------------------------------------------------
+    # Badge Switches (150+)
+    #---------------------------------------------------------------------------
+    BADGE_1                      = 150  # Thornwood - Thorne
+    BADGE_2                      = 151  # Misthollow - Freya
+    BADGE_3                      = 152  # Ironpeak - Magnus
+    BADGE_4                      = 153  # Frostfall - Yuki
+    BADGE_5                      = 154  # Corona - Sol
+    BADGE_6                      = 155  # Ashvale - Ember
+    BADGE_7                      = 156  # Grimholt - Viktor
+    BADGE_8                      = 157  # Evershade - Luna
+    
+    #---------------------------------------------------------------------------
+    # Story Progression Switches (160+)
+    #---------------------------------------------------------------------------
+    MARKS_APPEARED               = 160
+    MET_LYRA                     = 161  # Xerneas marked
+    MET_KAEL                     = 162  # Yveltal marked
+    ALL_THREE_UNITED             = 163
+    FIRST_SEAL_BROKEN            = 164
+    FENRIS_AWAKENED              = 165
+    SURTR_AWAKENED               = 166
+    JORMUNGANDR_AWAKENED         = 167
+    HEL_AWAKENED                 = 168
+    NIDHOGGR_AWAKENED            = 169
+    MALACHAR_DEFEATED            = 170
+    LYRA_DIED                    = 171
+    TRUE_ENDING_UNLOCKED         = 172
+    
+    #---------------------------------------------------------------------------
+    # Route/Location Arrival Switches (180+)
+    #---------------------------------------------------------------------------
+    ARRIVED_ROUTE_1              = 180
+    ARRIVED_SUNRISE_FARM         = 181
+    ARRIVED_WILLOWMERE           = 182
+    ARRIVED_THORNWOOD            = 183
+    ARRIVED_ASHWOOD              = 184
+    ARRIVED_MISTHOLLOW           = 185
+    ARRIVED_RAVENWATCH           = 186
+    ARRIVED_SHADOWFEN            = 187
+    ARRIVED_IRONPEAK             = 188
+    ARRIVED_GLACIER_PASS         = 189
+    ARRIVED_FROSTFALL            = 190
+    ARRIVED_HOLLOWBROOK          = 191
+    ARRIVED_CORONA               = 192
+    ARRIVED_HEARTHSTONE          = 193
+    ARRIVED_ASHVALE              = 194
+    ARRIVED_GRIMHOLT             = 195
+    ARRIVED_WILLOWDALE           = 196
+    ARRIVED_EVERSHADE            = 197
+    ARRIVED_DUSKFALL             = 198
+    ARRIVED_TWILIGHT_HARBOR      = 199
+    ARRIVED_STORMWATCH           = 200
+    ARRIVED_VALORIA              = 201
+    ARRIVED_GATEWAY              = 202
+    ARRIVED_ASGAHEIM             = 203
+    ARRIVED_SHATTERED_THRONE     = 204
+    
+    #---------------------------------------------------------------------------
+    # Quest Completion Switches (210+)
+    #---------------------------------------------------------------------------
+    JOEY_QUEST_STARTED           = 210
+    JOEY_QUEST_COMPLETE          = 211
+    SUNRISE_QUEST_STARTED        = 212
+    SUNRISE_QUEST_COMPLETE       = 213
+    PSYDUCK_QUEST_STARTED        = 214
+    PSYDUCK_FOUND                = 215
+    PSYDUCK_RETURNED             = 216
+    
+    #---------------------------------------------------------------------------
+    # Item Collection Switches (220+)
+    #---------------------------------------------------------------------------
+    GOT_OLD_ROD                  = 220
+    GOT_MOOMOO_GIFT              = 221
+    GOT_THORNWOOD_TM             = 222
+    ROUTE2_ITEM_1                = 223
+    ROUTE2_TM                    = 224
+    ITEM_ROUTE1_POTION           = 225
+    ITEM_ROUTE1_POKEBALL         = 226
+    
+    #---------------------------------------------------------------------------
+    # Story Event Switches (230+)
+    #---------------------------------------------------------------------------
+    SUNRISE_CULT_DEFEATED        = 230
+    LYRA_BOND_SCENE_1            = 231
+    VISITED_THORNWOOD_SHRINE     = 232
+    MET_THORNE                   = 233
+    MET_FREYA                    = 234
+    HEARD_KAEL_RUMORS            = 235
+    KAEL_JOINED                  = 236
+    RAGNAR_ASHWOOD_BATTLE        = 237
+    ROUTE2_CULT_DEFEATED         = 238
+    ARRIVED_ROUTE_2              = 239
+    MET_MAGNUS                   = 240
+    FIRST_SEAL_DISCOVERED        = 241
+    IRONPEAK_CULT_DEFEATED       = 242
+    
+    #---------------------------------------------------------------------------
+    # Companion Switches (250+)
+    #---------------------------------------------------------------------------
+    LYRA_BOND_SCENE_2            = 250
+    LYRA_BOND_SCENE_3            = 251
+    KAEL_BOND_SCENE_1            = 252
+    KAEL_BOND_SCENE_2            = 253
+    KAEL_BOND_SCENE_3            = 254
+    RAGNAR_BOND_SCENE_1          = 255
     
     #---------------------------------------------------------------------------
     # Helper methods
@@ -156,6 +266,9 @@ module SCScripts
     PLAYER_GENDER           = 25  # Custom: 0 = Boy, 1 = Girl
     DIFFICULTY_MODE         = 26  # 0 = Normal, 1 = Hard, 2 = Nuzlocke
     LEVEL_CAP_MODE          = 27  # 0 = None, 1 = Gym, 2 = Strict
+    STORY_PROGRESSION       = 28  # Main story progress (0-55 for chapters)
+    CURRENT_ACT             = 29  # 1-5 for story acts
+    RIVAL_BATTLES_WON       = 30  # Track rivalry
     
     #---------------------------------------------------------------------------
     # Quest Tracking (50+)

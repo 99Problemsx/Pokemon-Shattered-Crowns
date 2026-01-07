@@ -9,7 +9,7 @@
 
 ## About This Game
 
-Pokemon Shattered Crowns is a complete, story-driven Pokemon fan game set in the original region of Verdania. This game focuses on a deep, emotional narrative that spans 55 chapters across 5 acts, featuring over 700 unique cutscenes, meaningful character development, and a plot that deals with themes of friendship, sacrifice, love, and destiny.
+Pokemon Shattered Crowns is a complete, story-driven Pokemon fan game set in the original region of Asgheim. This game focuses on a deep, emotional narrative that spans 55 chapters across 5 acts, featuring over 700 unique cutscenes, meaningful character development, and a plot that deals with themes of friendship, sacrifice, love, and destiny.
 
 Unlike traditional Pokemon games, Shattered Crowns puts story at the forefront. Your choices matter. Characters live and die. And the ending you get is one you earn.
 
@@ -17,7 +17,7 @@ Unlike traditional Pokemon games, Shattered Crowns puts story at the forefront. 
 
 ## Story
 
-You are a young trainer from the quiet town of Willowbrook. Your journey begins like any other—choosing your first Pokemon, saying goodbye to your parents, stepping onto Route 1.
+You are a young trainer from the quiet town of Dawnhaven Village. Your journey begins like any other—choosing your first Pokemon, saying goodbye to your parents, stepping onto Route 1.
 
 But you are not ordinary.
 
@@ -46,7 +46,7 @@ But the path is not easy. Allies will fall. Enemies may become friends. And you 
 - A wedding, a funeral, and everything in between
 
 **Two Regions to Explore**
-- Verdania: Your home region with forests, mountains, cities, and secrets
+- Asgheim: Your home region with forests, mountains, cities, and secrets
 - Astoria: A forgotten region accessible in Act 5, holding the key to salvation
 
 **Legendary Pokemon Integration**
@@ -86,7 +86,7 @@ One year later. The seal weakens. Journey to Astoria. Restore the Crown of Unity
 
 **The Player (You)**
 Guardian: Zacian
-A young trainer from Willowbrook who becomes the leader of the Chosen. Your parents, Marcus and Aurora, are a former Champion and renowned researcher. The weight of the world falls on your shoulders—but you never carry it alone.
+A young trainer from Dawnhaven Village who becomes the leader of the Chosen. Your parents, Marcus and Aurora, are a former Champion and renowned researcher. The weight of the world falls on your shoulders—but you never carry it alone.
 
 **Lyra**
 Guardian: Xerneas
@@ -112,7 +112,7 @@ The World Ender. An original legendary Pokemon sealed away in the Distortion Wor
 [Screenshots would be inserted here showing:]
 - Title screen
 - The three Chosen with their guardians
-- Verdania region map
+- Asgheim region map
 - Key story moments
 - Battle against Nidhoggr
 - The True Ending scene
