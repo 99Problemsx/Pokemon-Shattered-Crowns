@@ -15,6 +15,11 @@
     //
     "windowTitle": "Pokémon Essentials v21.1",
 
+    // RTP paths for asset loading. GameData is where decrypted assets go.
+    // mkxp-z will check these paths after the game folder.
+    //
+    "RTP": ["GameData"],
+
     // The game window's width and height, in pixels.
     //
     "defScreenW": 512,
