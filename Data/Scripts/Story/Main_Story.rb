@@ -34,10 +34,23 @@ GameData::Cutscene.define :ch1_wake_up do |scene|
   scene.message "\\bMom\\b: Professor Aldric is waiting for you at the lab!"
   scene.message "\\bMom\\b: Today's the day you get your first Pokémon!"
   
+  scene.wait 60
+  
   # TODO: Event Sequence - Waking up animation
   # scene.message "You stretched and looked around your room in Dawnhaven Village."
   # scene.message "The morning sun lived up to the town's name."
   # scene.message "Today was finally the day..."
+  scene.show_emotion :PLAYER, :exclamation
+  scene.wait 30
+  scene.turn_up :PLAYER
+  scene.turn_left :PLAYER
+  scene.turn_right :PLAYER
+  scene.turn_down :PLAYER
+  scene.show_emotion :PLAYER, :music
+  scene.wait 20
+  
+  scene.message "\\b\\PN\\b: *yawning* Finally..."
+  scene.message "\\b\\PN\\b: Today is the day!"
 end
 
 GameData::Cutscene.define :ch1_morning_routine do |scene|
@@ -54,6 +67,12 @@ GameData::Cutscene.define :ch1_morning_routine do |scene|
   # scene.message "You got dressed quickly."
   # scene.message "Your adventure clothes. Chosen weeks ago."
   # scene.message "Finally, you were going to use them."
+  scene.fade_out 30
+  scene.play_se 'Audio/SE/Equip'
+  scene.wait 30
+  scene.fade_in 30
+  scene.show_animation :PLAYER, 4 # "Status Up" or similar generic pos
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch1_breakfast_with_family do |scene|
@@ -63,6 +82,12 @@ GameData::Cutscene.define :ch1_breakfast_with_family do |scene|
   # The kitchen was lively this morning.
   # Mom had maps spread across the table between breakfast plates.
   # Dad was polishing an old Pokéball.
+  scene.camera_pan :down, 2, 4
+  scene.wait 20
+  scene.show_emotion :MOM, :heart
+  scene.wait 10
+  scene.show_emotion :DAD, :note
+  scene.wait 20
   
   scene.message "\\bMom (Aurora)\\b: Eat up! Can't start an adventure on an empty stomach!"
   scene.message "\\bDad (Marcus)\\b: Your mother's right. Trust me."
@@ -90,6 +115,10 @@ GameData::Cutscene.define :ch1_dad_gift do |scene|
   # TODO: Event Sequence - He pulled out a worn Pokéball. His hands were scarred. Battle-worn.
   # scene.message "He pulled out a worn Pokéball."
   # scene.message "His hands were scarred. Battle-worn."
+  scene.move :DAD, [:step_toward_player], wait: true
+  scene.play_se 'Audio/SE/Item Get'
+  scene.show_animation :DAD, 20 # Item reveal generic
+  scene.wait 20
   
   scene.message "\\bDad (Marcus)\\b: This was my first partner's child."
   scene.message "\\bDad (Marcus)\\b: Raised her myself after the egg hatched."
@@ -112,6 +141,11 @@ GameData::Cutscene.define :ch1_dad_gift do |scene|
   # TODO: Event Sequence - Hug scene
   # scene.message "You hugged them both."
   # scene.message "The best parents a trainer could ask for."
+  scene.move :MOM, [:step_toward_player], wait: true
+  scene.show_emotion :PLAYER, :heart
+  scene.show_emotion :MOM, :heart
+  scene.show_emotion :DAD, :heart
+  scene.wait 40
 end
 
 GameData::Cutscene.define :ch1_walk_to_lab do |scene|
@@ -131,6 +165,10 @@ GameData::Cutscene.define :ch1_walk_to_lab do |scene|
   # scene.message "You'd lived in this village your whole life."
   # scene.message "Everyone knew everyone."
   # scene.message "But today... today you'd finally see what was beyond."
+  scene.camera_pan :up, 5, 2 # Scenic view of village
+  scene.wait 60
+  scene.camera_reset
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch1_village_memories do |scene|
@@ -140,6 +178,14 @@ GameData::Cutscene.define :ch1_village_memories do |scene|
   # scene.message "You passed the old oak tree where you used to play."
   # scene.message "The pond where wild Magikarp splashed."
   # scene.message "The fields where Mareep grazed peacefully."
+  scene.camera_pan :right, 3, 3
+  scene.wait 40
+  scene.play_se 'Audio/SE/Splash'
+  scene.wait 20
+  scene.camera_pan :down, 3, 3
+  scene.play_se 'Audio/SE/Sheep'
+  scene.wait 40
+  scene.camera_reset
   
   scene.message "\\b\\PN\\b: (I'm going to miss this place...)"
   
@@ -161,6 +207,10 @@ GameData::Cutscene.define :ch1_ragnar_appears do |scene|
   # scene.message "You turned to see your childhood friend sprinting toward you."
   # scene.message "Ragnar. Your neighbor. Your rival since you could walk."
   # scene.message "Competitive. Loud. Loyal to a fault."
+  scene.show_emotion :PLAYER, :exclamation
+  scene.turn_toward_event :PLAYER, :RAGNAR
+  scene.move :RAGNAR, [:step_toward_player, :step_toward_player, :step_toward_player, :jump_in_place], speed: 5
+  scene.wait 10
   
   scene.message "\\bRagnar\\b: *panting* You weren't... gonna leave... without me!"
   
@@ -174,6 +224,9 @@ GameData::Cutscene.define :ch1_ragnar_appears do |scene|
   # scene.message "He grinned, that same competitive spark in his eyes."
   # scene.message "You'd been racing each other your whole lives."
   # scene.message "Why would today be any different?"
+  scene.show_emotion :RAGNAR, :idea
+  scene.jump :RAGNAR, 0, 0
+  scene.wait 20
   
   scene.message "\\bRagnar\\b: Let's go get our starters TOGETHER!"
   scene.message "\\bRagnar\\b: And then I'll beat you in our first battle!"
@@ -189,6 +242,13 @@ GameData::Cutscene.define :ch1_lab_arrival do |scene|
   # scene.message "But inside, it was filled with wonders."
   # scene.message "Shelves of ancient artifacts. Glowing machines."
   # scene.message "And in the center... three Pokéballs."
+  scene.fade_out 20
+  scene.wait 20
+  scene.fade_in 20
+  scene.camera_pan :up, 2, 2
+  scene.wait 30
+  scene.show_animation :CENTRAL_MACHINE, 15 # Glowing machine animation
+  scene.wait 20
   
   scene.message "\\bRagnar\\b: Whoa... so cool..."
   
@@ -199,6 +259,9 @@ GameData::Cutscene.define :ch1_lab_arrival do |scene|
   # scene.message "The Professor was an older man with kind eyes."
   # scene.message "Silver hair and a warm smile."
   # scene.message "He'd known your father. They'd been friends."
+  scene.move :PROFESSOR, [:face_down], wait: true
+  scene.show_emotion :PROFESSOR, :note
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch1_professor_talk do |scene|
@@ -239,6 +302,13 @@ GameData::Cutscene.define :ch1_starter_bond do |scene|
   # scene.message "And there it was. Your first Pokémon."
   # scene.message "It looked up at you with curious eyes."
   # scene.message "Then... a happy cry."
+  scene.play_se 'Audio/SE/Ball Open'
+  scene.camera_flash 10
+  scene.show_animation :PLAYER, 40 # Receive item/pokemon
+  scene.wait 30
+  scene.play_se 'Cries/STARTER_CRY_PLACEHOLDER'
+  scene.show_emotion :PLAYER, :heart
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: Hey there, partner."
   scene.message "\\b\\PN\\b: Looks like we're going to be together for a long time."
@@ -247,6 +317,9 @@ GameData::Cutscene.define :ch1_starter_bond do |scene|
   # scene.message "You knelt down and extended your hand."
   # scene.message "Your starter sniffed it..."
   # scene.message "Then nuzzled against you affectionately."
+  scene.jump :STARTER, 0, 0
+  scene.show_emotion :STARTER, :heart
+  scene.wait 20
   
   scene.message "\\bProfessor Aldric\\b: *smiling* A perfect match."
   scene.message "\\bProfessor Aldric\\b: I knew it would be."
@@ -255,6 +328,9 @@ GameData::Cutscene.define :ch1_starter_bond do |scene|
   # scene.message "Something clicked in that moment."
   # scene.message "Like two puzzle pieces finding each other."
   # scene.message "You'd found your partner."
+  scene.wait 30
+  scene.camera_flash 10, Color.new(255, 255, 200, 100) # Warm flash
+  scene.wait 10
 end
 
 GameData::Cutscene.define :ch1_ragnar_starter do |scene|
@@ -265,12 +341,23 @@ GameData::Cutscene.define :ch1_ragnar_starter do |scene|
   # TODO: Event Sequence - Ragnar's excitement
   # scene.message "Ragnar bounced on his heels excitedly."
   # scene.message "He reached for a Pokéball with barely contained energy."
+  scene.jump :RAGNAR, 0, 0
+  scene.jump :RAGNAR, 0, 0
+  scene.show_emotion :RAGNAR, :exclamation
+  scene.wait 20
   
   scene.message "\\bRagnar\\b: This one! I can feel it!"
   
   # TODO: Event Sequence - Pikachu reveal
   # scene.message "The ball opened, revealing a Pikachu."
   # scene.message "The electric mouse sparked with energy."
+  scene.play_se 'Audio/SE/Ball Open'
+  scene.camera_flash 10
+  scene.show_animation :RAGNAR, 40 # Receive item/pokemon
+  scene.wait 30
+  scene.play_se 'Cries/PIKACHU'
+  scene.show_animation :RAGNAR, 3 # Sparkle or electric effect
+  scene.wait 20
   
   scene.message "\\bRagnar\\b: PERFECT! A Pikachu!"
   scene.message "\\bRagnar\\b: We're gonna be UNSTOPPABLE!"
@@ -280,6 +367,10 @@ GameData::Cutscene.define :ch1_ragnar_starter do |scene|
   # TODO: Event Sequence - Pikachu bonds with Ragnar
   # scene.message "The Pikachu immediately climbed onto Ragnar's shoulder."
   # scene.message "They were a perfect match too."
+  scene.jump :PIKACHU, 0, 0
+  scene.show_emotion :PIKACHU, :heart
+  scene.show_emotion :RAGNAR, :heart
+  scene.wait 20
   
   scene.message "\\bProfessor Aldric\\b: *chuckling* Two excellent pairs."
   scene.message "\\bProfessor Aldric\\b: I expect great things from both of you."
@@ -291,6 +382,10 @@ GameData::Cutscene.define :ch1_first_rival_battle do |scene|
   # TODO: Event Sequence - Rival battle setup
   # scene.message "Outside the lab, Ragnar blocked your path."
   # scene.message "That competitive grin on his face."
+  scene.turn_toward_event :RAGNAR, :PLAYER
+  scene.show_emotion :RAGNAR, :exclamation
+  scene.move :RAGNAR, [:jump_in_place], wait: true
+  scene.wait 10
   
   scene.message "\\bRagnar\\b: Hey \\PN!"
   scene.message "\\bRagnar\\b: We've got our partners now..."
@@ -306,6 +401,9 @@ GameData::Cutscene.define :ch1_first_rival_battle do |scene|
   
   # TODO: Event Sequence - Battle start animation
   # scene.message "Your starter stepped forward, ready."
+  scene.play_se 'Cries/STARTER_CRY_PLACEHOLDER'
+  scene.show_animation :PLAYER, 1 # Battle start shine
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: You're on, Ragnar."
   
@@ -332,6 +430,9 @@ GameData::Cutscene.define :ch1_after_rival_battle do |scene|
   # TODO: Event Sequence - Ragnar leaves
   # scene.message "Ragnar took off down a different path."
   # scene.message "His Pikachu clinging to his shoulder."
+  scene.move :RAGNAR, [:step_right, :step_right, :step_right, :step_up, :step_up, :step_up], speed: 5, wait: true
+  scene.remove_event :RAGNAR
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: (Same old Ragnar...)"
   scene.message "\\b\\PN\\b: (But I wouldn't have it any other way.)"
@@ -344,6 +445,9 @@ GameData::Cutscene.define :ch1_receive_pokedex do |scene|
   
   # TODO: Event Sequence - Pokedex Handover
   # scene.message "He handed you a sleek red device."
+  scene.play_se 'Audio/SE/Item Get'
+  scene.show_animation :PLAYER, 22 # Key Item get generic
+  scene.wait 20
   
   scene.message "\\bProfessor Aldric\\b: This is the Pokédex."
   scene.message "\\bProfessor Aldric\\b: It records data on every Pokémon you encounter."
@@ -366,6 +470,10 @@ GameData::Cutscene.define :ch1_parents_goodbye do |scene|
   # TODO: Event Sequence - Parents at gate
   # scene.message "Both your parents met you at the village gate."
   # scene.message "Dad had his old adventure bag. Mom had her research notes."
+  scene.camera_pan_to_event :PARENTS_GATE, 60
+  scene.wait 20
+  scene.show_emotion :MOM, :heart
+  scene.wait 10
   
   scene.message "\\bMom (Aurora)\\b: I packed some supplies."
   scene.message "\\bMom (Aurora)\\b: Potions, berries, and my field notes on local Pokémon."
@@ -393,6 +501,9 @@ GameData::Cutscene.define :ch1_parents_goodbye do |scene|
   # scene.message "Your parents watched, arms around each other."
   # scene.message "The road stretched ahead."
   # scene.message "Your adventure had begun."
+  scene.move :PLAYER, [:step_down, :step_down, :step_down], wait: true
+  scene.fade_out 60
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch1_first_wild_battle do |scene|
@@ -401,6 +512,11 @@ GameData::Cutscene.define :ch1_first_wild_battle do |scene|
   # TODO: Event Sequence - Wild Encounter
   # scene.message "Not far from the village, rustling in the grass!"
   # scene.message "A wild Rattata appeared!"
+  scene.play_se 'Audio/SE/Jump Small'
+  scene.show_emotion :PLAYER, :exclamation
+  scene.show_animation :RATTATA, 1 # Grass rustle or appear
+  scene.play_se 'Cries/RATTATA'
+  scene.wait 30
   
   scene.message "\\b\\PN\\b: This is it! Our first battle!"
   scene.message "\\b\\PN\\b: Let's go, partner!"
@@ -408,6 +524,9 @@ GameData::Cutscene.define :ch1_first_wild_battle do |scene|
   # TODO: Event Sequence - Battle Animation
   # scene.message "Your starter leaped forward eagerly."
   # scene.message "The battle was short but fierce."
+  scene.show_animation :PLAYER, 1 # Attack/Battle
+  scene.camera_shake 2, 20
+  scene.wait 30
   
   scene.message "Victory!"
   
@@ -426,6 +545,11 @@ GameData::Cutscene.define :ch1_strange_dream do |scene|
   # scene.message "That night, you had a strange dream..."
   # scene.message "Golden light. Fragments of something broken."
   # scene.message "A voice, barely a whisper..."
+  scene.camera_tint :sepia, 60
+  scene.wait 60
+  scene.play_se 'Audio/SE/Magic'
+  scene.camera_flash 30
+  scene.wait 30
   scene.message "\\ts[]'Soon...'"
   
   # scene.message "You woke with a start."
@@ -444,12 +568,17 @@ GameData::Cutscene.define :ch1_dream_details do |scene|
   # scene.message "A crown. Broken into pieces."
   # scene.message "Three figures standing against darkness."
   # scene.message "And a roar... ancient and terrible."
+  scene.camera_shake 1, 60
+  scene.play_se 'Audio/SE/Roar'
+  scene.wait 60
   
   scene.message "\\b\\PN\\b: (What does it mean?)"
   
   # TODO: Event Sequence - Starter Comfort
   # scene.message "Your starter nuzzled against you."
   # scene.message "As if sensing your unease."
+  scene.show_emotion :PARTNER, :heart
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: *petting* It's okay, buddy."
   scene.message "\\b\\PN\\b: Probably just a weird dream."
@@ -467,6 +596,10 @@ GameData::Cutscene.define :ch1_route_exploration do |scene|
   # scene.message "Wild Pokémon watched from the bushes."
   # scene.message "Birds sang in the trees."
   # scene.message "Everything felt fresh and new."
+  scene.camera_pan :right, 5, 2
+  scene.wait 60
+  scene.camera_reset
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: The world is so big..."
   scene.message "\\b\\PN\\b: I can't wait to see all of it."
@@ -474,10 +607,17 @@ GameData::Cutscene.define :ch1_route_exploration do |scene|
   # TODO: Event Sequence - Starter excitement
   # scene.message "Your starter bounded ahead."
   # scene.message "Just as excited as you were."
+  scene.jump :PARTNER, 0, 0
+  scene.move :PARTNER, [:step_right, :step_right], wait: true
+  scene.wait 20
   
   # TODO: Event Sequence - Farm View
   # scene.message "Ahead, you could see a farm in the distance."
   # scene.message "Sunrise Farm. Your first destination."
+  scene.camera_pan :up, 3, 3
+  scene.wait 40
+  scene.camera_reset
+  scene.wait 20
 end
 
 #===============================================================================
@@ -491,6 +631,11 @@ GameData::Cutscene.define :ch2_farm_arrival do |scene|
   # scene.message "Sunrise Farm appeared over the hill."
   # scene.message "Rolling fields of berries. Grazing Miltank."
   # scene.message "The scent of fresh earth and flowers."
+  scene.camera_pan :up, 4, 3
+  scene.wait 40
+  scene.play_se 'Audio/SE/Cow'
+  scene.wait 20
+  scene.camera_reset
   
   scene.message "\\b\\PN\\b: This must be the place."
   scene.message "\\b\\PN\\b: Lyra said to meet her here."
@@ -499,6 +644,12 @@ GameData::Cutscene.define :ch2_farm_arrival do |scene|
   # scene.message "A figure waved from the farmhouse."
   # scene.message "Bright smile. Boundless energy."
   # scene.message "That had to be Lyra."
+  scene.camera_pan_to_event :LYRA, 60
+  scene.wait 20
+  scene.show_emotion :LYRA, :heart
+  scene.jump :LYRA, 0, 0
+  scene.wait 20
+  scene.camera_reset
 end
 
 GameData::Cutscene.define :ch2_meet_lyra do |scene|
@@ -509,6 +660,10 @@ GameData::Cutscene.define :ch2_meet_lyra do |scene|
   # scene.message "A cheerful girl waved from Sunrise Farm."
   # scene.message "The berry fields stretched behind her, vibrant and alive."
   # scene.message "Beside her stood a small Eevee."
+  scene.move :LYRA, [:step_left, :step_left, :step_down], wait: true
+  scene.wait 10
+  scene.show_animation :LYRA, 3 # Sparkle
+  scene.wait 10
   
   scene.message "\\bLyra\\b: This is Willow! Grandma gave her to me."
   scene.message "\\bLyra\\b: She's a little shy, but she's the sweetest!"
@@ -519,7 +674,28 @@ GameData::Cutscene.define :ch2_meet_lyra do |scene|
   scene.message "\\bLyra\\b: Hey, did you have any weird dreams last night?"
   scene.message "\\bLyra\\b: I had this strange dream about golden light..."
   
-  scene.message "\\b\\PN\\b: Wait... me too. Golden light and broken pieces."
+  # STORY CHOICE: Share the dream?
+  if StoryChoices.enabled?
+    choice = scene.script { 
+      StoryChoices.make_decision(:ch2_share_dream, [
+        "Yes, me too.",
+        "No, not really."
+      ]) 
+    }
+    
+    if choice == 0
+      scene.message "\\b\\PN\\b: Wait... me too. Golden light and broken pieces."
+      scene.message "\\bLyra\\b: *eyes widening* Really? That's... amazing!"
+      scene.message "\\bLyra\\b: It means we're connected somehow!"
+    else
+      scene.message "\\b\\PN\\b: No... I slept like a rock."
+      scene.message "\\bLyra\\b: *disappointed* Oh. Just me then?"
+      scene.message "\\bLyra\\b: Maybe I just ate too many berries before bed..."
+    end
+  else
+    # Standard Story Path
+    scene.message "\\b\\PN\\b: Wait... me too. Golden light and broken pieces."
+  end
 end
 
 GameData::Cutscene.define :ch2_pokemon_introductions do |scene|
@@ -528,6 +704,12 @@ GameData::Cutscene.define :ch2_pokemon_introductions do |scene|
   # TODO: Event Sequence - Pokemon Playing
   # scene.message "Your starter and Willow sniffed each other curiously."
   # scene.message "Then they started playing!"
+  scene.move :PARTNER, [:step_toward_event, :WILLOW], wait: true
+  scene.wait 20
+  scene.show_emotion :PARTNER, :heart
+  scene.jump :WILLOW, 0, 0
+  scene.show_emotion :WILLOW, :music
+  scene.wait 20
   
   scene.message "\\bLyra\\b: Aww! They're already friends!"
   scene.message "\\bWillow\\b: Vee vee!"
@@ -543,6 +725,11 @@ GameData::Cutscene.define :ch2_pokemon_introductions do |scene|
   # TODO: Event Sequence - Playful Chase
   # scene.message "The two Pokémon chased each other through the berry bushes."
   # scene.message "Carefree. Happy. Like you wished you could be."
+  scene.move :WILLOW, [:run_right, :run_right, :run_up], wait: false
+  scene.move :PARTNER, [:wait, :wait, :run_right, :run_right, :run_up], wait: true
+  scene.wait 20
+  scene.show_emotion :LYRA, :heart
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch2_ragnar_route do |scene|
@@ -553,6 +740,10 @@ GameData::Cutscene.define :ch2_ragnar_route do |scene|
   #
   # scene.message "Ragnar was sitting by a tree, Pikachu on his shoulder."
   # scene.message "A Rattata and a Pidgey sat nearby."
+  scene.camera_pan_to_event :RAGNAR, 60
+  scene.wait 20
+  scene.show_emotion :RAGNAR, :sleep # Maybe he was napping? Or just sitting
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: Ragnar? You're ahead of me already?"
   
@@ -606,6 +797,12 @@ GameData::Cutscene.define :ch2_lyra_backstory do |scene|
   # TODO: Event Sequence - Walking through fields
   # scene.message "You walked through the berry fields with Lyra."
   # scene.message "The afternoon sun painted everything golden."
+  scene.camera_tint :sepia, 120 # Afternoon/Golden Hour feel
+  scene.move :LYRA, [:step_left, :step_left], wait: true
+  scene.move :PLAYER, [:step_left, :step_left], wait: true
+  scene.turn_down :LYRA
+  scene.turn_down :PLAYER
+  scene.wait 20
   
   scene.message "\\bLyra\\b: I've always loved this farm."
   scene.message "\\bLyra\\b: My parents... they're always traveling for work."
@@ -658,6 +855,14 @@ GameData::Cutscene.define :ch2_sunset_talk do |scene|
   # TODO: Event Sequence - Sunset View
   # scene.message "You sat on the fence, watching the sunset."
   # scene.message "Orange and pink painted the sky."
+  scene.camera_tint :sunset, 120
+  scene.wait 60
+  scene.camera_pan :up, 2, 5
+  scene.wait 40
+  # Assuming events are "sitting" or just facing up at view
+  scene.turn_up :LYRA
+  scene.turn_up :PLAYER
+  scene.wait 20
   
   scene.message "\\bLyra\\b: Beautiful, isn't it?"
   scene.message "\\b\\PN\\b: Yeah... really beautiful."
@@ -684,6 +889,11 @@ GameData::Cutscene.define :ch2_grandmother_warning do |scene|
   # TODO: Event Sequence - Grandmother watching
   # scene.message "Lyra's grandmother watched from the porch."
   # scene.message "Something in her eyes seemed... knowing."
+  scene.camera_tint :reset, 60
+  scene.wait 20
+  scene.camera_pan_to_event :GRANDMOTHER, 60
+  scene.move :GRANDMOTHER, [:step_down], wait: true
+  scene.wait 20
   
   scene.message "\\bGrandmother\\b: You must be \\PN."
   scene.message "\\bGrandmother\\b: Lyra's told me all about you."
@@ -710,6 +920,15 @@ GameData::Cutscene.define :ch2_grandmother_stories do |scene|
   
   # TODO: Event Sequence - Storytelling by fire
   # scene.message "That night, Grandmother told stories by the fire."
+  scene.camera_tint :night, 60
+  scene.wait 60
+  scene.play_se 'Audio/SE/Fire'
+  scene.wait 20
+  # Assuming sitting positions
+  scene.turn_left :GRANDMOTHER
+  scene.turn_right :LYRA
+  scene.turn_right :PLAYER
+  scene.wait 20
   
   scene.message "\\bGrandmother\\b: Long ago, this region was protected."
   scene.message "\\bGrandmother\\b: By three great guardians."
@@ -730,6 +949,11 @@ GameData::Cutscene.define :ch2_grandmother_stories do |scene|
   # scene.message "The fire crackled."
   # scene.message "For a moment, you could have sworn you saw shapes in the flames."
   # scene.message "A wolf. A deer. A great bird."
+  scene.show_animation :FIREPLACE, 10 # Fire animation if available or generic magic
+  scene.camera_flash 30, Color.new(255, 100, 0, 50)
+  scene.wait 30
+  scene.play_se 'Audio/SE/Magic'
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch2_shared_dream do |scene|
@@ -742,12 +966,27 @@ GameData::Cutscene.define :ch2_shared_dream do |scene|
   #
   # scene.message "But this time... you weren't alone."
   # scene.message "Lyra was there. And a third figure, shrouded in shadow."
+  scene.camera_tint :sepia, 60
+  scene.wait 60
+  scene.camera_pan_to_event :LYRA_DREAM, 0
+  scene.show_animation :LYRA_DREAM, 4 # Appear?
+  scene.wait 20
+  scene.camera_pan :right, 3, 2
+  scene.wait 40
+  # Shadow figure
+  scene.show_animation :SHADOW_FIGURE, 4 # Appear?
+  scene.wait 20
   
   scene.message "\\ts[]'Three must stand...'"
   scene.message "\\ts[]'Against the coming dark...'"
   
   # scene.message "You woke to find Lyra already awake."
   # scene.message "Eyes wide."
+  scene.camera_tint :reset, 10
+  scene.fade_in 60
+  scene.wait 30
+  scene.show_emotion :LYRA, :exclamation
+  scene.wait 20
   
   scene.message "\\bLyra\\b: You had the dream too, didn't you?"
   scene.message "\\b\\PN\\b: The same one. With you in it."
@@ -763,6 +1002,11 @@ GameData::Cutscene.define :ch2_departure_farm do |scene|
   
   # TODO: Event Sequence - Morning Departure
   # scene.message "Morning came. Time to continue your journey."
+  scene.camera_tint :reset, 0
+  scene.fade_in 60
+  scene.wait 30
+  scene.play_se 'Audio/SE/Bird'
+  scene.wait 20
   
   scene.message "\\bGrandmother\\b: Take care of my granddaughter."
   scene.message "\\b\\PN\\b: I will. I promise."
@@ -773,6 +1017,10 @@ GameData::Cutscene.define :ch2_departure_farm do |scene|
   # TODO: Event Sequence - Pendant Gift
   # scene.message "She pressed something into Lyra's hands."
   # scene.message "A small pendant. Shaped like leaves."
+  scene.move :GRANDMOTHER, [:step_toward_event, :LYRA], wait: true
+  scene.play_se 'Audio/SE/Item Get'
+  scene.show_animation :LYRA, 22 # Key item get
+  scene.wait 20
   
   scene.message "\\bGrandmother\\b: This belonged to your mother."
   scene.message "\\bGrandmother\\b: Keep it close."
@@ -5923,6 +6171,47 @@ GameData::Cutscene.define :ch12_catching_breath do |scene|
   scene.message "\\bKael\\b: The marks. They responded to our need."
   scene.message "\\bKael\\b: I felt it too. Yveltal's power."
   scene.message "\\bKael\\b: I didn't use it... but I could have."
+  
+  # Awakening of Battle Mechanic Power
+  scene.message "\\i[POWER AWAKENING]"
+  scene.message "You looked down at your hands."
+  scene.message "Something had changed. You could feel it."
+  scene.message "A new weight. A new potential."
+  
+  mechanic_name = BattleMechanicChoice.mechanic_name
+  scene.message "\\b\\PN\\b: (I feel... different.)"
+  scene.message "\\b\\PN\\b: (Like I've unlocked... #{mechanic_name}.)"
+  
+  scene.camera_flash 30
+  scene.play_se 'Audio/SE/Item Get'
+  
+  scene.script do
+    BattleMechanicStory.give_mechanic_item(silent: true)
+  end
+  
+  case BattleMechanicChoice.current_mechanic
+  when BattleMechanicChoice::MEGA_EVOLUTION
+    scene.message "\\se[Fanfare2]You grasped the \\c[1]Mega Ring\\c[0]!"
+    scene.message "The Keystone resonated with your heartbeat."
+    scene.message "The power of bonds... of Evolution beyond limits."
+    
+  when BattleMechanicChoice::DYNAMAX
+    scene.message "\\se[Fanfare2]You grasped the \\c[1]Dynamax Band\\c[0]!"
+    scene.message "It pulsed with strange energy."
+    scene.message "The power to grow... to become giant."
+    
+  when BattleMechanicChoice::TERASTALLIZATION
+    scene.message "\\se[Fanfare2]You grasped the \\c[1]Tera Orb\\c[0]!"
+    scene.message "It sparkled like a jewel in your hand."
+    scene.message "The power to change... to shine like crystal."
+    
+  when BattleMechanicChoice::Z_MOVES
+    scene.message "\\se[Fanfare2]You grasped the \\c[1]Z-Power Ring\\c[0]!"
+    scene.message "It gleamed with a brilliant light."
+    scene.message "The power to unleash... the ultimate move."
+  end
+  
+  scene.wait 20
   
   scene.message "\\bLyra\\b: It's scary..."
   scene.message "\\bLyra\\b: Having this power we don't understand."
@@ -12583,16 +12872,22 @@ GameData::Cutscene.define :ch25_entering_ruins do |scene|
   # TODO: Event Sequence - Enter Ruins
   # scene.message "Kael stepped into the ruins alone."
   # scene.message "The darkness swallowed him immediately."
+  scene.move :PLAYER, [:step_up, :step_up], wait: true
+  scene.camera_tint :dark, 20
   
   # TODO: Event Sequence - Door Seals
   # scene.message "Behind him, the entrance sealed."
   # scene.message "Stone grinding against stone."
+  scene.play_se 'Audio/SE/Close Door'
+  scene.camera_shake 2, 20
   
   scene.message "\\bKael\\b: (No going back now.)"
   
   # TODO: Event Sequence - Shadow
   # scene.message "Shadow walked beside him, fur bristling."
   # scene.message "The Zorua's eyes glowed in the darkness."
+  scene.play_se 'Cries/ZORUA', 80, 100
+  scene.wait 10
   
   scene.message "\\bKael\\b: At least I have you, girl."
   scene.message "\\bShadow\\b: *growl of agreement*"
@@ -12601,6 +12896,9 @@ GameData::Cutscene.define :ch25_entering_ruins do |scene|
   # scene.message "The corridor stretched endlessly."
   # scene.message "Whispers echoed from the walls."
   # scene.message "Voices of the dead. Calling his name."
+  scene.move :PLAYER, [:step_up, :step_up, :step_up, :step_up], wait: true
+  scene.play_se 'Audio/SE/Darkness5' # Eerie ambience
+  scene.wait 20
   
   scene.message "\\bVoices\\b: Kael... Kael... Kael..."
 end
@@ -12611,6 +12909,8 @@ GameData::Cutscene.define :ch25_memories_surface do |scene|
   # TODO: Event Sequence - Whispers Grow
   # scene.message "The whispers grew louder."
   # scene.message "And with them came memories."
+  scene.play_se 'Audio/SE/Darkness4', 90, 110
+  scene.camera_shake 2, 60
   
   scene.message "\\bKael\\b: (The fire. Mira screaming.)"
   scene.message "\\bKael\\b: (I couldn't save her. I was too weak.)"
@@ -12619,6 +12919,12 @@ GameData::Cutscene.define :ch25_memories_surface do |scene|
   # scene.message "Images flickered in the darkness."
   # scene.message "The burning orphanage. Children crying."
   # scene.message "And Mira, pushing him out the window."
+  scene.camera_flash 10
+  scene.camera_tint :sepia, 5
+  scene.wait 5
+  scene.camera_tint :dark, 5
+  scene.play_se 'Audio/SE/Fire3'
+  scene.wait 30
   
   scene.message "\\bMira's Memory\\b: RUN, KAEL! RUN!"
   
@@ -12632,6 +12938,9 @@ GameData::Cutscene.define :ch25_memories_surface do |scene|
   # TODO: Event Sequence - Figure Emerges
   # scene.message "A figure emerged from the shadows."
   # scene.message "Pale. Beautiful. Wrong."
+  scene.play_se 'Audio/SE/Darkness1'
+  scene.move :MORWEN, [:step_down, :step_down], wait: true
+  scene.camera_pan_to_event :MORWEN, 30
 end
 
 GameData::Cutscene.define :ch25_hel_temptation do |scene|
@@ -12682,6 +12991,9 @@ GameData::Cutscene.define :ch25_the_offer do |scene|
   
   # TODO: Event Sequence - Shadow Growl
   # scene.message "Shadow growled, stepping between them."
+  scene.play_se 'Cries/ZORUA', 100, 120
+  scene.move :SHADOW, [:jump_in_place], wait: true
+  scene.camera_shake 2, 10
   scene.message "\\bShadow\\b: *warning snarl*"
   
   scene.message "\\bLady Morwen\\b: Your beast knows nothing."
@@ -12696,6 +13008,12 @@ GameData::Cutscene.define :ch25_mira_ghost do |scene|
   # scene.message "Before Kael could respond..."
   # scene.message "The shadows shifted."
   # scene.message "And Mira appeared before him."
+  scene.camera_flash 30
+  scene.play_se 'Audio/SE/Heal'
+  scene.camera_tint :reset, 20
+  # Note: Assuming Mira event is already on map or set to appear
+  # scene.show_event :MIRA_GHOST if hidden
+
   
   scene.message "\\bMira's Ghost\\b: Kael..."
   scene.message "\\bKael\\b: M-Mira?!"
@@ -12704,6 +13022,8 @@ GameData::Cutscene.define :ch25_mira_ghost do |scene|
   # scene.message "She looked exactly as he remembered."
   # scene.message "Warm eyes. Gentle smile."
   # scene.message "The sister who saved his life."
+  scene.camera_pan_to_event :MIRA_GHOST, 40
+  scene.wait 40
   
   scene.message "\\bMira's Ghost\\b: Don't listen to her."
   scene.message "\\bMira's Ghost\\b: I'm not suffering. I'm at peace."
@@ -12728,6 +13048,8 @@ GameData::Cutscene.define :ch25_mira_message do |scene|
   # TODO: Event Sequence - Eye Contact
   # scene.message "Kael met her eyes."
   # scene.message "Tears streaming down his face."
+  scene.move :PLAYER, [:step_forward], wait: true
+  scene.wait 20
   
   scene.message "\\bMira's Ghost\\b: You have friends now. Real ones."
   scene.message "\\bMira's Ghost\\b: That girl with the pink hair..."
@@ -12767,6 +13089,9 @@ GameData::Cutscene.define :ch25_letting_go do |scene|
   # TODO: Event Sequence - Touch Cheek
   # scene.message "She reached out and touched his cheek."
   # scene.message "Warm. Not cold. Alive with memory."
+  scene.move :MIRA_GHOST, [:step_forward], wait: true
+  scene.play_se 'Audio/SE/Use Item'
+  scene.wait 20
   
   scene.message "\\bMira's Ghost\\b: I'm so proud of you."
   scene.message "\\bMira's Ghost\\b: Now go. Be happy."
@@ -12779,6 +13104,10 @@ GameData::Cutscene.define :ch25_letting_go do |scene|
   # TODO: Event Sequence - Mira Fades
   # scene.message "Mira smiled and faded away."
   # scene.message "Not into darkness. Into light."
+  scene.camera_flash 30
+  scene.play_se 'Audio/SE/Heal'
+  scene.remove_event :MIRA_GHOST
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch25_morwen_rage do |scene|
@@ -12803,6 +13132,11 @@ GameData::Cutscene.define :ch25_morwen_rage do |scene|
   # TODO: Event Sequence - Mark Burns
   # scene.message "His mark blazed with crimson light."
   # scene.message "Yveltal's power flowing through him."
+  scene.camera_flash 20
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.camera_tint :red, 10
+  scene.wait 10
+  scene.camera_tint :reset, 10
   
   scene.message "\\bLady Morwen\\b: THEN YOU WILL JOIN THE DEAD!"
 end
@@ -12818,6 +13152,10 @@ GameData::Cutscene.define :ch25_morwen_battle do |scene|
   # scene.message "Lady Morwen transformed."
   # scene.message "Her beauty twisted into something monstrous."
   # scene.message "A servant of Hel, goddess of the dishonored dead."
+  scene.play_se 'Cries/YVELTAL'
+  scene.camera_shake 10, 60
+  scene.camera_flash 30
+  scene.wait 30
   
   scene.message "\\bKael\\b: Shadow! Let's end this!"
   scene.message "\\bShadow\\b: *battle cry*"
@@ -12834,6 +13172,11 @@ GameData::Cutscene.define :ch25_morwen_battle do |scene|
   # scene.message "Lady Morwen screamed."
   # scene.message "And faded into nothing."
   # scene.message "Her darkness consumed by Yveltal's greater power."
+  scene.play_se 'Audio/SE/Pkmn faint'
+  scene.camera_shake 5, 40
+  scene.wait 40
+  scene.remove_event :MORWEN
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch25_trial_complete do |scene|
@@ -12844,6 +13187,11 @@ GameData::Cutscene.define :ch25_trial_complete do |scene|
   # TODO: Event Sequence - Ruins Shift
   # scene.message "The ruins shifted around him."
   # scene.message "Stone walls crumbling. Light breaking through."
+  scene.camera_shake 5, 60
+  scene.play_se 'Audio/SE/Earthquake'
+  scene.camera_tint :white, 30
+  scene.wait 30
+  scene.camera_tint :reset, 30
   
   scene.message "\\bYveltal\\b: (Well done, chosen one.)"
   scene.message "\\bYveltal\\b: (You have faced the darkness within.)"
@@ -12864,6 +13212,9 @@ GameData::Cutscene.define :ch25_trial_complete do |scene|
   # scene.message "Kael's mark blazed."
   # scene.message "The Entropy Shard pulsed in his pocket."
   # scene.message "Connected. Accepted. Complete."
+  scene.camera_flash 30
+  scene.play_se 'Audio/SE/Item Get'
+  scene.wait 60
 end
 
 GameData::Cutscene.define :ch25_reunion do |scene|
@@ -12874,9 +13225,13 @@ GameData::Cutscene.define :ch25_reunion do |scene|
   # TODO: Event Sequence - Shadow Wall Crumbles
   # scene.message "The shadow wall crumbled."
   # scene.message "Light flooded the ruins."
+  scene.camera_tint :reset, 20
+  scene.play_se 'Audio/SE/Barrier'
+  scene.wait 20
   
   # TODO: Event Sequence - Lyra Rushes
   # scene.message "And Lyra rushed to Kael."
+  scene.move :LYRA, [:step_forward, :step_forward, :step_forward], wait: true
   
   scene.message "\\bLyra\\b: KAEL!"
   scene.message "\\bLyra\\b: Are you okay?!"
@@ -12884,12 +13239,15 @@ GameData::Cutscene.define :ch25_reunion do |scene|
   # TODO: Event Sequence - Hug
   # scene.message "She threw her arms around him."
   # scene.message "Holding him tight."
+  scene.play_se 'Audio/SE/Use Item'
+  scene.wait 10
   
   scene.message "\\bKael\\b: ...Yeah. I am now."
   
   # TODO: Event Sequence - Smile
   # scene.message "For the first time, Kael smiled at her."
   # scene.message "Really smiled. Without walls. Without fear."
+  scene.wait 30
   
   scene.message "\\b\\PN\\b: You did it."
   
@@ -12911,6 +13269,9 @@ GameData::Cutscene.define :ch25_walking_forward do |scene|
   # scene.message "The three of you left the Mortality Ruins."
   # scene.message "Behind you, the stone entrance crumbled."
   # scene.message "Its purpose fulfilled."
+  scene.move :PLAYER, [:step_down, :step_down], wait: true
+  scene.play_se 'Audio/SE/Collapsing'
+  scene.camera_shake 5, 20
   
   scene.message "\\b\\PN\\b: All three trials complete."
   scene.message "\\b\\PN\\b: Now we have the power of the Guardians."
@@ -12949,17 +13310,26 @@ GameData::Cutscene.define :ch25_5_intro do |scene|
   # TODO: Event Sequence - Kael Thoughts
   # scene.message "The moment you stepped into the Mortality Ruins..."
   # scene.message "You knew this wouldn't be like the others' trials."
+  scene.move :PLAYER, [:step_up], wait: true
+  scene.camera_tint :sepia, 10
+  scene.wait 10
+  scene.camera_tint :reset, 10
   
   scene.message "\\bKael\\b: (This place... it's calling to me.)"
   
   # TODO: Event Sequence - Shadow
   # scene.message "Shadow pressed against your leg."
+  scene.play_se 'Cries/ZORUA'
+  scene.move :SHADOW, [:face_player], wait: true
+  scene.wait 10
   scene.message "\\bShadow\\b: Zor..."
   scene.message "\\bKael\\b: I know, girl. Stay close."
   
   # TODO: Event Sequence - Door Seals
   # scene.message "The door sealed behind you."
   # scene.message "No going back now."
+  scene.play_se 'Audio/SE/Close Door'
+  scene.camera_shake 2, 20
 end
 
 GameData::Cutscene.define :ch25_5_first_corridor do |scene|
@@ -12969,6 +13339,10 @@ GameData::Cutscene.define :ch25_5_first_corridor do |scene|
   # scene.message "The corridor stretched ahead."
   # scene.message "Walls carved with bones and skulls."
   # scene.message "Candles that burned without flame."
+  scene.move :PLAYER, [:step_up, :step_up, :step_up], wait: true
+  scene.camera_pan 0, -2, 40
+  scene.wait 40
+  scene.camera_reset 20
   
   scene.message "\\bKael\\b: (Death imagery everywhere.)"
   scene.message "\\bKael\\b: (Subtle, Yveltal. Real subtle.)"
@@ -12976,6 +13350,11 @@ GameData::Cutscene.define :ch25_5_first_corridor do |scene|
   # TODO: Event Sequence - Mark Pulse
   # scene.message "Your mark pulsed with crimson light."
   # scene.message "It was the only illumination you needed."
+  scene.camera_flash 10
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.camera_tint :red, 5
+  scene.wait 5
+  scene.camera_tint :reset, 5
   
   scene.message "\\bVoice\\b: (Child of endings...)"
   scene.message "\\bVoice\\b: (Welcome home.)"
@@ -12997,6 +13376,9 @@ GameData::Cutscene.define :ch25_5_first_memory do |scene|
   # TODO: Event Sequence - Wall Vision
   # scene.message "The walls showed you something."
   # scene.message "A young boy. A dying Pokémon."
+  scene.camera_tint :sepia, 20
+  scene.play_se 'Audio/SE/Flash2'
+  scene.wait 20
   
   scene.message "\\bYoung Kael\\b: Please don't go!"
   scene.message "\\bYoung Kael\\b: Please, please, please..."
@@ -13004,6 +13386,10 @@ GameData::Cutscene.define :ch25_5_first_memory do |scene|
   # TODO: Event Sequence - Dying Growlithe
   # scene.message "The Growlithe in his arms was fading."
   # scene.message "Hit by a carriage. Nothing could save it."
+  scene.play_se 'Cries/GROWLITHE'
+  scene.wait 20
+  scene.play_se 'Audio/SE/Pkmn faint'
+  scene.wait 20
   
   scene.message "\\bGrowlithe\\b: *weakly* Grow..."
   
@@ -13014,6 +13400,8 @@ GameData::Cutscene.define :ch25_5_first_memory do |scene|
   # scene.message "You remembered this."
   # scene.message "The first death you'd ever witnessed."
   # scene.message "The first time you understood."
+  scene.camera_tint :reset, 20
+  scene.camera_shake 2, 20
   
   scene.message "\\bKael\\b: (He was a stray. I'd been feeding him for weeks.)"
   scene.message "\\bKael\\b: (I couldn't save him.)"
@@ -13048,6 +13436,9 @@ GameData::Cutscene.define :ch25_5_second_corridor do |scene|
   # TODO: Event Sequence - Walk Deeper
   # scene.message "You walked deeper into the ruins."
   # scene.message "Shadow stayed close, growling at the shadows."
+  scene.move :PLAYER, [:step_up, :step_up, :step_up], wait: true
+  scene.play_se 'Cries/ZORUA', 90, 80
+  scene.wait 10
   
   scene.message "\\bKael\\b: It's okay, girl."
   scene.message "\\bKael\\b: They're just memories."
@@ -13074,6 +13465,9 @@ GameData::Cutscene.define :ch25_5_the_fire_approaches do |scene|
   # TODO: Event Sequence - Walls Glow
   # scene.message "And then the walls began to glow."
   # scene.message "Orange. Red. The color of flame."
+  scene.camera_tint :red, 30
+  scene.play_se 'Audio/SE/Fire3'
+  scene.wait 30
   
   scene.message "\\bKael\\b: (No. Not this.)"
   scene.message "\\bKael\\b: (Not yet.)"
@@ -13102,12 +13496,21 @@ GameData::Cutscene.define :ch25_5_fire_memory do |scene|
   # scene.message "Smoke. Screaming. Chaos."
   # scene.message "You were eleven years old."
   # scene.message "And everything was burning."
+  scene.camera_shake 5, 80
+  scene.play_se 'Audio/SE/Fire3'
+  scene.camera_flash 5
+  scene.wait 10
+  scene.camera_flash 5
+  scene.wait 10
+  scene.play_se 'Audio/SE/Collapsing'
   
   scene.message "\\bYoung Kael\\b: MIRA! MIRA, WHERE ARE YOU?!"
   
   # TODO: Event Sequence - Running in Flames
   # scene.message "You ran through the flames."
   # scene.message "Coughing. Choking. Barely seeing."
+  scene.move :PLAYER, [:step_random, :step_random, :step_random], wait: true
+  scene.camera_shake 5, 20
   
   scene.message "\\bMira's Voice\\b: KAEL! Over here!"
   
@@ -13142,6 +13545,11 @@ GameData::Cutscene.define :ch25_5_mira_sacrifice_detailed do |scene|
   # scene.message "She pushed you."
   # scene.message "Hard. Toward the window."
   # scene.message "The glass shattered around you."
+  scene.move :MIRA_MEMORY, [:step_toward_player, :step_toward_player], wait: true
+  scene.play_se 'Audio/SE/Bump' # Shove sound
+  scene.move :PLAYER, [:jump_backward], wait: true
+  scene.play_se 'Audio/SE/Glass Smash'
+  scene.wait 20
   
   # TODO: Event Sequence - Fall
   # scene.message "You fell into the night."
@@ -13167,12 +13575,18 @@ GameData::Cutscene.define :ch25_5_guilt_manifests do |scene|
   # TODO: Event Sequence - Present
   # scene.message "You fell to your knees."
   # scene.message "The memory fading but the pain remaining."
+  scene.camera_tint :reset, 20
+  scene.play_se 'Audio/SE/Jump' # Land sound?
+  scene.wait 20
   
   scene.message "\\bKael\\b: *trembling* I should have saved her."
   scene.message "\\bKael\\b: I should have been stronger."
   
   # TODO: Event Sequence - Shadow Comfort
   # scene.message "Shadow whimpered, nuzzling your hand."
+  scene.play_se 'Cries/ZORUA', 90, 80
+  scene.move :SHADOW, [:step_toward_player], wait: true
+  scene.wait 10
   
   scene.message "\\bVoice\\b: (Yes. You should have.)"
   
@@ -13181,6 +13595,9 @@ GameData::Cutscene.define :ch25_5_guilt_manifests do |scene|
   # scene.message "Yourself. But wrong."
   # scene.message "Eyes hollow. Clothes burned."
   # scene.message "The version of you that died in that fire."
+  scene.play_se 'Audio/SE/Darkness3'
+  scene.camera_pan_to_event :SHADOW_KAEL, 40
+  scene.wait 20
   
   scene.message "\\bShadow Kael\\b: You should have burned with her."
   scene.message "\\bShadow Kael\\b: Instead, you ran away."
@@ -13222,6 +13639,10 @@ GameData::Cutscene.define :ch25_5_temptation_deepens do |scene|
   # TODO: Event Sequence - Lady Morwen Appears
   # scene.message "Lady Morwen materialized beside your shadow self."
   # scene.message "Beautiful. Serene. Wrong."
+  scene.play_se 'Audio/SE/Teleport'
+  scene.camera_flash 10
+  # scene.show_event :MORWEN
+  scene.wait 20
   
   scene.message "\\bLady Morwen\\b: He speaks the truth, child."
   scene.message "\\bLady Morwen\\b: Why fight against the inevitable?"
@@ -13235,6 +13656,10 @@ GameData::Cutscene.define :ch25_5_temptation_deepens do |scene|
   # scene.message "She waved her hand."
   # scene.message "And Mira appeared before you."
   # scene.message "Whole. Unburned. Alive."
+  scene.play_se 'Audio/SE/Magic'
+  scene.camera_flash 30
+  # scene.show_event :MIRA_ILLUSION
+  scene.wait 30
   
   scene.message "\\bMira (Illusion)\\b: Kael... I've missed you..."
   
@@ -13250,6 +13675,8 @@ GameData::Cutscene.define :ch25_5_almost_falling do |scene|
   # TODO: Event Sequence - Reaching
   # scene.message "Your hand reached toward the illusion."
   # scene.message "Trembling. Desperate."
+  scene.move :PLAYER, [:step_forward], wait: true
+  scene.wait 20
   
   scene.message "\\bKael\\b: (Mira... real again...)"
   scene.message "\\bKael\\b: (Is that possible?)"
@@ -13261,12 +13688,19 @@ GameData::Cutscene.define :ch25_5_almost_falling do |scene|
   # scene.message "Shadow growled."
   # scene.message "Louder than before."
   # scene.message "Desperate."
+  scene.play_se 'Cries/ZORUA', 100, 120
+  scene.camera_shake 2, 10
+  scene.wait 10
   
   scene.message "\\bShadow\\b: ZORUA!"
   
   # TODO: Event Sequence - Tackle
   # scene.message "She tackled you."
   # scene.message "Knocked you away from the reaching hand."
+  scene.play_se 'Audio/SE/Bump'
+  scene.move :SHADOW, [:step_toward_player, :jump_in_place], wait: true
+  scene.move :PLAYER, [:step_backward], wait: true
+  scene.wait 10
   
   scene.message "\\bKael\\b: Shadow! What—"
   
@@ -13308,6 +13742,9 @@ GameData::Cutscene.define :ch25_5_shadow_fights do |scene|
   # scene.message "And then Shadow began to glow."
   # scene.message "Not evolving. Not yet."
   # scene.message "But burning with determination."
+  scene.camera_flash 10
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.wait 20
   
   scene.message "\\bKael\\b: Shadow?!"
   
@@ -13316,12 +13753,20 @@ GameData::Cutscene.define :ch25_5_shadow_fights do |scene|
   # scene.message "Not darkness. LIGHT."
   # scene.message "The light of determination. Of loyalty."
   # scene.message "Of five years of unwavering love."
+  scene.camera_flash 60
+  scene.camera_tint :white, 10
+  scene.play_se 'Audio/SE/Evolution'
+  scene.wait 60
+  scene.camera_tint :reset, 10
   
   scene.message "\\bShadow\\b: ZORUA!"
   
   # TODO: Event Sequence - Shadow Stands
   # scene.message "She stood between you and Lady Morwen."
   # scene.message "Small but fierce. Ready to give everything."
+  scene.move :SHADOW, [:step_forward], wait: true
+  scene.play_se 'Cries/ZORUA', 100, 100
+  scene.wait 10
   
   scene.message "\\bKael\\b: *tears in eyes* Shadow..."
   
@@ -13346,6 +13791,10 @@ GameData::Cutscene.define :ch25_5_morwen_battle do |scene|
   # scene.message "Shadow stood at your side."
   # scene.message "Still small. Still a Zorua."
   # scene.message "But fiercer than any Zoroark."
+  scene.move :SHADOW, [:face_enemy], wait: true
+  scene.play_se 'Cries/ZORUA', 100, 120
+  scene.camera_shake 2, 20
+  scene.wait 20
   
   scene.message "\\bKael\\b: Shadow—let's show her what we're made of!"
   scene.message "\\bShadow\\b: ZORUA!"
@@ -13361,6 +13810,11 @@ GameData::Cutscene.define :ch25_5_morwen_battle do |scene|
   # TODO: Event Sequence - Morwen Screams
   # scene.message "Lady Morwen screamed."
   # scene.message "And dissolved into the shadows."
+  scene.play_se 'Audio/SE/Pkmn faint'
+  scene.camera_shake 5, 40
+  scene.wait 40
+  scene.camera_tint :dark, 60
+  # scene.remove_event :MORWEN
 end
 
 GameData::Cutscene.define :ch25_5_real_mira_appears do |scene|
@@ -13371,6 +13825,9 @@ GameData::Cutscene.define :ch25_5_real_mira_appears do |scene|
   # TODO: Event Sequence - Darkness Lifts
   # scene.message "The darkness lifted."
   # scene.message "And in its place..."
+  scene.camera_tint :reset, 60
+  scene.play_se 'Audio/SE/Heal'
+  scene.wait 40
   
   scene.message "\\bMira (Real)\\b: Kael..."
   
@@ -13379,10 +13836,14 @@ GameData::Cutscene.define :ch25_5_real_mira_appears do |scene|
   # scene.message "And there she was."
   # scene.message "Not the illusion. Not the temptation."
   # scene.message "The REAL Mira."
+  scene.move :PLAYER, [:turn_up], wait: true
+  scene.wait 20
   
   # TODO: Event Sequence - Look Description
   # scene.message "Her eyes were warm. Brown. Full of love."
   # scene.message "Just like you remembered."
+  scene.camera_pan_to_event :MIRA_REAL, 40
+  scene.wait 30
   
   scene.message "\\bKael\\b: *voice breaking* M-Mira...?"
   
@@ -13421,6 +13882,8 @@ GameData::Cutscene.define :ch25_5_confession do |scene|
   # scene.message "Tears streamed down your face."
   # scene.message "Years of guilt. Years of pain."
   # scene.message "All breaking loose at once."
+  scene.play_se 'Audio/SE/Jump' # Soft emotional punctuation?
+  scene.wait 30
   
   scene.message "\\bMira (Real)\\b: Look at me, Kael."
   scene.message "\\bMira (Real)\\b: I need you to really look at me."
@@ -13435,6 +13898,8 @@ GameData::Cutscene.define :ch25_5_forgiveness do |scene|
   # scene.message "You met her eyes."
   # scene.message "Really met them."
   # scene.message "For the first time since the fire."
+  scene.move :PLAYER, [:step_forward], wait: true
+  scene.wait 20
   
   scene.message "\\bMira (Real)\\b: I am so proud of you."
   scene.message "\\bMira (Real)\\b: You've become someone amazing."
@@ -13482,6 +13947,8 @@ GameData::Cutscene.define :ch25_5_lyra_acknowledgment do |scene|
   
   # TODO: Event Sequence - Shadow Barks
   # scene.message "Shadow barked softly."
+  scene.play_se 'Cries/ZORUA', 80, 100
+  scene.move :SHADOW, [:jump_in_place], wait: true
   scene.message "\\bShadow\\b: Zor..."
   
   scene.message "\\bMira (Real)\\b: You surround yourself with people who stay."
@@ -13506,6 +13973,9 @@ GameData::Cutscene.define :ch25_5_letting_go do |scene|
   # scene.message "She reached out."
   # scene.message "Touched your face."
   # scene.message "Warm. Real. Present."
+  scene.move :MIRA_REAL, [:step_down], wait: true
+  scene.play_se 'Audio/SE/Use Item'
+  scene.wait 20
   
   scene.message "\\bMira (Real)\\b: I'm so proud of you."
   scene.message "\\bMira (Real)\\b: Now go. Be happy."
@@ -13527,6 +13997,9 @@ GameData::Cutscene.define :ch25_5_mira_departs do |scene|
   # scene.message "The same smile she'd worn at the end."
   # scene.message "But now, it wasn't wreathed in flame."
   # scene.message "It was wreathed in light."
+  scene.camera_flash 30
+  scene.camera_tint :sepia, 60
+  scene.play_se 'Audio/SE/Heal'
   
   scene.message "\\bMira (Real)\\b: I'll always be with you."
   scene.message "\\bMira (Real)\\b: In your heart. In your strength."
@@ -13543,6 +14016,9 @@ GameData::Cutscene.define :ch25_5_mira_departs do |scene|
   # scene.message "Not into darkness. Into peace."
   # scene.message "And for the first time..."
   # scene.message "The memory didn't hurt."
+  scene.camera_tint :reset, 40
+  scene.remove_event :MIRA_REAL
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch25_5_yveltal_appears do |scene|
@@ -13557,6 +14033,10 @@ GameData::Cutscene.define :ch25_5_yveltal_appears do |scene|
   
   # scene.message "Massive. Dark. Beautiful."
   # scene.message "Not the monster of legend."
+  scene.camera_shake 5, 40
+  scene.play_se 'Cries/YVELTAL'
+  scene.camera_flash 30
+  scene.wait 30
   scene.message "But a guardian of endings."
   
   scene.message "\\bYveltal\\b: (You have passed my trial, child.)"
@@ -13586,6 +14066,11 @@ GameData::Cutscene.define :ch25_5_power_accepted do |scene|
   # scene.message "Your mark blazed."
   # scene.message "Crimson light flooded the chamber."
   # scene.message "Power surged through you."
+  scene.camera_flash 20
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.camera_tint :red, 10
+  scene.wait 10
+  scene.camera_tint :reset, 10
   
   scene.message "\\bKael\\b: (This is... incredible...)"
   
@@ -13594,6 +14079,9 @@ GameData::Cutscene.define :ch25_5_power_accepted do |scene|
   # scene.message "The endings of things."
   # scene.message "The entropy that surrounded everything."
   # scene.message "Not as a curse. As a fact."
+  scene.camera_shake 2, 60
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.wait 20
   
   scene.message "\\bYveltal\\b: (Use this power wisely.)"
   scene.message "\\bYveltal\\b: (It can end suffering—or cause it.)"
@@ -13619,6 +14107,11 @@ GameData::Cutscene.define :ch25_5_ruins_collapse do |scene|
   # scene.message "The ruins began to crumble."
   # scene.message "The trial complete."
   # scene.message "The prison no longer needed."
+  scene.camera_shake 5, 100
+  scene.play_se 'Audio/SE/Earthquake'
+  scene.camera_tint :white, 40
+  scene.wait 40
+  scene.camera_tint :reset, 20
   
   scene.message "\\bKael\\b: Shadow! Let's go!"
   scene.message "\\bShadow\\b: ZORUA!"
@@ -13628,12 +14121,18 @@ GameData::Cutscene.define :ch25_5_ruins_collapse do |scene|
   # scene.message "Through collapsing corridors."
   # scene.message "Past crumbling walls."
   # scene.message "Toward the light of day."
+  scene.move :PLAYER, [:step_random, :step_random, :step_random], wait: true
+  scene.camera_shake 5, 40
+  scene.play_se 'Audio/SE/Collapsing'
   
   # TODO: Event Sequence - Ruins Silent
   # scene.message "And behind you..."
   # scene.message "The Mortality Ruins fell silent."
   # scene.message "Their purpose fulfilled."
   # scene.message "Their secrets released."
+  scene.camera_shake 0, 0
+  scene.play_se 'Audio/SE/Bang' # Final collapse
+  scene.wait 40
 end
 
 GameData::Cutscene.define :ch25_5_emergence do |scene|
@@ -13653,6 +14152,9 @@ GameData::Cutscene.define :ch25_5_emergence do |scene|
   # scene.message "You burst into the light."
   # scene.message "Gasping. Trembling."
   # scene.message "But whole."
+  scene.move :PLAYER, [:step_down, :step_down], wait: true
+  scene.play_se 'Audio/SE/Jump'
+  scene.wait 20
   
   scene.message "\\bLyra\\b: KAEL!"
   
@@ -13660,6 +14162,7 @@ GameData::Cutscene.define :ch25_5_emergence do |scene|
   # scene.message "She was running toward you."
   # scene.message "Pink hair streaming behind her."
   # scene.message "Eyes full of tears."
+  scene.move :LYRA, [:step_toward_player, :step_toward_player], wait: true
   
   scene.message "\\bLyra\\b: Are you okay?! We heard the earthquake—"
   
@@ -13667,6 +14170,8 @@ GameData::Cutscene.define :ch25_5_emergence do |scene|
   # scene.message "She threw her arms around you."
   # scene.message "And for the first time..."
   # scene.message "You hugged her back."
+  scene.play_se 'Audio/SE/Use Item'
+  scene.wait 30
   
   scene.message "\\bKael\\b: ...Yeah."
   scene.message "\\bKael\\b: I am now."
@@ -13704,6 +14209,10 @@ GameData::Cutscene.define :ch26_kael_reflection do |scene|
   # TODO: Event Sequence - Sat Alone
   # scene.message "You sat alone after the battle."
   # scene.message "Processing everything that had happened."
+  scene.camera_tint :night, 0
+  scene.wait 60
+  scene.show_emotion :PLAYER, :ellipses
+  scene.wait 40
   
   scene.message "\\bKael\\b: (Mira... she was at peace.)"
   scene.message "\\bKael\\b: (All this time, I thought I'd failed her.)"
@@ -13711,6 +14220,9 @@ GameData::Cutscene.define :ch26_kael_reflection do |scene|
   
   # TODO: Event Sequence - Shadow Curls
   # scene.message "Shadow curled beside you."
+  scene.move :SHADOW, [:step_toward_player, :face_player], wait: true
+  scene.show_emotion :SHADOW, :heart
+  scene.wait 20
   scene.message "\\bShadow\\b: Zor..."
   
   scene.message "\\bKael\\b: I know, girl. Things are different now."
@@ -13719,6 +14231,8 @@ GameData::Cutscene.define :ch26_kael_reflection do |scene|
   # scene.message "The weight in your chest was still there."
   # scene.message "But it felt... different."
   # scene.message "Less like a burden. More like a foundation."
+  scene.show_emotion :PLAYER, :exclamation, wait: false
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch26_lyra_approach do |scene|
@@ -13728,12 +14242,17 @@ GameData::Cutscene.define :ch26_lyra_approach do |scene|
   
   # TODO: Event Sequence - Lyra Sits
   # scene.message "Footsteps approached. Lyra."
+  scene.move :LYRA, [:step_toward_player, :step_toward_player, :step_toward_player], wait: true
+  scene.wait 10
   scene.message "\\bLyra\\b: Hey... can I sit?"
   scene.message "\\bKael\\b: ...Yeah."
   
   # scene.message "She sat beside him, closer than before."
   # scene.message "Neither spoke."
   # scene.message "But for once, the silence was comfortable."
+  scene.move :LYRA, [:step_down, :face_up], wait: true # Simulate sitting nearby
+  scene.show_emotion :LYRA, :ellipses
+  scene.wait 40
   
   scene.message "\\bLyra\\b: *quietly* What did you see in there?"
   
@@ -13747,6 +14266,9 @@ GameData::Cutscene.define :ch26_lyra_approach do |scene|
   # TODO: Event Sequence - Shoulder Touch
   # scene.message "He didn't look at her."
   # scene.message "But he didn't pull away when her shoulder touched his."
+  scene.move :LYRA, [:step_right], wait: true # Move closer
+  scene.show_emotion :PLAYER, :heart
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch26_ragnar_video do |scene|
@@ -13754,6 +14276,9 @@ GameData::Cutscene.define :ch26_ragnar_video do |scene|
   
   # TODO: Event Sequence - Phone Buzz
   # scene.message "Your phone buzzed. Another message from Ragnar."
+  scene.play_se 'Audio/SE/Phone Ring'
+  scene.show_emotion :PLAYER, :exclamation
+  scene.wait 30
   
   scene.message "\\bRagnar (Recording)\\b: Hey."
   scene.message "\\bRagnar (Recording)\\b: I know you can't tell me where you are."
@@ -13761,12 +14286,16 @@ GameData::Cutscene.define :ch26_ragnar_video do |scene|
   
   # TODO: Event Sequence - Seven Badges
   # scene.message "He held up SEVEN badges."
+  scene.play_se 'Audio/SE/Item Get'
+  scene.wait 20
   
   scene.message "\\bRagnar (Recording)\\b: See? Almost caught up!"
   scene.message "\\bRagnar (Recording)\\b: One more and I'm League-ready!"
   
   # TODO: Event Sequence - Faded Grin
   # scene.message "His grin faded slightly."
+  scene.wait 10 # Creating pause for tone shift
+
   
   scene.message "\\bRagnar (Recording)\\b: I hear things, you know."
   scene.message "\\bRagnar (Recording)\\b: About the cult. About what's coming."
@@ -13781,6 +14310,8 @@ GameData::Cutscene.define :ch26_ragnar_video do |scene|
   # TODO: Event Sequence - Message Ends
   # scene.message "The message ended."
   # scene.message "Seven badges. He really was catching up."
+  scene.play_se 'Audio/SE/Phone Ring' # End call sound
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch26_player_watches do |scene|
@@ -13791,6 +14322,8 @@ GameData::Cutscene.define :ch26_player_watches do |scene|
   # TODO: Event Sequence - Watching Friends
   # scene.message "You watched from a distance."
   # scene.message "Kael and Lyra, sitting together."
+  scene.camera_pan_to_event :PLAYER, 80 # Slow pan to player watching
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: (Good for them.)"
   scene.message "\\b\\PN\\b: (They deserve this.)"
@@ -13798,6 +14331,10 @@ GameData::Cutscene.define :ch26_player_watches do |scene|
   # TODO: Event Sequence - Starter Nudge
   # scene.message "Your starter nudged your hand."
   # scene.message "You scratched behind its ears."
+  scene.show_emotion :PARTNER, :heart
+  scene.jump :PARTNER, 0, 0
+  scene.play_se 'Cries/PIKACHU' # Generic starter cry placeholder - user should adjust if needed
+  scene.wait 20
   
   scene.message "\\b\\PN\\b: (We all need something to fight for.)"
   scene.message "\\b\\PN\\b: (Dad. Mom. My friends.)"
@@ -13805,6 +14342,9 @@ GameData::Cutscene.define :ch26_player_watches do |scene|
   
   # TODO: Event Sequence - Zacian Echo
   # scene.message "Zacian's voice echoed faintly."
+  scene.play_se 'Audio/SE/Magic'
+  scene.camera_flash 10, Color.new(0, 100, 255, 100) # Cyan flash
+  scene.wait 10
   scene.message "\\bZacian\\b: (And that strength will be tested soon, young one.)"
   scene.message "\\bZacian\\b: (Enjoy this peace while it lasts.)"
 end
@@ -13820,6 +14360,9 @@ GameData::Cutscene.define :ch26_yveltal_awakens do |scene|
   # scene.message "The ground trembled."
   # scene.message "At the heart of the Mortality Ruins..."
   # scene.message "Something stirred."
+  scene.camera_shake 3, 60
+  scene.play_se 'Audio/SE/Earthquake'
+  scene.wait 60
   
   scene.message "\\b\\PN\\b: What's happening?!"
   
@@ -13830,6 +14373,12 @@ GameData::Cutscene.define :ch26_yveltal_awakens do |scene|
   # scene.message "The cocoon at the heart of the ruins cracked."
   # scene.message "Ancient stone splitting apart."
   # scene.message "Crimson light bleeding through."
+  scene.camera_shake 5, 20
+  scene.play_se 'Audio/SE/Crack'
+  scene.camera_tint :red, 10
+  scene.wait 10
+  scene.camera_tint :reset, 10
+  scene.camera_flash 20
   
   scene.message "\\bLyra\\b: *gasping* It's beautiful..."
   
@@ -13837,6 +14386,10 @@ GameData::Cutscene.define :ch26_yveltal_awakens do |scene|
   # scene.message "Yveltal, the Destruction Pokémon, spread its wings."
   # scene.message "Massive. Terrifying. Magnificent."
   # scene.message "The embodiment of death itself."
+  scene.play_se 'Cries/YVELTAL', 100, 80 # Lower pitch for immense size
+  scene.camera_shake 5, 60
+  scene.show_animation :YVELTAL, 1 # Generic "Roar/Appear" animation ID
+  scene.wait 60
 end
 
 GameData::Cutscene.define :ch26_yveltal_speaks do |scene|
@@ -13855,6 +14408,11 @@ GameData::Cutscene.define :ch26_yveltal_speaks do |scene|
   # TODO: Event Sequence - Yveltal Descends
   # scene.message "The great bird descended."
   # scene.message "Its crimson eyes fixed on Kael."
+  scene.camera_pan_to_event :YVELTAL, 120 # Slow, majestic descent/focus
+  scene.camera_shake 2, 40
+  scene.wait 40
+  scene.show_animation :PLAYER, 1 # Generic "fear/shock" if available, or just pause
+  scene.wait 20
   
   scene.message "\\bYveltal\\b: I am the ending that gives meaning to beginnings."
   scene.message "\\bYveltal\\b: Without death, there is no life."
@@ -13876,11 +14434,20 @@ GameData::Cutscene.define :ch26_entropy_shard do |scene|
   # scene.message "The crimson shard floated from Yveltal's chest."
   # scene.message "Pulsing with ancient power."
   # scene.message "The essence of necessary endings."
+  scene.show_animation :YVELTAL, 25 # Generic "Cast/Give" animation
+  scene.wait 20
+  scene.show_animation :PLAYER, 40 # Generic "Receive/Item" animation
+  scene.play_se 'Audio/SE/Full Heal'
+  scene.wait 20
   
   # TODO: Event Sequence - Kael Takes Shard
   # scene.message "Kael reached out."
   # scene.message "The moment his fingers touched it..."
   # scene.message "His mark blazed with power."
+  scene.play_se 'Audio/SE/Absorb2'
+  scene.camera_flash 30, Color.new(255, 0, 0, 150) # Red flash
+  scene.show_animation :PLAYER, 55 # Power up animation
+  scene.wait 40
   
   scene.message "\\bKael\\b: *gasping* The power..."
   
@@ -13907,8 +14474,12 @@ GameData::Cutscene.define :ch26_yveltal_warning do |scene|
   scene.message "\\bLyra\\b: That's... terrifying."
   
   scene.message "\\bYveltal\\b: If it escapes... all we protect will end."
+  scene.camera_tint :dark, 60
+  scene.wait 60
   scene.message "\\bYveltal\\b: Not in natural cycles... but in chaos."
   scene.message "\\bYveltal\\b: Entropy without renewal. Void without purpose."
+  scene.camera_tint :reset, 60
+  scene.wait 40
 end
 
 GameData::Cutscene.define :ch26_shadow_glowing do |scene|
@@ -13919,6 +14490,11 @@ GameData::Cutscene.define :ch26_shadow_glowing do |scene|
   # TODO: Event Sequence - Shadow Glows
   # scene.message "As Yveltal spoke, Shadow began to glow."
   # scene.message "Dark energy swirling around the Zorua."
+  scene.camera_pan_to_event :SHADOW, 60
+  scene.show_animation :SHADOW, 30 # Dark pulse/charge animation
+  scene.wait 40
+  scene.show_emotion :SHADOW, :exclamation
+  scene.wait 20
   
   scene.message "\\bKael\\b: Shadow...? What's happening?"
   
@@ -13927,6 +14503,11 @@ GameData::Cutscene.define :ch26_shadow_glowing do |scene|
   # TODO: Event Sequence - Evolution Animation
   # scene.message "Shadow's form stretched, grew."
   # scene.message "The illusion fox becoming something greater."
+  scene.play_se 'Audio/SE/Evolution'
+  scene.camera_flash 20
+  scene.wait 20
+  scene.camera_shake 2, 40
+  scene.wait 40
   
   scene.message "\\bYveltal\\b: Your bond has deepened."
   scene.message "\\bYveltal\\b: Through trials and blood."

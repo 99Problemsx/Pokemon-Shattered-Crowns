@@ -85,45 +85,62 @@ ItemHandlers::UseOnPokemon.add(:HPUP, proc { |item, qty, pkmn, scene|
 })
 
 # Add handlers for all vitamins
-[:HPUP, :PROTEIN, :IRON, :CALCIUM, :ZINC, :CARBOS].each do |vitamin|
-  ItemHandlers::UseOnPokemon.add(vitamin, proc { |item, qty, pkmn, scene|
+{
+  :HPUP    => :HP,
+  :PROTEIN => :ATTACK,
+  :IRON    => :DEFENSE,
+  :CALCIUM => :SPECIAL_ATTACK,
+  :ZINC    => :SPECIAL_DEFENSE,
+  :CARBOS  => :SPEED
+}.each do |item, stat|
+  next unless GameData::Item.exists?(item)
+  ItemHandlers::UseOnPokemon.add(item, proc { |item, qty, pkmn, scene|
     if ChallengeModes.on?(:HARDCORE_MODE)
       scene.pbDisplay(_INTL("Hardcore Mode prevents the use of EV-raising items!"))
       next false
     end
-    ItemHandlers.triggerUseOnPokemon(:VITAMIN, item, qty, pkmn, scene)
+    # Normal behavior
+    next pbUseEVRaisingItem(stat, 10, qty, pkmn, "vitamin", scene, Settings::NO_VITAMIN_EV_CAP)
   })
 end
 
 # Add handlers for all wings (Gen 5+)
-[:HEALTHWING, :MUSCLEWING, :RESISTWING, :GENIUSWING, :CLEVERWING, :SWIFTWING].each do |wing|
-  next unless GameData::Item.exists?(wing)
-  ItemHandlers::UseOnPokemon.add(wing, proc { |item, qty, pkmn, scene|
+{
+  :HEALTHWING => :HP,
+  :MUSCLEWING => :ATTACK,
+  :RESISTWING => :DEFENSE,
+  :GENIUSWING => :SPECIAL_ATTACK,
+  :CLEVERWING => :SPECIAL_DEFENSE,
+  :SWIFTWING  => :SPEED
+}.each do |item, stat|
+  next unless GameData::Item.exists?(item)
+  ItemHandlers::UseOnPokemon.add(item, proc { |item, qty, pkmn, scene|
     if ChallengeModes.on?(:HARDCORE_MODE)
       scene.pbDisplay(_INTL("Hardcore Mode prevents the use of EV-raising items!"))
       next false
     end
-    # Call original wing handler if it exists
-    if ItemHandlers.hasUseOnPokemon(:WING)
-      ItemHandlers.triggerUseOnPokemon(:WING, item, qty, pkmn, scene)
-    else
-      # Fallback: Wings give +1 EV (blocked anyway in hardcore mode)
-      scene.pbDisplay(_INTL("It won't have any effect."))
-      next false
-    end
+    # Normal behavior
+    next pbUseEVRaisingItem(stat, 1, qty, pkmn, "wing", scene, true)
   })
 end
 
 # Add handlers for feathers (Gen 8+)
-[:HEALTHFEATHER, :MUSCLEFEATHER, :RESISTFEATHER, :GENIUSFEATHER, :CLEVERFEATHER, :SWIFTFEATHER].each do |feather|
-  next unless GameData::Item.exists?(feather)
-  ItemHandlers::UseOnPokemon.add(feather, proc { |item, qty, pkmn, scene|
+{
+  :HEALTHFEATHER => :HP,
+  :MUSCLEFEATHER => :ATTACK,
+  :RESISTFEATHER => :DEFENSE,
+  :GENIUSFEATHER => :SPECIAL_ATTACK,
+  :CLEVERFEATHER => :SPECIAL_DEFENSE,
+  :SWIFTFEATHER  => :SPEED
+}.each do |item, stat|
+  next unless GameData::Item.exists?(item)
+  ItemHandlers::UseOnPokemon.add(item, proc { |item, qty, pkmn, scene|
     if ChallengeModes.on?(:HARDCORE_MODE)
       scene.pbDisplay(_INTL("Hardcore Mode prevents the use of EV-raising items!"))
       next false
     end
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
+    # Normal behavior
+    next pbUseEVRaisingItem(stat, 1, qty, pkmn, "wing", scene, true)
   })
 end
 

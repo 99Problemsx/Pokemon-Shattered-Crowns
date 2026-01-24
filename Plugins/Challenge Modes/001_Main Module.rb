@@ -290,6 +290,13 @@ module ChallengeModes
         next if (species_bst - original_bst).abs > 100  # BST difference threshold
       end
       
+      # Restrict to Regional Dex (Dex 0)
+      # This fixes issues where PBS has extra Pokemon (like Gen 9) but no graphics for them
+      regional_dex_list = pbLoadRegionalDexes[0]
+      if regional_dex_list
+        next if !regional_dex_list.include?(species.species)
+      end
+
       possible_species.push(species.species)
     end
     

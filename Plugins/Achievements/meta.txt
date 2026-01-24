@@ -1,0 +1,5 @@
+Name       = Achievements System
+Version    = 1.0.0
+Essentials = 21.1
+Website    = nein
+Credits    = Nononever, Polectron, Caeles, Bezier (Original Spanish Script)

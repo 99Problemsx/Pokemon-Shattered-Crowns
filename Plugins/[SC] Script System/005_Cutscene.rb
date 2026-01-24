@@ -19,22 +19,32 @@ module GameData
     #---------------------------------------------------------------------------
     # Define a cutscene
     # Usage: Cutscene.define :intro_scene do |scene| ... end
+    # Usage: Cutscene.define :intro_scene do |scene, event_id: nil| ... end
     #---------------------------------------------------------------------------
     def self.define(name, &block)
-      builder = CutsceneBuilder.new(name)
-      yield(builder) if block_given?
-      @cutscenes[name] = builder
+      @cutscenes[name] = block
       SCScripts.log("Registered cutscene: #{name}")
     end
     
     #---------------------------------------------------------------------------
     # Play a cutscene by name
     # Usage: GameData::Cutscene.play(:intro_scene)
+    # Usage: GameData::Cutscene.play(:intro_scene, event_id: 5)
     # Options: auto_save: true/false (saves before playing)
     #---------------------------------------------------------------------------
-    def self.play(name, auto_save: false)
-      cutscene = @cutscenes[name]
-      unless cutscene
+    def self.play(name, auto_save: false, **params)
+      # Story Choice Mode Auto-Dispatch
+      # If Choice Mode is on, check if a "_choice" variant exists (e.g., :intro_scene_choice)
+      if defined?(StoryChoices) && StoryChoices.enabled?
+        choice_name = "#{name}_choice".to_sym
+        if @cutscenes.key?(choice_name)
+          name = choice_name
+          SCScripts.log("Story Choice Mode: Redirecting '#{name}' to '#{choice_name}'")
+        end
+      end
+
+      cutscene_block = @cutscenes[name]
+      unless cutscene_block
         SCScripts.log("ERROR: Cutscene '#{name}' not found!")
         return false
       end
@@ -48,7 +58,10 @@ module GameData
       # Add to history
       @played_history << { name: name, time: Time.now } unless @played_history.any? { |h| h[:name] == name }
       
-      cutscene.execute
+      # Create builder and execute with parameters
+      builder = CutsceneBuilder.new(name)
+      cutscene_block.call(builder, **params)
+      builder.execute
       true
     end
     
@@ -269,6 +282,85 @@ module GameData
     def wild_battle(species, level, options = {})
       @steps << { type: :wild_battle, species: species, level: level, options: options }
     end
+
+    #---------------------------------------------------------------------------
+    # Animations & Expressions
+    #---------------------------------------------------------------------------
+    
+    # Show emotion bubble (Exclamation, Question, etc.)
+    # emotion: :exclamation, :question, :ellipses, :heart, :anger, :sweat, :idea, :music
+    def show_emotion(target, emotion, wait: true)
+      @steps << { type: :show_emotion, target: target, emotion: emotion, wait: wait }
+    end
+    
+    # Play specific animation ID from database
+    def show_animation(target, animation_id, wait: true)
+      @steps << { type: :show_animation, target: target, animation_id: animation_id, wait: wait }
+    end
+    
+    # Jump
+    def jump(target, x_plus, y_plus, wait: true)
+       @steps << { type: :jump, target: target, x: x_plus, y: y_plus, wait: wait }
+    end
+
+    #---------------------------------------------------------------------------
+    # Camera & Visual Effects
+    #---------------------------------------------------------------------------
+    
+    # Shake screen
+    # power: 1-9 (intensity)
+    # speed: 1-9 (speed)
+    # duration: frames
+    def camera_shake(power, duration, speed = 5)
+      @steps << { type: :camera_shake, power: power, speed: speed, duration: duration }
+    end
+    
+    # Flash screen
+    # duration: frames
+    # color: Color object usually. We can default to white.
+    def camera_flash(duration, color = nil)
+      @steps << { type: :camera_flash, duration: duration, color: color }
+    end
+    
+    # Tint screen
+    # tone: Tone object or symbol (:sepia, :dark, :night, :reset)
+    # duration: frames
+    def camera_tint(tone, duration)
+      @steps << { type: :camera_tint, tone: tone, duration: duration }
+    end
+    
+    # Pan camera (Scroll Map)
+    # direction: 2, 4, 6, 8 (numpad)
+    # distance: number of tiles
+    # speed: 1-6
+    def camera_pan(direction, distance, speed)
+       @steps << { type: :camera_pan, direction: direction, distance: distance, speed: speed }
+    end
+
+    # Pan camera to event (Complex, simulates scroll)
+    def camera_pan_to_event(target, speed = 4)
+      @steps << { type: :camera_pan_to_event, target: target, speed: speed }
+    end
+    
+    # Reset camera to player (center)
+    def camera_reset(speed = 4)
+      @steps << { type: :camera_reset, speed: speed }
+    end
+    
+    # Erase event (temporary until map reload)
+    def remove_event(target)
+      @steps << { type: :remove_event, target: target }
+    end
+    
+    # Transparent/Opacity
+    def set_event_opacity(target, opacity)
+      @steps << { type: :set_event_opacity, target: target, opacity: opacity }
+    end
+    
+    # Alias for convenience (if used mistakenly as show_event)
+    def show_event(target)
+      set_event_opacity(target, 255)
+    end
     
     #---------------------------------------------------------------------------
     # Execute the cutscene
@@ -390,10 +482,291 @@ module GameData
         
       when :wild_battle
         pbWildBattle(step[:species], step[:level])
+
+      when :show_emotion
+        # Resolve target
+        target = nil
+        if step[:target].is_a?(Symbol)
+           target = (step[:target] == :PLAYER) ? $game_player : $game_map.events.values.find { |e| e.name == step[:target].to_s }
+        elsif step[:target].is_a?(Integer)
+           target = $game_map.events[step[:target]]
+        end
+        
+        if target
+          # Map symbols to standard Essentials/RPG Maker animation IDs or balloon IDs
+          # This mapping depends on the specific game's database.
+          # Providing defaults based on common Essentials setup or letting user specify ID.
+          emote_id = case step[:emotion]
+                     when :exclamation then 1
+                     when :question    then 2
+                     when :ellipses    then 3
+                     when :heart       then 4
+                     when :anger       then 5
+                     when :sweat       then 6
+                     when :idea        then 7
+                     when :music       then 8
+                     else 1
+                     end
+          
+          # Use pbExclaim or showBalloon if available, or just animation
+          # PbExclaim is often defined in Essentials for player/events
+          if defined?(pbExclaim)
+             pbExclaim(target, emote_id)
+          else
+             # Fallback to standard animation if no exclaim system
+             # Assuming standard animation IDs for emotions are often 1-8
+             target.animation_id = emote_id
+          end
+          
+          if step[:wait]
+             # Wait for animation duration (usually 8-15 frames for balloons)
+             20.times { Graphics.update; pbUpdateSceneMap }
+          end
+        end
+
+      when :show_animation
+         target = nil
+         if step[:target].is_a?(Symbol)
+            target = (step[:target] == :PLAYER) ? $game_player : $game_map.events.values.find { |e| e.name == step[:target].to_s }
+         elsif step[:target].is_a?(Integer)
+            target = $game_map.events[step[:target]]
+         end
+         
+         if target
+           target.animation_id = step[:animation_id]
+           if step[:wait]
+             while target.animation_id != 0
+               Graphics.update
+               pbUpdateSceneMap
+             end
+           end
+         end
+
+      when :jump
+         target = nil
+         if step[:target].is_a?(Symbol)
+            target = (step[:target] == :PLAYER) ? $game_player : $game_map.events.values.find { |e| e.name == step[:target].to_s }
+         elsif step[:target].is_a?(Integer)
+            target = $game_map.events[step[:target]]
+         end
+         
+         if target
+           # Use move route for jump
+           route = [PBMoveRoute::JUMP, step[:x], step[:y]]
+           pbMoveRoute(target, route)
+           
+           if step[:wait]
+             while target.jumping?
+               Graphics.update
+               pbUpdateSceneMap
+             end
+           end
+         end
+
+      when :camera_shake
+        $game_screen.start_shake(step[:power], step[:speed], step[:duration])
+        # Wait for shake? Usually no, but we can if we want.
+        
+      when :camera_flash
+        color = step[:color] || Color.new(255, 255, 255, 255)
+        $game_screen.start_flash(color, step[:duration])
+        
+      when :camera_tint
+        tone = step[:tone]
+        if tone.is_a?(Symbol)
+          case tone
+          when :reset, :normal then tone = Tone.new(0, 0, 0, 0)
+          when :sepia          then tone = Tone.new(30, -30, -60, 0) # Brownish
+          when :dark           then tone = Tone.new(-68, -68, -68, 0)
+          when :night          then tone = Tone.new(-100, -100, -100, 20)
+          when :red            then tone = Tone.new(100, -50, -50, 0)
+          when :white          then tone = Tone.new(150, 150, 150, 0) # Intense light
+          else tone = Tone.new(0,0,0,0)
+          end
+        end
+        # Ensure it's a Tone
+        tone = Tone.new(0,0,0,0) unless tone.is_a?(Tone)
+        $game_screen.start_tone_change(tone, step[:duration])
+        
+      when :camera_pan
+        $game_map.start_scroll(step[:direction], step[:distance], step[:speed])
+        while $game_map.scrolling?
+          Graphics.update
+          pbUpdateSceneMap
+        end
+        
+      when :camera_pan_to_event
+        # Resolve target
+        target = nil
+        if step[:target].is_a?(Symbol) && step[:target] == :PLAYER
+           target = $game_player
+        elsif step[:target].is_a?(Integer)
+           target = $game_map.events[step[:target]]
+        elsif step[:target].is_a?(Symbol)
+           # Try to find event with name (slow, but works)
+           target = $game_map.events.values.find { |e| e.name == step[:target].to_s }
+        end
+        
+        if target
+          # Calculate difference from center
+          # This is tricky because standard scroll doesn't "pan to". 
+          # We'll rely on the fact that if we aren't centered, we scroll?
+          # Actually, Essentials forces center on player. 
+          # To pan away, we must scroll.
+          # To pan BACK, we scroll back. 
+          # Simple implementation: Scroll towards target relative to player.
+          
+          dx = target.x - $game_player.x
+          dy = target.y - $game_player.y
+          
+          # Scroll X
+          if dx != 0
+            dir = dx > 0 ? 6 : 4
+            $game_map.start_scroll(dir, dx.abs, step[:speed])
+            while $game_map.scrolling?; Graphics.update; pbUpdateSceneMap; end
+          end
+          
+          # Scroll Y
+          if dy != 0
+            dir = dy > 0 ? 2 : 8
+            $game_map.start_scroll(dir, dy.abs, step[:speed])
+            while $game_map.scrolling?; Graphics.update; pbUpdateSceneMap; end
+          end
+        end
+
+      when :camera_reset
+        # Just Center on player?
+        # If we scrolled away, we need to scroll back?
+        # RPG Maker centers on player if you scroll back. 
+        # Or we can just snap.
+        # But for smooth, we might need a "return" logic which is hard if we don't track offset.
+        # For now, let's just snap to player (update map display).
+        $game_player.center($game_player.x, $game_player.y)
+        
+      when :remove_event
+        target = nil
+        if step[:target].is_a?(Integer)
+           target = $game_map.events[step[:target]]
+        elsif step[:target].is_a?(Symbol)
+           target = $game_map.events.values.find { |e| e.name == step[:target].to_s }
+        end
+        target.erase if target
+        
+      when :set_event_opacity
+        target = nil
+        if step[:target].is_a?(Integer)
+           target = $game_map.events[step[:target]]
+        elsif step[:target].is_a?(Symbol)
+           target = $game_map.events.values.find { |e| e.name == step[:target].to_s }
+        end
+        target.opacity = step[:opacity] if target
         
       when :move
-        # TODO: Implement move routes
+        # Resolve target
+        target = nil
+        if step[:target].is_a?(Symbol)
+          if step[:target] == :PLAYER
+            target = $game_player
+          # Add other symbols if needed (e.g. :PARTNER)
+          end
+        elsif step[:target].is_a?(Integer)
+          target = $game_map.events[step[:target]]
+        end
         
+        if target
+          # Build move route
+          route = step[:route]
+          if route.is_a?(Array)
+            # Convert symbols to MoveRoute commands
+            converted_route = []
+            route.each do |cmd|
+              if cmd.is_a?(Symbol)
+                # Normalize to lowercase symbol to support :STEP_UP and :step_up
+                cmd_norm = cmd.to_s.downcase.to_sym
+                
+                case cmd_norm
+                when :step_down  then converted_route << PBMoveRoute::DOWN
+                when :step_left  then converted_route << PBMoveRoute::LEFT
+                when :step_right then converted_route << PBMoveRoute::RIGHT
+                when :step_up    then converted_route << PBMoveRoute::UP
+                when :step_lower_left  then converted_route << PBMoveRoute::LOWER_LEFT
+                when :step_lower_right then converted_route << PBMoveRoute::LOWER_RIGHT
+                when :step_upper_left  then converted_route << PBMoveRoute::UPPER_LEFT
+                when :step_upper_right then converted_route << PBMoveRoute::UPPER_RIGHT
+                when :move_random      then converted_route << PBMoveRoute::RANDOM
+                when :step_toward_player then converted_route << PBMoveRoute::TOWARD_PLAYER
+                when :step_away_from_player then converted_route << PBMoveRoute::AWAY_FROM_PLAYER
+                when :step_forward     then converted_route << PBMoveRoute::FORWARD
+                when :step_backward    then converted_route << PBMoveRoute::BACKWARD
+                when :turn_down  then converted_route << PBMoveRoute::TURN_DOWN
+                when :turn_left  then converted_route << PBMoveRoute::TURN_LEFT
+                when :turn_right then converted_route << PBMoveRoute::TURN_RIGHT
+                when :turn_up    then converted_route << PBMoveRoute::TURN_UP
+                when :turn_90_right then converted_route << PBMoveRoute::TURN_RIGHT90
+                when :turn_90_left  then converted_route << PBMoveRoute::TURN_LEFT90
+                when :turn_180   then converted_route << PBMoveRoute::TURN180
+                when :turn_random then converted_route << PBMoveRoute::TURN_RANDOM
+                when :turn_toward_player then converted_route << PBMoveRoute::TURN_TOWARD_PLAYER
+                when :turn_away_from_player then converted_route << PBMoveRoute::TURN_AWAY_FROM_PLAYER
+                when :through_on  then converted_route << PBMoveRoute::THROUGH_ON
+                when :through_off then converted_route << PBMoveRoute::THROUGH_OFF
+                when :always_on_top_on  then converted_route << PBMoveRoute::ALWAYS_ON_TOP_ON
+                when :always_on_top_off then converted_route << PBMoveRoute::ALWAYS_ON_TOP_OFF
+                when :walk_anim_on  then converted_route << PBMoveRoute::WALK_ANIME_ON
+                when :walk_anim_off then converted_route << PBMoveRoute::WALK_ANIME_OFF
+                when :step_anim_on  then converted_route << PBMoveRoute::STEP_ANIME_ON
+                when :step_anim_off then converted_route << PBMoveRoute::STEP_ANIME_OFF
+                when :dir_fix_on    then converted_route << PBMoveRoute::DIRECTION_FIX_ON
+                when :dir_fix_off   then converted_route << PBMoveRoute::DIRECTION_FIX_OFF
+                else
+                  SCScripts.log("WARNING: Unknown move route symbol: #{cmd}")
+                end
+              elsif cmd.is_a?(Array) # For commands with params like [:wait, 20]
+                 op = cmd[0]
+                 param = cmd[1]
+                 case op
+                 when :wait
+                   converted_route << PBMoveRoute::WAIT
+                   converted_route << param
+                 when :switch_on
+                   converted_route << PBMoveRoute::SWITCH_ON
+                   converted_route << param
+                 when :switch_off
+                   converted_route << PBMoveRoute::SWITCH_OFF
+                   converted_route << param
+                 when :change_speed
+                   converted_route << PBMoveRoute::CHANGE_SPEED
+                   converted_route << param
+                 when :change_freq
+                    converted_route << PBMoveRoute::CHANGE_FREQUENCY
+                    converted_route << param
+                 when :opacity
+                    converted_route << PBMoveRoute::OPACITY
+                    converted_route << param
+                 when :play_se
+                    converted_route << PBMoveRoute::PLAY_SE
+                    converted_route << param
+                 end
+              else
+                converted_route << cmd
+              end
+            end
+            
+            pbMoveRoute(target, converted_route)
+          elsif route.is_a?(RPG::MoveRoute)
+            target.force_move_route(route)
+          end
+          
+          # Wait for move completion if requested
+          if step[:wait]
+            while target.moving? || target.move_route_forcing
+              pbUpdateSceneMap
+              Graphics.update
+            end
+          end
+        else
+          SCScripts.log("WARNING: Move target '#{step[:target]}' not found")
+        end
       end
     end
   end
@@ -402,8 +775,8 @@ end
 #===============================================================================
 # Short helper functions for event scripts (fits in RPG Maker script box)
 #===============================================================================
-def pbCutscene(name)
-  GameData::Cutscene.play(name)
+def pbCutscene(name, **params)
+  GameData::Cutscene.play(name, **params)
 end
 
 def pbShop(name)

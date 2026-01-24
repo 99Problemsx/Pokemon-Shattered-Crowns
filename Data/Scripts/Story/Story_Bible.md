@@ -1,7 +1,3 @@
-# POKÉMON SHATTERED CROWNS - STORY BIBLE
-## 40-Hour Main Story Outline
-
----
 
 # STORY OVERVIEW
 
@@ -577,6 +573,14 @@ Each has a full team of 6 themed Pokemon.
 - Faint, barely visible marks appear
 - **End:** Act 1 complete
 
+## Interlude: Chapter 8.5 - Kael's Nightmare
+- Playable flashback from Kael's perspective
+- **Memory:** The orphanage fire 5 years ago
+- **Reveal:** His sister Mira pushed him out a window to save him, dying in his place
+- **Adoption:** He found a wounded Zorua (Shadow) and nursed it back to health, seeing a kindred spirit
+- **The Whisper:** Yveltal speaks to him in the dream: "Child of entropy... use your pain."
+- **End:** Kael wakes up, bonds deeper with Lyra and Player (but still guarded)
+
 ---
 
 # ACT 2: AWAKENING (Chapters 9-18)
@@ -795,27 +799,128 @@ Each has a full team of 6 themed Pokemon.
 # POST-GAME (Optional Chapters 36-40)
 *~5+ hours*
 
-## Chapter 36: Legendary Hunt
-- Track down other legendary Pokémon
-- Each has connection to Asgaheim lore
 
-## Chapter 37: The Fourth Guardian
-- Hints at Rayquaza as fourth guardian
-- Was it absent from the war? Why?
+# POST-GAME ARC 1: THE FRACTURE (Chapters 36-41)
+*A new threat emerges from a forgotten region.*
 
-## Chapter 38: Rematch
-- Battle stronger versions of gym leaders
-- Battle friends as rivals
+## Chapter 36: One Year Later - Peace and Shadows
+- Time jump: One year of peace.
+- Player is Champion, friends have their own paths.
+- Strange rifts ("Fractures") begin appearing.
+- **End:** A distress signal from the lost region of Astoria.
 
-## Chapter 39: The Secret Ending
-- Collect all legendaries
-- Unlock true final dungeon
-- Face ??? (Arceus? Original creator?)
+## Chapter 37: The Fracture - Cracks in Reality
+- Investigate the first major rift.
+- Physics are warping (gravity reversed, etc).
+- Connection to Giratina and the Distortion World suggested.
+- **End:** Enter the rift to Astoria.
 
-## Chapter 40: Epilogue
-- Time skip
-- See where characters ended up
-- Tease sequel
+## Chapter 38: Astoria - The Forgotten Region
+- Arrive in Astoria, a land frozen in time.
+- Ruins of an ancient civilization that tried to control the gods.
+- Meet survivors/descendants.
+- **End:** Learn of the "Temple of Stars".
+
+## Chapter 39: Temple of Stars - First Fragment
+- Dungeon: Cosmic-themed puzzles.
+- Boss: Celestial Guardian.
+- Reward: First fragment of the "Universal Seal".
+- **Reveal:** Arceus didn't just sleep; it was *sealed* to protect it.
+
+## Chapter 40: Temple of Tides - Second Fragment
+- Dungeon: Underwater/Abyssal theme.
+- Boss: Primal Kyogre Shadow (Phantom).
+- Reward: Second fragment.
+- **Lore:** The Old Gods tried to break the seal once.
+
+## Chapter 41: Temple of Shadows - Third Fragment
+- Dungeon: Dark/Void theme.
+- Boss: Darkrai/Giratina Shadow.
+- Reward: Third fragment.
+- **Climax:** The seal is restored, but the true threat is revealed: The Void itself is leaking.
+
+---
+
+# POST-GAME ARC 2: THE VOID WAR (Chapters 42-48)
+*The stakes rise to cosmic levels. The Creator awakens.*
+
+## Chapter 42: The Crown Restored
+- Reassemble the full Divine Crown using the fragments.
+- It's a key to the Hall of Origin.
+- **End:** Gateway to the Divine Realm opens.
+
+## Chapter 43: Giratina's Warning
+- Giratina appears not as an enemy, but a warden.
+- Warns that awakening Arceus will attract "The Outsiders" (Ultra Beasts/Eternatus true form).
+- Player must prove worthiness.
+
+## Chapter 44: The Distortion World
+- Travel into the Distortion World to stabilize the reality anchors.
+- Trippy, non-Euclidean geometry.
+- Puzzle-heavy.
+- **End:** Anchors stabilized.
+
+## Chapter 45: The Seal Breaks
+- The Void forces attack Astoria.
+- Massive siege battle. All allies (Gym Leaders, Rivals) return.
+- The seal on the Hall of Origin is forced open.
+
+## Chapter 46: The Ultimate Battle
+- Enter the Hall of Origin.
+- Battle against the Void Avatar (original creation chaos).
+- High difficulty, level 100 cap.
+
+## Chapter 47: Arceus Descends
+- Arceus awakens.
+- Not a battle against Arceus, but WITH Arceus.
+- Final purge of the Void corruption.
+- **Visuals:** Spectacle fighter elements, cosmic scale.
+
+## Chapter 48: Return Home
+- The world is safe, truly.
+- The "Divine Age" ends, "Human Age" begins.
+- Arceus leaves the world in human hands.
+
+---
+
+# EPILOGUE: A LIFE WELL LIVED (Chapters 49-55)
+*Closure for all characters. The true ending.*
+
+## Chapter 49: Heroes Welcome
+- Parade/Celebration in the capital.
+- Recognition of all NPCs who helped.
+- Emotional reunions.
+
+## Chapter 50: New Beginnings
+- Helping rebuild/restore damage.
+- Small side-quests resolving character arcs.
+- Lyra opens a sanctuary. Kael starts a research institute.
+
+## Chapter 51: The Future Together
+- Time skip (few months).
+- Discussion about the future.
+- Player decides their path (Defender, Explorer, or Mentor).
+
+## Chapter 52: The Wedding
+- A wedding event (Lyra/Player or other pairing implied/player choice).
+- Or simply a massive celebration of unity.
+- All characters gathered in joy, not war.
+
+## Chapter 53: Final Farewells
+- Saying goodbye to the Guardians (Zacian, Zamazenta, etc).
+- They fade into legend/slumber.
+- Bittersweet but right.
+
+## Chapter 54: The Road Ahead
+- Setting off on a new journey.
+- No world to save. Just adventure.
+- "The journey never truly ends."
+
+## Chapter 55: True Ending - The Final Chapter
+- Credits roll with "Where are they now?" stills.
+- Post-credits scene: A new trainer picks up a Pokéball.
+- **The End.**
+
 
 ---
 
@@ -827,8 +932,8 @@ Each has a full team of 6 themed Pokemon.
 | Act 2 | 9-18 | 12-15h | 4-6 |
 | Act 3 | 19-28 | 10-12h | 7-8 + E4 |
 | Act 4 | 29-35 | 8-10h | Champion |
-| Post-Game | 36-40 | 5+h | Rematches |
-| **Total** | **40** | **~40h** | **Full** |
+| Post-Game | 36-55 | 10+h | World Saving |
+| **Total** | **55** | **~50h+** | **Full** |
 
 ---
 

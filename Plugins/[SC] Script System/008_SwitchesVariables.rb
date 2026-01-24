@@ -103,6 +103,15 @@ module SCScripts
     EXP_SHARE_ALL                = 144
     
     #---------------------------------------------------------------------------
+    # Battle Mechanic Switches (145-148)
+    #---------------------------------------------------------------------------
+    MECHANIC_MEGA_EVOLUTION      = 145  # Player chose Mega Evolution
+    MECHANIC_DYNAMAX             = 146  # Player chose Dynamax
+    MECHANIC_TERASTALLIZATION    = 147  # Player chose Terastallization
+    MECHANIC_Z_MOVES             = 148  # Player chose Z-Moves
+    STORY_CHOICE_MODE            = 149  # Enable Story Choice Mode
+    
+    #---------------------------------------------------------------------------
     # Badge Switches (150+)
     #---------------------------------------------------------------------------
     BADGE_1                      = 150  # Thornwood - Thorne
@@ -269,6 +278,9 @@ module SCScripts
     STORY_PROGRESSION       = 28  # Main story progress (0-55 for chapters)
     CURRENT_ACT             = 29  # 1-5 for story acts
     RIVAL_BATTLES_WON       = 30  # Track rivalry
+    BATTLE_MECHANIC_MODE    = 31  # 0 = Mega Evolution, 1 = Dynamax, 2 = Terastallization, 3 = Z-Moves
+    STORY_CHOICES           = 32  # Hash storing player choices if in Choice Mode
+
     
     #---------------------------------------------------------------------------
     # Quest Tracking (50+)

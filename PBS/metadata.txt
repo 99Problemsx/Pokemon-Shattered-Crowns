@@ -14,7 +14,7 @@ BicycleBGM = Bicycle
 #-------------------------------
 [1]
 TrainerType = POKEMONTRAINER_Red
-WalkCharset = trainer_POKEMONTRAINER_Red
+WalkCharset = Protagonist_M_Walk
 RunCharset = boy_run
 CycleCharset = boy_bike
 SurfCharset = boy_surf

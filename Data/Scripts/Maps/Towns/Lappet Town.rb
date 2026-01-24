@@ -19,7 +19,8 @@
 #===============================================================================
 
 # Professor intro when entering lab for the first time
-GameData::Cutscene.define :lappet_lab_intro do |scene|
+# Pass the event ID when calling: pbCutscene(:lappet_lab_intro, event_id: 1)
+GameData::Cutscene.define :lappet_lab_intro do |scene, event_id: nil|
   scene.fade_out
   scene.play_bgm 'Lab'
   scene.fade_in
@@ -42,13 +43,43 @@ GameData::Cutscene.define :lappet_lab_intro do |scene|
   scene.script { pbTrainerName }
   
   scene.message "\\PN! What a wonderful name!"
+  
+  # Battle Mechanic Selection
+  scene.message "Now, before you begin your adventure..."
+  scene.message "The world of Pokémon has evolved with different battle mechanics."
+  scene.message "Which one would you like to experience?"
+  
+  scene.script do
+    BattleMechanicChoice.show_selection
+  end
+  
+  scene.message "Excellent choice!"
+  
+  # Story Choice Mode Selection
+  scene.message "And one final question..."
+  scene.message "Do you wish to forge your own destiny?"
+  scene.message "In Story Choice Mode, your decisions will change the story."
+  
+  scene.choice ['Standard Story', 'Story Choice Mode'] do |mode|
+    if mode == 1
+      scene.script { StoryChoices.set_mode(true) }
+      scene.message "Very well. Your choices will shape the future."
+      scene.message "Choose wisely."
+    else
+      scene.script { StoryChoices.set_mode(false) }
+      scene.message "A classic tale then. Let the story unfold."
+    end
+  end
+  
   scene.message "Your very own Pokémon adventure is about to begin!"
   
   scene.set_switch SW::MET_PROFESSOR, true
+  scene.disable_event(event_id) if event_id  # Prevent re-triggering this intro
 end
 
 # Starter selection scene
-GameData::Cutscene.define :lappet_choose_starter do |scene|
+# Pass the event ID when calling: pbCutscene(:lappet_choose_starter, event_id: 2)
+GameData::Cutscene.define :lappet_choose_starter do |scene, event_id: nil|
   scene.message "Now, \\PN, which Pokémon will you choose?"
   scene.message "Take your time and choose wisely!"
   
@@ -74,10 +105,12 @@ GameData::Cutscene.define :lappet_choose_starter do |scene|
   
   scene.set_switch SW::GOT_STARTER, true
   scene.set_switch SW::GOT_POKEDEX, true
+  scene.disable_event(event_id) if event_id  # Prevent re-triggering starter selection
 end
 
 # Rival encounter at town exit
-GameData::Cutscene.define :lappet_rival_intro do |scene|
+# Pass the event ID when calling: pbCutscene(:lappet_rival_intro, event_id: 9)
+GameData::Cutscene.define :lappet_rival_intro do |scene, event_id: nil|
   scene.message "Hey, wait up!"
   scene.message "\\PN, right? I'm Gary, Professor Oak's grandson!"
   scene.message "Gramps gave you a Pokémon, huh? Let me see!"
@@ -91,6 +124,7 @@ GameData::Cutscene.define :lappet_rival_intro do |scene|
   scene.message "Smell ya later!"
   
   scene.set_switch SW::CUTSCENE_INTRO_PLAYED, true
+  scene.disable_event(event_id) if event_id  # Disable the event that triggered this
 end
 
 #===============================================================================
@@ -122,6 +156,17 @@ GameData::Dialogue.define :lappet_mom do |d|
   
   d.node :bye do |n|
     n.say "Good luck on your adventure!"
+  end
+end
+
+# Gary's dialogue (after battle)
+GameData::Dialogue.define :lappet_gary_after_battle do |d|
+  d.node :start do |n|
+    n.say "Tch... I can't believe I lost to you!"
+    n.say "But don't get cocky, \\PN!"
+    n.say "I'm going to train hard and become the strongest trainer!"
+    n.say "Next time we meet, I'll crush you!"
+    n.say "Smell ya later!"
   end
 end
 
@@ -259,13 +304,29 @@ end
 #===============================================================================
 # Use these in RPG Maker events:
 #
+# IMPORTANT: For one-time events, you need TWO event pages:
+#
+# Page 1 (The actual event):
+#   Condition: Self Switch A is OFF (and any other conditions)
+#   Script: pbCutscene(:cutscene_name)
+#   
+# Page 2 (After event is done):
+#   Condition: Self Switch A is ON
+#   Content: Empty (or different dialogue/behavior)
+#
+# The cutscene will automatically set Self Switch A to ON when it calls
+# scene.disable_event, which will switch to Page 2 and prevent re-triggering.
+#
+#-------------------------------------------------------------------------------
 # Professor Oak (first meeting):
-#   Condition: Switch [MET_PROFESSOR] is OFF
-#   Script: pbCutscene(:lappet_lab_intro)
+#   Page 1: Self Switch A OFF, Switch [MET_PROFESSOR] OFF
+#   Script: pbCutscene(:lappet_lab_intro, event_id: 1)  # Replace 1 with your event ID
+#   Page 2: Self Switch A ON (empty or "Welcome back!")
 #
 # Professor Oak (starter selection):
-#   Condition: Switch [MET_PROFESSOR] ON, [GOT_STARTER] OFF
-#   Script: pbCutscene(:lappet_choose_starter)
+#   Page 1: Self Switch A OFF, [MET_PROFESSOR] ON, [GOT_STARTER] OFF
+#   Script: pbCutscene(:lappet_choose_starter, event_id: 2)  # Replace 2 with your event ID
+#   Page 2: Self Switch A ON (empty or different dialogue)
 #
 # Mom:
 #   Script: pbDialogue(:lappet_mom)
@@ -286,5 +347,11 @@ end
 #   Script: pbDialogue(:lappet_sign_lab)
 #
 # Rival at town exit:
-#   Condition: Switch [GOT_STARTER] ON, [CUTSCENE_INTRO_PLAYED] OFF
-#   Script: pbCutscene(:lappet_rival_intro)
+#   Page 1: Self Switch A OFF, [GOT_STARTER] ON
+#   Script: pbCutscene(:lappet_rival_intro, event_id: 9)  # Replace 9 with your event ID
+#   
+#   Page 2: Self Switch A ON
+#   Script: pbDialogue(:lappet_gary_after_battle)
+#   (Gary shows different dialogue after being defeated)
+
+
