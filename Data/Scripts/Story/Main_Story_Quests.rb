@@ -1864,7 +1864,7 @@ GameData::Quest.define :msq_ch1_sub2 do |q|
   q.playable_character :player
   
   q.objectives [
-    { id: :walk_town, text: "Walk through Lappet Town" },
+    { id: :walk_town, text: "Walk through Dawnhaven Village" },
     { id: :enter_lab, text: "Enter the lab" },
     { id: :meet_professor, text: "Meet Professor Aldric" },
     { id: :see_starters, text: "See the three starters" },
@@ -1881,7 +1881,7 @@ GameData::Quest.define :msq_ch1_sub3 do |q|
   q.playable_character :player
   
   q.objectives [
-    { id: :leave_town, text: "Leave Lappet Town" },
+    { id: :leave_town, text: "Leave Dawnhaven Village" },
     { id: :first_wild, text: "Encounter your first wild Pokémon" },
     { id: :first_catch, text: "Catch your first Pokémon" }
   ]

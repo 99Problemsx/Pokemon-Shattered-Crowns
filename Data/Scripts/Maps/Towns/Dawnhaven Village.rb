@@ -51,7 +51,8 @@ GameData::Cutscene.define :dawnhaven_arrival do |scene|
   
   scene.message "\\i[DAWNHAVEN VILLAGE - YOUR ROOM]"
   scene.message "You're standing in your room."
-  scene.message "The mark on your arm still faintly glows."
+  scene.message "That dream still lingers in your mind..."
+  scene.message "Golden light... a broken crown..."
   scene.message "Mom's voice calls from downstairs..."
   
   scene.message "\\bMom\\b: \\PN! Hurry up!"
@@ -93,18 +94,18 @@ GameData::Cutscene.define :dawnhaven_meet_aldric do |scene|
   scene.message "\\bProfessor Aldric\\b: I've been waiting for you."
   scene.message "\\bProfessor Aldric\\b: Come in, come in!"
   
-  scene.message "He studied you intensely."
-  scene.message "His eyes lingered on your arm."
-  scene.message "Where the mark was hidden."
+  scene.message "He studied you with a warm smile."
+  scene.message "There was a knowing look in his eyes."
+  scene.message "As if he saw something special in you."
   
   scene.message "\\bProfessor Aldric\\b: Hmm..."
-  scene.message "\\bProfessor Aldric\\b: Yes, I thought so."
+  scene.message "\\bProfessor Aldric\\b: Yes, you have that spark."
   
-  scene.message "\\b\\PN\\b: Thought what...?"
+  scene.message "\\b\\PN\\b: Spark...?"
   
-  scene.message "\\bProfessor Aldric\\b: *shaking head* Never mind that now."
-  scene.message "\\bProfessor Aldric\\b: First things first!"
-  scene.message "\\bProfessor Aldric\\b: Your Pokémon partner awaits!"
+  scene.message "\\bProfessor Aldric\\b: *chuckling* The spark of adventure!"
+  scene.message "\\bProfessor Aldric\\b: I can always tell."
+  scene.message "\\bProfessor Aldric\\b: Now then, your Pokémon partner awaits!"
   
   scene.message "He led you to three Poké Balls on a table."
   
@@ -116,104 +117,86 @@ GameData::Cutscene.define :dawnhaven_meet_aldric do |scene|
   scene.set_switch SW::MET_ALDRIC, true
 end
 
-# AFTER CHOOSING STARTER - ALDRIC NOTICES THE MARK
-GameData::Cutscene.define :dawnhaven_aldric_sees_mark do |scene|
-  scene.play_bgm 'Pokemon RSE - Sealed Chamber'
+# AFTER CHOOSING STARTER - BONDING MOMENT
+# (Marks appear later in Chapter 8, Cult attacks in Chapter 7)
+GameData::Cutscene.define :dawnhaven_starter_chosen do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
   
-  scene.message "As you reached for the Poké Ball..."
-  scene.message "Your sleeve slipped."
-  scene.message "The mark on your arm glowed faintly."
+  scene.message "You reached for the Poké Ball..."
+  scene.message "The moment your fingers touched it, you felt a connection."
+  scene.message "Your first partner. Your first step."
   
-  scene.message "\\bProfessor Aldric\\b: *gasp*"
-  scene.message "\\bProfessor Aldric\\b: That mark..."
+  scene.message "\\bProfessor Aldric\\b: *smiling warmly*"
+  scene.message "\\bProfessor Aldric\\b: A wonderful choice."
+  scene.message "\\bProfessor Aldric\\b: I can see you two will be great partners."
   
-  scene.message "\\b\\PN\\b: You... know what this is?"
+  scene.message "\\b\\PN\\b: Thank you, Professor."
   
-  scene.message "\\bProfessor Aldric\\b: *face pale*"
-  scene.message "\\bProfessor Aldric\\b: I've only read about it."
-  scene.message "\\bProfessor Aldric\\b: In the oldest texts."
-  scene.message "\\bProfessor Aldric\\b: From before the Reckoning."
+  scene.message "\\bProfessor Aldric\\b: Now, remember..."
+  scene.message "\\bProfessor Aldric\\b: A trainer's bond with their Pokémon is everything."
+  scene.message "\\bProfessor Aldric\\b: Trust each other. Grow together."
   
-  scene.message "\\bProfessor Aldric\\b: \\PN... you've been chosen."
-  scene.message "\\bProfessor Aldric\\b: By the Guardians themselves."
+  scene.message "\\bProfessor Aldric\\b: Here, take this as well."
+  scene.message "He handed you a Pokédex and some Poké Balls."
   
-  scene.message "\\b\\PN\\b: Chosen for what?"
+  scene.message "\\bProfessor Aldric\\b: Fill this with knowledge."
+  scene.message "\\bProfessor Aldric\\b: And those Poké Balls—catch new friends along the way."
   
-  scene.message "\\bProfessor Aldric\\b: I... I don't know yet."
-  scene.message "\\bProfessor Aldric\\b: But if the legends are true..."
-  scene.message "\\bProfessor Aldric\\b: You aren't the only one."
-  scene.message "\\bProfessor Aldric\\b: There should be two others."
-  scene.message "\\bProfessor Aldric\\b: Marked by Xerneas and Yveltal."
-  
-  scene.message "\\bProfessor Aldric\\b: You must find them."
-  scene.message "\\bProfessor Aldric\\b: Before—"
-  
-  scene.camera_shake 20, 50
-  
-  scene.message "\\bVoice Outside\\b: THERE! The Professor's lab!"
-  scene.message "\\bVoice\\b: FIND THE MARKED ONE!"
-  
-  scene.message "\\bProfessor Aldric\\b: No... they've found us already."
-  scene.message "\\bProfessor Aldric\\b: The Shattered Crown."
+  scene.message "\\bProfessor Aldric\\b: Your journey begins now, \\PN."
+  scene.message "\\bProfessor Aldric\\b: Make Dawnhaven proud!"
   
   scene.set_switch SW::GOT_FIRST_POKEMON, true
 end
 
-# THE CULT ATTACKS
-GameData::Cutscene.define :dawnhaven_cult_attack do |scene|
-  scene.play_bgm 'Pokemon XY - Team Flare Appears'
-  scene.camera_shake 10, 30
+# PARENTS GOODBYE - Before leaving town
+# (Matches Main_Story.rb ch1_parents_goodbye)
+GameData::Cutscene.define :dawnhaven_parents_goodbye do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
   
-  scene.message "\\i[THE FIRST ATTACK]"
-  scene.message "Robed figures burst through the door."
-  scene.message "Dark energy crackled around them."
+  scene.message "\\i[YOUR HOME - BEFORE DEPARTURE]"
+  scene.message "You found Mom and Dad waiting outside."
   
-  scene.message "\\bCult Member\\b: Hand over the marked one!"
-  scene.message "\\bCult Member\\b: Lord Malachar has decreed it!"
+  scene.message "\\bMom\\b: \\PN... my little adventurer."
+  scene.message "\\bMom\\b: *wiping eyes* I can't believe this day is here."
   
-  scene.message "\\bProfessor Aldric\\b: \\PN—RUN!"
+  scene.message "\\bDad\\b: We're so proud of you."
+  scene.message "\\bDad\\b: Remember what I taught you about camping?"
   
-  scene.message "\\b\\PN\\b: I'm not leaving you!"
+  scene.message "\\b\\PN\\b: Always check for wild Pokémon before setting up."
   
-  scene.message "\\bProfessor Aldric\\b: Then FIGHT!"
-  scene.message "\\bProfessor Aldric\\b: Your partner is with you now!"
-  scene.message "\\bProfessor Aldric\\b: Together!"
+  scene.message "\\bDad\\b: *laughing* That's my kid!"
+  
+  scene.message "\\bMom\\b: Here, I packed some supplies."
+  scene.message "She handed you a bag full of potions and snacks."
+  
+  scene.message "\\bMom\\b: And call home whenever you can!"
+  
+  scene.message "\\bDad\\b: Go see the world, \\PN."
+  scene.message "\\bDad\\b: And remember—home will always be here."
+  
+  scene.message "\\b\\PN\\b: I'll make you both proud. I promise."
+  
+  scene.message "With one last hug, you turned toward the village exit."
+  scene.message "A whole region awaited."
 end
 
-# AFTER FIRST VICTORY
-GameData::Cutscene.define :dawnhaven_after_cult_fight do |scene|
-  scene.play_bgm 'Pokemon XY - Victory Road'
+# FIRST WILD BATTLE - On the route out of town
+GameData::Cutscene.define :dawnhaven_first_wild do |scene|
+  scene.play_bgm 'Pokemon RSE - Route 101'
   
-  scene.message "The cultists fled."
-  scene.message "For now."
+  scene.message "As you stepped onto Route 1..."
+  scene.message "The tall grass rustled."
   
-  scene.message "\\bProfessor Aldric\\b: *breathing heavily*"
-  scene.message "\\bProfessor Aldric\\b: You... you did it."
-  scene.message "\\bProfessor Aldric\\b: I knew you were special."
+  scene.message "\\b\\PN\\b: My first wild Pokémon!"
   
-  scene.message "\\b\\PN\\b: What IS the Shattered Crown?"
-  scene.message "\\b\\PN\\b: Why are they after me?"
+  scene.message "Your partner chirped eagerly."
+  scene.message "Ready to battle at your side."
   
-  scene.message "\\bProfessor Aldric\\b: They are a cult."
-  scene.message "\\bProfessor Aldric\\b: They believe the world is broken beyond repair."
-  scene.message "\\bProfessor Aldric\\b: They want to release the Ancient Evils."
-  scene.message "\\bProfessor Aldric\\b: To 'purify' everything through destruction."
-  
-  scene.message "\\bProfessor Aldric\\b: And they need the marked ones..."
-  scene.message "\\bProfessor Aldric\\b: To break the seals."
-  
-  scene.message "\\b\\PN\\b: Then I have to find the others first."
-  
-  scene.message "\\bProfessor Aldric\\b: Yes."
-  scene.message "\\bProfessor Aldric\\b: One should be at Sunrise Farm. Northeast of here."
-  scene.message "\\bProfessor Aldric\\b: The other... I'm not sure."
-  scene.message "\\bProfessor Aldric\\b: But you'll know them when you meet."
-  
-  scene.message "\\bProfessor Aldric\\b: Go, \\PN."
-  scene.message "\\bProfessor Aldric\\b: The fate of Asgheim may depend on it."
+  scene.message "(This is it. My adventure truly begins!)"
 end
 
 # MEETING RAGNAR AT TOWN EXIT
+# (Matches Main_Story.rb ch1_ragnar_appears - no cult mention yet)
 GameData::Cutscene.define :dawnhaven_meet_ragnar do |scene|
   scene.play_bgm 'Pokemon BW - Rival Theme'
   
@@ -225,31 +208,25 @@ GameData::Cutscene.define :dawnhaven_meet_ragnar do |scene|
   scene.message "\\bRagnar\\b: You weren't gonna leave without me, right?"
   scene.message "\\bRagnar\\b: We promised to start our journeys together!"
   
-  scene.message "\\b\\PN\\b: Ragnar... things have gotten complicated."
-  
-  scene.message "\\bRagnar\\b: I heard about the attack!"
-  scene.message "\\bRagnar\\b: Some creepy robed guys, right?"
-  scene.message "\\bRagnar\\b: All the more reason to stick together!"
+  scene.message "\\b\\PN\\b: Ragnar! You got your Pokémon too?"
   
   scene.message "\\bRagnar\\b: Check it out!"
-  scene.message "He showed off a Poké Ball."
+  scene.message "He showed off a Poké Ball proudly."
   scene.message "\\bRagnar\\b: Pikachu! My partner!"
-  scene.message "\\bRagnar\\b: We're gonna be the BEST!"
+  scene.message "\\bRagnar\\b: We're gonna be the BEST team ever!"
   
-  scene.message "\\b\\PN\\b: Ragnar, I don't know what's coming."
-  scene.message "\\b\\PN\\b: It could be dangerous."
+  scene.message "\\b\\PN\\b: That's great! Want to travel together?"
   
-  scene.message "\\bRagnar\\b: *grinning* DANGER is my middle name!"
-  scene.message "\\bRagnar\\b: Actually it's Erik, but whatever!"
-  scene.message "\\bRagnar\\b: You're not getting rid of me that easily."
+  scene.message "\\bRagnar\\b: *grinning* Actually..."
+  scene.message "\\bRagnar\\b: I was thinking we should be RIVALS!"
+  scene.message "\\bRagnar\\b: We train separately, get stronger..."
+  scene.message "\\bRagnar\\b: Then battle to see who's best!"
   
-  scene.message "\\b\\PN\\b: *smiling* Fine. But keep up."
+  scene.message "\\b\\PN\\b: *smiling* Sounds like a plan."
   
-  scene.message "\\bRagnar\\b: Keep up? I'll be ahead!"
-  scene.message "\\bRagnar\\b: Race you to Sunrise Farm!"
-  
-  scene.message "He sprinted off before you could respond."
-  scene.message "Some things never changed."
+  scene.message "\\bRagnar\\b: But first—let's battle right now!"
+  scene.message "\\bRagnar\\b: Pikachu vs your new partner!"
+  scene.message "\\bRagnar\\b: Show me what you've got!"
   
   scene.set_switch SW::MET_RAGNAR, true
 end
@@ -263,9 +240,9 @@ GameData::Dialogue.define :dawnhaven_villager_1 do |npc|
   npc.default "I've lived here all my life."
   
   npc.if_switch SW::GOT_FIRST_POKEMON do
-    npc.say "Did you hear about the attack on the lab?"
-    npc.say "Robed strangers... it's been fifty years since we've seen their kind."
-    npc.say "Not since the Reckoning..."
+    npc.say "So you got your first Pokémon?"
+    npc.say "How exciting! I remember when I was your age..."
+    npc.say "The world seemed so full of possibilities."
   end
 end
 

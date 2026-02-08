@@ -57,12 +57,13 @@ EventHandlers.add(:on_frame_update, :lab_intro_event,
     
     $game_variables[VAR::STORY_PROGRESSION] = 2 # Got Starter
     
-    # Rival Interrupt
+    # Rival Interrupt (Ragnar is the rival, not Kael - Kael is one of the three Chosen)
     pbMessage("Suddenly, the door bursts open!")
-    pbMessage("\\bRival\\b: Wait for me!")
+    pbMessage("\\bRagnar\\b: YO! Wait for me!")
     
-    # ... Rival dialogue here ...
-    pbMessage("\\bProfessor Aldric\\b: Ah, Kael. Late as usual.")
+    # Ragnar dialogue
+    pbMessage("\\bProfessor Aldric\\b: Ah, Ragnar. Late as usual.")
+    pbMessage("\\bRagnar\\b: *panting* You weren't gonna leave without me, right \\PN?")
     
     $game_switches[SW::GOT_STARTER] = true
   }

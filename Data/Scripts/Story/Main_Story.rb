@@ -2782,37 +2782,37 @@ GameData::Cutscene.define :ch6_regrouping do |scene|
   scene.message "\\b\\PN\\b: Let's contact him tomorrow."
 end
 
-GameData::Cutscene.define :ch6_marcus_intro do |scene|
+GameData::Cutscene.define :ch6_viktor_intro do |scene|
   scene.play_bgm 'Pokemon BW - Rival Theme'
   
-  # TODO: Event Sequence - Marcus Block
+  # TODO: Event Sequence - Viktor Block
   # scene.message "A confident trainer blocked your path."
   
-  scene.message "\\bMarcus\\b: Well, well! New challengers!"
-  scene.message "\\bMarcus\\b: I'm Marcus. The region's next Champion."
+  scene.message "\\bViktor\\b: Well, well! New challengers!"
+  scene.message "\\bViktor\\b: I'm Viktor. The region's next Champion."
   
   scene.message "\\bKael\\b: *unimpressed* Never heard of you."
   
-  scene.message "\\bMarcus\\b: You will! Once I crush you in battle!"
-  scene.message "\\bMarcus\\b: I've already got two badges!"
+  scene.message "\\bViktor\\b: You will! Once I crush you in battle!"
+  scene.message "\\bViktor\\b: I've already got two badges!"
   
   scene.message "\\bLyra\\b: So do we!"
   
-  scene.message "\\bMarcus\\b: Oho! Spirited one, aren't you?"
-  # TODO: Event Sequence - Marcus Flirting
+  scene.message "\\bViktor\\b: Oho! Spirited one, aren't you?"
+  # TODO: Event Sequence - Viktor Flirting
   # scene.message "He winked at Lyra."
   # scene.message "Kael's expression went cold."
   
-  scene.message "\\bMarcus\\b: Tell you what—let's battle!"
-  scene.message "\\bMarcus\\b: Winner gets bragging rights!"
+  scene.message "\\bViktor\\b: Tell you what—let's battle!"
+  scene.message "\\bViktor\\b: Winner gets bragging rights!"
   
   scene.message "\\b\\PN\\b: You're on."
   
-  scene.trainer_battle :RIVAL, "Marcus", 0
+  scene.trainer_battle :RIVAL, "Viktor", 0
   
-  scene.message "\\bMarcus\\b: Not bad! But next time, I'll win!"
-  scene.message "\\bMarcus\\b: See you around, cuties!"
-  # TODO: Event Sequence - Marcus Exit
+  scene.message "\\bViktor\\b: Not bad! But next time, I'll win!"
+  scene.message "\\bViktor\\b: See you around, cuties!"
+  # TODO: Event Sequence - Viktor Exit
   # scene.message "He waved and left."
   
   scene.message "\\bKael\\b: *muttering* I don't like him."

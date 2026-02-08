@@ -519,7 +519,7 @@ Each has a full team of 6 themed Pokemon.
 *~8-10 hours playtime*
 
 ## Chapter 1: Home
-- Wake up in Lappet Town
+- Wake up in Dawnhaven Village
 - Meet Mom, get starter Pokémon
 - Tutorial gameplay
 - **End:** Strange dream that night (vague, no symbols yet)

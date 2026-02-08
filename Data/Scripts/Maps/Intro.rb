@@ -435,16 +435,13 @@ def run_story_prologue
   pbMessage("Fragments of something broken, floating in the void.")
   pbMessage("A crown... shattered into a thousand pieces.")
   
-  pbMessage("A voice speaks:")
+  pbMessage("A voice speaks, barely a whisper:")
   pbMessage("\\bVoice\\b: \\PN...")
-  pbMessage("\\bVoice\\b: You have been chosen.")
-  pbMessage("\\bVoice\\b: The seals are breaking.")
-  pbMessage("\\bVoice\\b: Find the others.")
-  pbMessage("\\bVoice\\b: Save them all.")
+  pbMessage("\\bVoice\\b: Soon...")
   
-  pbMessage("You feel a burning sensation on your arm.")
-  pbMessage("A mark appears, glowing with golden light.")
-  pbMessage("The mark of Zacian.")
+  pbMessage("You try to see more, but the vision fades.")
+  pbMessage("The golden light dims.")
+  pbMessage("And you fall into darkness.")
   
   pbFadeOutIn {
     pbBGMPlay('Pokemon XY - Vaniville Town')
@@ -454,18 +451,16 @@ def run_story_prologue
   pbMessage("<c2>--- DAWNHAVEN VILLAGE ---</c2>\n<c2>YOUR HOME</c2>")
   pbMessage("You wake with a start.")
   pbMessage("Sunlight streams through your window.")
-  pbMessage("Just a dream... right?")
+  pbMessage("A strange dream... golden light, broken pieces...")
   
-  pbMessage("You look at your arm.")
-  pbMessage("The mark is still there.")
-  pbMessage("Faintly glowing.")
+  pbMessage("You shake your head.")
+  pbMessage("Just a dream. Nothing more.")
   
   pbMessage("\\bMom\\b: \\PN! Time to wake up!")
   pbMessage("\\bMom\\b: Professor Aldric is waiting for you at the lab!")
   pbMessage("\\bMom\\b: Today's the day you get your first Pokémon!")
   
-  pbMessage("You hide the mark under your sleeve.")
-  pbMessage("One thing at a time.")
-  pbMessage("First, your Pokémon.")
-  pbMessage("Then... answers.")
+  pbMessage("You stretch and smile.")
+  pbMessage("Today is the day.")
+  pbMessage("Your adventure begins!")
 end
