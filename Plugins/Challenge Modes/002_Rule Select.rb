@@ -67,6 +67,9 @@ module ChallengeModes
     selected_rules = []
     catch_clauses  = [:SHINY_CLAUSE, :DUPS_CLAUSE, :GIFT_CLAUSE]
     special_modes  = [:MONOTYPE_MODE, :RANDOMIZER_MODE, :HARDCORE_MODE]
+    # Rules that don't automatically trigger GAME_OVER_WHITEOUT
+    # These are "casual" challenge rules that can be played without stakes
+    no_stake_rules = special_modes + [:ONE_CAPTURE, :TRAINER_SCALING] + catch_clauses
     # EXAMPLE: Rules that require PERMAFAINT to be enabled
     permafaint_dependent = [:LEVEL_CAP]
     
@@ -173,15 +176,22 @@ module ChallengeModes
           selected_rules.delete(rule)
           catch_clauses.each { |r| selected_rules.delete(r) } if rule == :ONE_CAPTURE
           permafaint_dependent.each { |r| selected_rules.delete(r) } if rule == :PERMAFAINT
-          selected_rules.push(:GAME_OVER_WHITEOUT) if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT)
+          # Only auto-add GAME_OVER_WHITEOUT if remaining rules require stakes
+          remaining_stake_rules = selected_rules.reject { |r| no_stake_rules.include?(r) || r == :GAME_OVER_WHITEOUT }
+          if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT) && !remaining_stake_rules.empty?
+            selected_rules.push(:GAME_OVER_WHITEOUT)
+          end
           selected_rules.delete(:GAME_OVER_WHITEOUT) if selected_rules.first == :GAME_OVER_WHITEOUT && selected_rules.length == 1
+          # Also remove GAME_OVER_WHITEOUT if only no-stake rules remain
+          selected_rules.delete(:GAME_OVER_WHITEOUT) if remaining_stake_rules.empty?
           updated = true
         elsif (selected_rules.include?(:ONE_CAPTURE) && catch_clauses.include?(rule)) || 
               (selected_rules.include?(:PERMAFAINT) && (permafaint_dependent.include?(rule) || rule == :GAME_OVER_WHITEOUT)) ||
               !(catch_clauses + permafaint_dependent + [:GAME_OVER_WHITEOUT] + special_modes).include?(rule) ||
               special_modes.include?(rule)
           selected_rules.push(rule)
-          selected_rules.push(:GAME_OVER_WHITEOUT) if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT) && !special_modes.include?(rule) && rule != :TRAINER_SCALING
+          # Only auto-add GAME_OVER_WHITEOUT if this rule requires stakes
+          selected_rules.push(:GAME_OVER_WHITEOUT) if !selected_rules.include?(:PERMAFAINT) && !selected_rules.include?(:GAME_OVER_WHITEOUT) && !no_stake_rules.include?(rule)
           updated = true
         end
         if !updated

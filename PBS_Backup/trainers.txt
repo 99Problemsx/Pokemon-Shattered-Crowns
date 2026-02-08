@@ -1,0 +1,548 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[CAMPER,Liam]
+LoseText = A very good battle, indeed!
+Pokemon = DIGLETT,10
+Pokemon = BONSLY,11
+#-------------------------------
+[LEADER_Brock,Brock]
+Items = FULLRESTORE,FULLRESTORE
+LoseText = Very good.
+Pokemon = GEODUDE,12
+    Moves = DEFENSECURL,HEADSMASH,ROCKPOLISH,ROCKTHROW
+    AbilityIndex = 0
+    Gender = male
+    IV = 20,20,20,20,20,20
+Pokemon = ONIX,14
+    Name = Rocky
+    Moves = HEADSMASH,ROCKTHROW,RAGE,ROCKTOMB
+    AbilityIndex = 0
+    Item = SITRUSBERRY
+    Gender = male
+    IV = 20,20,20,20,20,20
+    Shiny = true
+    Ball = HEAVYBALL
+#-------------------------------
+[TEAMROCKET_M,Grunt,1]
+LoseText = You're too good for me!
+Pokemon = WEEPINBELL,21
+    Shadow = true
+#-------------------------------
+[TEAMROCKET_F,Grunt,1]
+LoseText = You're too good for me!
+Pokemon = BURMY,19
+Pokemon = WINGULL,19
+Pokemon = ELECTABUZZ,20
+    Shadow = true
+#-------------------------------
+[YOUNGSTER,Ben]
+LoseText = Aww, I lost.
+Pokemon = RATTATA,11
+Pokemon = EKANS,11
+#-------------------------------
+[CAMPER,Jeff]
+LoseText = A very good battle, indeed!
+Pokemon = SPEAROW,16
+Pokemon = SENTRET,16
+#-------------------------------
+[CAMPER,Jeff,1]
+LoseText = You beat me again!
+Pokemon = FEAROW,29
+Pokemon = FURRET,29
+#-------------------------------
+[PICNICKER,Susie]
+LoseText = Defeated! Oh my!
+Pokemon = MEOWTH,18
+#-------------------------------
+[PICNICKER,Susie,1]
+LoseText = Defeated! Oh my!
+Pokemon = PERSIAN,32
+#-------------------------------
+[HIKER,Ford]
+LoseText = You're too good for me!
+Pokemon = MACHOP,19
+#-------------------------------
+[FISHERMAN,Andrew]
+LoseText = Washed out!
+Pokemon = MAGIKARP,14
+Pokemon = MAGIKARP,18
+#-------------------------------
+[BEAUTY,Bridget]
+LoseText = My Skitty!
+Pokemon = SKITTY,18
+#-------------------------------
+[LASS,Crissy]
+LoseText = You didn't have to win so convincingly!
+Pokemon = PLUSLE,17
+Pokemon = MINUN,17
+#-------------------------------
+[COOLCOUPLE,Alice & Bob]
+LoseText = Our teamwork failed!
+Pokemon = TURTWIG,19
+Pokemon = CHIMCHAR,19
+#-------------------------------
+[POKEMONTRAINER_May,May]
+LoseText = ...
+Pokemon = COMBUSKEN,19
+#-------------------------------
+[SWIMMER2_F,Ariel]
+LoseText = Washed out!
+Pokemon = STARYU,15
+Pokemon = GOLDEEN,11
+#-------------------------------
+[RIVAL1,Blue]
+LoseText = Not too shabby.
+Pokemon = PIDGEOTTO,17
+Pokemon = RATTATA,15
+Pokemon = BULBASAUR,18
+#-------------------------------
+[RIVAL1,Blue,1]
+LoseText = Not too shabby.
+Pokemon = PIDGEOTTO,17
+Pokemon = RATTATA,15
+Pokemon = CHARMANDER,18
+#-------------------------------
+[RIVAL1,Blue,2]
+LoseText = Not too shabby.
+Pokemon = PIDGEOTTO,17
+Pokemon = RATTATA,15
+Pokemon = SQUIRTLE,18
+#-------------------------------
+[CHAMPION,Blue]
+LoseText = A good battle indeed!
+Pokemon = VENUSAUR,63
+    Item = SITRUSBERRY
+Pokemon = CHARIZARD,63
+    Item = SITRUSBERRY
+Pokemon = BLASTOISE,63
+    Item = SITRUSBERRY
+#-------------------------------
+[RIVAL1,Gary]
+LoseText = What?! I can't believe I lost!
+Pokemon = PIDGEY,5
+#-------------------------------
+[RIVAL1,Gary,1]
+LoseText = You got lucky this time!
+Pokemon = PIDGEOTTO,17
+Pokemon = RATTATA,15
+Pokemon = EEVEE,18
+
+#===============================================================================
+# TEST TRAINERS - Battle Mechanics Testing
+# These trainers test Mega Evolution, Z-Moves, Dynamax, and Terastallization
+# with the Advanced AI System at level 100
+#===============================================================================
+
+#-------------------------------
+# TEST: Mega Evolution
+#-------------------------------
+[AITESTER_M,MegaTester]
+Items = HYPERPOTION,HYPERPOTION,MEGARING
+
+LoseText = Your Mega Evolution strategy was better!
+SkillLevel = 100
+Pokemon = CHARIZARD,20
+    Item = CHARIZARDITEX
+    Moves = FLAMETHROWER,DRAGONCLAW,AIRSLASH,ROOST
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,252,4,0
+Pokemon = LUCARIO,20
+    Item = LUCARIONITE
+    Moves = AURASPHERE,FLASHCANNON,CLOSECOMBAT,EXTREMESPEED
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,252,4,0
+Pokemon = GENGAR,20
+    Item = GENGARITE
+    Moves = SHADOWBALL,SLUDGEBOMB,FOCUSBLAST,DESTINYBOND
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+
+#-------------------------------
+# TEST: Dynamax
+#-------------------------------
+[AITESTER_F,DynamaxTester]
+Items = HYPERPOTION,HYPERPOTION,DYNAMAXBAND
+LoseText = Your Dynamax timing was perfect!
+SkillLevel = 100
+Pokemon = CINDERACE,20
+    DynamaxLevel = 10
+    Moves = PYROBALL,HIGHJUMPKICK,UTURN,COURTCHANGE
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,4,0,252
+Pokemon = INTELEON,20
+    DynamaxLevel = 10
+    Moves = SNIPESHOT,ICEBEAM,UTURN,AIRSLASH
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = RILLABOOM,20
+    DynamaxLevel = 10
+    Moves = DRUMBEATING,KNOCKOFF,UTURN,HIGHHORSEPOWER
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 252,252,0,0,4,0
+
+#-------------------------------
+# TEST: Terastallization
+#-------------------------------
+[AITESTER_M,TeraTester]
+Items = HYPERPOTION,HYPERPOTION,TERAORB
+LoseText = Your Tera strategy was superior!
+SkillLevel = 100
+Pokemon = PIKACHU,20
+    TeraType = WATER
+    Moves = THUNDERBOLT,SURF,VOLTSWITCH,KNOCKOFF
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = GARCHOMP,20
+    TeraType = FAIRY
+    Moves = EARTHQUAKE,DRAGONCLAW,STONEEDGE,SWORDSDANCE
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,4,0,252
+Pokemon = AEGISLASH,20
+    TeraType = GHOST
+    Moves = SHADOWBALL,FLASHCANNON,SHADOWSNEAK,KINGSSHIELD
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 252,252,0,4,0,0
+
+#-------------------------------
+# TEST: Z-Moves
+#-------------------------------
+[AITESTER_F,ZMoveTester]
+Items = HYPERPOTION,HYPERPOTION,ZPOWERRING
+LoseText = Your Z-Move was devastating!
+SkillLevel = 100
+Pokemon = RAICHU,20
+    Item = PIKANIUMZ
+    Moves = THUNDERBOLT,VOLTSWITCH,GRASSKNOT,NASTYPLOT
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = DECIDUEYE,20
+    Item = DECIDIUMZ
+    Moves = SPIRITSHACKLE,LEAFBLADE,UTURN,SWORDSDANCE
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,4,0,252
+Pokemon = PRIMARINA,20
+    Item = PRIMARIUMZ
+    Moves = SPARKLINGARIA,MOONBLAST,PSYCHIC,CALMMIND
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 252,0,0,252,4,0
+
+#-------------------------------
+# TEST: Mixed Mechanics (All at once!)
+#-------------------------------
+[CHAMPION,MechanicMaster]
+Items = FULLRESTORE,FULLRESTORE,FULLRESTORE,MEGARING,DYNAMAXBAND,TERAORB,ZPOWERRING
+LoseText = You've mastered all battle mechanics!
+SkillLevel = 100
+Pokemon = CHARIZARD,25
+    Item = CHARIZARDITEY
+    Moves = FLAMETHROWER,AIRSLASH,SOLARBEAM,ROOST
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = CINDERACE,25
+    DynamaxLevel = 10
+    Moves = PYROBALL,HIGHJUMPKICK,UTURN,IRONHEAD
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,4,0,252
+Pokemon = GARCHOMP,25
+    TeraType = STEEL
+    Moves = EARTHQUAKE,DRAGONCLAW,STONEEDGE,SWORDSDANCE
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,4,0,252
+Pokemon = RAICHU,25
+    Item = ALORAICHIUMZ
+    Moves = THUNDERBOLT,PSYCHIC,GRASSKNOT,NASTYPLOT
+    AbilityIndex = 0
+    Form = 1
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = LUCARIO,25
+    Item = LUCARIONITE
+    Moves = AURASPHERE,FLASHCANNON,CLOSECOMBAT,EXTREMESPEED
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,252,4,0
+Pokemon = DRAGAPULT,25
+    TeraType = DRAGON
+    Moves = DRACOMETEOR,SHADOWBALL,UTURN,FIREBLAST
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+
+#-------------------------------
+# TEST: Doubles Battle with Mechanics
+#-------------------------------
+[COOLCOUPLE,MechanicDuo]
+Items = MEGARING,DYNAMAXBAND,TERAORB
+LoseText = Your doubles strategy was flawless!
+SkillLevel = 100
+DoubleBattle = true
+Pokemon = CHARIZARD,22
+    Item = CHARIZARDITEX
+    Moves = HEATWAVE,AIRSLASH,PROTECT,TAILWIND
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = RILLABOOM,22
+    DynamaxLevel = 10
+    Moves = DRUMBEATING,KNOCKOFF,PROTECT,GRASSYGLIDE
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 252,252,0,0,4,0
+Pokemon = INTELEON,22
+    DynamaxLevel = 10
+    Moves = SNIPESHOT,ICEBEAM,PROTECT,UTURN
+    AbilityIndex = 2
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = AEGISLASH,22
+    TeraType = FAIRY
+    Moves = FLASHCANNON,SHADOWBALL,KINGSSHIELD,WIDEGUARD
+    AbilityIndex = 0
+    IV = 31,31,31,31,31,31
+    EV = 252,252,0,4,0,0
+
+
+#-------------------------------
+[POKEMONTRAINER_Red, Tester]
+LoseText = Great test!
+Pokemon = SABLEYE,20
+    Moves = WILLOWISP,RECOVER,TAUNT,KNOCKOFF
+    Ability = PRANKSTER
+    Item = LEFTOVERS
+    Nature = BOLD
+    IV = 31,31,31,31,31,31
+    EV = 252,0,252,0,4,0
+Pokemon = MURKROW,20
+    Moves = THUNDERWAVE,TAILWIND,ROOST,FOULPLAY
+    Ability = PRANKSTER
+    Item = EVIOLITE
+    Nature = CALM
+    IV = 31,31,31,31,31,31
+    EV = 252,0,252,0,4,0
+Pokemon = FERROSEED,20
+    Moves = LEECHSEED,PROTECT,GYROBALL,STEALTHROCK
+    Ability = IRONBARBS
+    Item = ROCKYHELMET
+    Nature = RELAXED
+    IV = 31,31,31,31,31,0
+    EV = 252,4,252,0,0,0
+Pokemon = MIENFOO,20
+    Moves = UTURN,FAKEOUT,HIGHJUMPKICK,KNOCKOFF
+    Ability = REGENERATOR
+    Item = LIFEORB
+    Nature = JOLLY
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,0,4,252
+Pokemon = VULPIX,20
+    Moves = FLAMETHROWER,WILLOWISP,HEX,PROTECT
+    Ability = DROUGHT
+    Item = HEATROCK
+    Nature = TIMID
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = EEVEE,20
+    Moves = QUICKATTACK,BITE,CHARM,HELPINGHAND
+    Ability = ADAPTABILITY
+    Item = SILKSCARF
+    Nature = ADAMANT
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,0,4,252
+#-------------------------------
+# SHATTERED CROWNS - Rival Ragnar
+#-------------------------------
+[RIVAL_RAGNAR,Ragnar]
+LoseText = Hmph... You've gotten stronger.
+Pokemon = RIOLU,8
+    Moves = QUICKATTACK,COUNTER,FORCEPALM,FEINT
+    Nature = ADAMANT
+#-------------------------------
+[RIVAL_RAGNAR,Ragnar,1]
+LoseText = This changes nothing!
+Pokemon = RIOLU,14
+    Moves = QUICKATTACK,FORCEPALM,COUNTER,METALCLAW
+    Nature = ADAMANT
+Pokemon = PIDGEY,12
+    Moves = GUST,QUICKATTACK,SANDATTACK,TACKLE
+#-------------------------------
+[RIVAL_RAGNAR,Ragnar,2]
+LoseText = I underestimated you... again.
+Pokemon = LUCARIO,26
+    Moves = AURASPHERE,QUICKATTACK,METALCLAW,BONERUSH
+    Nature = ADAMANT
+    Item = SITRUSBERRY
+Pokemon = PIDGEOTTO,24
+    Moves = WINGATTACK,GUST,QUICKATTACK,TWISTER
+Pokemon = GROWLITHE,23
+    Moves = FLAMEWHEEL,BITE,REVERSAL,ROAR
+#-------------------------------
+[RIVAL_RAGNAR,Ragnar,3]
+LoseText = You... you're actually strong.
+Pokemon = LUCARIO,35
+    Moves = AURASPHERE,CLOSECOMBAT,FLASHCANNON,EXTREMESPEED
+    Nature = ADAMANT
+    Item = EXPERTBELT
+Pokemon = PIDGEOT,33
+    Moves = AIRSLASH,HURRICANE,ROOST,HEATWAVE
+Pokemon = ARCANINE,34
+    Moves = FLAMETHROWER,EXTREMESPEED,CRUNCH,WILDCHARGE
+Pokemon = GALLADE,32
+    Moves = PSYCHOCUT,CLOSECOMBAT,LEAFBLADE,SWORDSDANCE
+#-------------------------------
+# SHATTERED CROWNS - Gym Leader Flora (Bug)
+#-------------------------------
+[LEADER_FLORA,Flora]
+Items = SUPERPOTION,SUPERPOTION
+LoseText = You've truly blossomed as a trainer!
+Pokemon = BUTTERFREE,14
+    Moves = CONFUSION,SLEEPPOWDER,GUST,STUNSPORE
+    AbilityIndex = 0
+    Gender = female
+Pokemon = BEEDRILL,14
+    Moves = FURYATTACK,TWINEEDLE,FOCUSENERGY,POISONSTING
+    AbilityIndex = 0
+    Gender = female
+Pokemon = VIVILLON,16
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,LIGHTSCREEN
+    AbilityIndex = 0
+    Gender = female
+    Item = SITRUSBERRY
+#-------------------------------
+# SHATTERED CROWNS - Gym Leader Marina (Water)
+#-------------------------------
+[LEADER_MARINA,Marina]
+Items = SUPERPOTION,SUPERPOTION
+LoseText = The tide turns in your favor!
+Pokemon = STARYU,20
+    Moves = WATERPULSE,SWIFT,RECOVER,CONFUSERAY
+    AbilityIndex = 0
+Pokemon = WARTORTLE,21
+    Moves = WATERPULSE,BITE,AQUARING,PROTECT
+    AbilityIndex = 0
+    Gender = male
+Pokemon = DEWGONG,23
+    Moves = AURORABEAM,WATERPULSE,ICESHARD,AQUARING
+    AbilityIndex = 0
+    Gender = female
+    Item = SITRUSBERRY
+#-------------------------------
+# SHATTERED CROWNS - Gym Leader Rocky (Rock)
+#-------------------------------
+[LEADER_ROCKY,Rocky]
+Items = HYPERPOTION,HYPERPOTION
+LoseText = You're rock solid, trainer!
+Pokemon = GRAVELER,26
+    Moves = ROCKSLIDE,EARTHQUAKE,DEFENSECURL,BULLDOZE
+    AbilityIndex = 0
+    Gender = male
+Pokemon = ONIX,27
+    Moves = ROCKSLIDE,DIG,IRONTAIL,SANDSTORM
+    AbilityIndex = 0
+    Gender = male
+Pokemon = GOLEM,29
+    Moves = ROCKSLIDE,EARTHQUAKE,EXPLOSION,STEALTHROCK
+    AbilityIndex = 0
+    Gender = male
+    Item = SITRUSBERRY
+#-------------------------------
+# SHATTERED CROWNS - Cult Trainers
+#-------------------------------
+[CULTIST,Grunt,1]
+LoseText = The Shattered Hand will prevail!
+Pokemon = ZUBAT,18
+Pokemon = GRIMER,19
+#-------------------------------
+[CULTIST,Grunt,2]
+LoseText = You cannot stop what is coming!
+Pokemon = GOLBAT,25
+Pokemon = MUK,26
+Pokemon = HAUNTER,24
+#-------------------------------
+[CULT_ACOLYTE,Acolyte,1]
+LoseText = Lord Malachar will have his revenge!
+Pokemon = SABLEYE,30
+    Moves = SHADOWBALL,CONFUSERAY,FOULPLAY,WILLOWISP
+Pokemon = DUSCLOPS,32
+    Moves = SHADOWPUNCH,WILLOWISP,CURSE,CONFUSERAY
+Pokemon = SPIRITOMB,31
+    Moves = DARKPULSE,SHADOWBALL,HYPNOSIS,DREAMEATER
+#-------------------------------
+[GENERAL_SHADE,Shade]
+Items = FULLRESTORE,FULLRESTORE
+LoseText = Impressive... but this is far from over.
+Pokemon = HONCHKROW,48
+    Moves = DARKPULSE,BRAVEBIRD,HEATWAVE,NASTYPLOT
+    Nature = MODEST
+    Item = LIFEORB
+    IV = 31,31,31,31,31,31
+Pokemon = WEAVILE,47
+    Moves = NIGHTSLASH,ICEPUNCH,BRICKBREAK,SWORDSDANCE
+    Nature = JOLLY
+    IV = 31,31,31,31,31,31
+Pokemon = BISHARP,49
+    Moves = IRONHEAD,NIGHTSLASH,SWORDSDANCE,SUCKERPUNCH
+    Nature = ADAMANT
+    Item = FOCUSSASH
+    IV = 31,31,31,31,31,31
+Pokemon = DUSKNOIR,48
+    Moves = SHADOWPUNCH,EARTHQUAKE,ICEPUNCH,THUNDERPUNCH
+    Nature = ADAMANT
+    IV = 31,31,31,31,31,31
+Pokemon = SPIRITOMB,50
+    Moves = DARKPULSE,SHADOWBALL,WILLOWISP,CALMMIND
+    Nature = BOLD
+    Item = LEFTOVERS
+    IV = 31,31,31,31,31,31
+#-------------------------------
+[MALACHAR,Malachar]
+Items = FULLRESTORE,FULLRESTORE,FULLRESTORE
+LoseText = No... the fragments... how?!
+Pokemon = HYDREIGON,68
+    Moves = DARKPULSE,DRACOMETEOR,FLAMETHROWER,FLASHCANNON
+    Nature = TIMID
+    Item = LIFEORB
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = TYRANITAR,67
+    Moves = STONEEDGE,CRUNCH,EARTHQUAKE,DRAGONDANCE
+    Nature = ADAMANT
+    Item = FOCUSSASH
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,0,4,252
+Pokemon = CHANDELURE,66
+    Moves = SHADOWBALL,FIREBLAST,ENERGYBALL,TRICKROOM
+    Nature = QUIET
+    Item = CHOICESPECS
+    IV = 31,31,31,31,31,0
+    EV = 252,0,0,252,4,0
+Pokemon = AEGISLASH,67
+    Moves = SHADOWBALL,FLASHCANNON,KINGSSHIELD,SHADOWSNEAK
+    Nature = QUIET
+    IV = 31,31,31,31,31,31
+    EV = 252,0,4,252,0,0
+Pokemon = GRIMMSNARL,66
+    Moves = SPIRITBREAK,DARKESTLARIAT,THUNDERWAVE,TAUNT
+    Nature = IMPISH
+    Item = LIGHTCLAY
+    IV = 31,31,31,31,31,31
+    EV = 252,0,252,0,4,0
+Pokemon = DARKRAI,70
+    Moves = DARKPULSE,DARKVOID,DREAMEATER,NASTYPLOT
+    Nature = TIMID
+    Item = LEFTOVERS
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252

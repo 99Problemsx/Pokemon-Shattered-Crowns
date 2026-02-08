@@ -1,0 +1,16 @@
+GameData Validation Report
+==================================================
+
+Summary:
+  Species: 1025
+  Forms: 497
+  Moves: 921
+  Abilities: 310
+  Items: 1160
+  Types: 20
+  Trainer Types: 92
+  Ribbons: 167
+
+Errors (0):
+
+Warnings (0):

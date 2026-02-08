@@ -1,0 +1,230 @@
+#===============================================================================
+# Shattered Crowns Script System - Item Definitions
+#===============================================================================
+# Complete PBS replacement for items.txt
+# Defines items using Ruby DSL instead of text files.
+#===============================================================================
+
+module GameData
+  #=============================================================================
+  # Item - Define game items
+  #=============================================================================
+  class Item < ScriptBase
+    # Item pockets
+    POCKETS = {
+      items: 1,
+      medicine: 2,
+      pokeballs: 3,
+      tms_hms: 4,
+      berries: 5,
+      mail: 6,
+      battle_items: 7,
+      key_items: 8
+    }
+    
+    # Item categories
+    CATEGORIES = [
+      :None, :Medicine, :PokeBall, :TM, :HM, :TR, :Berry, :Mail,
+      :BattleItem, :KeyItem, :MegaStone, :ZCrystal, :Fossil,
+      :Mulch, :Apricorn, :Gem, :EvolutionStone, :TypeEnhancer,
+      :Hold, :Plate, :Memory, :Incense
+    ]
+    
+    #---------------------------------------------------------------------------
+    # Define a new item
+    # Usage:
+    #   GameData::Item.define :POTION do |item|
+    #     item.name "Potion"
+    #     item.pocket :medicine
+    #     item.price 300
+    #     item.field_use :heal_hp
+    #     item.description "Restores 20 HP."
+    #   end
+    #---------------------------------------------------------------------------
+    def self.define(id, &block)
+      id = DSL.to_id(id)
+      builder = ItemBuilder.new(id)
+      yield(builder) if block_given?
+      ScriptRegistry.register_item(id, builder.to_data)
+    end
+    
+    #---------------------------------------------------------------------------
+    # Get item data
+    #---------------------------------------------------------------------------
+    def self.get(id)
+      ScriptRegistry.get_item(DSL.to_id(id))
+    end
+    
+    def self.exists?(id)
+      !ScriptRegistry.get_item(DSL.to_id(id)).nil?
+    end
+    
+    def self.each
+      ScriptRegistry.items.each { |id, data| yield(id, data) }
+    end
+    
+    def self.count
+      ScriptRegistry.items.count
+    end
+    
+    # Get pocket ID
+    def self.pocket_id(name)
+      POCKETS[name.to_sym] || 1
+    end
+  end
+  
+  #=============================================================================
+  # ItemBuilder - Builder for item data
+  #=============================================================================
+  class ItemBuilder
+    attr_reader :id
+    
+    def initialize(id)
+      @id = id
+      @data = {
+        id: id,
+        name: id.to_s.split('_').map(&:capitalize).join(' '),
+        name_plural: nil,
+        pocket: 1,
+        price: 0,
+        sell_price: nil,
+        bp_price: nil,
+        category: :None,
+        field_use: nil,
+        battle_use: nil,
+        consumable: true,
+        show_quantity: true,
+        move: nil,
+        flags: [],
+        description: "No description."
+      }
+    end
+    
+    # Basic properties
+    def name(val); @data[:name] = val; end
+    def name_plural(val); @data[:name_plural] = val; end
+    def description(val); @data[:description] = val; end
+    
+    # Pocket
+    def pocket(val)
+      if val.is_a?(Symbol) || val.is_a?(String)
+        @data[:pocket] = Item::POCKETS[val.to_sym] || 1
+      else
+        @data[:pocket] = val
+      end
+    end
+    
+    # Shortcuts for pockets
+    def items_pocket; @data[:pocket] = 1; end
+    def medicine_pocket; @data[:pocket] = 2; end
+    def pokeballs_pocket; @data[:pocket] = 3; end
+    def tms_pocket; @data[:pocket] = 4; end
+    def berries_pocket; @data[:pocket] = 5; end
+    def mail_pocket; @data[:pocket] = 6; end
+    def battle_pocket; @data[:pocket] = 7; end
+    def key_items_pocket; @data[:pocket] = 8; end
+    
+    # Pricing
+    def price(val); @data[:price] = val; @data[:sell_price] ||= val / 2; end
+    def sell_price(val); @data[:sell_price] = val; end
+    def bp_price(val); @data[:bp_price] = val; end
+    
+    # Category
+    def category(val); @data[:category] = val; end
+    
+    # Usage
+    def field_use(val); @data[:field_use] = val; end
+    def battle_use(val); @data[:battle_use] = val; end
+    
+    # Properties
+    def consumable(val = true); @data[:consumable] = val; end
+    def not_consumable; @data[:consumable] = false; end
+    def hide_quantity; @data[:show_quantity] = false; end
+    def show_quantity(val = true); @data[:show_quantity] = val; end
+    
+    # TM/HM/TR moves
+    def teaches(move); @data[:move] = DSL.to_id(move); end
+    def move(val); @data[:move] = DSL.to_id(val); end
+    
+    # Flags
+    def flags(*vals)
+      @data[:flags].concat(vals.flatten.map { |f| DSL.to_id(f) })
+    end
+    
+    # Common item flags
+    def key_item
+      @data[:pocket] = 8
+      @data[:flags] << :KeyItem
+      @data[:consumable] = false
+    end
+    
+    def tm
+      @data[:pocket] = 4
+      @data[:category] = :TM
+    end
+    
+    def hm
+      @data[:pocket] = 4
+      @data[:category] = :HM
+      @data[:consumable] = false
+    end
+    
+    def tr
+      @data[:pocket] = 4
+      @data[:category] = :TR
+    end
+    
+    def pokeball
+      @data[:pocket] = 3
+      @data[:category] = :PokeBall
+    end
+    
+    def berry
+      @data[:pocket] = 5
+      @data[:category] = :Berry
+    end
+    
+    def mega_stone
+      @data[:category] = :MegaStone
+      @data[:consumable] = false
+    end
+    
+    def z_crystal
+      @data[:category] = :ZCrystal
+      @data[:consumable] = false
+    end
+    
+    def evo_stone
+      @data[:category] = :EvolutionStone
+    end
+    
+    def mail
+      @data[:pocket] = 6
+      @data[:category] = :Mail
+    end
+    
+    # Fling data
+    def fling_power(val); @data[:fling_power] = val; end
+    def fling_effect(val); @data[:fling_effect] = val; end
+    
+    # Natural Gift (for berries)
+    def natural_gift(type:, power:)
+      @data[:natural_gift_type] = DSL.to_id(type)
+      @data[:natural_gift_power] = power
+    end
+    
+    def to_data
+      @data[:flags].uniq!
+      # Set plural name if not set
+      @data[:name_plural] ||= "#{@data[:name]}s"
+      @data.compact
+    end
+  end
+end
+
+#===============================================================================
+# Top-level Shortcut
+#===============================================================================
+def Item
+  GameData::Item
+end

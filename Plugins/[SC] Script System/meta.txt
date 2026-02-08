@@ -1,5 +1,12 @@
 Name       = Shattered Crowns Script System
-Version    = 1.0.0
+Version    = 2.0.0
 Essentials = 21.1
 Website    = https://github.com/99Problemsx/Pokemon-Shattered-Crowns
 Credits    = Nononever
+
+# v2.0.0 - Complete PBS Replacement System
+# - Replaces all PBS text files with Ruby DSL definitions
+# - Supports: Pokemon, Moves, Abilities, Items, Types, Trainers, Encounters
+# - Includes data compiler with validation
+# - Hot reload support for development
+# - PBS migration tool included

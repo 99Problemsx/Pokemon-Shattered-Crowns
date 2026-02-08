@@ -75,15 +75,6 @@ end
 #===============================================================================
 # Block EV-raising items (Vitamins, Wings, etc.)
 #===============================================================================
-ItemHandlers::UseOnPokemon.add(:HPUP, proc { |item, qty, pkmn, scene|
-  if ChallengeModes.on?(:HARDCORE_MODE)
-    scene.pbDisplay(_INTL("Hardcore Mode prevents the use of EV-raising items!"))
-    next false
-  end
-  # Normal behavior continues if not in hardcore mode
-  ItemHandlers.triggerUseOnPokemon(:VITAMIN, item, qty, pkmn, scene)
-})
-
 # Add handlers for all vitamins
 {
   :HPUP    => :HP,
