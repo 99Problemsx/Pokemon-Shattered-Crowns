@@ -104,8 +104,7 @@ GameData::Cutscene.define :ch1_breakfast_with_family do |scene|
   scene.message "\\bMom (Aurora)\\b: That's not quite how I remember it."
   scene.message "\\bDad (Marcus)\\b: Artistic license, dear."
   
-  scene.message "You laughed. Your parents were ridiculous."
-  scene.message "But you wouldn't have it any other way."
+  # TODO: Event Sequence - Family moment, player laughs at parents' banter
 end
 
 GameData::Cutscene.define :ch1_dad_gift do |scene|
@@ -189,8 +188,7 @@ GameData::Cutscene.define :ch1_village_memories do |scene|
   
   scene.message "\\b\\PN\\b: (I'm going to miss this place...)"
   
-  scene.message "But the world was calling."
-  scene.message "And you couldn't ignore it anymore."
+  # TODO: Event Sequence - World calling, can't ignore it anymore
   
   # TODO: Event Sequence - Lab Approach
   # scene.message "The Professor's lab rose ahead."
@@ -458,7 +456,7 @@ GameData::Cutscene.define :ch1_receive_pokedex do |scene|
   scene.message "\\bProfessor Aldric\\b: I'm also giving you these Pokéballs."
   scene.message "\\bProfessor Aldric\\b: Use them to catch wild Pokémon."
   
-  scene.message "You received 5 Pokéballs!"
+  scene.script { pbReceiveItem(:POKEBALL, 5) }
   
   scene.message "\\bProfessor Aldric\\b: Now go, \\PN."
   scene.message "\\bProfessor Aldric\\b: Your adventure awaits!"
@@ -528,13 +526,11 @@ GameData::Cutscene.define :ch1_first_wild_battle do |scene|
   scene.camera_shake 2, 20
   scene.wait 30
   
-  scene.message "Victory!"
+  # TODO: Event Sequence - Victory celebration
   
   scene.message "\\b\\PN\\b: Great job! You're amazing!"
-  scene.message "Your starter puffed up with pride."
   
-  scene.message "This was just the beginning."
-  scene.message "But it felt like the start of something incredible."
+  # TODO: Event Sequence - Starter puffs up with pride, start of something incredible
 end
 
 GameData::Cutscene.define :ch1_strange_dream do |scene|
@@ -583,7 +579,8 @@ GameData::Cutscene.define :ch1_dream_details do |scene|
   scene.message "\\b\\PN\\b: *petting* It's okay, buddy."
   scene.message "\\b\\PN\\b: Probably just a weird dream."
   
-  scene.message "But somehow... you didn't believe that."
+  # TODO: Event Sequence - Lingering doubt
+  # - Player senses something more to the dream
 end
 
 GameData::Cutscene.define :ch1_route_exploration do |scene|
@@ -757,13 +754,12 @@ GameData::Cutscene.define :ch2_ragnar_route do |scene|
   scene.message "\\bRagnar\\b: HA! Classic Broody!"
   scene.message "\\bRagnar\\b: Always overthinking everything!"
   
-  scene.message "His Pikachu sparked playfully at your starter."
+  # TODO: Event Sequence - Pikachu sparks playfully at starter
   
   scene.message "\\bRagnar\\b: Don't worry, I'll wait for you at the first Gym!"
   scene.message "\\bRagnar\\b: So I can watch you TRY to catch up!"
   
-  scene.message "He took off running, laughing."
-  scene.message "Some things never change."
+  # TODO: Event Sequence - Ragnar runs off laughing
 end
 
 GameData::Cutscene.define :ch2_farm_tour do |scene|
@@ -771,8 +767,7 @@ GameData::Cutscene.define :ch2_farm_tour do |scene|
   
   scene.message "\\bLyra\\b: Let me show you around!"
   
-  scene.message "She led you through the berry fields."
-  scene.message "Cheri, Pecha, Oran... every variety."
+  # TODO: Event Sequence - Lyra leads through berry fields (Cheri, Pecha, Oran)
   
   scene.message "\\bLyra\\b: We grow berries for the whole region!"
   scene.message "\\bLyra\\b: Grandma started this farm 40 years ago."
@@ -782,12 +777,10 @@ GameData::Cutscene.define :ch2_farm_tour do |scene|
   scene.message "\\bLyra\\b: I love it here. But..."
   scene.message "\\bLyra\\b: I've always wanted to see more."
   
-  scene.message "You helped water some plants."
-  scene.message "Fed the Miltank."
-  scene.message "Chased a runaway Wooloo."
+  # TODO: Event Sequence - Farm chores montage (watering, feeding Miltank, chasing Wooloo)
   
   scene.message "\\bLyra\\b: *laughing* Watch out for—"
-  scene.message "The Wooloo knocked you over."
+  # TODO: Event Sequence - Wooloo knocks player over
   scene.message "\\bLyra\\b: —that one. Sorry!"
 end
 
@@ -846,7 +839,7 @@ GameData::Cutscene.define :ch2_lyra_sister_mention do |scene|
   scene.message "\\bLyra\\b: She is! I want to be just like her someday."
   scene.message "\\bLyra\\b: Maybe we'll run into her on our journey!"
   
-  scene.message "(Little did you know how important that meeting would be.)"
+  # TODO: Event Sequence - Foreshadowing moment
 end
 
 GameData::Cutscene.define :ch2_sunset_talk do |scene|
@@ -912,7 +905,7 @@ GameData::Cutscene.define :ch2_grandmother_warning do |scene|
   scene.message "\\bLyra\\b: Grandma! Stop being cryptic!"
   scene.message "\\bGrandmother\\b: *laughs* Go on, you two. Have fun."
   
-  scene.message "(Strange... what did she mean?)"
+  # TODO: Event Sequence - Player ponders grandmother's cryptic warning
 end
 
 GameData::Cutscene.define :ch2_grandmother_stories do |scene|
@@ -1432,8 +1425,7 @@ end
 GameData::Cutscene.define :ch3_mask_merchant do |scene|
   scene.play_bgm 'Pokemon RSE - Slateport City'
   
-  scene.message "A mask merchant waved you over to their stall."
-  scene.message "Hundreds of masks lined the walls—Pokémon, legends, spirits."
+  # TODO: Event Sequence - Mask merchant beckons, display stall full of masks
   
   scene.message "\\bMask Merchant\\b: Ah, young travelers!"
   scene.message "\\bMask Merchant\\b: Pick a mask—it reveals your true nature!"
@@ -1456,7 +1448,7 @@ GameData::Cutscene.define :ch3_mask_merchant do |scene|
   scene.message "\\bMask Merchant\\b: Take it. No charge. It was waiting for you."
   
   scene.message "\\b\\PN\\b: Waiting...?"
-  scene.message "The merchant said nothing more, already helping other customers."
+  # TODO: Event Sequence - Merchant ignores player, returns to other customers
 end
 
 GameData::Cutscene.define :ch3_festival_story do |scene|
@@ -1485,12 +1477,12 @@ end
 GameData::Cutscene.define :ch3_storyteller_prophecy do |scene|
   scene.play_bgm 'Pokemon RSE - Mt Pyre'
   
-  scene.message "The storyteller continued, his voice dropping low."
+  # TODO: Event Sequence - Storyteller drops voice low, atmosphere intensifies
   
   scene.message "\\bOld Storyteller\\b: But the legend doesn't end there..."
   scene.message "\\bOld Storyteller\\b: The ancients spoke of a prophecy."
   
-  scene.message "The crowd fell silent."
+  # TODO: Event Sequence - Crowd falls silent
   
   scene.message "\\bOld Storyteller\\b: 'When shadows rise and crowns awaken...'"
   scene.message "\\bOld Storyteller\\b: 'Three souls bound by fate shall stand.'"
@@ -1500,13 +1492,11 @@ GameData::Cutscene.define :ch3_storyteller_prophecy do |scene|
   scene.message "\\bLyra\\b: Three souls..."
   scene.message "\\bKael\\b: It's a coincidence."
   
-  scene.message "The storyteller's eyes found yours."
-  scene.message "For a moment, they seemed to glow with ancient knowledge."
+  # TODO: Event Sequence - Storyteller locks eyes with player, eyes seem to glow
   
   scene.message "\\bOld Storyteller\\b: Perhaps. Or perhaps... the prophecy has begun."
   
-  scene.message "He smiled mysteriously and bowed."
-  scene.message "When you looked for him later, he was gone."
+  # TODO: Event Sequence - Storyteller bows mysteriously, later vanishes
 end
 
 GameData::Cutscene.define :ch3_hooded_figures do |scene|
@@ -1543,13 +1533,12 @@ GameData::Cutscene.define :ch3_ragnar_festival do |scene|
   scene.message "\\bRagnar\\b: Yeah! Said you're really nice!"
   scene.message "\\bRagnar\\b: Unlike THIS grumpy one!"
   
-  scene.message "He pointed at Kael, who glared."
+  # TODO: Event Sequence - Ragnar points at Kael, Kael glares
   
   scene.message "\\bKael\\b: Who are you?"
   scene.message "\\bRagnar\\b: Your new best friend! Obviously!"
   
-  scene.message "Kael looked at you with a 'help me' expression."
-  scene.message "You just shrugged. Welcome to your world."
+  # TODO: Event Sequence - Kael gives player pleading look, player shrugs
 end
 
 GameData::Cutscene.define :ch3_dance_festival do |scene|
@@ -2657,7 +2646,7 @@ GameData::Cutscene.define :ch6_gym2_leader_intro do |scene|
   
   scene.message "\\bSpark\\b: That's the spirit! Luxray, let's go!"
   
-  scene.message "The battle crackled with electric tension."
+  # TODO: Event Sequence - Battle starts, electric tension
 end
 
 GameData::Cutscene.define :ch6_gym2_victory do |scene|
@@ -3384,7 +3373,7 @@ GameData::Cutscene.define :ch8_marks_appear do |scene|
   # scene.message "On your forearm... a faint symbol glowed."
   # scene.message "Steel-blue light, pulsing like a heartbeat."
   
-  scene.message "(What is this...?)"
+  # TODO: Event Sequence - Player examines mysterious mark with confusion
   
   scene.set_switch SW::MARKS_APPEARED, true
 end
@@ -6174,9 +6163,10 @@ GameData::Cutscene.define :ch12_catching_breath do |scene|
   
   # Awakening of Battle Mechanic Power
   scene.message "\\i[POWER AWAKENING]"
-  scene.message "You looked down at your hands."
-  scene.message "Something had changed. You could feel it."
-  scene.message "A new weight. A new potential."
+  
+  # TODO: Event Sequence - Power awakens
+  # - Player looks at hands
+  # - Something changed, new weight, new potential
   
   mechanic_name = BattleMechanicChoice.mechanic_name
   scene.message "\\b\\PN\\b: (I feel... different.)"
@@ -6625,7 +6615,8 @@ GameData::Cutscene.define :ch13_pokemon_bonding do |scene|
   # scene.message "Shadow, initially hostile, now tolerated Willow's presence."
   
   scene.message "\\bWillow\\b: Vee vee!"
-  scene.message "The Eevee playfully batted at Shadow's tail."
+  
+  # TODO: Event Sequence - Eevee plays with Shadow's tail
   
   scene.message "\\bShadow\\b: *annoyed* Zor."
   
@@ -8830,11 +8821,9 @@ GameData::Cutscene.define :ch17_peaceful_path do |scene|
   # - Screen flicker effect
   # - Subtle dark particles at screen edges
   # - Tension music fade-in
+  # - Something wrong, chill down spine
   scene.wait 30
   scene.camera_tint :sepia, 15
-  scene.message "But even as you said it..."
-  scene.message "Something felt wrong."
-  scene.message "A chill crept down your spine."
   scene.wait 20
 end
 
@@ -8849,8 +8838,7 @@ GameData::Cutscene.define :ch17_shadow_warning do |scene|
   # - Shadow sprite stops, exclamation bubble
   # - Fur bristle animation
   # - Camera zoom on Shadow
-  scene.message "Shadow stopped mid-stride."
-  scene.message "Every hair on the Zorua's body stood on end."
+  # - Shadow stops, every hair on end
   scene.play_se 'Anim/Growl', 60
   scene.show_emotion :KAEL, :exclamation
   
@@ -8875,13 +8863,10 @@ GameData::Cutscene.define :ch17_shadow_warning do |scene|
   scene.message "\\bKael\\b: We're surrounded."
   
   # TODO: Event Sequence - Surrounded
-  # - Kael reaches for Pokeball
-  # - Yveltal mark glows on arm
+  # - Kael reaches for Pokeball, ready to release team
+  # - Yveltal mark glows on arm, pulses with warning
   # - Camera pan showing encirclement
-  scene.message "His hand moved to his belt."
-  scene.message "Ready to release his team at a moment's notice."
   scene.camera_flash 10
-  scene.message "The mark of Yveltal pulsed with warning."
   
   scene.message "\\bKael\\b: (Death is close. Too close.)"
   scene.message "\\bKael\\b: (But whose?)"
@@ -8897,12 +8882,13 @@ GameData::Cutscene.define :ch17_ambush_begins do |scene|
   # - Dark energy burst animation
   # - Cultist sprites drop from trees
   # - Encirclement formation
-  scene.message "The forest erupted in dark energy!"
+  # - Forest erupts in dark energy
   scene.play_se 'Anim/Explosion', 80
   scene.camera_shake 8, 30
   
-  scene.message "Cultists dropped from trees, emerged from bushes."
-  scene.message "Dozens of them. A coordinated strike."
+  # TODO: Event Sequence - Dozens of cultists
+  # - Drop from trees, emerge from bushes
+  # - Coordinated strike
   
   scene.show_emotion :player, :exclamation
   scene.message "\\bCultist Leader\\b: For the Shattered Hand!"
@@ -9453,29 +9439,28 @@ GameData::Cutscene.define :ch17_first_steps do |scene|
   scene.message "\\bNurse Joy\\b: Easy now. Don't push too hard."
   
   # Taking steps
+  # TODO: Event Sequence - First Steps
+  # - Partner takes shaky steps
+  # - Then another, each one a small victory
   scene.play_se 'Cries/Pokemon', 60
-  scene.message "Your partner took a shaky step."
-  scene.message "Then another. Then another."
-  scene.message "Each one a small victory."
   
   scene.show_emotion :player, :heart
   scene.message "\\b\\PN\\b: That's it. You're doing great."
   
-  # Looking up with determination
-  scene.message "Your starter looked up at you."
-  scene.message "Eyes full of determination."
-  scene.message "They weren't going to let this stop them."
-  scene.message "Not when there was still fighting to do."
+  # TODO: Event Sequence - Determination
+  # - Starter looks up at player
+  # - Eyes full of determination
+  # - Won't let this stop them
   
   scene.show_emotion :LYRA, :heart
   scene.message "\\bLyra\\b: *sniffling* They're so brave..."
   
   scene.message "\\bKael\\b: They take after their trainer."
   
-  # Unexpected compliment
+  # TODO: Event Sequence - Unexpected compliment
+  # - Player blinks at compliment
+  # - Kael shrugs, looks away
   scene.show_emotion :player, :question
-  scene.message "You blinked at the unexpected compliment."
-  scene.message "Kael just shrugged, looking away."
   
   scene.message "\\bKael\\b: What? It's true."
   
