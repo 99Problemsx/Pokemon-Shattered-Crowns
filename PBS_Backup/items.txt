@@ -6723,3 +6723,27 @@ Pocket = 8
 Price = 0
 Flags = KeyItem
 Description = Princess Elena's heirloom ring. Grants +10% to all stats in decisive battles.
+#-------------------------------
+[TOPPERCENTBADGE]
+Name = Top Percent Badge
+NamePlural = Top Percent Badges
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A badge certifying you witnessed Joey's Rattata - truly in the top percentage.
+#-------------------------------
+[ANCIENTCODEX]
+Name = Ancient Codex
+NamePlural = Ancient Codexes
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A book predating civilization, containing the secrets of the Crown's creation.
+#-------------------------------
+[ALDRICSPROTOTYPE]
+Name = Aldric's Prototype
+NamePlural = Aldric's Prototypes
+Pocket = 2
+Price = 0
+Flags = HoldItem,Fling_80
+Description = A prototype item from Project Chimera. Randomly boosts a stat each turn in battle.

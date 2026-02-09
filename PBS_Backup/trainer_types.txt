@@ -573,3 +573,13 @@ BaseMoney = 0
 SkillLevel = 100
 BattleBGM = Battle! Ultra Necrozma
 VictoryBGM = Battle victory champion
+#-------------------------------
+# Malachar - Main Antagonist
+#-------------------------------
+[CULT_LEADER]
+Name = Cult Leader
+Gender = Male
+BaseMoney = 200
+SkillLevel = 100
+BattleBGM = Battle Eternatus Phase 3
+VictoryBGM = Battle victory champion

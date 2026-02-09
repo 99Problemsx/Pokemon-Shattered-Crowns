@@ -594,3 +594,91 @@ Pokemon = GRENINJA,48
     Item = CHOICESPECS
     IV = 31,31,31,31,31,31
     EV = 0,0,0,252,4,252
+#-------------------------------
+# Joey's Ultimate Rattata (F.E.A.R. Strategy)
+#-------------------------------
+[YOUNGSTER,Joey]
+LoseText = My Rattata! It really IS in the top percentage! You've witnessed greatness!
+Pokemon = RATTATA,100
+    Moves = ENDEAVOR,QUICKATTACK,SUCKERPUNCH,PROTECT
+    Nature = JOLLY
+    AbilityIndex = 0
+    Item = FOCUSSASH
+    IV = 31,31,31,31,31,31
+    EV = 0,252,0,0,4,252
+#-------------------------------
+# Subject Zero - Chimera Battle
+#-------------------------------
+[SCIENTIST,Subject Zero]
+LoseText = ...Father... forgive... me...
+Pokemon = MEWTWO,60
+    Form = 0
+    Moves = PSYSTRIKE,DARKPULSE,RECOVER,AURASPHERE
+    Nature = TIMID
+    AbilityIndex = 0
+    Item = LIFEORB
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+#-------------------------------
+# Final Boss: Malachar with Eternatus
+#-------------------------------
+[CULT_LEADER,Malachar]
+Items = FULLRESTORE,FULLRESTORE,FULLRESTORE,FULLRESTORE
+LoseText = Impossible! Nidhoggr was supposed to end all suffering!
+Pokemon = HYDREIGON,68
+    Moves = DRACOMETEOR,DARKPULSE,FLASHCANNON,FLAMETHROWER
+    Nature = MODEST
+    AbilityIndex = 0
+    Item = CHOICESPECS
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = TYRANITAR,67
+    Moves = STONEEDGE,CRUNCH,EARTHQUAKE,DRAGONDANCE
+    Nature = ADAMANT
+    AbilityIndex = 0
+    Item = WEAKNESSPOLICY
+    IV = 31,31,31,31,31,31
+    EV = 252,252,0,0,4,0
+Pokemon = DUSKNOIR,66
+    Moves = SHADOWPUNCH,WILLOWISP,PAINSPLIT,EARTHQUAKE
+    Nature = CAREFUL
+    AbilityIndex = 0
+    Item = LEFTOVERS
+    IV = 31,31,31,31,31,31
+    EV = 252,0,128,0,128,0
+Pokemon = CHANDELURE,67
+    Moves = SHADOWBALL,FIREBLAST,ENERGYBALL,TRICKROOM
+    Nature = QUIET
+    AbilityIndex = 0
+    Item = CHOICESCARF
+    IV = 31,31,31,31,31,0
+    EV = 252,0,0,252,4,0
+Pokemon = GRIMMSNARL,68
+    Moves = SPIRITBREAK,FOULPLAY,THUNDERWAVE,REFLECT
+    Nature = IMPISH
+    AbilityIndex = 0
+    Item = LIGHTCLAY
+    IV = 31,31,31,31,31,31
+    EV = 252,0,252,0,4,0
+Pokemon = ETERNATUS,70
+    Form = 0
+    Moves = DYNAMAXCANNON,CROSSPOISON,FLAMETHROWER,RECOVER
+    Nature = TIMID
+    AbilityIndex = 0
+    Item = BLACKSLUDGE
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+#-------------------------------
+# Post-Game Boss: Eternamax Eternatus
+#-------------------------------
+[CULT_LEADER,Malachar Reborn]
+Items = FULLRESTORE,FULLRESTORE,FULLRESTORE,FULLRESTORE
+LoseText = Even in failure... I showed the world its flaws...
+Pokemon = ETERNATUS,100
+    Form = 1
+    Moves = ETERNABEAM,DYNAMAXCANNON,COSMICPOWER,RECOVER
+    Nature = MODEST
+    AbilityIndex = 0
+    Item = LEFTOVERS
+    IV = 31,31,31,31,31,31
+    EV = 252,0,0,252,0,4

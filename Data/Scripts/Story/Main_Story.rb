@@ -18290,6 +18290,121 @@ GameData::Cutscene.define :ch33_charge do |scene|
 end
 
 #===============================================================================
+# Chapter 33.5: Defeat Malachar - Stop the Ritual
+# Final confrontation with the cult leader before Nidhoggr fully manifests
+#===============================================================================
+
+GameData::Cutscene.define :ch33_5_malachar_appears do |scene|
+  scene.play_bgm 'Pokemon XY - Lysandre Theme'
+  scene.camera_shake 10, 30
+  
+  scene.message "\\bMalachar\\b: You made it this far..."
+  scene.message "\\bMalachar\\b: I must admit, I'm impressed."
+  
+  scene.message "\\b\\PN\\b: It's over, Malachar! Stop the ritual!"
+  
+  scene.message "\\bMalachar\\b: *laughs* Over? It's only just BEGINNING."
+  scene.message "\\bMalachar\\b: Nidhoggr is awakening. Nothing can stop it now."
+  
+  scene.message "\\bLyra\\b: Then we'll stop YOU first!"
+  
+  scene.message "\\bMalachar\\b: Such conviction..."
+  scene.message "\\bMalachar\\b: Let me show you WHY I lead the Shattered Hand."
+end
+
+GameData::Cutscene.define :ch33_5_malachar_power do |scene|
+  scene.play_bgm 'Pokemon USUM - Battle! Ultra Necrozma'
+  scene.camera_flash 15
+  
+  scene.message "Dark energy erupted from Malachar's form."
+  scene.message "His eyes burned with Nidhoggr's corruption."
+  
+  scene.message "\\bMalachar\\b: I've touched the Void itself!"
+  scene.message "\\bMalachar\\b: I've seen what lies beyond existence!"
+  scene.message "\\bMalachar\\b: And I will SHARE that gift with the world!"
+  
+  scene.message "\\bKael\\b: *readying* He's powered up by Nidhoggr..."
+  scene.message "\\bKael\\b: This won't be easy."
+  
+  scene.message "\\b\\PN\\b: Nothing worth doing ever is."
+  scene.message "\\b\\PN\\b: Let's finish this!"
+end
+
+GameData::Cutscene.define :ch33_5_malachar_battle do |scene|
+  scene.play_bgm 'Pokemon SWSH - Battle! Rose'
+  
+  scene.message "\\bMalachar\\b: Very well..."
+  scene.message "\\bMalachar\\b: Come, champions! Show me your strength!"
+  
+  # BATTLE: CULT_LEADER Malachar
+  # Hydreigon, Tyranitar, Dusknoir, Chandelure, Grimmsnarl, Eternatus
+  
+  scene.message "\\i[Battle Start: Cult Leader Malachar]"
+  scene.message "\\i[This is the ultimate test before the final battle!]"
+end
+
+GameData::Cutscene.define :ch33_5_malachar_defeated do |scene|
+  scene.play_bgm 'Pokemon XY - Lysandre Defeated'
+  scene.camera_shake 5, 20
+  
+  scene.message "\\bMalachar\\b: *staggering* No... this can't..."
+  scene.message "\\bMalachar\\b: I won't accept this!"
+  
+  scene.message "\\b\\PN\\b: It's over, Malachar. Surrender."
+  
+  scene.message "\\bMalachar\\b: *laughing bitterly* Surrender? SURRENDER?"
+  scene.message "\\bMalachar\\b: You don't understand..."
+  scene.message "\\bMalachar\\b: The ritual is COMPLETE."
+end
+
+GameData::Cutscene.define :ch33_5_ritual_complete do |scene|
+  scene.play_bgm 'Pokemon SwSh - Eternatus Awakens'
+  scene.camera_shake 40, 120
+  scene.camera_flash 30
+  
+  scene.message "The ground split open."
+  scene.message "Dark energy poured from the rift."
+  
+  scene.message "\\bMalachar\\b: *ecstatic* YES! YESSS!"
+  scene.message "\\bMalachar\\b: NIDHOGGR AWAKENS!"
+  
+  scene.message "\\bLyra\\b: Everyone, get back!"
+  
+  scene.message "A massive form rose from the darkness."
+  scene.message "Ancient. Corrupt. Hungry."
+  
+  scene.message "\\bNidhoggr\\b: AT LAST... I AM FREE..."
+end
+
+GameData::Cutscene.define :ch33_5_malachar_absorbed do |scene|
+  scene.play_bgm 'Pokemon SwSh - Eternatus Theme'
+  scene.camera_shake 20, 60
+  
+  scene.message "\\bMalachar\\b: *approaching Nidhoggr* Master! I have freed you!"
+  scene.message "\\bMalachar\\b: Grant me the power you promised!"
+  
+  scene.message "\\bNidhoggr\\b: POWER?"
+  scene.message "\\bNidhoggr\\b: YOU DESIRE... POWER?"
+  
+  scene.message "Dark tendrils wrapped around Malachar."
+  
+  scene.message "\\bMalachar\\b: *confused* What... what are you doing?!"
+  
+  scene.message "\\bNidhoggr\\b: I GRANT YOUR WISH..."
+  scene.message "\\bNidhoggr\\b: BECOME ONE WITH THE VOID!"
+  
+  scene.message "\\bMalachar\\b: NO! WAIT! THIS ISN'T—AAAAAAHHH!"
+  
+  scene.message "Malachar's screams echoed as Nidhoggr consumed him."
+  scene.message "His life force fed the World-Eater's awakening."
+  
+  scene.message "\\bKael\\b: ...Even he was just a tool."
+  scene.message "\\bLyra\\b: That's what happens when you deal with monsters."
+  
+  scene.message "\\b\\PN\\b: Now we have to stop the monster itself."
+end
+
+#===============================================================================
 # Chapter 34: Final Battle - Nidhoggr (Eternatus)
 #===============================================================================
 

@@ -2884,3 +2884,439 @@ end
 # - Shadow Oath Badge, Resonance Crystal, Crown Heir Ring
 # - Multiple Shiny Pokémon rewards!
 #===============================================================================
+
+#===============================================================================
+# QUEST 79: JOEY'S RATTATA - The Ultimate Challenge
+# Joey's obsession reaches its peak - can you beat his perfect Rattata?
+# Reward: Focus Sash + Top Percentage Badge
+#===============================================================================
+
+GameData::Quest.define :joeys_rattata do |q|
+  q.name "Top Percentage"
+  q.description "Joey claims his Rattata is in the top percentage. Prove him wrong... if you can."
+  q.giver "Joey"
+  q.location "Champion Road"
+  q.chapter_unlock 45
+  
+  q.objectives [
+    { id: :find_joey, text: "Find Joey on Champion Road" },
+    { id: :hear_story, text: "Listen to Joey's Rattata journey" },
+    { id: :battle_joey, text: "Battle Joey's ultimate Rattata" },
+    { id: :acknowledge, text: "Acknowledge the top percentage" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bJoey\\b: See?! I TOLD you my Rattata was special!")
+    pbMessage("\\bJoey\\b: Years of training, perfect breeding, optimal EV spreads...")
+    pbReceiveItem(:FOCUSSASH)
+    pbReceiveItem(:TOPPERCENTBADGE)
+    pbMessage("\\bJoey\\b: Now everyone will know the truth!")
+  end
+end
+
+GameData::Cutscene.define :sq_joeys_rattata_start do |scene|
+  scene.play_bgm 'Pokemon HGSS - Route 30'
+  
+  scene.message "\\bJoey\\b: \\PN! Over here!"
+  scene.message "\\bJoey\\b: I've been waiting for this moment my whole life!"
+  
+  scene.message "\\b\\PN\\b: Joey? What are you doing on Champion Road?"
+  
+  scene.message "\\bJoey\\b: Training! Preparing!"
+  scene.message "\\bJoey\\b: Everyone laughed at me and my Rattata."
+  scene.message "\\bJoey\\b: 'Just a Rattata,' they said. 'Use a real Pokémon,' they said."
+  
+  scene.message "\\bJoey\\b: But I BELIEVED."
+  scene.message "\\bJoey\\b: And now, my Rattata has reached its ultimate form!"
+end
+
+GameData::Cutscene.define :sq_joeys_rattata_story do |scene|
+  scene.play_bgm 'Pokemon HGSS - Goldenrod City'
+  
+  scene.message "\\bJoey\\b: Let me tell you the story of my Rattata."
+  
+  scene.message "\\bJoey\\b: I caught her when I was six years old."
+  scene.message "\\bJoey\\b: Everyone else wanted Pikachu, Charizard, legendaries..."
+  scene.message "\\bJoey\\b: But I saw something special in those beady eyes."
+  
+  scene.message "\\bJoey\\b: We trained every day. Rain or shine."
+  scene.message "\\bJoey\\b: We lost hundreds of battles. HUNDREDS."
+  scene.message "\\bJoey\\b: But we never gave up."
+  
+  scene.message "\\bJoey\\b: I studied every mechanic. EVs, IVs, natures, abilities..."
+  scene.message "\\bJoey\\b: I bred for six generations to get the perfect specimen."
+  scene.message "\\bJoey\\b: And now... NOW..."
+  
+  scene.message "\\bJoey\\b: Behold the TOP PERCENTAGE!"
+end
+
+GameData::Cutscene.define :sq_joeys_rattata_battle do |scene|
+  scene.play_bgm 'Pokemon HGSS - Battle! Trainer'
+  
+  scene.message "Joey sent out his Rattata!"
+  scene.message "It was... wearing a Focus Sash and looked terrifyingly determined."
+  
+  # Battle: Joey's Ultimate Rattata
+  # Level 100 Rattata with perfect stats
+  # Moves: Endeavor, Quick Attack, Sucker Punch, Protect
+  # Item: Focus Sash
+  # The infamous F.E.A.R. strategy!
+end
+
+GameData::Cutscene.define :sq_joeys_rattata_complete do |scene|
+  scene.play_bgm 'Pokemon HGSS - Pokemon Center'
+  
+  scene.message "\\bJoey\\b: *breathing heavily* That was... incredible!"
+  
+  scene.message "\\b\\PN\\b: Joey, your Rattata is genuinely terrifying."
+  
+  scene.message "\\bJoey\\b: *tears of joy* You... you really think so?"
+  scene.message "\\bJoey\\b: After all these years... someone finally understands!"
+  
+  scene.message "\\bJoey\\b: Take this Focus Sash. It's my spare."
+  scene.message "\\bJoey\\b: And this badge I made. It certifies that you've witnessed..."
+  scene.message "\\bJoey\\b: THE TOP PERCENTAGE!"
+  
+  scene.message "\\b\\PN\\b: I'll treasure it, Joey."
+  scene.message "\\bJoey\\b: Now if you'll excuse me, I need to call everyone I know."
+  scene.message "\\bJoey\\b: *pulls out phone* This might take a while..."
+end
+
+#===============================================================================
+# QUEST 80: HELENA'S RESEARCH - The Crown's Origin
+# Helena's archaeological discovery leads to ancient secrets
+# Reward: Ancient Codex (boosts all moves by 5% + lore item)
+#===============================================================================
+
+GameData::Quest.define :helenas_research do |q|
+  q.name "Unearthed Secrets"
+  q.description "Help Helena investigate an ancient ruin that may hold the Crown's origin."
+  q.giver "Helena"
+  q.location "Forgotten Excavation Site"
+  q.chapter_unlock 35
+  
+  q.objectives [
+    { id: :meet_helena, text: "Meet Helena at the excavation site" },
+    { id: :explore_ruins, text: "Explore the underground chambers" },
+    { id: :decipher_murals, text: "Help decipher the ancient murals" },
+    { id: :retrieve_codex, text: "Retrieve the Ancient Codex" },
+    { id: :escape_collapse, text: "Escape the collapsing ruins" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bHelena\\b: We made it! And we have the codex!")
+    pbMessage("\\bHelena\\b: This will revolutionize everything we know about the Crown!")
+    pbReceiveItem(:ANCIENTCODEX)
+    pbMessage("\\bHelena\\b: Keep it safe. The cult would kill for this knowledge.")
+  end
+end
+
+GameData::Cutscene.define :sq_helenas_research_start do |scene|
+  scene.play_bgm 'Pokemon XY - Geosenge Town'
+  
+  scene.message "\\bHelena\\b: \\PN! You came!"
+  scene.message "\\bHelena\\b: I found something incredible. You won't believe it."
+  
+  scene.message "\\b\\PN\\b: What is it?"
+  
+  scene.message "\\bHelena\\b: These ruins... they're not from any known civilization."
+  scene.message "\\bHelena\\b: The architecture predates the Crown Kingdom by millennia."
+  scene.message "\\bHelena\\b: I think... I think this is where the Crown was MADE."
+  
+  scene.message "\\bLyra\\b: The origin of the Crown itself?"
+  
+  scene.message "\\bHelena\\b: Exactly! But the lower chambers are unstable."
+  scene.message "\\bHelena\\b: I need backup in case of... complications."
+end
+
+GameData::Cutscene.define :sq_helenas_research_ruins do |scene|
+  scene.play_bgm 'Pokemon BW - Relic Castle'
+  
+  scene.message "The underground chambers stretched endlessly into darkness."
+  scene.message "Ancient machinery lay dormant, covered in dust and time."
+  
+  scene.message "\\bHelena\\b: *scribbling notes* Fascinating! These mechanisms..."
+  scene.message "\\bHelena\\b: They were designed to channel some kind of energy."
+  
+  scene.message "\\bKael\\b: You mean like the Crown's power?"
+  
+  scene.message "\\bHelena\\b: Similar, but... more raw. Primal."
+  scene.message "\\bHelena\\b: The Crown might just be a refined version of this."
+  
+  # TODO: Event Sequence
+  # Navigate through puzzle chambers
+  # Avoid ancient traps
+  # Battle awakened guardian Pokémon
+end
+
+GameData::Cutscene.define :sq_helenas_research_murals do |scene|
+  scene.play_bgm 'Pokemon ORAS - Cave of Origin'
+  
+  scene.message "Massive murals covered the central chamber walls."
+  scene.message "They depicted beings of immense power... and their creation."
+  
+  scene.message "\\bHelena\\b: *gasps* This is... this is everything."
+  scene.message "\\bHelena\\b: Look here—the Crown wasn't made by humans."
+  
+  scene.message "\\b\\PN\\b: Then who made it?"
+  
+  scene.message "\\bHelena\\b: According to this... Arceus itself."
+  scene.message "\\bHelena\\b: The Crown was a gift to early humanity."
+  scene.message "\\bHelena\\b: A way to maintain balance between humans and Pokémon."
+  
+  scene.message "\\bLyra\\b: And when the Crown shattered..."
+  
+  scene.message "\\bHelena\\b: The balance broke with it."
+  scene.message "\\bHelena\\b: That's why legendary Pokémon have been stirring."
+  scene.message "\\bHelena\\b: They sense the imbalance."
+end
+
+GameData::Cutscene.define :sq_helenas_research_codex do |scene|
+  scene.play_bgm 'Pokemon USUM - Ultra Megalopolis'
+  
+  scene.message "In the deepest chamber, a pedestal held an ancient book."
+  scene.message "The Ancient Codex—a record of the Crown's creation."
+  
+  scene.message "\\bHelena\\b: *reverent* This is it. The source text."
+  scene.message "\\bHelena\\b: Every ritual, every power, every secret..."
+  
+  scene.message "The moment Helena touched the codex, the ruins began to shake."
+  
+  scene.message "\\bKael\\b: That's not good."
+  scene.message "\\bHelena\\b: It must have been a trap! The codex was the trigger!"
+  scene.message "\\bLyra\\b: RUN!"
+end
+
+GameData::Cutscene.define :sq_helenas_research_escape do |scene|
+  scene.play_bgm 'Pokemon USUM - Battle! Ultra Necrozma'
+  
+  scene.message "Rocks fell as the ancient structure collapsed around you."
+  
+  # TODO: Event Sequence
+  # Timed escape sequence
+  # Quick decisions at branching paths
+  # Helena almost falls, player saves her
+  
+  scene.message "\\bHelena\\b: The ceiling! It's—"
+  scene.message "\\b\\PN\\b: Helena, watch out!"
+  
+  scene.message "You grabbed Helena and dove through the exit."
+  scene.message "Behind you, millennia of history crumbled to dust."
+end
+
+GameData::Cutscene.define :sq_helenas_research_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Shalour City'
+  
+  scene.message "\\bHelena\\b: *coughing* We... we made it."
+  scene.message "\\bHelena\\b: And the codex is intact!"
+  
+  scene.message "\\bKael\\b: That was way too close."
+  
+  scene.message "\\bHelena\\b: But worth it. \\PN, you saved my life."
+  scene.message "\\bHelena\\b: I can't thank you enough."
+  
+  scene.message "\\bHelena\\b: Take the codex. You need it more than I do."
+  scene.message "\\bHelena\\b: It might hold the key to restoring the Crown."
+  
+  scene.message "\\b\\PN\\b: Are you sure? This is your life's work."
+  
+  scene.message "\\bHelena\\b: *smiles* My life's work is understanding the past."
+  scene.message "\\bHelena\\b: YOUR work is saving the future."
+  scene.message "\\bHelena\\b: Make good use of it."
+end
+
+#===============================================================================
+# QUEST 81: PROFESSOR ALDRIC - The Failed Experiment
+# Professor Aldric's dark past catches up with him
+# Reward: Aldric's Prototype (held item, random stat boost each turn)
+#===============================================================================
+
+GameData::Quest.define :aldrics_experiment do |q|
+  q.name "The Failed Experiment"
+  q.description "Help Professor Aldric confront the consequences of his past research."
+  q.giver "Professor Aldric"
+  q.location "Abandoned Research Facility"
+  q.chapter_unlock 38
+  
+  q.objectives [
+    { id: :receive_letter, text: "Receive Aldric's urgent message" },
+    { id: :go_to_facility, text: "Travel to the abandoned facility" },
+    { id: :learn_truth, text: "Learn about Experiment Chimera" },
+    { id: :defeat_chimera, text: "Battle the escaped experiment" },
+    { id: :aldrics_choice, text: "Witness Aldric's decision" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bProfessor Aldric\\b: It's finally over...")
+    pbMessage("\\bProfessor Aldric\\b: Twenty years of guilt... finally atoned.")
+    pbReceiveItem(:ALDRICSPROTOTYPE)
+    pbMessage("\\bProfessor Aldric\\b: Take this. A reminder that science must have ethics.")
+  end
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_start do |scene|
+  scene.play_bgm 'Pokemon XY - Professor Sycamore\'s Theme'
+  
+  scene.message "An urgent letter arrived from Professor Aldric."
+  
+  scene.message "\\b[Letter]\\b"
+  scene.message "\\PN, I need your help. Something from my past has resurfaced."
+  scene.message "Something I thought buried forever."
+  scene.message "Meet me at these coordinates. Come alone if you can."
+  scene.message "I'm sorry to involve you, but I have no one else to turn to."
+  scene.message "- Aldric"
+  
+  scene.message "\\bLyra\\b: That doesn't sound good."
+  scene.message "\\bKael\\b: 'Come alone' is never a good sign."
+  scene.message "\\b\\PN\\b: He helped us. We should help him."
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_facility do |scene|
+  scene.play_bgm 'Pokemon Colosseum - The Under'
+  
+  scene.message "The abandoned facility loomed against a grey sky."
+  scene.message "Rust and decay covered what was once state-of-the-art technology."
+  
+  scene.message "\\bProfessor Aldric\\b: You came. Thank you."
+  scene.message "\\bProfessor Aldric\\b: Before we go inside... you deserve to know the truth."
+  
+  scene.message "\\bProfessor Aldric\\b: Twenty years ago, I wasn't just a Pokémon researcher."
+  scene.message "\\bProfessor Aldric\\b: I was the lead scientist of Project Chimera."
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_truth do |scene|
+  scene.play_bgm 'Pokemon SM - Aether Paradise'
+  
+  scene.message "\\bProfessor Aldric\\b: Project Chimera was meant to create the ultimate Pokémon."
+  scene.message "\\bProfessor Aldric\\b: We combined DNA from multiple species. Pushed boundaries."
+  scene.message "\\bProfessor Aldric\\b: The kingdom funded us. They wanted a weapon."
+  
+  scene.message "\\bLyra\\b: That's... unethical."
+  
+  scene.message "\\bProfessor Aldric\\b: I know. I know that NOW."
+  scene.message "\\bProfessor Aldric\\b: But back then, I was blinded by ambition."
+  scene.message "\\bProfessor Aldric\\b: We succeeded in creating something. Subject Zero."
+  
+  scene.message "\\bKael\\b: What happened to it?"
+  
+  scene.message "\\bProfessor Aldric\\b: It... escaped. During the incident, it killed three of my colleagues."
+  scene.message "\\bProfessor Aldric\\b: I sealed the facility and buried the project."
+  scene.message "\\bProfessor Aldric\\b: But last week, I received reports of sightings."
+  scene.message "\\bProfessor Aldric\\b: Subject Zero is awake. And it's coming for me."
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_inside do |scene|
+  scene.play_bgm 'Pokemon XD - Cipher Lab'
+  
+  scene.message "Inside the facility, shattered containment pods lined the walls."
+  scene.message "Claw marks scarred every surface."
+  
+  scene.message "\\bProfessor Aldric\\b: *trembling* It remembers. It remembers everything."
+  scene.message "\\bProfessor Aldric\\b: The experiments, the pain, the loneliness..."
+  
+  # TODO: Event Sequence
+  # Explore the facility
+  # Find research logs revealing the experiments
+  # Subject Zero stalks the group
+  
+  scene.message "A haunting cry echoed through the corridors."
+  
+  scene.message "\\bProfessor Aldric\\b: It's here."
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_chimera do |scene|
+  scene.play_bgm 'Pokemon USUM - Battle! Ultra Necrozma'
+  
+  scene.message "Subject Zero emerged from the shadows."
+  scene.message "A chimeric horror—parts of Mewtwo, Ditto, and unknown species fused together."
+  scene.message "Its eyes held pain, rage, and something disturbingly human."
+  
+  scene.message "\\bSubject Zero\\b: ...Fa...ther..."
+  
+  scene.message "\\bProfessor Aldric\\b: *shocked* It... it can speak?"
+  
+  scene.message "\\bSubject Zero\\b: You... made me... then... abandoned me..."
+  scene.message "\\bSubject Zero\\b: Twenty years... alone... in pain..."
+  
+  scene.message "\\bProfessor Aldric\\b: I'm sorry. I'm so sorry."
+  
+  scene.message "\\bSubject Zero\\b: Sorry... is not... ENOUGH!"
+  
+  # Battle: Subject Zero (custom chimera Pokémon)
+  # Psychic/Dark type, Level 60
+  # Ability: Adaptability
+  # Moves: Psystrike, Dark Pulse, Transform, Recover
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_choice do |scene|
+  scene.play_bgm 'Pokemon XY - Sycamore\'s Theme (Sad)'
+  
+  scene.message "Subject Zero collapsed, weakened but not defeated."
+  
+  scene.message "\\bSubject Zero\\b: End... it... please..."
+  scene.message "\\bSubject Zero\\b: I don't... want to hurt... anymore..."
+  
+  scene.message "\\bProfessor Aldric\\b: *tears streaming* I can't... I created you. I can't destroy you."
+  
+  scene.message "\\bLyra\\b: There has to be another way."
+  
+  scene.message "\\bProfessor Aldric\\b: *long pause* ...There might be."
+  scene.message "\\bProfessor Aldric\\b: The original stabilization formula. I never finished it."
+  scene.message "\\bProfessor Aldric\\b: If I complete it now... I might be able to ease its pain."
+  
+  scene.message "Aldric worked feverishly, combining old formulas with new knowledge."
+  scene.message "Hours passed. Finally, he approached Subject Zero with a syringe."
+  
+  scene.message "\\bProfessor Aldric\\b: This won't undo what I did. Nothing can."
+  scene.message "\\bProfessor Aldric\\b: But maybe... maybe you can finally rest."
+end
+
+GameData::Cutscene.define :sq_aldrics_experiment_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Forever'
+  
+  scene.message "The formula worked. Subject Zero's form stabilized."
+  scene.message "The rage faded from its eyes, replaced by peace."
+  
+  scene.message "\\bSubject Zero\\b: ...Thank... you..."
+  scene.message "\\bSubject Zero\\b: Father... I... forgive..."
+  
+  scene.message "Subject Zero's form shimmered, then dissolved into light."
+  scene.message "It was finally free."
+  
+  scene.message "\\bProfessor Aldric\\b: *sobbing* I'm sorry. I'm so sorry."
+  
+  scene.message "\\bLyra\\b: Professor..."
+  
+  scene.message "\\bProfessor Aldric\\b: *composing himself* ...Thank you, all of you."
+  scene.message "\\bProfessor Aldric\\b: For helping me face this. For not judging me."
+  
+  scene.message "\\bKael\\b: Everyone has a past, Professor."
+  scene.message "\\bKael\\b: What matters is what you do now."
+  
+  scene.message "\\bProfessor Aldric\\b: *nods* You're right."
+  scene.message "\\bProfessor Aldric\\b: Take this prototype. The only good thing to come from this project."
+  scene.message "\\bProfessor Aldric\\b: May it serve you better than it served me."
+end
+
+#===============================================================================
+# FULL QUEST REWARD SUMMARY (1-81)
+#===============================================================================
+# 1-15: Basic competitive items
+# 16-40: Advanced items and rare Pokémon
+# 41-70: Mega/Z/Gmax items, mints, patches, and legendary gear
+# 71-75: Story-related items (Guardian legends, cult infiltration)
+# 76-78: Character backstory quests (Kael, Lyra, Elena)
+# 79-81: NPC spotlight quests (Joey, Helena, Aldric)
+#
+# Total Unique Rewards:
+# - Master Ball, Gold Bottle Cap, Ability Patch
+# - All Choice Items, Life Orb, Leftovers
+# - Shiny Charm, Oval Charm, Mark Charm
+# - All Type Gems, All Z-Crystals, All Mints
+# - Mega Stones, Tera Orb, Booster Energy
+# - Key Stone, Link Cable, Power Items
+# - Beast Balls, Dream Balls, Apricorn Balls
+# - Shadow Oath Badge, Resonance Crystal, Crown Heir Ring
+# - Focus Sash, Top Percentage Badge, Ancient Codex, Aldric's Prototype
+# - Multiple Shiny Pokémon rewards!
+#===============================================================================
