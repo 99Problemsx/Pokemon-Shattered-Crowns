@@ -6683,3 +6683,19 @@ Pocket = 8
 Price = 0
 Flags = KeyItem
 Description = A faded sea chart that shows the way to a certain island.
+#-------------------------------
+[ANCIENTCROWNFRAGMENT]
+Name = Crown Fragment
+NamePlural = Crown Fragments
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = An ancient fragment pulsing with guardian energy. Collect all three to forge the Crown Pendant.
+#-------------------------------
+[CROWNPENDANT]
+Name = Crown Pendant
+NamePlural = Crown Pendants
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = A pendant forged from three Crown Fragments. When HP is critical, boosts all stats of the holder.

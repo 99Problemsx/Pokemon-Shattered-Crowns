@@ -413,6 +413,250 @@ GameData::Quest.define :ability_doctor do |q|
 end
 
 #===============================================================================
+# QUEST 16: THE GUARDIAN'S ECHO
+# Reward: Crown Pendant (boosts all stats when HP is critical)
+#===============================================================================
+
+GameData::Quest.define :guardians_echo do |q|
+  q.name "The Guardian's Echo"
+  q.description "Investigate mysterious energy readings across the region connected to ancient guardian legends."
+  q.giver "Historian Mirella"
+  q.location "Ancient Library"
+  
+  q.objective :collect_item, item: :ANCIENTCROWNFRAGMENT, count: 3
+  
+  q.on_complete do
+    pbMessage("\\bMirella\\b: You've collected all three Crown Fragments!")
+    pbMessage("\\bMirella\\b: Together, they resonate with the power of Zacian, Zamazenta, and Eternatus!")
+    pbMessage("\\bMirella\\b: Let me forge them into something useful...")
+    pbMessage("The fragments merge into a beautiful pendant!")
+    pbReceiveItem(:CROWNPENDANT)
+    pbMessage("\\bMirella\\b: The Crown Pendant will protect you when hope seems lost.")
+    pbMessage("\\bMirella\\b: May the Guardians watch over you, Chosen One.")
+  end
+end
+
+GameData::Cutscene.define :sq_guardians_echo_start do |scene|
+  scene.play_bgm 'Pokemon SwSh - Slumbering Weald'
+  
+  scene.message "\\bMirella\\b: Ah, a visitor to my library..."
+  scene.message "\\bMirella\\b: Wait. That mark on your hand!"
+  
+  scene.message "\\b\\PN\\b: You can see it?"
+  
+  scene.message "\\bMirella\\b: I've studied the ancient texts for decades."
+  scene.message "\\bMirella\\b: You bear Zacian's blessing. The mark of the Chosen."
+  
+  # TODO: Event Sequence - Mirella approaches
+  # - Old historian moves closer
+  # - Examines mark with magnifying glass
+  
+  scene.message "\\bMirella\\b: There are places... where the barrier between worlds is thin."
+  scene.message "\\bMirella\\b: Where echoes of the ancient guardians still linger."
+  scene.message "\\bMirella\\b: Three locations hold fragments of their power."
+  
+  scene.message "\\b\\PN\\b: Where are these places?"
+  
+  scene.message "\\bMirella\\b: The Weeping Falls, where Zacian once rested..."
+  scene.message "\\bMirella\\b: The Iron Ruins, where Zamazenta stood vigil..."
+  scene.message "\\bMirella\\b: And the Void Chasm, where Eternatus was first sealed."
+  
+  scene.message "\\bMirella\\b: Find the Crown Fragments at each location."
+  scene.message "\\bMirella\\b: Together, they hold great power."
+  
+  scene.message "\\b\\PN\\b: I'll find them."
+  
+  scene.message "\\bMirella\\b: Be careful, Chosen One."
+  scene.message "\\bMirella\\b: The echoes... they test those who seek them."
+end
+
+GameData::Cutscene.define :sq_guardians_echo_zacian do |scene|
+  scene.play_bgm 'Pokemon SwSh - Legendary Dogs'
+  
+  # TODO: Event Sequence - Arrival at Weeping Falls
+  # - Mist parts as player approaches
+  # - Ancient sword marking on stone
+  # - Blue energy pulses
+  
+  scene.message "\\bZacian Echo\\b: Who dares approach the Falls of Valor?"
+  
+  scene.camera_shake 3, 15
+  
+  # TODO: Event Sequence - Echo Manifestation
+  # - Spectral form of Zacian appears
+  # - Not solid, translucent blue energy
+  # - Eyes glow with recognition
+  
+  scene.message "\\bZacian Echo\\b: ...The mark."
+  scene.message "\\bZacian Echo\\b: You carry my blessing."
+  
+  scene.message "\\b\\PN\\b: Zacian? But... you're with me already."
+  
+  scene.message "\\bZacian Echo\\b: I am but a memory. An echo of times past."
+  scene.message "\\bZacian Echo\\b: Left here to guard this fragment until the Chosen arrived."
+  
+  scene.message "\\bZacian Echo\\b: Answer me, Chosen One."
+  scene.message "\\bZacian Echo\\b: What is true strength?"
+  
+  scene.choice ["Protecting those you love", "Never giving up", "The bonds we share"] do |choice|
+    pbMessage("\\bZacian Echo\\b: ...")
+    pbMessage("\\bZacian Echo\\b: All answers hold truth.")
+    pbMessage("\\bZacian Echo\\b: But remember - strength without love is merely violence.")
+  end
+  
+  scene.message "\\bZacian Echo\\b: Take this fragment. You have earned it."
+  
+  scene.camera_flash 15
+  
+  scene.script do
+    pbReceiveItem(:ANCIENTCROWNFRAGMENT)
+    pbMessage("Obtained CROWN FRAGMENT (VALOR)!")
+  end
+  
+  scene.message "\\bZacian Echo\\b: Two more await. Seek them with courage."
+  
+  # TODO: Event Sequence - Echo Fades
+  # - Blue light dissipates
+  # - Warmth remains in the air
+end
+
+GameData::Cutscene.define :sq_guardians_echo_zamazenta do |scene|
+  scene.play_bgm 'Pokemon SwSh - Legendary Dogs'
+  
+  # TODO: Event Sequence - Iron Ruins
+  # - Ancient stone fortification
+  # - Shield emblem carved into walls
+  # - Red energy pulses from center
+  
+  scene.message "\\bZamazenta Echo\\b: HALT!"
+  
+  scene.camera_shake 5, 20
+  
+  # TODO: Event Sequence - Echo Manifestation
+  # - Massive spectral shield forms
+  # - Red energy coalesces into Zamazenta's form
+  # - Protective stance
+  
+  scene.message "\\bZamazenta Echo\\b: None may pass without proving their heart."
+  
+  scene.message "\\b\\PN\\b: I carry Zacian's mark. I seek the Crown Fragment."
+  
+  scene.message "\\bZamazenta Echo\\b: The mark means nothing without the will to use it."
+  scene.message "\\bZamazenta Echo\\b: I shall test you!"
+  
+  scene.trainer_battle :GUARDIAN_ECHO, "Zamazenta Echo", 0
+  
+  scene.message "\\bZamazenta Echo\\b: *impressed* You fight with conviction."
+  scene.message "\\bZamazenta Echo\\b: Not for glory. For others."
+  scene.message "\\bZamazenta Echo\\b: That is the heart of a true protector."
+  
+  scene.camera_flash 15
+  
+  scene.script do
+    pbReceiveItem(:ANCIENTCROWNFRAGMENT)
+    pbMessage("Obtained CROWN FRAGMENT (PROTECTION)!")
+  end
+  
+  scene.message "\\bZamazenta Echo\\b: One fragment remains. In the darkest place."
+  scene.message "\\bZamazenta Echo\\b: Face your fears, Chosen One."
+  
+  # TODO: Event Sequence - Echo fades into shield stones
+end
+
+GameData::Cutscene.define :sq_guardians_echo_eternatus do |scene|
+  scene.play_bgm 'Pokemon SwSh - Eternatus Phase 2'
+  
+  # TODO: Event Sequence - Void Chasm
+  # - Darkness swirls
+  # - Purple energy crackles
+  # - Oppressive atmosphere
+  
+  scene.message "\\bEternatus Echo\\b: So... you have come."
+  
+  scene.camera_shake 8, 25
+  
+  # TODO: Event Sequence - Eternatus manifestation
+  # - Massive skeletal form
+  # - Purple and pink energy
+  # - Eyes burn with ancient power
+  
+  scene.message "\\bEternatus Echo\\b: The light-bearers sent their puppet."
+  
+  scene.message "\\b\\PN\\b: I'm no puppet. I make my own choices."
+  
+  scene.message "\\bEternatus Echo\\b: Do you? Or do you simply follow the path laid before you?"
+  scene.message "\\bEternatus Echo\\b: Zacian chose you. Zamazenta accepted you."
+  scene.message "\\bEternatus Echo\\b: But I... I shall show you truth."
+  
+  # TODO: Event Sequence - Vision sequence
+  # - Player sees themselves failing
+  # - Friends falling
+  # - World ending
+  
+  scene.message "\\bEternatus Echo\\b: This is what awaits. Can you bear it?"
+  
+  scene.choice ["I'll change that future", "I'm not afraid"] do |choice|
+    if choice == 0
+      pbMessage("\\bEternatus Echo\\b: ...Change? Foolish.")
+      pbMessage("\\bEternatus Echo\\b: And yet... that foolishness is what defeated me once.")
+    else
+      pbMessage("\\bEternatus Echo\\b: Fear is wisdom. But courage... is greater.")
+    end
+  end
+  
+  scene.message "\\bEternatus Echo\\b: Take the fragment, Chosen One."
+  scene.message "\\bEternatus Echo\\b: Chaos acknowledges your will."
+  
+  scene.camera_flash 20
+  
+  scene.script do
+    pbReceiveItem(:ANCIENTCROWNFRAGMENT)
+    pbMessage("Obtained CROWN FRAGMENT (ETERNITY)!")
+    pbMessage("You have collected all three Crown Fragments!")
+    pbMessage("Return to Historian Mirella at the Ancient Library.")
+  end
+  
+  scene.message "\\bEternatus Echo\\b: When darkness comes again..."
+  scene.message "\\bEternatus Echo\\b: Remember - even chaos can be wielded for light."
+  
+  # TODO: Event Sequence - Echo dissipates into void
+end
+
+GameData::Cutscene.define :sq_guardians_echo_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Victory Road'
+  
+  scene.message "\\bMirella\\b: You've returned! And the fragments..."
+  
+  # TODO: Event Sequence - Fragments React
+  # - Three fragments float from bag
+  # - Orbit each other
+  # - Blue, red, purple light intertwines
+  
+  scene.camera_flash 25
+  
+  scene.message "\\bMirella\\b: Magnificent! They're resonating!"
+  scene.message "\\bMirella\\b: Quick, place them on the altar!"
+  
+  # TODO: Event Sequence - Fusion
+  # - Player places fragments on ancient altar
+  # - Blinding light
+  # - When it fades, a pendant remains
+  
+  scene.message "\\bMirella\\b: The Crown Pendant..."
+  scene.message "\\bMirella\\b: Forged from the essence of three guardians."
+  scene.message "\\bMirella\\b: It will protect you in your darkest hour."
+  
+  scene.message "\\b\\PN\\b: Thank you, Mirella. For everything."
+  
+  scene.message "\\bMirella\\b: No, Chosen One. Thank YOU."
+  scene.message "\\bMirella\\b: I spent my life studying legends."
+  scene.message "\\bMirella\\b: And now... I've met one."
+  
+  scene.message "\\bMirella\\b: Go. Fulfill your destiny."
+  scene.message "\\bMirella\\b: The guardians believe in you. As do I."
+end
+
+#===============================================================================
 # SIDE STORY: LYRA'S FARM (Relaxation)
 #===============================================================================
 
@@ -498,6 +742,8 @@ end
 # Quest 12: Shiny Charm (shiny odds)
 # Quest 13: Lucky Egg (exp boost)
 # Quest 14: Destiny Knot (IV breeding)
+# Quest 15: Ability Capsule (ability change)
+# Quest 16: Crown Pendant (all stats boost at critical HP)
 # Quest 15: Ability Capsule (ability change)
 #===============================================================================
 
