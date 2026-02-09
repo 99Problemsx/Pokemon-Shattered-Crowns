@@ -18928,31 +18928,37 @@ GameData::Cutscene.define :ch36_intro do |scene|
   scene.message "\\ts[]ACT 5: THE ETERNAL SEAL"
   scene.message "\\ts[]Chapter 36: One Year Later"
   
-  scene.message "A year had passed since Nidhoggr's sealing."
-  scene.message "The world had healed. People had moved on."
-  scene.message "But you hadn't forgotten."
+  # TODO: Event Sequence - Time Skip
+  # - A year has passed since Nidhoggr's sealing
+  # - World has healed, people moved on
+  # - But player hasn't forgotten
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch36_peaceful_morning do |scene|
   scene.play_bgm 'Pokemon XY - Lumiose City'
   
-  scene.message "Morning light streamed through your window."
-  scene.message "Your starter dozed at the foot of your bed."
-  scene.message "Raichu—Ragnar's Raichu—was curled nearby."
-  
-  scene.message "A year. It still felt surreal."
+  # TODO: Event Sequence - Peaceful Morning
+  # - Morning light streams through window
+  # - Starter dozes at foot of bed
+  # - Raichu (Ragnar's) curled nearby
+  # - A year later, still feels surreal
+  scene.wait 20
   
   scene.message "\\bAurora\\b: *from downstairs* Breakfast!"
   scene.message "\\bMarcus\\b: Your mother made pancakes!"
   
-  scene.message "You smiled. Some things never changed."
+  # TODO: Event Sequence - Smile
+  # - Player smiles
+  # - Some things never change
 end
 
 GameData::Cutscene.define :ch36_breakfast do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
   
-  scene.message "The kitchen smelled like home."
-  scene.message "Mom was humming. Dad was reading the paper."
+  # TODO: Event Sequence - Kitchen Scene
+  # - Kitchen smells like home
+  # - Mom humming, Dad reading paper
   
   scene.message "\\bAurora\\b: There's my hero!"
   scene.message "\\bMarcus\\b: *grinning* Champion of Verdania AND the world."
@@ -18960,26 +18966,33 @@ GameData::Cutscene.define :ch36_breakfast do |scene|
   scene.message "\\b\\PN\\b: Dad, please..."
   scene.message "\\bMarcus\\b: What? I'm proud!"
   
-  scene.message "Your pendant pulsed warmly against your chest."
-  scene.message "Just a gentle reminder."
-  scene.message "You were never truly alone."
+  # TODO: Event Sequence - Pendant Pulse
+  # - Pendant pulses warmly against chest
+  # - Gentle reminder
+  # - Never truly alone
+  scene.camera_flash 5
 end
 
 GameData::Cutscene.define :ch36_letter_arrives do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
   
-  scene.message "A Pelipper landed at the window."
-  scene.message "It carried a letter with familiar handwriting."
+  # TODO: Event Sequence - Letter Arrives
+  # - Pelipper lands at window
+  # - Carries letter with familiar handwriting
+  scene.play_se 'Bird Cry', 60
   
   scene.message "\\bAurora\\b: From Lyra?"
   scene.message "\\b\\PN\\b: *smiling* Yeah."
   
-  scene.message "You opened it eagerly."
-  scene.message "'Hey! Sanctuary's doing great. Kael says hi (he grunted, close enough).'"
-  scene.message "'Miss you! Visit soon? - Lyra'"
+  # TODO: Event Sequence - Reading Letter
+  # - Open letter eagerly
+  # - Show letter contents on screen
+  scene.message "\\i['Hey! Sanctuary's doing great. Kael says hi (he grunted, close enough). Miss you! Visit soon? - Lyra']"
   
-  scene.message "You touched your pendant."
-  scene.message "Your mark pulsed in response."
+  # TODO: Event Sequence - Pendant Response
+  # - Touch pendant
+  # - Mark pulses in response
+  scene.camera_flash 5
 end
 
 GameData::Cutscene.define :ch36_pendant_warning do |scene|
@@ -19004,18 +19017,22 @@ GameData::Cutscene.define :ch36_vision do |scene|
   scene.play_bgm 'Pokemon RSE - Sealed Chamber'
   scene.camera_shake 10, 30
   
-  scene.message "Images flooded your mind."
-  scene.message "Darkness. Void. Chains cracking."
-  scene.message "Nidhoggr's prison... failing."
+  # TODO: Event Sequence - Vision
+  # - Images flood player's mind
+  # - Darkness, void, chains cracking
+  # - Nidhoggr's prison failing
+  scene.camera_tint :dark, 20
   
   scene.message "\\bNidhoggr's Voice\\b: DID YOU THINK IT WOULD LAST?"
   scene.message "\\bNidhoggr's Voice\\b: THE CROWN IS INCOMPLETE..."
   scene.message "\\bNidhoggr's Voice\\b: AND I AM ETERNAL..."
   
   scene.camera_flash 20
+  scene.camera_tint :reset, 10
   
-  scene.message "You gasped, returning to reality."
-  scene.message "Your parents were shaking you."
+  # TODO: Event Sequence - Return to Reality
+  # - Gasp, returning to reality
+  # - Parents are shaking player
   
   scene.message "\\bMarcus\\b: \\PN! Talk to us!"
   scene.message "\\b\\PN\\b: *shaking* I... I need to find Lyra and Kael."
@@ -19031,8 +19048,9 @@ GameData::Cutscene.define :ch36_parents_worry do |scene|
   scene.message "\\b\\PN\\b: The seal on Nidhoggr... it's weakening."
   scene.message "\\b\\PN\\b: I saw it. Felt it."
   
-  scene.message "Your parents exchanged looks."
-  scene.message "Fear. Resignation. Pride."
+  # TODO: Event Sequence - Parents Exchange Looks
+  # - Parents exchange looks
+  # - Fear, resignation, pride in their eyes
   
   scene.message "\\bMarcus\\b: Then you know what you have to do."
   scene.message "\\bAurora\\b: *hugging you* Come back to us."
@@ -19042,30 +19060,32 @@ end
 GameData::Cutscene.define :ch36_departure do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
   
-  scene.message "You gathered your team."
-  scene.message "Your starter. Raichu. The others."
+  # TODO: Event Sequence - Gather Team
+  # - Gather team: starter, Raichu, others
   
   scene.message "\\b\\PN\\b: Ready, everyone?"
   
-  scene.message "They nodded. Determined."
-  scene.message "They'd been through this before."
-  scene.message "They'd do it again."
+  # TODO: Event Sequence - Team Nods
+  # - Team nods, determined
+  # - Been through this before, will do it again
   
-  scene.message "You headed for the Sanctuary."
-  scene.message "Where Lyra and Kael waited."
-  scene.message "The journey wasn't over after all."
+  # TODO: Event Sequence - Head to Sanctuary
+  # - Head for the Sanctuary
+  # - Where Lyra and Kael wait
+  # - Journey isn't over after all
 end
 
 GameData::Cutscene.define :ch36_sanctuary_arrival do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
   
-  scene.message "The Pokémon Sanctuary was beautiful."
-  scene.message "Rolling hills. Happy Pokémon everywhere."
-  scene.message "Lyra and Kael's dream, realized."
+  # TODO: Event Sequence - Sanctuary View
+  # - Pokemon Sanctuary is beautiful
+  # - Rolling hills, happy Pokemon everywhere
+  # - Lyra and Kael's dream realized
   
-  scene.message "But as you approached..."
-  scene.message "You saw them waiting at the gate."
-  scene.message "Their faces told you everything."
+  # TODO: Event Sequence - Approaching Gate
+  # - Lyra and Kael waiting at gate
+  # - Their faces tell everything
   
   scene.message "\\bLyra\\b: You felt it too."
   scene.message "\\bKael\\b: The seal is failing."
@@ -19078,8 +19098,9 @@ GameData::Cutscene.define :ch36_reunion do |scene|
   scene.message "\\bLyra\\b: Last night. My bracelet started burning."
   scene.message "\\bKael\\b: My ring too. Yveltal spoke to me."
   
-  scene.message "Willow and Shadow stood beside their trainers."
-  scene.message "Evolved. Powerful. Ready."
+  # TODO: Event Sequence - Partners
+  # - Willow and Shadow stand beside trainers
+  # - Evolved, powerful, ready
   
   scene.message "\\bKael\\b: The Crown of Unity wasn't complete."
   scene.message "\\bKael\\b: We used fragments. Improvised."
@@ -19121,8 +19142,10 @@ GameData::Cutscene.define :ch36_preparing do |scene|
   scene.message "\\b\\PN\\b: Tomorrow, we head out."
   scene.message "\\b\\PN\\b: Whatever it takes."
   
-  scene.message "Three pendants pulsed in unison."
-  scene.message "The Chosen Ones were together again."
+  # TODO: Event Sequence - Pendants Pulse
+  # - Three pendants pulse in unison
+  # - The Chosen Ones are together again
+  scene.camera_flash 10
 end
 
 GameData::Cutscene.define :ch36_night_vision do |scene|
@@ -19130,10 +19153,10 @@ GameData::Cutscene.define :ch36_night_vision do |scene|
   scene.play_bgm 'Pokemon RSE - Sealed Chamber'
   scene.fade_in
   
-  scene.message "That night, you dreamed."
-  scene.message "All three of you. Together."
-  
-  scene.message "The Guardians appeared—but faint. Flickering."
+  # TODO: Event Sequence - Dream
+  # - That night, all three dream together
+  # - Guardians appear but faint, flickering
+  scene.camera_tint :sepia, 20
   
   scene.message "\\bZacian\\b: The seal... was never meant to be temporary..."
   scene.message "\\bXerneas\\b: The Original Crown... shattered long ago..."
@@ -19144,15 +19167,18 @@ GameData::Cutscene.define :ch36_night_vision do |scene|
   scene.message "\\bZacian\\b: Seek... the Astral Temples..."
   scene.message "\\bZacian\\b: In Astoria... the forgotten region..."
   
-  scene.message "The vision faded."
-  scene.message "But you had a destination now."
+  # TODO: Event Sequence - Vision Fades
+  # - Vision fades
+  # - But now have a destination
+  scene.camera_tint :reset, 15
 end
 
 GameData::Cutscene.define :ch36_morning_resolve do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
   
-  scene.message "You woke to find Lyra and Kael already up."
-  scene.message "They'd had the same dream."
+  # TODO: Event Sequence - Wake Up
+  # - Wake to find Lyra and Kael already up
+  # - They had the same dream
   
   scene.message "\\bKael\\b: Astoria. I've heard legends."
   scene.message "\\bLyra\\b: A region lost to time. Beyond the eastern sea."
@@ -19163,8 +19189,9 @@ GameData::Cutscene.define :ch36_morning_resolve do |scene|
   scene.message "\\bKael\\b: *dry* More like certain doom."
   scene.message "\\b\\PN\\b: Same thing with us."
   
-  scene.message "Together, you set out."
-  scene.message "The final journey had begun."
+  # TODO: Event Sequence - Set Out
+  # - Together, set out
+  # - The final journey has begun
 end
 
 #===============================================================================
@@ -19178,23 +19205,26 @@ GameData::Cutscene.define :ch37_intro do |scene|
   
   scene.message "\\ts[]Chapter 37: The Fracture"
   
-  scene.message "The journey east took you through familiar lands."
-  scene.message "But something was... wrong."
-  scene.message "The world felt different. Unstable."
+  # TODO: Event Sequence - Journey East
+  # - Journey east through familiar lands
+  # - Something feels wrong, unstable
+  # - World feels different
 end
 
 GameData::Cutscene.define :ch37_first_fracture do |scene|
   scene.play_bgm 'Pokemon RSE - Cave'
   scene.camera_shake 15, 40
   
-  scene.message "You were crossing the mountain pass when it happened."
-  scene.message "Reality... cracked."
+  # TODO: Event Sequence - Crossing Mountain Pass
+  # - Crossing mountain pass when it happens
+  # - Reality cracks open
   
   scene.message "\\bLyra\\b: What IS that?!"
   
-  scene.message "A tear in the air itself."
-  scene.message "Purple and black. Writhing with void energy."
-  scene.message "Like a wound in existence."
+  # TODO: Event Sequence - Tear in Air
+  # - Tear in the air itself
+  # - Purple and black, writhing with void energy
+  # - Like a wound in existence
   
   scene.message "\\bKael\\b: *grim* The seal is failing faster than we thought."
   scene.message "\\bKael\\b: Nidhoggr's corruption is leaking through."
@@ -19218,8 +19248,9 @@ GameData::Cutscene.define :ch37_void_battle do |scene|
   
   scene.trainer_battle :VOIDCREATURE, 1
   
-  scene.message "The creature dissolved into nothingness."
-  scene.message "But more fractures were appearing in the distance."
+  # TODO: Event Sequence - Creature Dissolves
+  # - Creature dissolves into nothingness
+  # - More fractures appearing in distance
   
   scene.message "\\bLyra\\b: They're everywhere..."
   scene.message "\\bKael\\b: The whole region is destabilizing."
@@ -19228,8 +19259,9 @@ end
 GameData::Cutscene.define :ch37_refugees do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   
-  scene.message "You encountered travelers fleeing west."
-  scene.message "Families. Trainers. Pokémon. Terrified."
+  # TODO: Event Sequence - Travelers Fleeing
+  # - Encounter travelers fleeing west
+  # - Families, trainers, Pokemon, all terrified
   
   scene.message "\\bRefugee\\b: The eastern towns are gone!"
   scene.message "\\bRefugee\\b: Swallowed by those... those tears!"
@@ -19243,11 +19275,10 @@ end
 GameData::Cutscene.define :ch37_port_town do |scene|
   scene.play_bgm 'Pokemon XY - Lumiose City'
   
-  scene.message "You reached Port Horizon—the eastern harbor."
-  scene.message "Or what was left of it."
-  
-  scene.message "Half the town had been consumed by fractures."
-  scene.message "Ships sat abandoned. People huddled in fear."
+  # TODO: Event Sequence - Port Horizon
+  # - Reach Port Horizon, eastern harbor
+  # - Half the town consumed by fractures
+  # - Ships abandoned, people huddled in fear
   
   scene.message "\\bLyra\\b: We need a ship to Astoria."
   scene.message "\\bKael\\b: Good luck finding a captain crazy enough."
@@ -19258,8 +19289,9 @@ GameData::Cutscene.define :ch37_captain_appears do |scene|
   
   scene.message "\\bVoice\\b: I'll take you."
   
-  scene.message "An old sailor stepped forward."
-  scene.message "Weathered. Scarred. Eyes full of fire."
+  # TODO: Event Sequence - Old Sailor
+  # - Old sailor steps forward
+  # - Weathered, scarred, eyes full of fire
   
   scene.message "\\bCaptain Maren\\b: Name's Maren. I've sailed to Astoria before."
   scene.message "\\bCaptain Maren\\b: Fifty years ago. Only one who came back."
@@ -19273,8 +19305,9 @@ end
 GameData::Cutscene.define :ch37_boarding do |scene|
   scene.play_bgm 'Pokemon XY - Route Theme'
   
-  scene.message "Captain Maren's ship was old but sturdy."
-  scene.message "The Stormbreaker. Built for impossible journeys."
+  # TODO: Event Sequence - Boarding Ship
+  # - Captain Maren's ship is old but sturdy
+  # - The Stormbreaker, built for impossible journeys
   
   scene.message "\\bCaptain Maren\\b: Astoria lies three days east."
   scene.message "\\bCaptain Maren\\b: If the sea doesn't kill us first."
@@ -19282,15 +19315,16 @@ GameData::Cutscene.define :ch37_boarding do |scene|
   scene.message "\\bLyra\\b: Cheerful."
   scene.message "\\bCaptain Maren\\b: Realistic."
   
-  scene.message "You set sail as the sun set behind you."
-  scene.message "Leaving Verdania. Perhaps for the last time."
+  # TODO: Event Sequence - Setting Sail
+  # - Set sail as sun sets behind them
+  # - Leaving Verdania, perhaps for the last time
 end
 
 GameData::Cutscene.define :ch37_at_sea do |scene|
   scene.play_bgm 'Pokemon ORAS - Sailing'
   
-  scene.message "The open ocean was vast and terrifying."
-  scene.message "And beautiful. In its own way."
+  # TODO: Event Sequence - Open Ocean
+  # - Vast, terrifying, yet beautiful
   
   scene.message "\\bLyra\\b: *at the bow* I've never been this far from home."
   scene.message "\\bKael\\b: *beside her* Neither have I."
@@ -19301,40 +19335,43 @@ GameData::Cutscene.define :ch37_at_sea do |scene|
   scene.message "\\bKael\\b: ...Yes."
   scene.message "\\b\\PN\\b: Good. Me too."
   
-  scene.message "Your starters gathered around you."
-  scene.message "Together. Always together."
+  # TODO: Event Sequence - Starters Gather
+  # - Starters gather around trainers
+  # - Together, always together
 end
 
 GameData::Cutscene.define :ch37_storm do |scene|
   scene.play_bgm 'Pokemon RSE - Danger'
   scene.camera_shake 20, 60
   
-  scene.message "The storm hit on the second night."
-  scene.message "Waves as tall as mountains."
-  scene.message "Lightning splitting the sky."
+  # TODO: Event Sequence - Storm Hits
+  # - Storm hits on second night
+  # - Waves tall as mountains
+  # - Lightning splitting the sky
   
   scene.message "\\bCaptain Maren\\b: HOLD ON!"
   
-  scene.message "The Stormbreaker groaned and creaked."
-  scene.message "But she held. Barely."
-  
-  scene.message "And through the chaos..."
-  scene.message "You saw something in the waves."
+  # TODO: Event Sequence - Ship Struggling
+  # - Stormbreaker groans and creaks
+  # - Holds, barely
+  # - Something visible in the waves
 end
 
 GameData::Cutscene.define :ch37_sea_guardian do |scene|
   scene.play_bgm 'Pokemon ORAS - Sailing'
   scene.camera_flash 30
   
-  scene.message "A massive shape beneath the water."
-  scene.message "Ancient. Powerful. Watching."
+  # TODO: Event Sequence - Massive Shape
+  # - Massive shape beneath water
+  # - Ancient, powerful, watching
   
   scene.message "\\bLyra\\b: Is that...?"
   scene.message "\\bKael\\b: Kyogre. Or something like it."
   
-  scene.message "The creature's eye met yours."
-  scene.message "And then... it dove deeper."
-  scene.message "The storm began to calm."
+  # TODO: Event Sequence - Eye Contact
+  # - Creature's eye meets player's
+  # - Then dives deeper
+  # - Storm begins to calm
   
   scene.message "\\bCaptain Maren\\b: *awed* It let us pass..."
   scene.message "\\bCaptain Maren\\b: The sea guardians know who you are."
@@ -19343,26 +19380,28 @@ end
 GameData::Cutscene.define :ch37_astoria_sighted do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
   
-  scene.message "On the third day, you saw it."
-  scene.message "Astoria. The Forgotten Region."
-  
-  scene.message "Mountains wreathed in mist."
-  scene.message "Forests older than civilization."
-  scene.message "Ruins dotting the coastline."
+  # TODO: Event Sequence - Third Day
+  # - On third day, see Astoria
+  # - The Forgotten Region
+  # - Mountains wreathed in mist
+  # - Forests older than civilization
+  # - Ruins dotting coastline
   
   scene.message "\\bCaptain Maren\\b: There she is. Haven't changed a bit."
   scene.message "\\bLyra\\b: It's... incredible."
   scene.message "\\bKael\\b: It's dangerous. Stay alert."
   
-  scene.message "The Stormbreaker approached the ancient shore."
-  scene.message "Your destiny awaited."
+  # TODO: Event Sequence - Approaching Shore
+  # - Stormbreaker approaches ancient shore
+  # - Destiny awaits
 end
 
 GameData::Cutscene.define :ch37_landing do |scene|
   scene.play_bgm 'Pokemon XY - Route Theme'
   
-  scene.message "You disembarked on a crumbling stone dock."
-  scene.message "Clearly ancient. Clearly unused for centuries."
+  # TODO: Event Sequence - Disembark
+  # - Disembark on crumbling stone dock
+  # - Clearly ancient, unused for centuries
   
   scene.message "\\bCaptain Maren\\b: I'll wait here. One week."
   scene.message "\\bCaptain Maren\\b: After that... I assume you're not coming back."
@@ -19370,8 +19409,9 @@ GameData::Cutscene.define :ch37_landing do |scene|
   scene.message "\\b\\PN\\b: We'll be back."
   scene.message "\\bCaptain Maren\\b: *small smile* I believe you."
   
-  scene.message "The three of you stepped into Astoria."
-  scene.message "The forgotten region swallowed you whole."
+  # TODO: Event Sequence - Entering Astoria
+  # - Three step into Astoria
+  # - Forgotten region swallows them whole
 end
 
 #===============================================================================
