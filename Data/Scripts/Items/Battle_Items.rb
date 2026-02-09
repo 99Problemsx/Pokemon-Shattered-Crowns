@@ -395,3 +395,25 @@ GameData::Item.define :POKETOY do |i|
   i.description "An item that attracts Pokémon. Use it to flee from any battle with a wild Pokémon."
 end
 
+#===============================================================================
+# Crown Pendant - Guardian's Echo Reward
+#===============================================================================
+
+GameData::Item.define :CROWNPENDANT do |i|
+  i.name        "Crown Pendant"
+  i.name_plural "Crown Pendants"
+  i.pocket      1
+  i.price       0
+  i.flags       :Fling_30
+  i.description "A pendant forged from three Crown Fragments. When HP is critical, boosts all stats."
+end
+
+GameData::Item.define :ANCIENTCROWNFRAGMENT do |i|
+  i.name        "Crown Fragment"
+  i.name_plural "Crown Fragments"
+  i.pocket      8
+  i.price       0
+  i.flags       :KeyItem
+  i.description "An ancient fragment pulsing with guardian energy. Collect all three."
+end
+

@@ -553,4 +553,14 @@ Name = Professor
 Gender = Male
 BaseMoney = 80
 SkillLevel = 85
+#-------------------------------
+# Guardian's Echo Side Quest
+#-------------------------------
+[GUARDIAN_ECHO]
+Name = Guardian Echo
+Gender = Male
+BaseMoney = 0
+SkillLevel = 100
+BattleBGM = Battle Zamazenta Zacian
+VictoryBGM = Battle victory champion
 

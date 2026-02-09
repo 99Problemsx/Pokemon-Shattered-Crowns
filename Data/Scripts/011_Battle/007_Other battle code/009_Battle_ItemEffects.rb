@@ -1946,3 +1946,25 @@ Battle::ItemEffects::CertainEscapeFromBattle.add(:SMOKEBALL,
     next true
   }
 )
+
+#===============================================================================
+# Crown Pendant - Boosts all stats when HP is low
+#===============================================================================
+
+Battle::ItemEffects::HPHeal.add(:CROWNPENDANT,
+  proc { |item, battler, battle, forced|
+    next false if !forced && !battler.canConsumePinchBerry?(false)
+    # Check if any stat can be raised
+    stats = [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    can_raise = stats.any? { |s| battler.pbCanRaiseStatStage?(s, battler) }
+    next false if !can_raise
+    battle.pbCommonAnimation("UseItem", battler) if !forced
+    itemName = GameData::Item.get(item).name
+    battle.pbDisplay(_INTL("The {1} glows with guardian energy!", itemName))
+    stats.each do |stat|
+      battler.pbRaiseStatStage(stat, 1, battler) if battler.pbCanRaiseStatStage?(stat, battler)
+    end
+    # Crown Pendant is NOT consumed - it's a permanent guardian artifact
+    next true
+  }
+)

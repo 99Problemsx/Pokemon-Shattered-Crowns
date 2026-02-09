@@ -546,3 +546,16 @@ Pokemon = DARKRAI,70
     Item = LEFTOVERS
     IV = 31,31,31,31,31,31
     EV = 0,0,0,252,4,252
+#-------------------------------
+# Guardian's Echo Side Quest - Zamazenta Echo Battle
+#-------------------------------
+[GUARDIAN_ECHO,Zamazenta Echo]
+LoseText = You fight with conviction... for others. That is the heart of a true protector.
+Pokemon = ZAMAZENTA,50
+    Form = 1
+    Moves = BEHEMOTHBASH,CLOSECOMBAT,CRUNCH,HOWL
+    Nature = IMPISH
+    AbilityIndex = 0
+    Item = RUSTEDSHIELD
+    IV = 31,31,31,31,31,31
+    EV = 252,0,128,0,128,0
