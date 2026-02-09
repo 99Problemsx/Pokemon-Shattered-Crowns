@@ -8789,46 +8789,70 @@ end
 
 GameData::Cutscene.define :ch17_peaceful_path do |scene|
   scene.play_bgm 'Pokemon XY - Route 4'
+  scene.camera_tint :reset, 20
+  scene.wait 30
   
   # TODO: Event Sequence - Forest Path
-  # scene.message "The forest path was beautiful in the afternoon light."
-  # scene.message "Sunbeams filtered through the canopy above."
+  # - Pan camera through sunlit forest
+  # - Particle effects: floating leaves, sunbeams
+  # - Ambient sounds: birds, wind
+  scene.message "The forest path was beautiful in the afternoon light."
+  scene.wait 15
+  scene.message "Sunbeams filtered through the canopy above."
+  scene.message "A gentle breeze rustled the leaves overhead."
   
+  scene.show_emotion :LYRA, :music, wait: false
   scene.message "\\bLyra\\b: It's nice to have a peaceful moment."
   scene.message "\\bLyra\\b: After everything in the caves..."
   
+  scene.show_emotion :KAEL, :ellipses
   scene.message "\\bKael\\b: Don't get used to it."
   scene.message "\\bKael\\b: Peace never lasts."
   
+  scene.show_emotion :LYRA, :anger
   scene.message "\\bLyra\\b: Kael! Can you be optimistic for once?"
   
   scene.message "\\bKael\\b: I'm being realistic."
   scene.message "\\bKael\\b: Shadow agrees."
   
   # TODO: Event Sequence - Pokemon Walking
-  # scene.message "Shadow walked beside Kael, ears twitching."
+  # - Shadow sprite walks beside Kael, dark fur gleaming
+  # - Zorua ears twitch animation
+  # - Starter sprite bounds beside player happily
+  # - Walking animation loop
   scene.message "\\bShadow\\b: Zor..."
-  
-  # scene.message "Your starter bounded alongside you happily."
-  # TODO: Event Sequence - Enjoyment
-  # scene.message "Enjoying the simple pleasure of the walk."
+  scene.show_emotion :player, :heart
   
   scene.message "\\b\\PN\\b: Let them have their fun."
   scene.message "\\b\\PN\\b: They've earned it."
   
   # TODO: Event Sequence - Wrongness
-  # scene.message "But even as you said it..."
-  # scene.message "Something felt wrong."
+  # - Screen flicker effect
+  # - Subtle dark particles at screen edges
+  # - Tension music fade-in
+  scene.wait 30
+  scene.camera_tint :sepia, 15
+  scene.message "But even as you said it..."
+  scene.message "Something felt wrong."
+  scene.message "A chill crept down your spine."
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch17_shadow_warning do |scene|
   scene.play_bgm 'Pokemon RSE - Tension'
+  scene.camera_tint :dark, 30
+  
+  scene.message "\\i[KAEL'S PERSPECTIVE]"
+  scene.wait 20
   
   # TODO: Event Sequence - Shadow Warning
-  scene.message "\\i[KAEL'S PERSPECTIVE]"
-  
-  # scene.message "Shadow stopped mid-stride."
-  # scene.message "Every hair on the Zorua's body stood on end."
+  # - Shadow sprite stops, exclamation bubble
+  # - Fur bristle animation
+  # - Camera zoom on Shadow
+  scene.message "Shadow stopped mid-stride."
+  scene.message "Every hair on the Zorua's body stood on end."
+  scene.play_se 'Anim/Growl', 60
+  scene.show_emotion :KAEL, :exclamation
   
   scene.message "\\bShadow\\b: Zor... Zorua..."
   
@@ -8836,50 +8860,73 @@ GameData::Cutscene.define :ch17_shadow_warning do |scene|
   scene.message "\\bKael\\b: (Shadow only acts like this when—)"
   
   # TODO: Event Sequence - Illusion Flicker
-  # scene.message "The Zorua's illusion flickered."
-  # scene.message "A sign of extreme distress."
+  # - Shadow sprite briefly shows true form
+  # - Glitch/static effect
+  scene.camera_flash 5
+  scene.message "The Zorua's illusion flickered momentarily."
+  scene.message "A sign of extreme distress."
   
   scene.message "\\bKael\\b: \\PN. Lyra."
   scene.message "\\bKael\\b: Stop walking. Now."
   
+  scene.show_emotion :LYRA, :question
   scene.message "\\bLyra\\b: What is it?"
   
   scene.message "\\bKael\\b: We're surrounded."
   
   # TODO: Event Sequence - Surrounded
-  # scene.message "His hand moved to his belt."
-  # scene.message "The mark of Yveltal pulsed with warning."
+  # - Kael reaches for Pokeball
+  # - Yveltal mark glows on arm
+  # - Camera pan showing encirclement
+  scene.message "His hand moved to his belt."
+  scene.message "Ready to release his team at a moment's notice."
+  scene.camera_flash 10
+  scene.message "The mark of Yveltal pulsed with warning."
   
   scene.message "\\bKael\\b: (Death is close. Too close.)"
   scene.message "\\bKael\\b: (But whose?)"
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch17_ambush_begins do |scene|
   scene.play_bgm 'Pokemon XY - Team Flare Appears'
   scene.camera_shake 5, 15
+  scene.camera_flash 25
   
   # TODO: Event Sequence - Ambush
-  # scene.message "The forest erupted in dark energy!"
+  # - Dark energy burst animation
+  # - Cultist sprites drop from trees
+  # - Encirclement formation
+  scene.message "The forest erupted in dark energy!"
+  scene.play_se 'Anim/Explosion', 80
+  scene.camera_shake 8, 30
   
-  # scene.message "Cultists dropped from trees, emerged from bushes."
-  # scene.message "Dozens of them. A coordinated strike."
+  scene.message "Cultists dropped from trees, emerged from bushes."
+  scene.message "Dozens of them. A coordinated strike."
   
+  scene.show_emotion :player, :exclamation
   scene.message "\\bCultist Leader\\b: For the Shattered Hand!"
   scene.message "\\bCultist Leader\\b: Capture the Chosen Ones!"
   scene.message "\\bCultist Leader\\b: General Shade wants them alive!"
   
   scene.message "\\bKael\\b: Shadow, defensive position!"
+  scene.show_emotion :LYRA, :exclamation
   scene.message "\\bLyra\\b: Mimi, protect us!"
   
   scene.message "\\b\\PN\\b: Everyone, ready for battle!"
   
   # TODO: Event Sequence - Stance
-  # scene.message "Your starter moved in front of you."
-  # scene.message "Ready to fight. Ready to protect."
+  # - Starter sprite moves in front of player
+  # - Battle stance animation
+  # - Fierce eyes close-up
+  scene.message "Your starter moved in front of you."
+  scene.message "Eyes fierce. Ready to fight. Ready to protect."
+  scene.play_se 'Anim/Growl2', 70
   
   scene.message "\\bCultist\\b: The Guardian marks... they're real!"
   scene.message "\\bCultist\\b: Master Viktor will reward us greatly!"
   
+  scene.camera_flash 15
   scene.message "\\bKael\\b: You'll have to go through us first!"
   
   scene.trainer_battle :CULTIST_AMBUSH1
@@ -8890,27 +8937,40 @@ GameData::Cutscene.define :ch17_battle_overwhelmed do |scene|
   scene.camera_shake 8, 25
   
   # TODO: Event Sequence - More Cultists
-  # scene.message "More cultists kept coming!"
-  # scene.message "For every one defeated, two more appeared."
+  # - Wave spawning animation
+  # - Overwhelm visual effect
+  # - More cultists keep coming, for every one defeated two more appear
+  scene.camera_shake 5, 20
   
+  scene.show_emotion :LYRA, :sweat
   scene.message "\\bLyra\\b: There's too many!"
   scene.message "\\bKael\\b: We need to break through!"
   
   # TODO: Event Sequence - Battle Chaos
-  # scene.message "Shadow was fighting three Pokémon at once."
-  # scene.message "Mimi was protecting Lyra desperately."
+  # - Split screen showing Shadow, Mimi fighting three at once
+  # - Illusion flicker effect on Shadow under strain
+  # - Defensive barrier animation on Mimi protecting Lyra
   
+  scene.show_emotion :player, :exclamation
   scene.message "\\bCultist Leader\\b: Use the dark binding!"
   scene.message "\\bCultist Leader\\b: Immobilize the Chosen!"
   
-  # scene.message "A cultist aimed a strange device at you."
-  # scene.message "Dark energy gathered at its tip."
+  # TODO: Event Sequence - Dark Binding Device
+  # - Cultist aims strange device at player
+  # - Dark energy gathers at tip, crackling ominously
+  scene.camera_tint :dark, 15
+  scene.play_se 'Anim/Flash2', 80
   
   scene.message "\\b\\PN\\b: What is—"
   
   # TODO: Event Sequence - Beam Fired
-  # scene.message "The beam fired!"
-  # scene.message "Heading straight for you!"
+  # - Dark energy beam projectile animation
+  # - Slow-mo effect
+  # - Player dodge failure animation
+  # - Beam fires, heading straight for player
+  scene.camera_flash 30
+  scene.play_se 'Anim/Psychic', 100
+  scene.wait 10
   
   scene.trainer_battle :CULTIST_AMBUSH2
 end
@@ -8918,36 +8978,53 @@ end
 GameData::Cutscene.define :ch17_starter_sacrifice do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   scene.camera_shake 10, 30
+  scene.wait 10
   
-  # TODO: Event Sequence - Sacrifice Choice
-  # scene.message "Time seemed to slow."
+  # TODO: Event Sequence - Time Slows
+  # - Slow motion effect on screen
+  # - Dark energy beam races toward player
+  # - Player can't dodge, can't move fast enough
+  # - But starter can...
+  scene.camera_tint :sepia, 20
+  scene.wait 20
   
-  # scene.message "The dark energy beam raced toward you."
-  # scene.message "You couldn't dodge. Couldn't move fast enough."
-  
-  # scene.message "But your starter could."
-  
+  # TODO: Event Sequence - The Sacrifice
+  # - Starter leaps in front of player
+  # - Takes full force of the attack
+  # - Impact animation with camera shake
   scene.camera_flash 15
+  scene.play_se 'Anim/Super power', 100
+  scene.camera_tint :reset, 5
+  scene.camera_shake 15, 40
+  scene.camera_flash 40
   
-  # TODO: Event Sequence - Impact
-  # scene.message "Your partner leaped in front of you!"
-  # scene.message "Taking the full force of the attack!"
-  
+  scene.play_se 'Cries/Pokemon', 100
   scene.message "\\b\\PN\\b: NO!!!"
   
-  # TODO: Event Sequence - Agony
-  # scene.message "Your starter cried out in agony."
-  # scene.message "Dark energy crackling across their body."
-  # scene.message "Then collapsed. Motionless."
+  # TODO: Event Sequence - The Aftermath
+  # - Starter cries out in agony
+  # - Dark energy crackling across body
+  # - Sparks of corruption seeping into fur
+  # - Starter collapses, motionless
+  scene.camera_tint :dark, 20
+  scene.wait 30
+  scene.play_se 'Anim/Fall', 80
+  scene.wait 40
   
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: Oh no... oh no no no..."
+  scene.show_emotion :KAEL, :exclamation
   scene.message "\\bKael\\b: \\PN—!"
   
-  # TODO: Event Sequence - Snap
-  # scene.message "Something inside you snapped."
-  
-  # scene.message "Your mark blazed with golden light!"
-  # scene.message "Zacian's power surging through you uncontrolled."
+  # TODO: Event Sequence - Player Snaps
+  # - Something inside player snaps
+  # - Mark blazes with golden light
+  # - Zacian power surges uncontrolled
+  # - Fury, grief, rage beyond measure
+  scene.wait 20
+  scene.camera_flash 30
+  scene.play_se 'Anim/Shine', 100
+  scene.camera_shake 8, 50
 end
 
 GameData::Cutscene.define :ch17_rage_awakening do |scene|
@@ -8957,46 +9034,56 @@ GameData::Cutscene.define :ch17_rage_awakening do |scene|
   
   scene.message "\\b\\PN\\b: GET AWAY FROM THEM!!!"
   
-  # TODO: Event Sequence - Rage
-  # scene.message "Golden energy exploded outward!"
-  # scene.message "The Sword of Valor manifested around you."
+  # TODO: Event Sequence - Rage Explosion
+  # - Golden energy explodes outward
+  # - Sword of Valor manifests around player
+  # - Spectral blade of pure light
+  scene.camera_flash 50
+  scene.camera_shake 20, 60
+  scene.play_se 'Anim/Saint Fire', 100
   
+  scene.show_emotion :player, :anger
   scene.message "\\bCultist\\b: The Guardian power—it's awakening!"
   scene.message "\\bCultist Leader\\b: Fall back! FALL BACK!"
   
   # TODO: Event Sequence - No Escape
-  # scene.message "But you weren't letting them escape."
+  # - Player moves faster than ever
+  # - World a blur, Zacian's blessing driving forward
+  scene.camera_flash 20
   
-  # TODO: Event Sequence - Fast Movement
-  # scene.message "You moved faster than you ever had."
-  # scene.message "Zacian's blessing driving you forward."
-  
+  scene.show_emotion :KAEL, :exclamation
   scene.message "\\bKael\\b: \\PN, stop! Your partner needs help!"
   
-  # TODO: Event Sequence - Aftermath
-  # scene.message "Kael's words cut through the rage."
-  # scene.message "You looked down at your fallen starter."
+  # TODO: Event Sequence - Kael's Words Cut Through
+  # - Rage subsides like cold water on flame
+  # - Player looks down at fallen starter
+  # - Cultists flee into forest shadows
+  scene.wait 20
+  scene.camera_tint :reset, 15
   
-  # scene.message "The cultists used the distraction to flee."
-  # scene.message "But you didn't care."
-  
+  scene.show_emotion :player, :ellipses
   scene.message "\\b\\PN\\b: We need to get them to a Pokémon Center!"
   scene.message "\\b\\PN\\b: NOW!"
 end
 
 GameData::Cutscene.define :ch17_desperate_rush do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 15
   
-  # TODO: Event Sequence - Rush
-  # scene.message "You carried your starter in your arms."
-  # scene.message "Running faster than you'd ever run."
+  # TODO: Event Sequence - Carrying Starter
+  # - Player carries starter in arms
+  # - Body feels light, fragile
+  # - Running animation, faster than ever
   
+  scene.show_emotion :LYRA, :sweat
   scene.message "\\bLyra\\b: The town is just ahead!"
   scene.message "\\bLyra\\b: Hold on, little one. Please hold on!"
   
   # TODO: Event Sequence - Shallow Breathing
-  # scene.message "Your starter's breathing was shallow."
-  # scene.message "Dark energy still crackled across their body."
+  # - Starter's breathing shallow
+  # - Each breath a battle
+  # - Dark energy still crackles across body
+  scene.camera_flash 5
   
   scene.message "\\bKael\\b: That weapon—it wasn't normal."
   scene.message "\\bKael\\b: It was designed to hurt Pokémon of Chosen."
@@ -9006,10 +9093,13 @@ GameData::Cutscene.define :ch17_desperate_rush do |scene|
   scene.message "\\bKael\\b: To hurt us. Through our partners."
   scene.message "\\bKael\\b: They know our bonds are our weakness."
   
+  scene.show_emotion :LYRA, :exclamation
   scene.message "\\bLyra\\b: There! The Pokémon Center!"
   
   # TODO: Event Sequence - Pokemon Center
-  # scene.message "You burst through the doors."
+  # - Player bursts through doors
+  scene.camera_tint :reset, 10
+  scene.play_se 'Door open', 80
   scene.message "\\b\\PN\\b: HELP! PLEASE HELP!"
 end
 
@@ -9199,47 +9289,54 @@ end
 
 GameData::Cutscene.define :ch17_reunion do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.fade_in
   
-  # TODO: Event Sequence - Reunion
-  # scene.message "Your starter lay in a small bed."
-  # scene.message "Bandaged. Weak. But alive."
-  
-  # scene.message "Their eyes opened when you entered."
-  # scene.message "A small, tired cry of recognition."
+  # TODO: Event Sequence - Reunion with Starter
+  # - Starter lies in small bed, bandaged, weak but alive
+  # - Eyes open when player enters
+  # - Small, tired cry of recognition
+  scene.wait 20
+  scene.play_se 'Cries/Pokemon', 60
+  scene.show_emotion :player, :heart
   
   scene.message "\\b\\PN\\b: Hey, buddy..."
   
-  # TODO: Event Sequence - Beside Bed
-  # scene.message "You sat beside them."
-  # scene.message "Gently stroking their head."
+  # TODO: Event Sequence - Sitting Beside Them
+  # - Player sits beside starter
+  # - Gently stroking their head
+  # - Tears streaming down face
   
   scene.message "\\b\\PN\\b: You scared me."
   scene.message "\\b\\PN\\b: Don't ever do that again."
   
-  # TODO: Event Sequence - Defiant Sound
-  # scene.message "Your partner made a small sound."
-  # scene.message "Defiant. They'd do it again in a heartbeat."
+  # TODO: Event Sequence - Defiant Response
+  # - Partner makes small defiant sound
+  # - They'd do it again in a heartbeat
+  scene.play_se 'Cries/Pokemon', 70
   
   scene.message "\\b\\PN\\b: *tearful laugh* Yeah. I know."
   scene.message "\\b\\PN\\b: That's what makes you so amazing."
   
   # TODO: Event Sequence - Healing Light
-  # scene.message "Your mark glowed softly."
-  # scene.message "Golden light washing over your starter."
-  
-  # scene.message "Zacian's blessing, helping them heal."
-  # scene.message "Your partner's breathing grew easier."
+  # - Mark glows softly
+  # - Golden light washes over starter
+  # - Zacian's blessing helping them heal
+  # - Partner's breathing grows easier
+  scene.camera_flash 20
+  scene.play_se 'Anim/Heal', 80
+  scene.show_emotion :player, :heart
   
   scene.message "\\b\\PN\\b: We're going to be okay."
   scene.message "\\b\\PN\\b: Both of us."
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch17_recovery_begins do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
   
   # TODO: Event Sequence - Recovery
-  # scene.message "The next few days were quiet."
-  # scene.message "You stayed by your starter's side constantly."
+  # - Next few days are quiet
+  # - Player stays by starter's side constantly
   
   scene.message "\\bLyra\\b: You need to eat something, \\PN."
   scene.message "\\bLyra\\b: You've barely touched your food."
@@ -9249,17 +9346,19 @@ GameData::Cutscene.define :ch17_recovery_begins do |scene|
   scene.message "\\bKael\\b: Your partner needs you strong."
   scene.message "\\bKael\\b: Not weak from starvation."
   
-  scene.message "He had a point."
-  scene.message "You forced yourself to eat."
-  
-  scene.message "Your starter watched you approvingly."
-  scene.message "Making small sounds of encouragement."
+  # TODO: Event Sequence - Eating
+  # - Player reluctantly eats
+  # - Starter watches approvingly
+  # - Small sounds of encouragement from starter
+  scene.play_se 'Cries/Pokemon', 50
   
   scene.message "\\b\\PN\\b: *small smile* You're the one recovering."
   scene.message "\\b\\PN\\b: Shouldn't I be encouraging you?"
   
-  scene.message "Your partner huffed."
-  scene.message "Clearly taking their caretaking duties seriously."
+  # TODO: Event Sequence - Partner Huffs
+  # - Partner huffs
+  # - Taking caretaking duties seriously
+  scene.play_se 'Cries/Pokemon', 60
   
   scene.message "\\bLyra\\b: *giggling* They're looking after you."
   scene.message "\\bLyra\\b: Even from a hospital bed."
@@ -9267,57 +9366,65 @@ end
 
 GameData::Cutscene.define :ch17_partners_bond do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.fade_out
+  scene.wait 30
+  scene.fade_in
   
   scene.message "\\i[YOUR STARTER'S PERSPECTIVE]"
+  scene.camera_tint :sepia, 30
+  scene.wait 20
   
   # TODO: Event Sequence - Starter's Experience
-  # scene.message "Pain. Darkness. Then... light."
-  # scene.message "Their trainer's face. Worried. Loving."
+  # - Pain, darkness, then light
+  # - Trainer's face appears - worried, loving
+  # - Memory flash: dark energy aimed at trainer
+  # - Memory flash: jumping in front of attack
+  # - No regrets - their best friend, their whole world
+  scene.wait 15
   
-  # scene.message "They didn't regret it. Not for a moment."
+  scene.camera_tint :reset, 20
   
-  # scene.message "That dark energy had been aimed at their human."
-  # scene.message "Their best friend. Their whole world."
+  # TODO: Event Sequence - Healing
+  # - Starter healing slowly, painfully, but surely
+  # - Trainer is here, talking, caring, loving
+  # - Never leaving their side
+  scene.wait 20
   
-  # scene.message "Of course they jumped in front of it."
-  # scene.message "What else would they do?"
+  # TODO: Event Sequence - Bond Deepens
+  # - Golden warmth flows between them
+  # - Connection deeper than before
+  # - Guardian's blessing touches starter too
+  # - Bond strengthened beyond words
+  scene.camera_flash 15
+  scene.play_se 'Anim/Shine', 60
   
-  # scene.message "Now they were healing."
-  # scene.message "Slowly. Painfully. But surely."
-  
-  # scene.message "Because their trainer was here."
-  # scene.message "Talking to them. Caring for them. Loving them."
-  
-  # scene.message "And something new flowed between them."
-  # scene.message "A golden warmth. A connection deeper than before."
-  
-  # scene.message "The Guardian's blessing touched them too."
-  # scene.message "Strengthening their bond."
-  
-  # scene.message "They would never let anyone hurt their trainer again."
-  # scene.message "No matter what it cost."
+  # TODO: Event Sequence - Sacred Vow
+  # - Starter's eyes show determination
+  # - They will never let anyone hurt their trainer again
+  # - No matter the cost - their sacred vow
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch17_team_support do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
   
   # TODO: Event Sequence - Team Visits
-  # scene.message "Your other Pokémon took turns visiting."
-  # scene.message "Keeping your starter company."
+  # - Other Pokémon take turns visiting
+  # - Keeping starter company
   
   scene.message "\\bLyra\\b: Look at them."
   scene.message "\\bLyra\\b: Your whole team loves them."
   
   # TODO: Event Sequence - Team Around Bed
-  # scene.message "Your Pokémon gathered around the bed."
-  # scene.message "Offering small gifts. Comfort. Support."
+  # - All Pokémon gathered around the bed
+  # - Offering small gifts, comfort, support
   
   scene.message "\\bKael\\b: Pokémon understand sacrifice."
   scene.message "\\bKael\\b: They respect what your starter did."
   
   # TODO: Event Sequence - Shadow Guard
-  # scene.message "Shadow sat beside the bed protectively."
-  # scene.message "Standing guard, even though the danger had passed."
+  # - Shadow sits beside bed protectively
+  # - Standing guard even though danger has passed
   
   scene.message "\\b\\PN\\b: Thank you. All of you."
   scene.message "\\b\\PN\\b: We're going to need each other."
@@ -9329,55 +9436,71 @@ GameData::Cutscene.define :ch17_team_support do |scene|
   scene.message "\\bKael\\b: I guess we are."
   
   # TODO: Event Sequence - Happy Sound
-  # scene.message "Your starter made a happy sound."
-  # scene.message "Family. Yes. This was family."
+  # - Starter makes happy sound
+  # - Family - yes, this is family
+  scene.play_se 'Cries/Pokemon', 70
 end
 
 GameData::Cutscene.define :ch17_first_steps do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.fade_in
   
-  # TODO: Event Sequence - Standing
-  # scene.message "Three days later, your starter tried to stand."
-  # scene.message "Wobbly. Uncertain. But determined."
+  # Standing for the first time
+  scene.message "Three days later, your starter tried to stand."
+  scene.message "Wobbly. Uncertain. But determined."
+  scene.wait 15
   
   scene.message "\\bNurse Joy\\b: Easy now. Don't push too hard."
   
-  # TODO: Event Sequence - Shaky Steps
-  # scene.message "Your partner took a shaky step."
-  # scene.message "Then another. Then another."
+  # Taking steps
+  scene.play_se 'Cries/Pokemon', 60
+  scene.message "Your partner took a shaky step."
+  scene.message "Then another. Then another."
+  scene.message "Each one a small victory."
   
+  scene.show_emotion :player, :heart
   scene.message "\\b\\PN\\b: That's it. You're doing great."
   
-  # TODO: Event Sequence - Looking Up
-  # scene.message "Your starter looked up at you."
-  # scene.message "Eyes full of determination."
-  # scene.message "They weren't going to let this stop them."
+  # Looking up with determination
+  scene.message "Your starter looked up at you."
+  scene.message "Eyes full of determination."
+  scene.message "They weren't going to let this stop them."
+  scene.message "Not when there was still fighting to do."
   
+  scene.show_emotion :LYRA, :heart
   scene.message "\\bLyra\\b: *sniffling* They're so brave..."
   
   scene.message "\\bKael\\b: They take after their trainer."
   
-  # TODO: Event Sequence - Unexpected Compliment
-  # scene.message "You blinked at the unexpected compliment."
-  # scene.message "Kael just shrugged."
+  # Unexpected compliment
+  scene.show_emotion :player, :question
+  scene.message "You blinked at the unexpected compliment."
+  scene.message "Kael just shrugged, looking away."
   
   scene.message "\\bKael\\b: What? It's true."
   
   # TODO: Event Sequence - Nuzzle
-  # scene.message "Your starter reached you and nuzzled your leg."
-  # scene.message "Weak, but alive. And getting stronger every day."
+  # - Starter reaches player and nuzzles their leg
+  # - Weak but alive, getting stronger every day
+  scene.play_se 'Cries/Pokemon', 70
+  scene.show_emotion :player, :heart
   
   scene.message "\\b\\PN\\b: We're going to be okay, buddy."
   scene.message "\\b\\PN\\b: I promise."
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch17_new_resolve do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
+  scene.fade_in
   
   # TODO: Event Sequence - Sitting Outside
-  # scene.message "A week after the ambush, you sat outside."
-  # scene.message "Your recovering starter resting in your lap."
+  # - A week after ambush
+  # - Warm sun on face, birds singing
+  # - Recovering starter resting in player's lap
+  scene.wait 15
   
+  scene.show_emotion :LYRA, :question
   scene.message "\\bLyra\\b: You've been quiet, \\PN."
   scene.message "\\bLyra\\b: What are you thinking about?"
   
@@ -9387,6 +9510,7 @@ GameData::Cutscene.define :ch17_new_resolve do |scene|
   scene.message "\\bKael\\b: They'll try again."
   scene.message "\\bKael\\b: They won't stop until they have us."
   
+  scene.show_emotion :player, :anger
   scene.message "\\b\\PN\\b: I know."
   scene.message "\\b\\PN\\b: That's why we need to stop them first."
   
@@ -9397,32 +9521,36 @@ GameData::Cutscene.define :ch17_new_resolve do |scene|
   scene.message "\\b\\PN\\b: I'm saying we do both."
   scene.message "\\b\\PN\\b: Strengthen the seals AND fight back."
   
+  scene.show_emotion :KAEL, :idea
   scene.message "\\bKael\\b: That's dangerous."
   scene.message "\\bKael\\b: ...I like it."
   
-  # TODO: Event Sequence - Sound of Agreement
-  # scene.message "Your starter made a sound of agreement."
-  # scene.message "They were ready to fight. With you."
+  # TODO: Event Sequence - Starter Agrees
+  # - Starter makes fierce, determined sound
+  # - Ready to fight with player
+  scene.play_se 'Cries/Pokemon', 80
   
+  scene.camera_flash 10
   scene.message "\\b\\PN\\b: The Shattered Hand hurt my family."
   scene.message "\\b\\PN\\b: They're going to regret that."
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch17_ragnar_learns_truth do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   
   # TODO: Event Sequence - Ragnar Waited
-  # scene.message "Ragnar had waited. True to his word."
-  # scene.message "Now, with your starter recovering, it was time."
+  # - Ragnar waited, true to his word
+  # - With starter recovering, it's time to explain
   
   scene.message "\\bRagnar\\b: Okay. Talk."
   
   # TODO: Event Sequence - Explaining Everything
-  # scene.message "You told him everything."
-  # scene.message "The marks. The Guardians. The Shattered Hand."
-  # scene.message "Nidhoggr. The end of the world."
-  
-  # scene.message "Ragnar sat in stunned silence."
+  # - Player tells him everything
+  # - The marks, the Guardians, the Shattered Hand
+  # - Nidhoggr, the end of the world
+  # - Ragnar sits in stunned silence
+  scene.wait 20
   
   scene.message "\\bRagnar\\b: ...So you're telling me..."
   scene.message "\\bRagnar\\b: My best friend is some kind of chosen hero..."
@@ -9439,7 +9567,7 @@ GameData::Cutscene.define :ch17_ragnar_learns_truth do |scene|
   scene.message "\\bRagnar\\b: No wait, I'm also TERRIFIED!"
   scene.message "\\bRagnar\\b: But also... you NEED me!"
   
-  scene.message "\\b\\PN\\b: Ragnar—"
+  scene.message "\\b\\PN\\b: Ragnar\u2014"
   
   scene.message "\\bRagnar\\b: NO! Listen!"
   scene.message "\\bRagnar\\b: You three are off saving the world..."
@@ -9459,8 +9587,8 @@ GameData::Cutscene.define :ch17_ragnar_learns_truth do |scene|
   scene.message "\\bRagnar\\b: Let me help. Please."
   
   # TODO: Event Sequence - Looking at Friends
-  # scene.message "You looked at your friends."
-  # scene.message "Kael shrugged. Lyra nodded."
+  # - Player looks at friends
+  # - Kael shrugs, Lyra nods
   
   scene.message "\\b\\PN\\b: ...Okay. But you follow our lead."
   
@@ -12386,26 +12514,37 @@ GameData::Cutscene.define :ch24_urgent_message do |scene|
   scene.play_bgm 'Pokemon XY - Emergency'
   scene.camera_shake 3, 10
   
-  # TODO: Event Sequence - Communicator Buzz
-  # scene.message "Your communicator buzzed urgently."
-  # scene.message "A distress signal. From the lab."
+  # Communicator buzzes
+  scene.play_se 'Phone', 80
+  scene.message "Your communicator buzzed urgently."
+  scene.message "Not a normal call. A distress signal."
+  scene.message "From the lab."
   
-  # scene.message "Static. Explosions. And the Professor's voice—"
+  scene.camera_shake 5, 20
+  scene.play_se 'Anim/Explosion', 60
+  scene.message "Static. Explosions. And the Professor's voice—"
   
+  scene.show_emotion :player, :exclamation
   scene.message "\\bProfessor Aldric\\b: *static* They're here—!"
   scene.message "\\bProfessor Aldric\\b: The cult—attacking—!"
   scene.message "\\bProfessor Aldric\\b: Need help—can't hold—"
   
-  # TODO: Event Sequence - Transmission Cut
-  # scene.message "The transmission cut off."
+  # Transmission cut
+  scene.play_se 'Anim/Crash', 70
+  scene.message "The transmission cut off with a terrible crash."
+  scene.message "Static. Then silence."
   
+  scene.show_emotion :player, :exclamation
   scene.message "\\b\\PN\\b: The Professor's in trouble!"
+  scene.show_emotion :LYRA, :exclamation
   scene.message "\\bLyra\\b: What?!"
   scene.message "\\bKael\\b: Move. NOW."
   
-  # TODO: Event Sequence - Running
-  # scene.message "You ran. Faster than you'd ever run before."
-  # scene.message "But somehow... you knew you'd be too late."
+  # Running
+  scene.message "You ran. Faster than you'd ever run before."
+  scene.message "Your heart pounding in your chest."
+  scene.message "But somehow... you knew you'd be too late."
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_racing_back do |scene|
@@ -12414,14 +12553,14 @@ GameData::Cutscene.define :ch24_racing_back do |scene|
   scene.message "\\i[LYRA'S PERSPECTIVE]"
   
   # TODO: Event Sequence - Running Back
-  # scene.message "Every second felt like an eternity."
-  # scene.message "The lab was too far. Too far away."
+  # - Every second feels like an eternity
+  # - The lab is too far away
   
   scene.message "\\bLyra\\b: (Please be okay. Please be okay.)"
   
   # TODO: Event Sequence - Kael Running
-  # scene.message "Kael ran ahead, Shadow keeping pace."
-  # scene.message "\\PN's jaw was set with determination."
+  # - Kael runs ahead, Shadow keeping pace
+  # - Player's jaw set with determination
   
   scene.message "\\bLyra\\b: Why would they attack the Professor?"
   scene.message "\\bLyra\\b: He's not a fighter!"
@@ -12433,62 +12572,83 @@ GameData::Cutscene.define :ch24_racing_back do |scene|
   scene.message "\\b\\PN\\b: Cut us off from information."
   
   # TODO: Event Sequence - Smoke
-  # scene.message "Smoke rose in the distance."
-  # scene.message "The lab was burning."
+  # - Smoke rises in the distance
+  # - The lab is burning
 end
 
 GameData::Cutscene.define :ch24_lab_destroyed do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   scene.camera_shake 5, 15
+  scene.fade_in
   
-  # TODO: Event Sequence - Lab Ruins
-  # scene.message "The lab was in ruins."
-  # scene.message "Smoke. Fire. Destruction."
+  # TODO: Event Sequence - Lab in Ruins
+  # - Lab is in ruins
+  # - Smoke, fire, destruction
+  # - Everything the Professor built is gone
+  scene.camera_tint :sepia, 20
   
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: No... no, this can't be..."
   
-  # TODO: Event Sequence - Bodies
-  # scene.message "Cultist bodies lay everywhere."
-  # scene.message "The Professor had fought back."
-  # scene.message "But there had been too many."
+  # TODO: Event Sequence - Bodies and Aftermath
+  # - Cultist bodies lay everywhere
+  # - Professor fought back harder than expected
+  # - But there were too many
   
   scene.message "\\bKael\\b: The damage... they used explosives."
   scene.message "\\bKael\\b: This was planned. Coordinated."
+  scene.message "\\bKael\\b: A precision strike."
   
+  scene.show_emotion :player, :exclamation
   scene.message "\\b\\PN\\b: Find the Professor! NOW!"
   
   # TODO: Event Sequence - Searching
-  # scene.message "You split up, searching through the rubble."
-  # scene.message "Calling his name. Praying for an answer."
+  # - Split up, searching through rubble
+  # - Calling his name, praying for answer
+  # - Every second feels like eternity
   
+  scene.show_emotion :KAEL, :exclamation
   scene.message "\\bKael\\b: Over there!"
   
-  # TODO: Event Sequence - Found Him
-  # scene.message "He pointed to a figure slumped against the wall."
+  # TODO: Event Sequence - Finding Him
+  # - Kael points to figure slumped against wall
+  # - Player's heart stops
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_finding_professor do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 20
   
-  # TODO: Event Sequence - Found Professor
-  # scene.message "You found him among the debris."
-  # scene.message "Professor Aldric. Your mentor. Your friend."
+  # Finding the professor
+  scene.message "You found him among the debris."
+  scene.message "Professor Aldric. Your mentor. Your friend."
+  scene.message "The man who believed in you from the start."
+  scene.wait 20
   
-  # scene.message "He was badly wounded."
-  # scene.message "Blood soaked his lab coat."
-  # scene.message "But he was still breathing."
+  scene.message "He was badly wounded."
+  scene.message "Blood soaked his lab coat."
+  scene.message "His face pale, but his eyes still bright."
+  scene.message "And he was still breathing."
   
+  scene.show_emotion :player, :ellipses
   scene.message "\\b\\PN\\b: Professor!"
   
   scene.message "\\bProfessor Aldric\\b: *weakly* \\PN... you came..."
   
+  scene.show_emotion :LYRA, :sweat
   scene.message "\\bLyra\\b: We're here! Hold on!"
   scene.message "\\bLyra\\b: Kael, help me!"
   
   scene.message "\\bKael\\b: *kneeling beside him* The wounds are too severe..."
   scene.message "\\bKael\\b: *quietly* There's nothing..."
   
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: Don't say that! There has to be something!"
+  scene.message "\\bLyra\\b: I can use Xerneas's power—"
+  
+  scene.message "\\bKael\\b: *shaking his head* Lyra..."
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_professors_words do |scene|
@@ -12498,12 +12658,14 @@ GameData::Cutscene.define :ch24_professors_words do |scene|
   scene.message "\\bProfessor Aldric\\b: Listen... this is important..."
   
   # TODO: Event Sequence - Grab Hand
-  # scene.message "He grabbed your hand with surprising strength."
+  # - Professor grabs player's hand with surprising strength
+  # - Eyes lock onto player with fierce intensity
   
   scene.message "\\bProfessor Aldric\\b: The truth... is in the crowns..."
   scene.message "\\bProfessor Aldric\\b: The Shattered Crowns... they're not just symbols."
   scene.message "\\bProfessor Aldric\\b: They're fragments... of Nidhoggr's prison."
   
+  scene.show_emotion :player, :question
   scene.message "\\b\\PN\\b: What do you mean?"
   
   scene.message "\\bProfessor Aldric\\b: Nidhoggr... is the true threat..."
@@ -12511,9 +12673,13 @@ GameData::Cutscene.define :ch24_professors_words do |scene|
   scene.message "\\bProfessor Aldric\\b: The cult wants both... but Nidhoggr..."
   
   # TODO: Event Sequence - Coughing
-  # scene.message "He coughed. Blood on his lips."
+  # - Professor coughs, blood on his lips
+  # - But keeps talking - he has to
+  scene.play_se 'Cough', 60
   
   scene.message "\\bProfessor Aldric\\b: Nidhoggr consumes... everything..."
+  scene.message "\\bProfessor Aldric\\b: Worlds. Dimensions. Reality itself..."
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_final_message do |scene|
@@ -12534,82 +12700,107 @@ GameData::Cutscene.define :ch24_final_message do |scene|
   scene.message "\\bProfessor Aldric\\b: I... believe... in..."
   
   # TODO: Event Sequence - Professor Dies
-  # scene.message "His grip loosened."
-  # scene.message "His eyes went distant."
-  # scene.message "And then... still."
+  # - Grip loosens
+  # - Eyes go distant
+  # - A final breath, a final peace
+  # - Then still
+  scene.wait 20
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch24_elm_death do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   scene.camera_shake 3, 10
+  scene.wait 20
   
-  # TODO: Event Sequence - Gone
-  # scene.message "Professor Aldric was gone."
+  # TODO: Event Sequence - Professor is Gone
+  # - Professor Aldric is gone
+  # - The mentor who believed in player
+  # - The guide who taught so much
+  # - The friend who never gave up
+  scene.camera_tint :dark, 30
+  scene.wait 30
   
-  # scene.message "The mentor who believed in you."
-  # scene.message "The guide who taught you so much."
-  # scene.message "The friend who never gave up on you."
-  
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: *sobbing* No... no no no..."
   scene.message "\\bKael\\b: ..."
   
-  # TODO: Event Sequence - Kael Reaction
-  # scene.message "Kael's face was stone."
-  # scene.message "But his hands were shaking."
+  # TODO: Event Sequence - Kael's Reaction
+  # - Kael's face is stone
+  # - But his hands are shaking
+  # - Shadow nuzzles against him, whimpering
   
+  scene.show_emotion :player, :anger
   scene.message "\\b\\PN\\b: *clenching fists* They will pay for this."
   scene.message "\\b\\PN\\b: I swear it."
   
   # TODO: Event Sequence - Mark Burns
-  # scene.message "Your mark blazed with furious golden light."
-  # scene.message "Zacian's power responding to your rage."
+  # - Mark blazes with furious golden light
+  # - Zacian's power responding to rage
+  # - Promise of vengeance burning in heart
+  scene.camera_flash 30
+  scene.play_se 'Anim/Fire', 80
   
   scene.set_switch SW::ELM_DIED, true
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch24_grief do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.fade_in
   
   scene.message "\\i[KAEL'S PERSPECTIVE]"
+  scene.wait 20
   
   # TODO: Event Sequence - Another Death
-  # scene.message "Another death."
-  # scene.message "Another person taken too soon."
+  # - Another death, another person taken too soon
+  # - Mira, now the Professor - who would be next?
+  scene.camera_tint :sepia, 20
   
   scene.message "\\bKael\\b: (This never ends.)"
   scene.message "\\bKael\\b: (Everyone we care about...)"
   
-  # TODO: Event Sequence - Look at Friends
-  # scene.message "He looked at Lyra, sobbing in the ruins."
-  # scene.message "At \\PN, burning with rage."
+  # TODO: Event Sequence - Looking at Friends
+  # - Looks at Lyra sobbing in the ruins
+  # - Her Mark of Xerneas dimmed with grief
+  # - Player burning with rage, golden light flickering dangerously
   
   scene.message "\\bKael\\b: (I can't let this break them.)"
   scene.message "\\bKael\\b: (I have to be strong. For them.)"
   
   # TODO: Event Sequence - Comfort Lyra
-  # scene.message "He knelt beside Lyra."
-  # scene.message "Put his arm around her."
-  # scene.message "Let her cry into his shoulder."
+  # - Kneels beside Lyra
+  # - Puts arm around her
+  # - Lets her cry into his shoulder
+  # - Shadow presses against them both
   
+  scene.camera_tint :reset, 15
   scene.message "\\bKael\\b: We'll make this mean something."
   scene.message "\\bKael\\b: His death won't be in vain."
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_players_rage do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.fade_in
   
   scene.message "\\i[YOUR PERSPECTIVE]"
+  scene.wait 15
   
-  # TODO: Event Sequence - Rage
-  # scene.message "Rage burned through you."
-  # scene.message "Hotter than any fire. Sharper than any blade."
+  # TODO: Event Sequence - Rage Building
+  # - Rage burns through player
+  # - Hotter than fire, sharper than blade
+  # - A fury never known before
+  scene.camera_tint :dark, 15
   
   scene.message "\\b\\PN\\b: (Malachar did this.)"
   scene.message "\\b\\PN\\b: (The cult. Viktor. All of them.)"
+  scene.message "\\b\\PN\\b: (They'll pay. They'll all pay.)"
   
-  # TODO: Event Sequence - Mark Pulse
-  # scene.message "Your mark pulsed."
-  # scene.message "Zacian's voice echoed in your mind."
+  # TODO: Event Sequence - Mark Pulses
+  # - Mark pulses, burning against skin
+  # - Zacian's voice echoes in mind
+  scene.camera_flash 15
   
   scene.message "\\bZacian\\b: (Vengeance is not justice, child.)"
   scene.message "\\bZacian\\b: (Do not let your sword become an instrument of hate.)"
@@ -12618,89 +12809,111 @@ GameData::Cutscene.define :ch24_players_rage do |scene|
   
   scene.message "\\bZacian\\b: (And his sacrifice deserves more than blind rage.)"
   scene.message "\\bZacian\\b: (It deserves purpose. Victory.)"
+  scene.message "\\bZacian\\b: (Honor him with valor, not vengeance.)"
   
-  # TODO: Event Sequence - Rage Focused
-  # scene.message "The fury didn't fade."
-  # scene.message "But it... focused."
-  # scene.message "Became something sharper. More dangerous."
+  # TODO: Event Sequence - Rage Focuses
+  # - Fury doesn't fade but focuses
+  # - Becomes something sharper, more dangerous
+  # - A blade waiting to be swung at right moment
+  scene.camera_tint :reset, 20
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_leaving_lab do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
   
   # TODO: Event Sequence - Leave Ruins
-  # scene.message "You couldn't stay in the ruins."
-  # scene.message "There was nothing left to save."
+  # - Can't stay in the ruins
+  # - Smoke stings eyes
+  # - Nothing left to save
   
   scene.message "\\bKael\\b: We need to move."
   scene.message "\\bKael\\b: The cult might come back."
   
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: *wiping tears* What about... his body?"
   
   scene.message "\\b\\PN\\b: We'll make arrangements."
   scene.message "\\b\\PN\\b: He deserves a proper burial."
   
   # TODO: Event Sequence - Carry Body
-  # scene.message "You carried the Professor's body to safety."
-  # scene.message "One final act of respect."
-  # scene.message "One final goodbye."
+  # - Carry Professor's body to safety
+  # - Gently, reverently
+  # - One final act of respect
+  # - One final goodbye to man who gave everything
+  scene.wait 20
 end
 
 GameData::Cutscene.define :ch24_dad_arrives do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
-  
-  scene.play_bgm 'Pokemon XY - Emotion'
+  scene.fade_in
   
   # TODO: Event Sequence - Dad Arrives
-  # scene.message "Dad Marcus arrived within hours."
-  # scene.message "The Champion's face was grim."
+  # - Dad Marcus arrives within hours
+  # - Champion's face is grim
+  # - Usual confidence replaced by sorrow
   
   scene.message "\\bDad Marcus\\b: I heard. I came as fast as I could."
   
+  scene.show_emotion :player, :ellipses
   scene.message "\\b\\PN\\b: Dad..."
   
   # TODO: Event Sequence - Embrace
-  # scene.message "He embraced you."
-  # scene.message "Strong arms holding you tight."
+  # - Dad embraces player
+  # - Strong arms holding tight
+  # - Like when player was a child
+  # - When nightmares felt like worst thing in the world
   
   scene.message "\\bDad Marcus\\b: I'm so sorry."
   scene.message "\\bDad Marcus\\b: Aldric was a good man."
-  scene.message "\\bDad Marcus\\b: One of the best."
+  scene.message "\\bDad Marcus\\b: One of the best I've ever known."
   
+  scene.show_emotion :player, :anger
   scene.message "\\b\\PN\\b: The cult did this."
   scene.message "\\b\\PN\\b: Malachar ordered it."
   
   scene.message "\\bDad Marcus\\b: *darkly* I know."
   scene.message "\\bDad Marcus\\b: And they will answer for it."
   scene.message "\\bDad Marcus\\b: To you. To me. To justice."
+  scene.wait 15
 end
 
 GameData::Cutscene.define :ch24_funeral do |scene|
   scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.fade_out
+  scene.wait 60
+  scene.fade_in
   
-  scene.play_bgm 'Pokemon XY - Sad Theme'
-  
-  # TODO: Event Sequence - Funeral Start
-  # scene.message "The funeral was small. Private."
-  # scene.message "The Professor had no family left."
-  # scene.message "Only his research. And his memories."
+  # TODO: Event Sequence - Funeral Setting
+  # - Funeral is small, private
+  # - Few gathered souls under weeping sky
+  # - Professor had no family left
+  # - Only research, memories, legacy
+  scene.camera_tint :sepia, 30
+  scene.wait 20
   
   # TODO: Event Sequence - Standing at Grave
-  # scene.message "You stood before the grave."
-  # scene.message "Lyra. Kael. \\PN."
-  # scene.message "And Dad Marcus, silent and strong."
+  # - Player, Lyra, Kael standing before grave
+  # - Dad Marcus silent and strong behind
+  # - Three marks glow faintly in grey light
   
+  scene.show_emotion :LYRA, :ellipses
   scene.message "\\bLyra\\b: He believed in us until the end..."
   
   scene.message "\\bKael\\b: Then we can't let him down."
   
+  scene.show_emotion :player, :idea
   scene.message "\\b\\PN\\b: We won't."
   scene.message "\\b\\PN\\b: I promise, Professor."
   scene.message "\\b\\PN\\b: We'll finish what you started."
   
   # TODO: Event Sequence - Unity
-  # scene.message "The three of you stood together."
-  # scene.message "Unified in grief. Strengthened by purpose."
+  # - Three stand together
+  # - Unified in grief, strengthened by purpose
+  # - His death will not be meaningless
+  # - His sacrifice will not be forgotten
+  scene.camera_tint :reset, 20
+  scene.wait 30
 end
 
 GameData::Cutscene.define :ch24_new_resolve do |scene|
@@ -12724,16 +12937,14 @@ GameData::Cutscene.define :ch24_new_resolve do |scene|
   
   scene.message "\\b\\PN\\b: Thanks, Dad."
   
-  scene.message "\\b\\PN\\b: Thanks, Dad."
-  
   # TODO: Event Sequence - Shoulder Touch
-  # scene.message "He placed a hand on your shoulder."
+  # - Dad places hand on player's shoulder
   
   scene.message "\\bDad Marcus\\b: Make them pay."
   scene.message "\\bDad Marcus\\b: For Aldric. For all of us."
   
   # TODO: Event Sequence - Personal Quest
-  # scene.message "The hunt for Malachar had become personal."
+  # - Hunt for Malachar has become personal
 end
 
 GameData::Cutscene.define :ch24_hidden_research do |scene|
