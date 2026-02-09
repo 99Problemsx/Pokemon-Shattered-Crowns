@@ -559,3 +559,38 @@ Pokemon = ZAMAZENTA,50
     Item = RUSTEDSHIELD
     IV = 31,31,31,31,31,31
     EV = 252,0,128,0,128,0
+#-------------------------------
+# Kael's Past Side Quest - Shadow Self Battle
+# A manifestation of Kael's suppressed guilt and darkness
+#-------------------------------
+[SHADOW_SELF,Shadow Kael]
+LoseText = ...You're stronger now. Perhaps strong enough to live without me.
+Pokemon = UMBREON,45
+    Moves = FOULPLAY,MOONLIGHT,TOXIC,PROTECT
+    Nature = CALM
+    AbilityIndex = 0
+    Item = LEFTOVERS
+    IV = 31,31,31,31,31,31
+    EV = 252,0,4,0,252,0
+Pokemon = ABSOL,46
+    Moves = NIGHTSLASH,SWORDSDANCE,PSYCHOCUT,SUPERPOWER
+    Nature = ADAMANT
+    AbilityIndex = 0
+    Item = SCOPELENS
+    IV = 31,31,31,31,31,31
+    EV = 4,252,0,0,0,252
+Pokemon = ZOROARK,47
+    Moves = NIGHTDAZE,FLAMETHROWER,NASTYPLOT,FOCUSBLAST
+    Nature = TIMID
+    AbilityIndex = 0
+    Item = LIFEORB
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252
+Pokemon = GRENINJA,48
+    Form = 2
+    Moves = DARKPULSE,HYDROPUMP,ICEBEAM,EXTRASENSORY
+    Nature = TIMID
+    AbilityIndex = 0
+    Item = CHOICESPECS
+    IV = 31,31,31,31,31,31
+    EV = 0,0,0,252,4,252

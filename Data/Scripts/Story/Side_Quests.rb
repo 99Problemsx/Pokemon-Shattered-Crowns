@@ -2381,11 +2381,497 @@ GameData::Cutscene.define :sq_hopes_light_complete do |scene|
 end
 
 #===============================================================================
-# FULL QUEST REWARD SUMMARY (1-70)
+# QUEST 76: KAEL'S PAST - Orphanage Memories
+# Unlocks after Chapter 25, reveals Kael's backstory
+# Reward: Shadow Oath Badge (boosts Dark-type moves)
+#===============================================================================
+
+GameData::Quest.define :kaels_past do |q|
+  q.name "Shadows of the Orphanage"
+  q.description "Help Kael confront his past at the ruins of St. Aegis Orphanage."
+  q.giver "Kael"
+  q.location "Ruins of Aegis Town"
+  q.chapter_unlock 25
+  
+  q.objectives [
+    { id: :find_ruins, text: "Find the orphanage ruins" },
+    { id: :recover_locket, text: "Recover Kael's sister's locket" },
+    { id: :confront_memory, text: "Face the memory of the fire" },
+    { id: :defeat_shadow, text: "Battle Kael's Shadow Self" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bKael\\b: ...I remember now. Everything.")
+    pbMessage("\\bKael\\b: My sister... she saved me that night.")
+    pbReceiveItem(:SHADOWOATHBADGE)
+    pbMessage("\\bKael\\b: I've been running from this for so long.")
+    pbMessage("\\bKael\\b: But now... I can finally move forward.")
+  end
+end
+
+GameData::Cutscene.define :sq_kaels_past_start do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+  
+  scene.message "\\bKael\\b: \\PN... can I ask you something?"
+  scene.message "\\bKael\\b: There's a place I need to visit."
+  scene.message "\\bKael\\b: I've been putting it off for years, but..."
+  
+  scene.message "\\b\\PN\\b: Where is it?"
+  
+  scene.message "\\bKael\\b: ...The orphanage where I grew up."
+  scene.message "\\bKael\\b: It burned down when I was seven."
+  scene.message "\\bKael\\b: I... I don't remember what happened."
+  
+  scene.message "\\bLyra\\b: We'll go with you."
+  scene.message "\\bKael\\b: ...Thanks."
+end
+
+GameData::Cutscene.define :sq_kaels_past_ruins do |scene|
+  scene.play_bgm 'Pokemon XY - Empty Streets'
+  
+  scene.message "The ruins of St. Aegis Orphanage stood silent."
+  scene.message "Charred beams and crumbling walls told of tragedy long past."
+  
+  scene.message "\\bKael\\b: ...It's smaller than I remember."
+  scene.message "\\bKael\\b: Everything always seems bigger when you're a kid."
+  
+  scene.message "\\bLyra\\b: What are we looking for?"
+  
+  scene.message "\\bKael\\b: My sister's locket. She... she was wearing it that night."
+  scene.message "\\bKael\\b: If I can find it, maybe... maybe I'll remember."
+  
+  # TODO: Event Sequence
+  # Search through rubble
+  # Find hidden basement
+  # Discover memorial for orphans who didn't survive
+  
+  scene.message "\\b\\PN\\b: Kael, over here. I found something."
+  scene.message "A small silver locket, tarnished but intact."
+  
+  scene.message "\\bKael\\b: ...That's it. That's hers."
+  scene.message "\\bKael\\b: *takes locket* Sister..."
+end
+
+GameData::Cutscene.define :sq_kaels_past_memory do |scene|
+  scene.play_bgm 'Pokemon SM - Aether Paradise'
+  
+  scene.message "As Kael held the locket, memories flooded back."
+  
+  # Flashback sequence
+  scene.message "\\b[Flashback]\\b"
+  scene.message "\\bYoung Kael\\b: Sister! The building is on fire!"
+  scene.message "\\bKael's Sister\\b: I know, Kael. Take my hand."
+  scene.message "\\bKael's Sister\\b: We have to get the others out."
+  
+  scene.message "\\bYoung Kael\\b: I'm scared..."
+  scene.message "\\bKael's Sister\\b: I know. But you're brave."
+  scene.message "\\bKael's Sister\\b: Take this locket. Keep it safe for me."
+  
+  scene.message "A beam collapsed, separating them."
+  
+  scene.message "\\bKael's Sister\\b: Kael! Go! Get out!"
+  scene.message "\\bYoung Kael\\b: I won't leave you!"
+  scene.message "\\bKael's Sister\\b: You have to live, Kael!"
+  scene.message "\\bKael's Sister\\b: Live for both of us!"
+  
+  scene.message "\\b[End Flashback]\\b"
+  
+  scene.message "\\bKael\\b: ...She pushed me out. Saved my life."
+  scene.message "\\bKael\\b: And I... I forgot her face. Her name."
+  scene.message "\\bKael\\b: How could I forget?"
+  
+  scene.message "A dark shadow manifested behind Kael."
+  scene.message "\\bShadow Kael\\b: Because you wanted to forget."
+  scene.message "\\bShadow Kael\\b: The guilt. The survivor's shame."
+end
+
+GameData::Cutscene.define :sq_kaels_past_battle do |scene|
+  scene.play_bgm 'Pokemon USUM - Battle! Ultra Necrozma'
+  
+  scene.message "\\bShadow Kael\\b: You let her die."
+  scene.message "\\bShadow Kael\\b: You were weak. You couldn't save anyone."
+  
+  scene.message "\\bKael\\b: ...Maybe you're right."
+  scene.message "\\bKael\\b: But I'm not that scared kid anymore."
+  
+  scene.message "\\bLyra\\b: Kael, we're with you!"
+  scene.message "\\b\\PN\\b: You don't have to face this alone!"
+  
+  scene.message "\\bKael\\b: I know. That's why I can do this now."
+  scene.message "\\bKael\\b: Come on, shadow. Let's end this."
+  
+  # Battle: Shadow Kael (uses Dark-type team)
+  # Umbreon, Absol, Zoroark, Shadow Greninja
+end
+
+GameData::Cutscene.define :sq_kaels_past_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Forever'
+  
+  scene.message "The shadow dissipated, merging back into Kael."
+  
+  scene.message "\\bKael\\b: ...Her name was Sera."
+  scene.message "\\bKael\\b: Sera. My sister Sera."
+  scene.message "\\bKael\\b: *clutches locket* I remember now."
+  
+  scene.message "\\bLyra\\b: Are you okay?"
+  
+  scene.message "\\bKael\\b: ...Yeah. For the first time in years."
+  scene.message "\\bKael\\b: She didn't die so I could hide in the shadows."
+  scene.message "\\bKael\\b: She died so I could live."
+  
+  scene.message "\\bKael\\b: \\PN, Lyra... thank you."
+  scene.message "\\bKael\\b: For coming with me. For not giving up on me."
+  
+  scene.message "\\b\\PN\\b: That's what friends are for."
+  
+  scene.message "\\bKael\\b: ...Friends. Yeah."
+  scene.message "\\bKael\\b: *small smile* I like the sound of that."
+end
+
+#===============================================================================
+# QUEST 77: LYRA'S SECRET - Crown Resonance
+# Unlocks after Chapter 30, reveals Lyra's connection to Crown magic
+# Reward: Resonance Crystal (boosts Psychic/Fairy moves)
+#===============================================================================
+
+GameData::Quest.define :lyras_secret do |q|
+  q.name "Echoes of the Crown"
+  q.description "Investigate why Lyra has strange reactions near Crown artifacts."
+  q.giver "Lyra"
+  q.location "Ancient Crown Temple"
+  q.chapter_unlock 30
+  
+  q.objectives [
+    { id: :investigate_reactions, text: "Study Lyra's Crown resonance" },
+    { id: :find_temple, text: "Locate the Ancient Crown Temple" },
+    { id: :pass_trials, text: "Complete the Temple's three trials" },
+    { id: :learn_truth, text: "Discover Lyra's ancestral secret" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bLyra\\b: I'm... descended from the Crown Keepers?")
+    pbMessage("\\bLyra\\b: That's why the artifacts react to me...")
+    pbReceiveItem(:RESONANCECRYSTAL)
+    pbMessage("\\bLyra\\b: This power... I'll use it to protect everyone.")
+  end
+end
+
+GameData::Cutscene.define :sq_lyras_secret_start do |scene|
+  scene.play_bgm 'Pokemon ORAS - Mt. Pyre Peak'
+  
+  scene.message "\\bLyra\\b: \\PN, something strange has been happening."
+  scene.message "\\bLyra\\b: Every time we get near a Crown artifact..."
+  scene.message "\\bLyra\\b: I feel this... pull. Like it's calling to me."
+  
+  scene.message "\\b\\PN\\b: Have you always felt this?"
+  
+  scene.message "\\bLyra\\b: No, it started when I touched the Crown Pendant."
+  scene.message "\\bLyra\\b: I heard... voices. Ancient voices."
+  
+  scene.message "\\bKael\\b: That's not normal."
+  scene.message "\\bLyra\\b: I know. That's why I need to understand what's happening."
+  scene.message "\\bLyra\\b: My grandmother mentioned an old temple once..."
+  scene.message "\\bLyra\\b: She said our family had 'obligations.'"
+end
+
+GameData::Cutscene.define :sq_lyras_secret_temple do |scene|
+  scene.play_bgm 'Pokemon BW - Relic Castle'
+  
+  scene.message "The Ancient Crown Temple rose from the mountainside."
+  scene.message "Its architecture pre-dated any known civilization."
+  
+  scene.message "\\bKael\\b: This place is old. Really old."
+  scene.message "\\bLyra\\b: ...The voices are louder here."
+  
+  # TODO: Event Sequence
+  # The temple doors respond only to Lyra's touch
+  # Ancient mechanisms spring to life
+  
+  scene.message "\\b\\PN\\b: The temple recognized you, Lyra."
+  
+  scene.message "\\bLyra\\b: I know. I think... I think I was meant to come here."
+  scene.message "\\bLyra\\b: Let's see what's inside."
+end
+
+GameData::Cutscene.define :sq_lyras_secret_trial1 do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+  
+  scene.message "\\b[Trial of Mind]\\b"
+  scene.message "An ethereal voice echoed through the chamber."
+  
+  scene.message "\\bVoice\\b: Child of the Keepers, prove your wisdom."
+  scene.message "\\bVoice\\b: The Crown grants power. What must balance power?"
+  
+  scene.message "\\bLyra\\b: ...Responsibility."
+  scene.message "\\bLyra\\b: Power without responsibility is tyranny."
+  
+  scene.message "\\bVoice\\b: You speak truth. Proceed."
+  
+  scene.message "The first seal illuminated with golden light."
+end
+
+GameData::Cutscene.define :sq_lyras_secret_trial2 do |scene|
+  scene.play_bgm 'Pokemon SM - Altar of the Sunne'
+  
+  scene.message "\\b[Trial of Heart]\\b"
+  
+  scene.message "\\bVoice\\b: Child of the Keepers, prove your compassion."
+  scene.message "\\bVoice\\b: Show us the bonds that give you strength."
+  
+  # TODO: Event Sequence
+  # Lyra must demonstrate her connections to allies
+  # Memories of helping others flash by
+  
+  scene.message "\\bLyra\\b: I fight for my friends. For the people I love."
+  scene.message "\\bLyra\\b: \\PN, Kael, everyone we've met on this journey..."
+  scene.message "\\bLyra\\b: They're my strength."
+  
+  scene.message "\\bVoice\\b: Your heart is true. Proceed."
+  
+  scene.message "The second seal blazed with warm light."
+end
+
+GameData::Cutscene.define :sq_lyras_secret_trial3 do |scene|
+  scene.play_bgm 'Pokemon USUM - Ultra Wormhole'
+  
+  scene.message "\\b[Trial of Sacrifice]\\b"
+  
+  scene.message "\\bVoice\\b: Child of the Keepers, prove your resolve."
+  scene.message "\\bVoice\\b: Would you give everything to protect what matters?"
+  
+  scene.message "\\bLyra\\b: ..."
+  scene.message "\\bLyra\\b: Yes. Without hesitation."
+  
+  scene.message "\\bKael\\b: Lyra, don't—"
+  
+  scene.message "\\bLyra\\b: If my life could save the world, I'd give it."
+  scene.message "\\bLyra\\b: But I'd rather live... and fight... and win."
+  scene.message "\\bLyra\\b: That's why I won't give up. Ever."
+  
+  scene.message "\\bVoice\\b: ...Well spoken, young one."
+  scene.message "\\bVoice\\b: True sacrifice is not seeking death."
+  scene.message "\\bVoice\\b: It is living each day for others."
+  
+  scene.message "The final seal shattered, revealing the inner sanctum."
+end
+
+GameData::Cutscene.define :sq_lyras_secret_revelation do |scene|
+  scene.play_bgm 'Pokemon ORAS - Primal Reversion'
+  
+  scene.message "Within the sanctum stood an ancient mural."
+  scene.message "It depicted a lineage stretching back millennia."
+  
+  scene.message "\\bLyra\\b: These people... they're all..."
+  
+  scene.message "\\bVoice\\b: Your ancestors, Lyra of the Keeper bloodline."
+  scene.message "\\bVoice\\b: When the Crown was forged, your family swore an oath."
+  scene.message "\\bVoice\\b: To guard it. To ensure it was never misused."
+  
+  scene.message "\\bLyra\\b: But... my grandmother never mentioned..."
+  
+  scene.message "\\bVoice\\b: The knowledge was lost. Wars, disasters, time itself..."
+  scene.message "\\bVoice\\b: But the blood remembers."
+  scene.message "\\bVoice\\b: That is why the artifacts call to you."
+  
+  scene.message "\\bKael\\b: So Lyra is basically Crown royalty?"
+  scene.message "\\bVoice\\b: Not royalty. Something greater. A guardian."
+end
+
+GameData::Cutscene.define :sq_lyras_secret_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Cyllage City'
+  
+  scene.message "\\bLyra\\b: This is... a lot to take in."
+  scene.message "\\bLyra\\b: My whole life, I felt like there was something more."
+  scene.message "\\bLyra\\b: Some purpose I couldn't quite see."
+  
+  scene.message "\\b\\PN\\b: How do you feel now?"
+  
+  scene.message "\\bLyra\\b: Honestly? Relieved."
+  scene.message "\\bLyra\\b: It explains why I could never just... ignore injustice."
+  scene.message "\\bLyra\\b: Why I had to help people."
+  
+  scene.message "\\bKael\\b: That's just who you are, Lyra."
+  scene.message "\\bKael\\b: Bloodline or not."
+  
+  scene.message "\\bLyra\\b: *smiles* Thanks, Kael."
+  scene.message "\\bLyra\\b: \\PN, I promise—I'll use this power to help us win."
+  scene.message "\\bLyra\\b: The Crown won't fall into the wrong hands. Not on my watch."
+end
+
+#===============================================================================
+# QUEST 78: ELENA'S LEGACY - The Lost Princess
+# Unlocks after Chapter 40, reveals Elena's true fate
+# Reward: Crown Heir Ring (all stats +10% in decisive battles)
+#===============================================================================
+
+GameData::Quest.define :elenas_legacy do |q|
+  q.name "The Lost Princess"
+  q.description "Uncover the truth about Princess Elena's disappearance 20 years ago."
+  q.giver "Royal Historian"
+  q.location "Crownheart Palace Archives"
+  q.chapter_unlock 40
+  
+  q.objectives [
+    { id: :find_documents, text: "Find Elena's hidden journals" },
+    { id: :visit_locations, text: "Visit places from Elena's past" },
+    { id: :find_survivor, text: "Locate someone who knew Elena" },
+    { id: :learn_truth, text: "Discover what really happened" },
+    { id: :honor_memory, text: "Honor Elena's memory at the memorial" }
+  ]
+  
+  q.on_complete do
+    pbMessage("\\bRoyal Historian\\b: So that's what happened to Princess Elena...")
+    pbMessage("\\bRoyal Historian\\b: She sacrificed everything to seal away Eternatus.")
+    pbReceiveItem(:CROWNHEIRRING)
+    pbMessage("\\bRoyal Historian\\b: This ring was meant for her heir...")
+    pbMessage("\\bRoyal Historian\\b: I believe she would want you to have it.")
+  end
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_start do |scene|
+  scene.play_bgm 'Pokemon XY - Parfum Palace'
+  
+  scene.message "\\bRoyal Historian\\b: Ah, travelers. You seek knowledge?"
+  scene.message "\\bRoyal Historian\\b: I am the keeper of royal histories."
+  
+  scene.message "\\b\\PN\\b: We want to learn about Princess Elena."
+  
+  scene.message "\\bRoyal Historian\\b: *surprised* The Lost Princess?"
+  scene.message "\\bRoyal Historian\\b: That story is... complicated."
+  scene.message "\\bRoyal Historian\\b: Twenty years ago, Elena vanished."
+  scene.message "\\bRoyal Historian\\b: The official story says she fled her duties."
+  
+  scene.message "\\bLyra\\b: But that's not true, is it?"
+  
+  scene.message "\\bRoyal Historian\\b: *sighs* I've always suspected more."
+  scene.message "\\bRoyal Historian\\b: Her journals are hidden in the archives."
+  scene.message "\\bRoyal Historian\\b: Find them, and perhaps you'll learn the truth."
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_journals do |scene|
+  scene.play_bgm 'Pokemon HGSS - National Park'
+  
+  scene.message "Deep within the archives, a hidden chamber awaited."
+  scene.message "Elena's personal journals sat untouched for two decades."
+  
+  scene.message "\\bLyra\\b: *reading* 'Day 47: The Crown fragments grow unstable.'"
+  scene.message "\\bLyra\\b: 'Father refuses to acknowledge the danger.'"
+  scene.message "\\bLyra\\b: 'If Eternatus awakens, everything will be lost.'"
+  
+  scene.message "\\bKael\\b: Eternatus? The same one Cedric is trying to awaken?"
+  
+  scene.message "\\b\\PN\\b: *reading* 'Day 112: I've found a way.'"
+  scene.message "\\b\\PN\\b: 'The sealing ritual requires a sacrifice.'"
+  scene.message "\\b\\PN\\b: 'My bloodline can contain the beast.'"
+  
+  scene.message "\\bLyra\\b: She was planning to..."
+  
+  scene.message "\\b\\PN\\b: Keep reading. 'Day 113: Tomorrow, I will save our kingdom.'"
+  scene.message "\\b\\PN\\b: 'Tell no one. If they knew, they would try to stop me.'"
+  scene.message "\\b\\PN\\b: 'This is my duty as heir to the Crown.'"
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_survivor do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+  
+  scene.message "Following the journal's clues led to a small cottage."
+  scene.message "An elderly knight answered the door."
+  
+  scene.message "\\bOld Knight\\b: Who... who are you?"
+  
+  scene.message "\\b\\PN\\b: We're investigating Princess Elena's disappearance."
+  
+  scene.message "\\bOld Knight\\b: *eyes widen* After all these years..."
+  scene.message "\\bOld Knight\\b: I was her personal guard. Sir Marcus."
+  scene.message "\\bOld Knight\\b: I was the only one who knew her plan."
+  
+  scene.message "\\bLyra\\b: What happened that night?"
+  
+  scene.message "\\bSir Marcus\\b: She made me swear to let her go."
+  scene.message "\\bSir Marcus\\b: Said the kingdom needed protecting more than she needed life."
+  scene.message "\\bSir Marcus\\b: I watched her walk into that portal..."
+  scene.message "\\bSir Marcus\\b: And it sealed behind her."
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_truth do |scene|
+  scene.play_bgm 'Pokemon USUM - Vast Poni Canyon'
+  
+  scene.message "\\bSir Marcus\\b: For twenty years, I've kept her secret."
+  scene.message "\\bSir Marcus\\b: The king declared her a traitor to save face."
+  scene.message "\\bSir Marcus\\b: But Elena was the greatest hero this kingdom ever had."
+  
+  scene.message "\\bKael\\b: She sealed Eternatus... by sacrificing herself?"
+  
+  scene.message "\\bSir Marcus\\b: Her soul became the lock."
+  scene.message "\\bSir Marcus\\b: As long as her spirit endures, the seal holds."
+  scene.message "\\bSir Marcus\\b: But now... with the Crown shattering..."
+  
+  scene.message "\\bLyra\\b: The seal is weakening."
+  scene.message "\\bLyra\\b: That's why Eternatus is stirring again."
+  
+  scene.message "\\bSir Marcus\\b: You must stop whoever is trying to break the seal."
+  scene.message "\\bSir Marcus\\b: If Eternatus awakens while the Crown is shattered..."
+  scene.message "\\bSir Marcus\\b: Elena's sacrifice will have been for nothing."
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_memorial do |scene|
+  scene.play_bgm 'Pokemon SWSH - Ballonlea'
+  
+  scene.message "Sir Marcus led you to a hidden grove."
+  scene.message "A small shrine stood among ancient trees."
+  
+  scene.message "\\bSir Marcus\\b: I built this for her."
+  scene.message "\\bSir Marcus\\b: Every year, I come here to remember."
+  
+  # TODO: Event Sequence
+  # Place flowers at the memorial
+  # A ghostly presence briefly appears
+  
+  scene.message "For a moment, a translucent figure shimmered."
+  
+  scene.message "\\bElena's Spirit\\b: ...Thank you for remembering."
+  scene.message "\\bElena's Spirit\\b: The seal... it won't hold much longer."
+  scene.message "\\bElena's Spirit\\b: Please... finish what I started."
+  
+  scene.message "The vision faded, but warmth remained."
+  
+  scene.message "\\b\\PN\\b: We will, Princess Elena."
+  scene.message "\\bLyra\\b: Your sacrifice won't be forgotten."
+  scene.message "\\bKael\\b: We'll stop Cedric. We'll protect the kingdom."
+end
+
+GameData::Cutscene.define :sq_elenas_legacy_complete do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Forever'
+  
+  scene.message "\\bSir Marcus\\b: *tears in eyes* Thank you, young ones."
+  scene.message "\\bSir Marcus\\b: For learning the truth."
+  scene.message "\\bSir Marcus\\b: For honoring her memory."
+  
+  scene.message "\\bSir Marcus\\b: Take this ring."
+  scene.message "\\bSir Marcus\\b: It belonged to Elena's mother, the Queen."
+  scene.message "\\bSir Marcus\\b: It was meant for the Crown heir."
+  
+  scene.message "\\b\\PN\\b: We can't accept this..."
+  
+  scene.message "\\bSir Marcus\\b: You carry on her mission."
+  scene.message "\\bSir Marcus\\b: That makes you her heir in spirit, if not blood."
+  scene.message "\\bSir Marcus\\b: Wear it with honor."
+  
+  scene.message "\\bLyra\\b: We won't let her down."
+  scene.message "\\bKael\\b: The kingdom will know the truth someday."
+  scene.message "\\b\\PN\\b: Princess Elena will be remembered as a hero."
+  
+  scene.message "\\bSir Marcus\\b: *smiles* That's all she ever wanted."
+end
+
+#===============================================================================
+# FULL QUEST REWARD SUMMARY (1-78)
 #===============================================================================
 # 1-15: Basic competitive items
 # 16-40: Advanced items and rare Pokémon
 # 41-70: Mega/Z/Gmax items, mints, patches, and legendary gear
+# 71-75: Story-related items (Guardian legends, cult infiltration)
+# 76-78: Character backstory quests (Kael, Lyra, Elena)
 #
 # Total Unique Rewards:
 # - Master Ball, Gold Bottle Cap, Ability Patch
@@ -2395,5 +2881,6 @@ end
 # - Mega Stones, Tera Orb, Booster Energy
 # - Key Stone, Link Cable, Power Items
 # - Beast Balls, Dream Balls, Apricorn Balls
+# - Shadow Oath Badge, Resonance Crystal, Crown Heir Ring
 # - Multiple Shiny Pokémon rewards!
 #===============================================================================

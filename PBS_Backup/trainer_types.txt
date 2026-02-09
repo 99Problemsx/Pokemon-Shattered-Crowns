@@ -563,4 +563,13 @@ BaseMoney = 0
 SkillLevel = 100
 BattleBGM = Battle Zamazenta Zacian
 VictoryBGM = Battle victory champion
-
+#-------------------------------
+# Kael's Past Side Quest - Shadow Self
+#-------------------------------
+[SHADOW_SELF]
+Name = Shadow Self
+Gender = Male
+BaseMoney = 0
+SkillLevel = 100
+BattleBGM = Battle! Ultra Necrozma
+VictoryBGM = Battle victory champion

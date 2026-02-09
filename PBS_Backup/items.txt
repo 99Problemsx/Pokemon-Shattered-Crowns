@@ -6699,3 +6699,27 @@ Pocket = 1
 Price = 0
 Flags = Fling_30
 Description = A pendant forged from three Crown Fragments. When HP is critical, boosts all stats of the holder.
+#-------------------------------
+[SHADOWOATHBADGE]
+Name = Shadow Oath Badge
+NamePlural = Shadow Oath Badges
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A badge forged from Kael's confrontation with his past. Boosts the power of Dark-type moves when held.
+#-------------------------------
+[RESONANCECRYSTAL]
+Name = Resonance Crystal
+NamePlural = Resonance Crystals
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A crystal attuned to Crown magic through Lyra's bloodline. Boosts Psychic and Fairy-type moves.
+#-------------------------------
+[CROWNHEIRRING]
+Name = Crown Heir Ring
+NamePlural = Crown Heir Rings
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Princess Elena's heirloom ring. Grants +10% to all stats in decisive battles.
