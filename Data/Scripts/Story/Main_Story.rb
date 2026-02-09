@@ -19425,9 +19425,10 @@ GameData::Cutscene.define :ch38_intro do |scene|
   
   scene.message "\\ts[]Chapter 38: Astoria"
   
-  scene.message "The air itself felt different here."
-  scene.message "Heavier. Older. Charged with forgotten power."
-  scene.message "This was a land where legends walked."
+  # TODO: Event Sequence - Astoria Atmosphere
+  # - Air feels different here
+  # - Heavier, older, charged with forgotten power
+  # - Land where legends walked
 end
 
 GameData::Cutscene.define :ch38_ancient_forest do |scene|
@@ -19446,12 +19447,15 @@ end
 GameData::Cutscene.define :ch38_wild_battle do |scene|
   scene.play_bgm 'Pokemon SWSH - Wild Battle'
   
-  scene.message "A strange Pokémon lunged from the underbrush!"
-  scene.message "Feral. Territorial. Powerful."
+  # TODO: Event Sequence - Wild Pokemon Attack
+  # - Strange Pokemon lunges from underbrush
+  # - Feral, territorial, powerful
   
   scene.trainer_battle :ASTORIAN_WILD, 1
   
-  scene.message "The creature fled deeper into the forest."
+  # TODO: Event Sequence - Creature Flees
+  # - Creature flees deeper into forest
+  
   scene.message "\\bKael\\b: These aren't corrupted. Just... wild."
   scene.message "\\bLyra\\b: Astoria has its own rules."
 end
@@ -19459,9 +19463,10 @@ end
 GameData::Cutscene.define :ch38_ruins_spotted do |scene|
   scene.play_bgm 'Pokemon ORAS - Ancient Ruins'
   
-  scene.message "Through the trees, you spotted structures."
-  scene.message "Ancient temples. Crumbling towers."
-  scene.message "A civilization lost to time."
+  # TODO: Event Sequence - Spotting Ruins
+  # - Through trees, spot structures
+  # - Ancient temples, crumbling towers
+  # - Civilization lost to time
   
   scene.message "\\b\\PN\\b: The Astral Temples?"
   scene.message "\\bKael\\b: One of them, maybe. The Guardians mentioned multiple."
@@ -19473,12 +19478,11 @@ end
 GameData::Cutscene.define :ch38_temple_approach do |scene|
   scene.play_bgm 'Pokemon RSE - Cave'
   
-  scene.message "You approached cautiously."
-  scene.message "The temple was massive. Carved from living stone."
-  scene.message "Symbols you didn't recognize covered every surface."
-  
-  scene.message "And at the entrance..."
-  scene.message "An old woman sat, watching you."
+  # TODO: Event Sequence - Approaching Temple
+  # - Approach cautiously
+  # - Temple is massive, carved from living stone
+  # - Unrecognized symbols cover every surface
+  # - Old woman sits at entrance, watching
   
   scene.message "\\bElder\\b: The Chosen Ones. At last."
   scene.message "\\bElder\\b: We have waited centuries for you."
