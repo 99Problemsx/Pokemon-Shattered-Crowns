@@ -1385,7 +1385,7 @@ class Battle::AI
       total_damage += sr_damage
       
       if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
-        PBDebug.log("[HAZARD] Stealth Rock: #{(sr_damage * 100).round(1)}% (#{sr_multiplier}x effective)", "Switch")
+        PBDebug.log("[HAZARD] Stealth Rock: #{(sr_damage * 100).round(1)}% (#{sr_multiplier}x effective)")
       end
     end
     
@@ -1406,7 +1406,7 @@ class Battle::AI
         total_damage += spikes_damage
         
         if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
-          PBDebug.log("[HAZARD] Spikes (#{spikes_layers} layers): #{(spikes_damage * 100).round(1)}%", "Switch")
+          PBDebug.log("[HAZARD] Spikes (#{spikes_layers} layers): #{(spikes_damage * 100).round(1)}%")
         end
       end
     end
@@ -1427,7 +1427,7 @@ class Battle::AI
         
         if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
           status_type = toxic_spikes_layers >= 2 ? "Badly Poisoned" : "Poisoned"
-          PBDebug.log("[HAZARD] Toxic Spikes: #{status_type} on switch-in", "Switch")
+          PBDebug.log("[HAZARD] Toxic Spikes: #{status_type} on switch-in")
         end
       end
     end
@@ -1447,7 +1447,7 @@ class Battle::AI
         total_damage += sticky_web_penalty
         
         if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
-          PBDebug.log("[HAZARD] Sticky Web: Speed -1 stage (~#{(sticky_web_penalty * 100).round(1)}% penalty)", "Switch")
+          PBDebug.log("[HAZARD] Sticky Web: Speed -1 stage (~#{(sticky_web_penalty * 100).round(1)}% penalty)")
         end
       end
     end
@@ -1456,7 +1456,7 @@ class Battle::AI
     # If Pokemon has Heavy-Duty Boots, it ignores all entry hazards
     if switch_pkmn.item_id == :HEAVYDUTYBOOTS
       if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE && total_damage > 0
-        PBDebug.log("[ITEM] Heavy-Duty Boots: Hazard damage negated!", "Switch")
+        PBDebug.log("[ITEM] Heavy-Duty Boots: Hazard damage negated!")
       end
       return 0.0
     end
@@ -1465,7 +1465,7 @@ class Battle::AI
     # Magic Guard prevents indirect damage
     if switch_pkmn.ability_id == :MAGICGUARD
       if AdvancedAI::DEBUG_SWITCH_INTELLIGENCE && total_damage > 0
-        PBDebug.log("[ABILITY] Magic Guard: Hazard damage negated!", "Switch")
+        PBDebug.log("[ABILITY] Magic Guard: Hazard damage negated!")
       end
       # Still suffer from Sticky Web speed drop and Toxic Spikes status
       # Return only the non-damage hazard penalties
@@ -1804,33 +1804,33 @@ class Battle::AI
     damage = calculate_incoming_damage(switch_pkmn, move, attacker)
     
     if show_breakdown && AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
-      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "Damage Calc")
-      PBDebug.log("DAMAGE BREAKDOWN: #{move.name} → #{switch_pkmn.name}", "Damage Calc")
-      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "Damage Calc")
+      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+      PBDebug.log("DAMAGE BREAKDOWN: #{move.name} → #{switch_pkmn.name}")
+      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
       
       # Move info
       move_type = move.pbCalcType(attacker) rescue move.type
-      PBDebug.log("Move: #{move.name} (#{move_type}, #{move.power} BP)", "Damage Calc")
+      PBDebug.log("Move: #{move.name} (#{move_type}, #{move.power} BP)")
       
       # Type effectiveness
       effectiveness = Effectiveness.calculate(move_type, *switch_pkmn.types.compact)
       eff_mult = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
-      PBDebug.log("Effectiveness: #{eff_mult}x (#{switch_pkmn.types.join('/')} vs #{move_type})", "Damage Calc")
+      PBDebug.log("Effectiveness: #{eff_mult}x (#{switch_pkmn.types.join('/')} vs #{move_type})")
       
       # Stats
       if move.physicalMove?
-        PBDebug.log("Physical: #{attacker.attack} Atk vs #{switch_pkmn.defense} Def", "Damage Calc")
+        PBDebug.log("Physical: #{attacker.attack} Atk vs #{switch_pkmn.defense} Def")
       else
-        PBDebug.log("Special: #{attacker.spatk} SpA vs #{switch_pkmn.spdef} SpD", "Damage Calc")
+        PBDebug.log("Special: #{attacker.spatk} SpA vs #{switch_pkmn.spdef} SpD")
       end
       
       # Abilities
-      PBDebug.log("Attacker Ability: #{attacker.ability_id}", "Damage Calc") if attacker.ability_id
-      PBDebug.log("Defender Ability: #{switch_pkmn.ability_id}", "Damage Calc") if switch_pkmn.ability_id
+      PBDebug.log("Attacker Ability: #{attacker.ability_id}") if attacker.ability_id
+      PBDebug.log("Defender Ability: #{switch_pkmn.ability_id}") if switch_pkmn.ability_id
       
       # Final damage
-      PBDebug.log("RESULT: #{(damage * 100).round(1)}% damage", "Damage Calc")
-      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "Damage Calc")
+      PBDebug.log("RESULT: #{(damage * 100).round(1)}% damage")
+      PBDebug.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     end
     
     damage
@@ -1840,29 +1840,29 @@ class Battle::AI
   def log_switch_decision(user, should_switch, best_switch_idx = nil)
     return unless AdvancedAI::DEBUG_SWITCH_INTELLIGENCE
     
-    PBDebug.log("", "Switch Decision")
-    PBDebug.log("═══════════════════════════════════════", "Switch Decision")
-    PBDebug.log("SWITCH DECISION SUMMARY", "Switch Decision")
-    PBDebug.log("═══════════════════════════════════════", "Switch Decision")
-    PBDebug.log("Current: #{user.name} (#{user.hp}/#{user.totalhp} HP)", "Switch Decision")
+    PBDebug.log("")
+    PBDebug.log("═══════════════════════════════════════")
+    PBDebug.log("SWITCH DECISION SUMMARY")
+    PBDebug.log("═══════════════════════════════════════")
+    PBDebug.log("Current: #{user.name} (#{user.hp}/#{user.totalhp} HP)")
     
     if should_switch && best_switch_idx
       party = @battle.pbParty(user.index)
       best_mon = party[best_switch_idx]
-      PBDebug.log("DECISION: ✅ SWITCH to #{best_mon.name}", "Switch Decision")
-      PBDebug.log("Reason: Better matchup / Strategic advantage", "Switch Decision")
+      PBDebug.log("DECISION: ✅ SWITCH to #{best_mon.name}")
+      PBDebug.log("Reason: Better matchup / Strategic advantage")
     else
-      PBDebug.log("DECISION: ❌ STAY with #{user.name}", "Switch Decision")
+      PBDebug.log("DECISION: ❌ STAY with #{user.name}")
       reasons = []
       reasons << "No better matchup" unless should_switch
       reasons << "Can secure KO" if can_ko_opponent?(user)
       reasons << "Has stat boosts" if user.stages.values.any? { |s| s > 0 }
       reasons << "Just switched in" if user.turnCount < 2
-      PBDebug.log("Reason: #{reasons.join(', ')}", "Switch Decision")
+      PBDebug.log("Reason: #{reasons.join(', ')}")
     end
     
-    PBDebug.log("═══════════════════════════════════════", "Switch Decision")
-    PBDebug.log("", "Switch Decision")
+    PBDebug.log("═══════════════════════════════════════")
+    PBDebug.log("")
   end
 end
 

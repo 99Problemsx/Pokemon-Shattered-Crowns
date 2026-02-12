@@ -209,11 +209,21 @@ class Battle::AI
     
     item_id = target.item_id
     
-    # CRITICAL VALUE: Remove mega stones (prevents Mega Evolution)
-    if GameData::Item.get(item_id).is_mega_stone?
-      score += 100
-      AdvancedAI.log("  Knock Off Mega Stone: +100 (prevents Mega!)", "Disruption")
+    # Check if item is unlosable (Mega Stones, Z-Crystals, etc.)
+    # Knock Off CANNOT remove unlosable items!
+    item_data = GameData::Item.get(item_id)
+    if item_data.unlosable?
+      AdvancedAI.log("  Knock Off: Item is unlosable (no bonus)", "Disruption")
+      return 0  # Base damage only, can't remove item
     end
+    
+    # CRITICAL VALUE: Remove mega stones (prevents Mega Evolution)
+    # NOTE: This should never trigger since Mega Stones are unlosable,
+    # but keeping for compatibility with custom implementations
+    #if item_data.is_mega_stone?
+      #score += 100
+      #AdvancedAI.log("  Knock Off Mega Stone: +100 (prevents Mega!)", "Disruption")
+    #end
     
     # VERY HIGH VALUE: Choiced items (unlocks them)
     choice_items = [:CHOICEBAND, :CHOICESCARF, :CHOICESPECS]
