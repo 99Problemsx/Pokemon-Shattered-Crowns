@@ -9,7 +9,107 @@ module GameData
   #=============================================================================
   # Species - Define Pokemon species
   #=============================================================================
-  class Species < ScriptBase
+  class Species
+    attr_reader :id, :real_name, :form_name, :species, :form, :pokedex_entry
+    attr_reader :type1, :type2, :base_stats, :evs, :catch_rate, :happiness
+    attr_reader :base_exp, :growth_rate, :gender_ratio, :hatch_steps, :incense
+    attr_reader :moves, :tutor_moves, :egg_moves, :abilities, :hidden_abilities
+    attr_reader :wild_item_common, :wild_item_uncommon, :wild_item_rare
+    attr_reader :ev_yield, :height, :weight, :color, :shape, :habitat, :generation
+    attr_reader :mega_stone, :mega_move, :unmega_form, :mega_message
+    attr_reader :back_sprite_x, :back_sprite_y, :front_sprite_x, :front_sprite_y
+    attr_reader :front_sprite_altitude, :shadow_sprite_x, :shadow_sprite_y
+    attr_reader :egg_groups, :flags, :evolutions
+    attr_reader :call_rate_sos, :call_rate_shadow, :call_rate_same
+    
+    def initialize(data)
+      @id = data[:id]
+      @species = data[:species] || @id
+      @form = data[:form_number] || 0
+      @real_name = data[:name] || "Unnamed"
+      @form_name = data[:form_name]
+      @pokedex_entry = data[:pokedex_entry]
+      
+      @types = data[:types] || [:NORMAL]
+      @type1 = @types[0]
+      @type2 = @types[1]
+      
+      # Normalize stat keys: SC uses lowercase (:hp, :attack), Essentials expects uppercase (:HP, :ATTACK)
+      @base_stats = self.class.normalize_stat_hash(data[:base_stats] || {})
+      @evs = self.class.normalize_stat_hash(data[:evs] || {})
+      @catch_rate = data[:catch_rate] || 255
+      @happiness = data[:happiness] || 70
+      @base_exp = data[:base_exp] || 100
+      @growth_rate = data[:growth_rate] || :Medium
+      @gender_ratio = data[:gender_ratio] || :Female50Percent
+      @hatch_steps = data[:hatch_steps] || 5120
+      @incense = data[:incense]
+      
+      @moves = data[:moves] || []
+      @tutor_moves = data[:tutor_moves] || []
+      @egg_moves = data[:egg_moves] || []
+      @abilities = data[:abilities] || []
+      @hidden_abilities = data[:hidden_abilities] || []
+      
+      @wild_item_common = data[:wild_item_common]
+      @wild_item_uncommon = data[:wild_item_uncommon]
+      @wild_item_rare = data[:wild_item_rare]
+      
+      @ev_yield = self.class.normalize_stat_hash(data[:ev_yield] || {})
+      @height = data[:height] || 1.0
+      @weight = data[:weight] || 10.0
+      @color = data[:color] || :Red
+      @shape = data[:shape] || :Head
+      @habitat = data[:habitat]
+      @generation = data[:generation] || 1
+      
+      @mega_stone = data[:mega_stone]
+      @mega_move = data[:mega_move]
+      @unmega_form = data[:unmega_form]
+      @mega_message = data[:mega_message]
+      
+      @back_sprite_x = data[:back_sprite_x] || 0
+      @back_sprite_y = data[:back_sprite_y] || 0
+      @front_sprite_x = data[:front_sprite_x] || 0
+      @front_sprite_y = data[:front_sprite_y] || 0
+      @front_sprite_altitude = data[:front_sprite_altitude] || 0
+      @shadow_sprite_x = data[:shadow_sprite_x] || 0
+      @shadow_sprite_y = data[:shadow_sprite_y] || 0
+      
+      @egg_groups = data[:egg_groups] || [:Undiscovered]
+      @flags = data[:flags] || []
+      @evolutions = data[:evolutions] || []
+      
+      @call_rate_sos = data[:call_rate_sos]
+      @call_rate_shadow = data[:call_rate_shadow]
+      @call_rate_same = data[:call_rate_same]
+    end
+    
+    # Normalize SC lowercase stat keys to Essentials uppercase stat IDs
+    STAT_KEY_MAP = {
+      :hp => :HP, :attack => :ATTACK, :defense => :DEFENSE,
+      :sp_atk => :SPECIAL_ATTACK, :special_attack => :SPECIAL_ATTACK,
+      :sp_def => :SPECIAL_DEFENSE, :special_defense => :SPECIAL_DEFENSE,
+      :speed => :SPEED
+    }
+    ALL_MAIN_STATS = [:HP, :ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    def self.normalize_stat_hash(hash)
+      return {} unless hash.is_a?(Hash)
+      normalized = {}
+      hash.each do |k, v|
+        new_key = STAT_KEY_MAP[k] || k
+        normalized[new_key] = v
+      end
+      # Ensure all main stat keys exist (default 0) so lookups never return nil
+      ALL_MAIN_STATS.each { |s| normalized[s] = 0 unless normalized.key?(s) }
+      normalized
+    end
+    
+    def name; @real_name; end
+    def types; @types; end
+    def single_gendered?; [:AlwaysMale, :AlwaysFemale, :Genderless].include?(@gender_ratio); end
+    def has_type?(type); @types.include?(DSL.to_id(type)); end
+    
     #---------------------------------------------------------------------------
     # Define a new Pokemon species
     # Usage:
@@ -47,11 +147,15 @@ module GameData
     # Get species data
     #---------------------------------------------------------------------------
     def self.get(id)
-      ScriptRegistry.get_pokemon(DSL.to_id(id))
+      data = ScriptRegistry.get_pokemon(DSL.to_id(id))
+      return nil unless data
+      self.new(data)
     end
     
     def self.get_form(species, form)
-      ScriptRegistry.get_pokemon_form(DSL.to_id(species), form)
+      data = ScriptRegistry.get_pokemon_form(DSL.to_id(species), form)
+      return nil unless data
+      self.new(data)
     end
     
     def self.exists?(id)
@@ -59,7 +163,11 @@ module GameData
     end
     
     def self.each
-      ScriptRegistry.pokemon.each { |id, data| yield(id, data) }
+      ScriptRegistry.pokemon.each { |id, data| yield(self.new(data)) }
+    end
+    
+    def self.each_species(&block)
+      self.each(&block)
     end
     
     def self.count
@@ -72,6 +180,7 @@ module GameData
   #=============================================================================
   class SpeciesBuilder
     attr_reader :id
+    attr_reader :data
     
     def initialize(id)
       @id = id
@@ -111,6 +220,8 @@ module GameData
     end
     
     # Basic info
+    def species(val); @data[:species] = DSL.to_id(val); end
+    def form(val); @data[:form_number] = val; end
     def name(val); @data[:name] = val; end
     def form_name(val); @data[:form_name] = val; end
     def category(val); @data[:category] = val; end
@@ -243,6 +354,11 @@ module GameData
     def offspring(*vals)
       @data[:offspring] = vals.flatten.map { |s| DSL.to_id(s) }
     end
+    
+    # SOS Calling
+    def call_rate_sos(val); @data[:call_rate_sos] = val; end
+    def call_rate_shadow(val); @data[:call_rate_shadow] = val; end
+    def call_rate_same(val); @data[:call_rate_same] = val; end
     
     def to_data
       @data.compact

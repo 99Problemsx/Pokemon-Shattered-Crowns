@@ -166,9 +166,26 @@ module GameData
       @types[id]
     end
     
+    def self.get_trainer_type(id)
+      @trainer_types[id]
+    end
+    
     def self.get_type_effectiveness(attacking, defending)
       return 1.0 unless @type_chart[attacking]
       @type_chart[attacking][defending] || 1.0
+    end
+    
+    #---------------------------------------------------------------------------
+    # Generic register/get_data - delegates to top-level ScriptRegistry
+    # Allows code inside module GameData to call ScriptRegistry.register(...)
+    # without needing the :: prefix.
+    #---------------------------------------------------------------------------
+    def self.register(category, key, data)
+      ::ScriptRegistry.register(category, key, data)
+    end
+    
+    def self.get_data(category, key)
+      ::ScriptRegistry.get_data(category, key)
     end
     
     #---------------------------------------------------------------------------
@@ -258,6 +275,28 @@ module GameData
     def self.to_id(name)
       return name if name.is_a?(Symbol)
       name.to_s.upcase.gsub(/[^A-Z0-9_]/, '_').to_sym
+    end
+  end
+end
+
+#===============================================================================
+# Top-level ScriptRegistry
+#===============================================================================
+# Generic data store used by SpeciesMetrics, RegionalDex, and BerryPlant DSLs.
+# Separate from GameData::ScriptRegistry which handles core PBS data.
+#===============================================================================
+module ScriptRegistry
+  class << self
+    def register(category, key, data)
+      @data ||= {}
+      @data[category] ||= {}
+      @data[category][key] = data
+    end
+
+    def get_data(category, key)
+      @data ||= {}
+      @data[category] ||= {}
+      @data[category][key]
     end
   end
 end

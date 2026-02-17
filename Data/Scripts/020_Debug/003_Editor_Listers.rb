@@ -589,14 +589,16 @@ class TrainerBattleLister
       @ids.push(true)
     end
     cmds.each do |t|
+      trainer_data = GameData::Trainer.try_get(t[1], t[2], t[3])
+      party_size = trainer_data ? trainer_data.pokemon.length : 0
       if t[3] > 0
         @commands.push(_INTL("{1} {2} ({3}) x{4}",
                              GameData::TrainerType.get(t[1]).name, t[2], t[3],
-                             GameData::Trainer.get(t[1], t[2], t[3]).pokemon.length))
+                             party_size))
       else
         @commands.push(_INTL("{1} {2} x{3}",
                              GameData::TrainerType.get(t[1]).name, t[2],
-                             GameData::Trainer.get(t[1], t[2], t[3]).pokemon.length))
+                             party_size))
       end
       @ids.push([t[1], t[2], t[3]])
     end

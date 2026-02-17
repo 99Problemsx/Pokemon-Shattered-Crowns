@@ -214,3 +214,37 @@ module AdvancedAI
 end
 
 AdvancedAI.log("Move Memory System loaded (Reborn-inspired)", "Memory")
+
+#===============================================================================
+# Integration in Battle::AI - Wires move memory into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_move_memory(score, move, user, target)
+    return score unless move && target
+    
+    # Penalize overly repetitive moves (predictable play)
+    freq = AdvancedAI.move_frequency(@battle, user, move.id)
+    if freq >= 3
+      score -= 10  # Slight penalty for using same move 3+ times
+    end
+    
+    # If we know the opponent has a priority move, slight boost to bulky plays
+    if AdvancedAI.has_priority_move?(@battle, target)
+      if AdvancedAI.protect_move?(move.id)
+        score += 10  # Protect is good against priority users
+      end
+    end
+    
+    # If opponent has healing, boost status/setup over weak attacks
+    if AdvancedAI.has_healing_move?(@battle, target)
+      if move.damagingMove? && move.power < 60
+        score -= 10  # Weak attacks get outhealed
+      end
+      if AdvancedAI.setup_move?(move.id)
+        score += 5  # Setup to overpower healing
+      end
+    end
+    
+    return score
+  end
+end

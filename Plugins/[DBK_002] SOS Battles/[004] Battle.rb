@@ -548,7 +548,7 @@ class Battle
     pkmn = pbParty(0)[idxParty]
     evYield = defeatedBattler.pokemon.evYield
     evTotal = 0
-    GameData::Stat.each_main { |s| evTotal += pkmn.ev[s.id] }
+    GameData::Stat.each_main { |s| evTotal += (pkmn.ev[s.id] || 0) }
     if !Battle::ItemEffects.triggerEVGainModifier(pkmn.item, pkmn, evYield)
       Battle::ItemEffects.triggerEVGainModifier(@initialItems[0][idxParty], pkmn, evYield)
     end
@@ -561,14 +561,14 @@ class Battle
     if pkmn.shadowPokemon? && pkmn.heartStage <= 3 && pkmn.saved_ev
       pkmn.saved_ev.each_value { |e| evTotal += e }
       GameData::Stat.each_main do |s|
-        evGain = evYield[s.id].clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[s.id] - pkmn.saved_ev[s.id])
+        evGain = (evYield[s.id] || 0).clamp(0, Pokemon::EV_STAT_LIMIT - (pkmn.ev[s.id] || 0) - (pkmn.saved_ev[s.id] || 0))
         evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
         pkmn.saved_ev[s.id] += evGain
         evTotal += evGain
       end
     else
       GameData::Stat.each_main do |s|
-        evGain = evYield[s.id].clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[s.id])
+        evGain = (evYield[s.id] || 0).clamp(0, Pokemon::EV_STAT_LIMIT - (pkmn.ev[s.id] || 0))
         evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
         pkmn.ev[s.id] += evGain
         evTotal += evGain

@@ -194,6 +194,87 @@ end
 
 puts "[Advanced AI] Hotfixes loaded: Wonder Launcher, Item AI, Type Effectiveness"
 
+#===============================================================================
+# Nil-Safe Effects Array Wrapper
+#===============================================================================
+# AIBattler.effects delegates to battler.effects which returns a raw Array.
+# Some PBEffects indices may not be initialized, returning nil. Comparisons
+# like `effects[PBEffects::Wish] > 0` then crash with NoMethodError.
+# This wrapper returns 0 for nil numeric effects.
+#===============================================================================
+class NilSafeEffects
+  # PBEffects that are boolean (true/false) rather than numeric counters
+  # These must return false (not 0) when nil, since 0 is truthy in Ruby
+  BOOLEAN_EFFECTS = [
+    PBEffects::AquaRing, PBEffects::Charge, PBEffects::CurseGhost,
+    PBEffects::Endure, PBEffects::FocusEnergy, PBEffects::GastroAcid,
+    PBEffects::Grudge, PBEffects::HelpingHand, PBEffects::Imprison,
+    PBEffects::Ingrain, PBEffects::MagicCoat, PBEffects::MudSport,
+    PBEffects::Powder, PBEffects::Snatch, PBEffects::WaterSport,
+    PBEffects::SmackDown, PBEffects::Torment
+  ].compact.freeze rescue [].freeze
+
+  def initialize(arr)
+    @arr = arr || []
+  end
+
+  def [](idx)
+    val = @arr[idx]
+    return val unless val.nil?
+    # Return false for boolean effects, 0 for numeric effects
+    return false if BOOLEAN_EFFECTS.include?(idx)
+    0
+  end
+
+  def []=(idx, val)
+    @arr[idx] = val
+  end
+
+  def length;  @arr.length;  end
+  def size;    @arr.size;    end
+  def each(&block); @arr.each(&block); end
+
+  def respond_to_missing?(method, include_private = false)
+    @arr.respond_to?(method, include_private) || super
+  end
+
+  def method_missing(method, *args, &block)
+    if @arr.respond_to?(method)
+      @arr.send(method, *args, &block)
+    else
+      super
+    end
+  end
+end
+
+#===============================================================================
+# AIBattler: Nil-safe effects for battler effects array
+#===============================================================================
+class Battle::AI::AIBattler
+  def effects
+    NilSafeEffects.new(battler.effects)
+  end
+end
+
+#===============================================================================
+# ActiveSide / ActiveField: Nil-safe effects for side & field arrays
+# This covers ALL access paths: @battle.sides[i].effects, user.pbOwnSide.effects,
+# target.pbOpposingSide.effects, @battle.field.effects, etc.
+#===============================================================================
+class Battle::ActiveSide
+  alias _aai_original_effects effects unless method_defined?(:_aai_original_effects)
+  def effects
+    NilSafeEffects.new(_aai_original_effects)
+  end
+end
+
+class Battle::ActiveField
+  alias _aai_original_effects effects unless method_defined?(:_aai_original_effects)
+  def effects
+    NilSafeEffects.new(_aai_original_effects)
+  end
+end
+
 # Test echoln output
 echoln "═══════════════════════════════════════════════════"
 echoln "[AAI] Advanced AI System v3.0.0 - DEBUG MODE ACTIVE"

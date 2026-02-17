@@ -17,6 +17,8 @@ module SCScripts
       content = File.read(filepath, encoding: 'UTF-8')
       
       # Determine file type and parse accordingly
+      # NOTE: Order matters! More specific patterns must come before general ones.
+      # e.g. pokemon_metrics, pokemon_forms must match before plain /pokemon/
       case filename
       when /abilities/
         parse_abilities(content)
@@ -26,6 +28,8 @@ module SCScripts
         parse_items(content)
       when /types/
         parse_types(content)
+      when /pokemon.*metrics/
+        parse_pokemon_metrics(content)
       when /pokemon.*forms/
         parse_pokemon_forms(content)
       when /pokemon/
@@ -111,7 +115,12 @@ module SCScripts
           when 'type'
             current_data[:type] = value.to_sym
           when 'category'
-            current_data[:category] = value.downcase.to_sym
+            current_data[:category] = case value.downcase
+                                      when 'physical' then 0
+                                      when 'special' then 1
+                                      when 'status' then 2
+                                      else value.downcase.to_sym
+                                      end
           when 'power', 'basedamage'
             current_data[:power] = value.to_i
           when 'accuracy'
@@ -342,6 +351,48 @@ module SCScripts
     end
     
     #---------------------------------------------------------------------------
+    # Parse pokemon metrics PBS format
+    # These contain sprite positioning data, NOT species definitions.
+    # They should NOT overwrite species data.
+    #---------------------------------------------------------------------------
+    def self.parse_pokemon_metrics(content)
+      metrics = {}
+      current_id = nil
+      current_data = {}
+      
+      content.each_line do |line|
+        line = line.strip
+        next if line.empty? || line.start_with?('#')
+        
+        if line =~ /^\[(\w+)\]$/
+          metrics[current_id.to_sym] = current_data if current_id
+          current_id = $1
+          current_data = { id: current_id.to_sym }
+        elsif line.include?('=') && current_id
+          key, value = line.split('=', 2).map(&:strip)
+          
+          case key.downcase
+          when 'backsprite'
+            vals = value.split(',').map(&:to_i)
+            current_data[:back_sprite] = { x: vals[0] || 0, y: vals[1] || 0 }
+          when 'frontsprite'
+            vals = value.split(',').map(&:to_i)
+            current_data[:front_sprite] = { x: vals[0] || 0, y: vals[1] || 0 }
+          when 'frontspritealtitude'
+            current_data[:front_sprite_altitude] = value.to_i
+          when 'shadowx'
+            current_data[:shadow_x] = value.to_i
+          when 'shadowsize'
+            current_data[:shadow_size] = value.to_i
+          end
+        end
+      end
+      
+      metrics[current_id.to_sym] = current_data if current_id
+      metrics
+    end
+    
+    #---------------------------------------------------------------------------
     # Parse trainers PBS format
     #---------------------------------------------------------------------------
     def self.parse_trainers(content)
@@ -378,6 +429,8 @@ module SCScripts
           case key.downcase
           when 'losetext'
             current_data[:lose_text] = value
+          when 'items'
+            current_data[:items] = value.split(',').map { |i| i.strip.to_sym }
           when 'pokemon'
             in_pokemon_section = true
             species, level = value.split(',').map(&:strip)
@@ -388,8 +441,51 @@ module SCScripts
             current_pokemon.last[:moves] = value.split(',').map { |m| m.strip.to_sym } if current_pokemon.any?
           when 'ability'
             current_pokemon.last[:ability] = value.to_sym if current_pokemon.any?
+          when 'abilityindex'
+            current_pokemon.last[:ability_index] = value.to_i if current_pokemon.any?
           when 'nature'
             current_pokemon.last[:nature] = value.to_sym if current_pokemon.any?
+          when 'gender'
+            if current_pokemon.any?
+              g = value.downcase
+              current_pokemon.last[:gender] = (g == 'male') ? 0 : (g == 'female') ? 1 : nil
+            end
+          when 'iv'
+            if current_pokemon.any?
+              vals = value.split(',').map { |v| v.strip.to_i }
+              stat_keys = [:HP, :ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+              iv_hash = {}
+              stat_keys.each_with_index { |k, i| iv_hash[k] = vals[i] || 0 }
+              current_pokemon.last[:iv] = iv_hash
+            end
+          when 'ev'
+            if current_pokemon.any?
+              vals = value.split(',').map { |v| v.strip.to_i }
+              stat_keys = [:HP, :ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+              ev_hash = {}
+              stat_keys.each_with_index { |k, i| ev_hash[k] = vals[i] || 0 }
+              current_pokemon.last[:ev] = ev_hash
+            end
+          when 'name'
+            current_pokemon.last[:real_name] = value if current_pokemon.any?
+          when 'shiny'
+            current_pokemon.last[:shininess] = (value.downcase == 'true') if current_pokemon.any?
+          when 'shadow'
+            current_pokemon.last[:shadowness] = (value.downcase == 'true') if current_pokemon.any?
+          when 'ball'
+            current_pokemon.last[:poke_ball] = value.to_sym if current_pokemon.any?
+          when 'form'
+            current_pokemon.last[:form] = value.to_i if current_pokemon.any?
+          when 'happiness'
+            current_pokemon.last[:happiness] = value.to_i if current_pokemon.any?
+          when 'dynamaxlevel'
+            current_pokemon.last[:dynamax_level] = value.to_i if current_pokemon.any?
+          when 'teratype'
+            current_pokemon.last[:tera_type] = value.to_sym if current_pokemon.any?
+          when 'skilllevel'
+            current_data[:skill_level] = value.to_i
+          when 'doublebattle'
+            current_data[:double_battle] = (value.downcase == 'true')
           end
         end
       end
@@ -433,6 +529,16 @@ module SCScripts
             current_data[:battle_bgm] = value
           when 'victorybgm'
             current_data[:victory_bgm] = value
+          when 'gender'
+            case value.strip.downcase
+            when 'male'   then current_data[:gender] = 0
+            when 'female' then current_data[:gender] = 1
+            else               current_data[:gender] = 2
+            end
+          when 'skilllevel'
+            current_data[:skill_level] = value.to_i
+          when 'introbgm'
+            current_data[:intro_bgm] = value
           when 'flags'
             current_data[:flags] = value.split(',').map { |f| f.strip.to_sym }
           end
@@ -531,6 +637,15 @@ module SCScripts
       when /types/
         data.each { |id, d| GameData::ScriptRegistry.register_type(id, d) }
         SCScripts.log("Registered #{data.count} types from #{file_info[:name]}")
+      when /pokemon.*metrics/
+        data.each do |id, d|
+          # Merge metrics into existing pokemon data rather than overwriting
+          existing = GameData::ScriptRegistry.pokemon[id]
+          if existing
+            existing.merge!(d) { |_key, old_val, _new_val| old_val }  # Keep existing values
+          end
+        end
+        SCScripts.log("Merged #{data.count} Pokemon metrics from #{file_info[:name]}")
       when /pokemon/
         data.each { |id, d| GameData::ScriptRegistry.register_pokemon(id, d) }
         SCScripts.log("Registered #{data.count} Pokemon from #{file_info[:name]}")

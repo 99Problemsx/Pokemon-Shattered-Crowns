@@ -148,6 +148,11 @@ module GameData
       @objectives = []
       @rewards = []
       @category = :main
+      @chapter = nil
+      @playable_character = nil
+      @giver = nil
+      @location = nil
+      @chapter_unlock = nil
       @show_notification = true
       @on_start = nil
       @on_complete = nil
@@ -165,17 +170,70 @@ module GameData
       @category = cat # :main, :side, :daily, :event
     end
     
+    # Alias for category - used by Main_Story_Quests.rb as q.type :main_story
+    def type(cat)
+      @category = cat
+    end
+    
+    def chapter(num)
+      @chapter = num
+    end
+    
+    def playable_character(char)
+      @playable_character = char
+    end
+    
+    def giver(name)
+      @giver = name.to_s
+    end
+    
+    def location(place)
+      @location = place.to_s
+    end
+    
+    def chapter_unlock(num)
+      @chapter_unlock = num
+    end
+    
+    # Friendship points for bonding quests
+    # Usage: q.friendship_points :lyra, 10
+    def friendship_points(character, amount)
+      @rewards << { type: :friendship, character: character, amount: amount }
+    end
+    
     def show_notification(value)
       @show_notification = value
     end
     
-    # Add objective
-    def objective(text, options = {})
-      @objectives << {
-        text: text,
-        count: options[:count] || 1,
-        current: 0
-      }
+    # Add objective (supports multiple calling forms)
+    # Single text: q.objective "Do something", count: 3
+    # Symbol type:  q.objective :catch_species, species: :PIDGEY, count: 1
+    def objective(text_or_type, options = {})
+      if text_or_type.is_a?(Symbol)
+        @objectives << {
+          type: text_or_type,
+          text: text_or_type.to_s.gsub('_', ' ').capitalize,
+          count: options[:count] || 1,
+          current: 0
+        }.merge(options)
+      else
+        @objectives << {
+          text: text_or_type,
+          count: options[:count] || 1,
+          current: 0
+        }.merge(options)
+      end
+    end
+    
+    # Set objectives as an array (used by Main_Story_Quests.rb)
+    def objectives(arr)
+      @objectives = arr.map do |obj|
+        if obj.is_a?(Hash)
+          { text: obj[:text] || obj[:id].to_s, count: obj[:count] || 1, current: 0 }.merge(obj)
+        else
+          { text: obj.to_s, count: 1, current: 0 }
+        end
+      end
     end
     
     # Add rewards
@@ -206,6 +264,11 @@ module GameData
         name: @name,
         description: @description,
         category: @category,
+        chapter: @chapter,
+        playable_character: @playable_character,
+        giver: @giver,
+        location: @location,
+        chapter_unlock: @chapter_unlock,
         objectives: @objectives,
         rewards: @rewards,
         show_notification: @show_notification,

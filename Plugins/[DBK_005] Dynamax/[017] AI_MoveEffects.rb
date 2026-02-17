@@ -88,10 +88,6 @@ Battle::AI::Handlers::MoveEffectScore.add("RaiseUserSideAtk1",
   proc { |score, move, user, ai, battle|
     old_score = score
     battle.allSameSideBattlers(user.battler).each do |b|
-      if !move.move.respond_to?(:statUp)
-        PBDebug.log("DEBUG: Move #{move.move.id} (#{move.move.name}) class #{move.move.class.name} missing statUp")
-        next
-      end
       check_score = ai.get_score_for_target_stat_raise(old_score, ai.battlers[b.index], move.move.statUp)
       score += check_score / battle.pbSideBattlerCount(user.battler)
     end
@@ -112,10 +108,6 @@ Battle::AI::Handlers::MoveEffectScore.add("LowerTargetSideAtk1",
   proc { |score, move, user, ai, battle|
     old_score = score
     battle.allOtherSideBattlers(user.battler).each do |b|
-      if !move.move.respond_to?(:statDown)
-        PBDebug.log("DEBUG: Move #{move.move.id} (#{move.move.name}) class #{move.move.class.name} missing statDown")
-        next
-      end
       check_score = ai.get_score_for_target_stat_drop(old_score, ai.battlers[b.index], move.move.statDown)
       score += check_score / battle.pbOpposingBattlerCount(user.battler)
     end

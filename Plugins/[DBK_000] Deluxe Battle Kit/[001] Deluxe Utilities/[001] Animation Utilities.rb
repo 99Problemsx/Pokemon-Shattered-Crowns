@@ -518,24 +518,16 @@ class Battle::Scene::Animation
     pictureTRAINER.setVisible(delay, false)
     spriteTRAINER = @pictureEx.length - 1
     @pictureSprites[spriteTRAINER].y = 230
-    
-    # Safety check: if trainer sprite failed to load, skip trainer animation
-    if @pictureSprites[spriteTRAINER].bitmap.nil?
-      offsetX = 0
-      @pictureSprites[spriteTRAINER].x = (mirror) ? -Graphics.width : Graphics.width * 2
-      trainer_end_x = @pictureSprites[spriteTRAINER].x
+    offsetX = @pictureSprites[spriteTRAINER].bitmap.width / 2
+    offsetX += ((base_width - @pictureSprites[spriteTRAINER].bitmap.width) / 2).floor
+    delta = (base_width.to_f * 0.75).to_i
+    if mirror
+      @pictureSprites[spriteTRAINER].mirror = true
+      @pictureSprites[spriteTRAINER].x = -offsetX
+      trainer_end_x = @pictureSprites[spriteTRAINER].x + delta
     else
-      offsetX = @pictureSprites[spriteTRAINER].bitmap.width / 2
-      offsetX += ((base_width - @pictureSprites[spriteTRAINER].bitmap.width) / 2).floor
-      delta = (base_width.to_f * 0.75).to_i
-      if mirror
-        @pictureSprites[spriteTRAINER].mirror = true
-        @pictureSprites[spriteTRAINER].x = -offsetX
-        trainer_end_x = @pictureSprites[spriteTRAINER].x + delta
-      else
-        @pictureSprites[spriteTRAINER].x = Graphics.width + offsetX
-        trainer_end_x = @pictureSprites[spriteTRAINER].x - delta
-      end
+      @pictureSprites[spriteTRAINER].x = Graphics.width + offsetX
+      trainer_end_x = @pictureSprites[spriteTRAINER].x - delta
     end
     @pictureSprites[spriteTRAINER].z = 999
     trainer_x, trainer_y = @pictureSprites[spriteTRAINER].x, @pictureSprites[spriteTRAINER].y

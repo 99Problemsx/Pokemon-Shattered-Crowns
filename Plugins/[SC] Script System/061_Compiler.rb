@@ -105,7 +105,10 @@ module SCScripts
     def self.validate_move(id, data)
       raise "Missing name" unless data[:name]
       raise "Missing type" unless data[:type]
-      raise "Invalid category" unless [:physical, :special, :status].include?(data[:category])
+      # Accept both symbol (:physical/:special/:status) and integer (0/1/2) categories
+      valid_sym = [:physical, :special, :status].include?(data[:category])
+      valid_int = [0, 1, 2].include?(data[:category])
+      raise "Invalid category" unless valid_sym || valid_int
       
       # Validate type exists
       type_id = data[:type]
@@ -132,7 +135,10 @@ module SCScripts
     
     def self.validate_item(id, data)
       raise "Missing name" unless data[:name]
-      raise "Invalid pocket (must be 1-8)" unless (1..8).include?(data[:pocket])
+      # Allow pockets 1-9 (pocket 9 is used by Z-Crystals)
+      pocket = data[:pocket]
+      pocket = pocket.to_i if pocket.respond_to?(:to_i)
+      raise "Invalid pocket (must be 1-9)" unless pocket.is_a?(Integer) && (1..9).include?(pocket)
     end
     
     #---------------------------------------------------------------------------

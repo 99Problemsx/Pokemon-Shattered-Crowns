@@ -465,12 +465,8 @@ class Battle::Battler
       return true if $game_switches[Settings::DYNAMAX_ON_ANY_MAP]
       return $game_map && map_data&.has_flag?("PowerSpot")
     else
-      if wild?
-        return @battle.wildBattleMode == :dynamax
-      else
-        # Non-wild, non-trainer (shouldn't happen, but handle gracefully)
-        return false if !$game_switches[Settings::DYNAMAX_IN_WILD_BATTLES]
-      end
+      return false if wild? && @battle.wildBattleMode != :dynamax
+      return false if !wild? && !$game_switches[Settings::DYNAMAX_IN_WILD_BATTLES]
       return true if $game_switches[Settings::DYNAMAX_ON_ANY_MAP]
       return $game_map && map_data&.has_flag?("PowerSpot")
     end

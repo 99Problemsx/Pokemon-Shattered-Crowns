@@ -5,6 +5,21 @@
 # This system completely replaces PBS text files with Ruby script definitions.
 #===============================================================================
 
+# FileUtils stub - RGSS does not include Ruby's fileutils library
+unless defined?(FileUtils)
+  module FileUtils
+    def self.mkdir_p(path)
+      return if path.nil? || path.empty?
+      parts = path.gsub("\\", "/").split("/")
+      current = ""
+      parts.each do |part|
+        current = current.empty? ? part : "#{current}/#{part}"
+        Dir.mkdir(current) unless current.empty? || Dir.exist?(current)
+      end
+    end
+  end
+end
+
 module SCScripts
   #=============================================================================
   # Version Information
@@ -16,7 +31,7 @@ module SCScripts
   # Path Configuration
   #=============================================================================
   # Base path for all script data
-  SCRIPTS_BASE_PATH = "Data/Scripts"
+  SCRIPTS_BASE_PATH = "Plugins/[SC] Script System"
   
   # Individual paths for different data types
   MAP_SCRIPTS_PATH = "#{SCRIPTS_BASE_PATH}/Maps"

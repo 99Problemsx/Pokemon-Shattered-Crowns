@@ -162,18 +162,12 @@ class Battle::Scene::Animation::BattlerDynamax < Battle::Scene::Animation
     #---------------------------------------------------------------------------
     # Sets up trainer
     picTRAINER, sprTRAINER = dxSetSprite(@trainer_file, delay, center_x, center_y, PictureOrigin::BOTTOM)
-    # Safety check: if trainer sprite failed to load, skip trainer animation
-    if @pictureSprites[sprTRAINER].bitmap.nil?
-      offsetX = 0
-      @pictureSprites[sprTRAINER].x = (@opposes) ? Graphics.width * 2 : -Graphics.width
+    offsetX = @pictureSprites[sprTRAINER].bitmap.width / 2
+    if @opposes
+      @pictureSprites[sprTRAINER].x = Graphics.width + offsetX
     else
-      offsetX = @pictureSprites[sprTRAINER].bitmap.width / 2
-      if @opposes
-        @pictureSprites[sprTRAINER].x = Graphics.width + offsetX
-      else
-        @pictureSprites[sprTRAINER].mirror = true
-        @pictureSprites[sprTRAINER].x = -offsetX
-      end
+      @pictureSprites[sprTRAINER].mirror = true
+      @pictureSprites[sprTRAINER].x = -offsetX
     end
     trainer_x = @pictureSprites[sprTRAINER].x
     trainer_y = base_y - (@pictureSprites[sprBASE].bitmap.height / 2) + 4

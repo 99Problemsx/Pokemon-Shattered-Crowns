@@ -1,283 +1,414 @@
-# Advanced AI System - Version 2.4.0 (Complete Optimization Suite)
+# Advanced AI System — Changelog v2.4.0
 
 ## Summary
-Version 2.4.0 completes all remaining critical optimizations identified in post-2.3.0 analysis. Adds 8 major systems covering stat stages, status move value, multi-hit calculations, terrain effects, critical hit integration, recoil tracking, doubles strategies, and priority tiers. These changes bring the AI to near-competitive human level with complete mechanical awareness.
+
+Version 2.4.0 is a major stability and coverage release. It fixes several critical
+crashes, closes the remaining Gen 1–9 mechanic gaps to **100 % coverage** (247/247),
+introduces two entirely new strategy modules (Strategic Awareness, Tactical
+Enhancements), adds a companion **Dynamic Difficulty System** plugin, and hardens
+every effects-array access path against nil values.
 
 ---
 
-## 🎯 New Features (8 Major Systems)
+## Critical Bug Fixes
 
-### 1. **Stat Stage Modifiers in Damage Calculation** ⭐ CRITICAL
-- **Problem**: Damage calc treated +6 Swords Dance attacker same as +0 (massive AI errors)
-- **Solution**: Apply Pokemon formula to attack/defense stats before damage calc
-  - Positive stages: `(2 + stage) / 2` → +1 = 1.5x, +2 = 2.0x, +6 = 4.0x
-  - Negative stages: `2 / (2 + abs(stage))` → -1 = 0.67x, -6 = 0.25x
-- **Impact**: 
-  - AI now correctly assesses boosted threats (+6 Dragonite = 4x attack!)
-  - Prevents suicidal switches into setup sweepers
-  - Correctly values debuff moves (Intimidate, Snarl, etc.)
-- **Files Modified**: `[012] Switch_Intelligence.rb` (lines 754-774)
+### Side / Field-Targeting Moves Scoring 0
+Stealth Rock, Spikes, Reflect, Light Screen, Tailwind and all other moves with
+`num_targets == 0` were never scored because vanilla Essentials calls
+`pbGetMoveScore()` without a target argument.  The scorer's guard clause
+(`return 0 unless move && user && target`) rejected them all.
 
-### 2. **Status Move Value Boost System** ⭐ CRITICAL
-- **Problem**: Status moves heavily undervalued (Thunder Wave, Toxic, Will-O-Wisp scored same as weak attacks)
-- **Improvements**:
-  - **Thunder Wave**: +80 vs faster threats, +30 if can KO after paralyze
-  - **Will-O-Wisp**: +100 vs physical attackers, +40 if locked into physical move
-  - **Toxic**: +130 vs walls (200+ Def+SpD), +50 vs Regenerator, +40 with stall moves
-  - **Sleep**: +90 base, +60 if can setup during sleep, +40 vs offensive threats (120+ Atk/SpA)
-  - **Poison**: +35 base, +25 vs bulky targets
-- **Impact**: AI now uses status moves intelligently instead of spamming attacks
-- **Files Modified**: `[003] Move_Scorer.rb` (lines 536-600)
+- **Core.rb** — Added fallback target resolution: picks the first non-fainted
+  opponent when `target` is `nil`.
+- **0_Move_Scorer.rb** — Relaxed guard to `return 0 unless move && user` with
+  internal target resolution for nil targets.
 
-### 3. **Multi-Hit Damage Calculation** ⭐ CRITICAL
-- **Problem**: Multi-hit moves treated as single-hit (AI thought Population Bomb = 20 BP instead of 200 BP)
-- **Implemented**:
-  - **Skill Link**: 5 guaranteed hits
-  - **Loaded Dice**: 4.5 average hits
-  - **Parental Bond**: 1.25x multiplier (second hit = 25%)
-  - **Population Bomb**: 200 BP with Skill Link, 140 BP average
-  - **Triple Kick/Axel**: 60 BP / 120 BP totals
-  - **Standard multi-hit**: 3x average
-- **Impact**: AI correctly values Maushold, Cloyster, Breloom multi-hit builds
-- **Files Modified**: `[012] Switch_Intelligence.rb` (lines 898-922)
+### GrassyTerrain PBEffects Crash
+`PBEffects::GrassyTerrain` does not exist; Grassy Terrain is a field terrain,
+not a battle-side effect.  Protect / Detect scoring crashed when evaluating
+passive recovery.
 
-### 4. **Complete Terrain Effects**
-- **Added Terrain Modifiers**:
-  - **Electric Terrain**: 1.3x Electric moves, sleep immunity
-  - **Grassy Terrain**: 1.3x Grass moves, 0.5x Earthquake/Bulldoze/Magnitude
-  - **Psychic Terrain**: 1.3x Psychic moves, blocks priority moves
-  - **Misty Terrain**: 0.5x Dragon moves, status immunity boost
-- **Impact**: AI adapts to terrain changes (prefers Grassy Glide in Grassy Terrain, avoids priority in Psychic Terrain)
-- **Files Modified**: `[012] Switch_Intelligence.rb` (lines 856-885)
+- **0_Move_Scorer.rb** — Changed to
+  `@battle.field.terrain == :Grassy && user.battler.affectedByTerrain?`.
 
-### 5. **Critical Hit Awareness Integration** ⭐
-- **Implemented**:
-  - **Always-Crit Moves**: Frost Breath, Storm Throw, Wicked Blow, Surging Strikes, Flower Trick (1.5x damage)
-  - **High-Crit Moves**: Slash, Stone Edge, etc. (+1 stage = 12.5% crit)
-  - **Super Luck**: +1 stage
-  - **Focus Energy**: +2 stages
-  - **Scope Lens / Razor Claw**: +1 stage
-  - **Crit Rates**: Stage 0 = 4.17%, Stage 1 = 12.5%, Stage 2 = 50%, Stage 3+ = 100%
-  - **Sniper Ability**: 2.25x damage on crit (instead of 1.5x)
-- **Damage Calc**:
-  - 100% crit: Full 1.5x multiplier
-  - 50% crit: 1.25x average damage
-  - 12.5% crit: 1.0625x average damage
-- **Impact**: AI values Stone Edge over Earthquake when opponent has +2 Defense, prefers Frost Breath vs boosted walls
-- **Files Modified**: `[012] Switch_Intelligence.rb` (lines 924-978)
+### Kernel#pp RGSS Safety
+RGSS / mkxp lacks the `pp` standard library.  Any call to `pp` (including AI
+debug logging) caused a fatal `NoMethodError`.
 
-### 6. **Recoil and Self-Damage Tracking** (NEW FILE)
-- **Tracked Recoil Moves**:
-  - **50% recoil**: Head Smash
-  - **33% recoil**: Brave Bird, Double-Edge, Volt Tackle, Wood Hammer, Flare Blitz
-  - **25% recoil**: Wild Charge, Submission, Take Down
-  - **Max HP cost**: Belly Drum (50%), Mind Blown (50%), Steel Beam (50%), Chloroblast (50%)
-- **Life Orb**: 10% max HP per attack (unless Rock Head)
-- **Confusion**: 40 BP self-hit, 50% chance = expected damage calculated
-- **Substitute**: 25% max HP cost, blocks move if HP < 26%
-- **Penalties**:
-  - Recoil would KO self: -500 (NEVER use unless KOs opponent)
-  - 75%+ HP loss: -120
-  - 50%+ HP loss: -80
-  - If move KOs opponent: 80% penalty reduction (recoil acceptable)
-- **Impact**: AI avoids Brave Bird when low HP, doesn't use Substitute at 25% HP
-- **Files Created**: `[041] Recoil_Tracking.rb` (285 lines)
+- **Core.rb** — Defines `Kernel#pp` as a safe `echoln`-based fallback when the
+  native implementation is unavailable.
 
-### 7. **Doubles/VGC Optimizations** (NEW FILE)
-- **Spread Moves**: Earthquake, Surf, Discharge, etc. → 0.75x damage when hitting both
-- **Redirection**:
-  - Follow Me / Rage Powder / Spotlight detection
-  - +80 if partner < 33% HP, +40 if partner boosted
-  - Lightning Rod / Storm Drain ability tracking
-- **Fake Out**: +80 Turn 1, +60 if partner has setup move (Tailwind, Trick Room)
-- **Helping Hand**: +60 if partner has 80+ BP move, +40 if can secure KO
-- **Protect Coordination**: -50 if both partners Protect (wasteful)
-- **Wide Guard / Quick Guard**: -200 if move blocked
-- **Impact**: AI uses Fake Out + setup combos, protects frail partner with Follow Me, doesn't waste double Protect
-- **Files Created**: `[042] Doubles_Strategy.rb` (312 lines)
+### SystemStackError Recursion Guard
+`Effectiveness.calculate` and `GameData::Type.calculate` could infinitely
+recurse in certain type-matchup edge cases.
 
-### 8. **Priority Move Tier System** (NEW FILE)
-- **Priority Tiers**:
-  - **+4**: Helping Hand
-  - **+3**: King's Shield, Baneful Bunker, Magic Coat
-  - **+2**: Extreme Speed, Feint, Follow Me, First Impression
-  - **+1**: Aqua Jet, Mach Punch, Quick Attack, Shadow Sneak, Bullet Punch, etc.
-  - **-1 to -7**: Vital Throw, Focus Punch, Avalanche, Counter, Trick Room
-- **Scoring**:
-  - Priority +1 vs faster opponent: +40
-  - User < 33% HP: +50 (desperation)
-  - Target < 33% HP: +60 (secure KO)
-  - Already faster: +10 (minor bonus)
-- **Special Cases**:
-  - **Sucker Punch**: -100 if opponent used status move last turn (likely fails)
-  - **Grassy Glide**: -40 if no Grassy Terrain (no priority)
-  - **Trick Room**: +100 if user speed < 50, -50 if already active
-  - **Counter/Mirror Coat**: +60 if HP > 70%, -40 if low HP
-  - **Prankster**: +50 status moves, -200 vs Dark-types (immune)
-  - **Gale Wings**: +40 Flying moves at full HP
-  - **Triage**: +80 healing moves if < 50% HP
-- **Impact**: AI uses Extreme Speed over Quick Attack, values Aqua Jet when outsped, doesn't spam Sucker Punch vs status users
-- **Files Created**: `[043] Priority_Tiers.rb` (348 lines)
+- **Hotfixes.rb** — Added recursion depth guard (max 10) on both methods;
+  falls back to neutral effectiveness on overflow.
+
+### PBDebug.log ArgumentError Crash
+`PBDebug.log` was called with 2 arguments `(message, category)`, but Essentials
+v21.1 only accepts 1.  Crashed when AI tried to switch with debug mode enabled.
+
+- **Switch_Intelligence.rb** — Fixed all 8 call sites.
+
+### Knock Off vs Unlosable Items
+AI gave +100 bonus for using Knock Off against Mega Stones, Z-Crystals and other
+unlosable items that cannot actually be removed.
+
+- **0_Move_Scorer.rb** — Added `unlosableItem?` guard so Knock Off score only
+  applies to removable items.
+
+### ProtectRate Nil Crash
+`user.effects[PBEffects::ProtectRate]` returned `nil` for battlers whose effect
+hadn't been initialised yet, causing `nil > 1` → `NoMethodError` every round.
+
+- **0_Move_Scorer.rb** — `score_protect_utility` now uses
+  `(protect_rate || 0) > 1` with rescue fallback.
+
+### Status Move Scoring / PP Bug
+Status moves were under-scored due to category comparison issues; the PP check
+also prevented valid moves from being considered.
+
+- **0_Move_Scorer.rb** — Fixed status-move category comparison
+  and zero-PP guard clause.
+
+### Console Log Cleanup
+Leftover debug `puts` / `echoln` calls from testing polluted the console output.
+
+- Removed stray console output across multiple files.
 
 ---
 
-## 📊 Performance Metrics
+## Nil-Safe Effects System (Hotfixes.rb)
 
-### Damage Calculation Accuracy
-- **Stat Stages**: 100% accurate (Pokemon formula implemented)
-- **Multi-Hit**: 100% accurate (Population Bomb, Triple Axel, etc.)
-- **Critical Hits**: 95% accurate (probabilistic weighted average)
-- **Terrain**: 100% accurate (all 4 terrains)
-
-### Move Selection Improvements
-- **Status Moves**: +400% usage increase (now correctly valued)
-- **Priority Moves**: +250% smarter usage (tier-aware)
-- **Recoil Avoidance**: 100% accuracy (never KOs self unless trading)
-- **Doubles Coordination**: +300% team synergy
-
-### AI Skill Level Impact
-- **Beginner (0-60)**: Basic recoil awareness, simple priority
-- **Mid (61-85)**: Status move value, multi-hit awareness
-- **Pro (86-99)**: Full terrain/crit integration, doubles tactics
-- **Extreme (100)**: Perfect mechanical execution, competitive-level decisions
+A new `NilSafeEffects` wrapper replaces raw effects-array access on
+**AIBattler**, **ActiveSide** and **ActiveField**.  Any uninitialised
+`PBEffects` index now returns `0` (numeric) or `false` (boolean) instead of
+`nil`, preventing an entire class of `NoMethodError` crashes site-wide.
 
 ---
 
-## 🔧 Technical Details
+## New Module — Strategic Awareness (~900 lines)
 
-### Code Statistics
-- **New Files**: 3 (`[041] Recoil_Tracking.rb`, `[042] Doubles_Strategy.rb`, `[043] Priority_Tiers.rb`)
-- **Modified Files**: 2 (`[012] Switch_Intelligence.rb`, `[003] Move_Scorer.rb`)
-- **Total Lines Added**: ~1,150 lines
-- **New Constants**: 12 (SPREAD_DAMAGE_MULTIPLIER, HELPING_HAND_BOOST, LIFE_ORB_RECOIL, etc.)
-- **New Functions**: 24 major functions
+`4_Battle_Strategy/Strategic_Awareness.rb`
 
-### Performance Impact
-- **Damage Calc**: +15% slower (critical hit + multi-hit checks)
-- **Move Scoring**: +10% slower (priority tiers + recoil checks)
-- **Memory**: +2 KB per battler (tracking arrays)
-- **Overall**: Negligible impact on gameplay (<1 frame difference)
-
----
-
-## 🐛 Bug Fixes
-
-### Critical Fixes
-1. **Stat Stage Bug**: Fixed damage calc ignoring stat stages (+6 Atk = 4.0x damage now)
-2. **Multi-Hit Bug**: Fixed Population Bomb treated as 20 BP (now 200 BP with Skill Link)
-3. **Status Move Bug**: Fixed Thunder Wave scoring +40 regardless of speed (now +80 vs faster)
-4. **Terrain Bug**: Fixed Electric Terrain not boosting Electric moves (now 1.3x)
-5. **Recoil Bug**: Fixed AI killing self with Brave Bird at 10% HP (now blocks)
-
-### Minor Fixes
-- Grassy Glide priority check (only in Grassy Terrain)
-- Sucker Punch prediction (fails vs status moves)
-- Trick Room toggle awareness (doesn't turn off if active)
-- Life Orb recoil + Rock Head interaction
+| Feature | Description |
+|---|---|
+| Opponent Archetype Recognition | Classifies teams as Hyper Offense, Balance, Stall, etc. based on stat spreads and moveset composition |
+| Win Condition Counter-Play | Identifies the opponent's win condition and scores counter-measures higher |
+| Dynamic Win Condition Shifting | Re-evaluates the AI's own win condition as the battle progresses |
+| Coverage Gap Mapping | Detects unresisted type combinations the AI cannot answer |
+| Health Trajectory Tracking | Monitors HP trends to predict whether a battle is trending in the AI's favour |
+| Threat Persistence | Tracks which opposing Pokémon have been most dangerous over multiple turns |
+| Proactive Sacking | Identifies expendable Pokémon that can be sacrificed to preserve the win condition |
+| Defensive Core Recognition | Detects complementary defensive pairs (e.g. Blissey + Skarmory) and adjusts lure tactics |
 
 ---
 
-## 🎮 Gameplay Impact
+## New Module — Tactical Enhancements (~1 000 lines)
 
-### Competitive Viability
-- **AI Tier**: Now at **High-Ladder** level (~1600-1800 ELO equivalent)
-- **Human Comparison**: Matches intermediate competitive players
-- **Strategy Depth**: Understands setup sweepers, pivot cycles, stall teams, hyper offense
-- **Mechanical Execution**: 95%+ accuracy on damage calcs and predictions
+`4_Battle_Strategy/Tactical_Enhancements.rb`
 
-### Specific Improvements
-1. **Setup Sweepers**: AI no longer switches into +6 Dragonite thinking it's safe
-2. **Status Teams**: AI uses Toxic + Protect stall tactics correctly
-3. **Priority Spam**: AI stops using Aqua Jet when already faster
-4. **Recoil Management**: AI preserves Brave Bird for critical KOs, not chip damage
-5. **Doubles**: AI executes Fake Out + setup combos, protects frail partners
-6. **Terrain**: AI adapts to Electric Seed Rillaboom, Grassy Glide spam
-7. **Crit Fishing**: AI values Stone Edge over Earthquake vs boosted walls
+21 modular scoring methods wired into the Core.rb pipeline for skill ≥ 50.
+Key features include:
+
+- **Magic Bounce / Good as Gold** early-exit penalties (−1 000 / −200 for
+  blocked status moves)
+- **Mold Breaker family** bonus vs Ice Scales (+20), Tera Shell (+25),
+  Seed Sower (+10) — includes Gen 9 Mycelium Might
+- Multi-turn move planning, item-aware pivoting, doubles-specific adjustments
+- Stall-detection heuristics and anti-stall escalation
 
 ---
 
-## 📝 Developer Notes
+## Gen 1–9 Coverage: 89.9 % → 100 %
 
-### Integration Points
-All new systems integrate via **alias method chaining** to avoid conflicts:
-- `recoil_tracking_score_move_original` → `score_move`
-- `doubles_strategy_score_move_original` → `score_move`
-- `priority_tiers_score_move_original` → `score_move`
+The audit identified 25 missing symbols across moves, abilities and items.
+All 25 have been implemented:
 
-Damage calculation remains in `[012] Switch_Intelligence.rb` for centralized maintenance.
+### Moves
 
-### Future Optimization Opportunities
-1. **Weather Ball Power**: Dynamic BP based on weather (50 → 100)
-2. **Pledge Combos**: Grass Pledge + Fire Pledge = Sea of Fire
-3. **Z-Moves**: Special damage calc and selection priority
-4. **Dynamax**: Max Move power and field effect integration
-5. **Tera Types**: Type change prediction and adaptation
+| Move | File | What it does |
+|---|---|---|
+| **Heavy Slam / Heat Crash** | 0_Move_Scorer.rb | Weight-ratio → 40–120 BP calculation |
+| **Low Kick / Grass Knot** | 0_Move_Scorer.rb | Target-weight thresholds → 20–120 BP |
+| **Terrain Pulse** | 0_Move_Scorer.rb, Field_Effects.rb | 2× BP + type change in active terrain |
+| **Topsy-Turvy** | 0_Move_Scorer.rb | +80 vs setup, −40 if would invert drops |
+| **Armor Cannon** | 0_Move_Scorer.rb | Def / SpDef drop cost penalty (−10) |
+| **Bitter Blade** | 0_Move_Scorer.rb | Drain bonus (+15) when user < 70 % HP |
+| **Hydro Steam** | 0_Move_Scorer.rb | 1.5× BP in Sun / Harsh Sun instead of penalty |
+| **Psyblade** | 0_Move_Scorer.rb | 1.5× BP in Electric Terrain |
+| **Pledge Combos** | 0_Move_Scorer.rb | Fire + Grass → Sea of Fire, Water + Fire → Rainbow, Grass + Water → Swamp; 150 BP |
+| **Fusion Flare / Bolt** | 0_Move_Scorer.rb | 2× power when partner used complement move |
+| **Ruination** | 0_Move_Scorer.rb | Fixed 50 % current-HP damage scoring |
 
-### Known Limitations
-- **Party Pokemon Stat Stages**: Can't predict defender stat stages on switch-in (not in battle yet)
-- **Helping Hand Timing**: Simplified partner move prediction (could be enhanced with turn planning)
-- **Spread Move Targeting**: Doesn't optimize which opponents to hit in triples
-- **Confusion Damage**: Uses expected value instead of perfect prediction
+### Abilities
 
----
+| Ability | Files | What it does |
+|---|---|---|
+| **As One (Glastrier)** | Custom_Content, Utilities, Threat_Assessment, Advanced_Abilities | 2.5× weight, +1.2 threat, 1.9 snowball |
+| **As One (Spectrier)** | Custom_Content, Utilities, Threat_Assessment, Advanced_Abilities | 2.5× weight, +1.2 threat, 1.9 snowball |
+| **Mind's Eye** | Custom_Content, Utilities, Threat_Assessment | 1.5× weight, +0.5 threat, Scrappy + accuracy bypass in damage calc |
+| **Seed Sower** | Custom_Content, Utilities, Threat_Assessment, Tactical_Enhancements | −1.0 defensive weight, +0.4 threat, Mold Breaker bypass (+10) |
+| **Zero to Hero** | Custom_Content, Utilities | 2.5× weight (Hero-form Palafin) |
+| **Ice Scales** | Custom_Content, Utilities, Tactical_Enhancements | −2.5 defensive weight, 0.5× special modifier, Mold Breaker bypass (+20) |
+| **Tera Shell** | Custom_Content, Tactical_Enhancements | 0.5× all moves at full HP, Mold Breaker bypass (+25) |
+| **Stamina** | Utilities | Gen 9 defensive ability dictionary |
+| **Weak Armor** | Utilities | Gen 9 defensive ability dictionary |
+| **Anger Shell** | Utilities | Gen 9 offensive ability dictionary |
+| **Electromorphosis** | Utilities | Gen 9 offensive ability dictionary |
+| **Wind Power** | Utilities | Gen 9 offensive ability dictionary |
+| **Toxic Boost / Flare Boost** | Utilities | Gen 9 offensive ability dictionary |
+| **Cotton Down** | Utilities | Gen 9 defensive ability dictionary |
+| **Embody Aspect** | Utilities | Gen 9 offensive ability dictionary |
 
-## 🚀 Upgrade Path
+### Items
 
-### From v2.3.0 to v2.4.0
-1. Drop in 3 new files: `[041]`, `[042]`, `[043]`
-2. Replace `[012] Switch_Intelligence.rb` (stat stages + multi-hit + terrain + crits)
-3. Replace `[003] Move_Scorer.rb` (status move value boost)
-4. Clear cache (delete `Data/PluginScripts.rxdata`)
-5. Test damage calculations with boosted Pokemon
-
-### Compatibility
-- **Pokemon Essentials**: v21.1, v22, v22.1
-- **Other AAI Modules**: 100% compatible (uses alias chaining)
-- **Existing Saves**: Compatible (no save data changes)
-
----
-
-## 🏆 Version History
-- **v2.0.0**: Initial release (basic AI)
-- **v2.1.0**: Damage calc overhaul, setup detection, speed tiers
-- **v2.2.0**: Entry hazards, pivot moves, recovery timing
-- **v2.3.0**: Substitute breaking, 4-tier system, learning patterns
-- **v2.4.0**: **Stat stages, status value, multi-hit, terrain, crits, recoil, doubles, priority** ✅ COMPLETE
-
----
-
-## 📈 Statistics Summary
-
-### Total Project Stats (v1.0 → v2.4)
-- **Bugs Fixed**: 31 (26 deprecated API + 5 logic bugs)
-- **Features Added**: 21 major systems
-- **Lines of Code**: ~3,500 lines
-- **Files Created**: 14 total
-- **Accuracy Improvement**: +85% over base AI
-- **Competitive Viability**: High-Ladder level (1600-1800 ELO)
-
-### Session 4 Achievements (v2.1 → v2.4)
-- **Total Changes**: 26 bugs + 21 features = 47 improvements
-- **Development Time**: ~6 hours (efficient iteration)
-- **Code Quality**: Zero crashes, zero deprecation warnings
-- **Production Status**: ✅ **READY FOR COMPETITIVE PLAY**
+| Item | File | What it does |
+|---|---|---|
+| **Light Ball** | Item_Intelligence | 2.0× damage for Pikachu; +0.8 threat |
+| **Thick Club** | Item_Intelligence | 2.0× physical for Cubone / Marowak; +0.8 threat |
+| **Shed Shell** | Item_Intelligence, 0_Move_Scorer | `has_shed_shell?` helper; trapping moves −30 vs holder; −0.2 threat |
+| **Ability Shield** | Item_Intelligence | −40 for ability-changing moves vs holder; −0.3 threat |
+| **Power Herb** | Item_Intelligence | Two-turn move bonus |
+| **White Herb** | Item_Intelligence | Stat-drop recovery bonus |
+| **Booster Energy** | Item_Intelligence | Paradox Pokémon stat boost scoring |
 
 ---
 
-## 🎯 Conclusion
+## New Companion Plugin — Dynamic Difficulty System v1.3.0
 
-Version 2.4.0 represents the **completion of all critical AI optimizations**. The system now has:
-- ✅ Perfect damage calculation (stats, terrain, weather, crits, multi-hit)
-- ✅ Intelligent status move usage (value-based scoring)
-- ✅ Complete mechanical awareness (recoil, priority, doubles)
-- ✅ Adaptive learning (patterns, predictions, tier-based behavior)
-- ✅ Production-ready stability (zero crashes, zero warnings)
+`Plugins/[SC] Dynamic Difficulty System/` — 8 files, requires Advanced AI System.
 
-**Next Steps**: Playtesting, balance tuning, and optional advanced features (Z-Moves, Dynamax, Tera).
+Automatically adjusts AI difficulty based on player performance across battles.
+**New in v1.3.0:** Pool-Based Team Building — the AI assembles entirely new teams
+from curated species pools that match each trainer's class theme.
+
+| File | Purpose |
+|---|---|
+| **Settings.rb** | Config constants, score boundaries, tier thresholds, trainer weights, badge caps, team scaling tables, species pools |
+| **DDS_PerformanceTracker.rb** | Tracks wins / losses, streaks, dominance metrics, rolling history, level scaling, oscillation damping |
+| **DDS_TierEngine.rb** | Maps score → AI tier override via `$game_variables[100]`; badge-based tier cap; public script API |
+| **DDS_BattleHooks.rb** | Hooks `pbStartBattle` (build + scale) and `pbEndOfBattle` (record + clear); extracts level & trainer-class data |
+| **DDS_TeamBuilder.rb** | **NEW** — Pool-based team builder: assembles teams from species pools per trainer class, tier, and progression |
+| **DDS_TeamScaler.rb** | Adaptive team scaling: levels, IVs, EVs, natures, items per tier |
+| **DDS_OptionsMenu.rb** | Adds "Dynamic Difficulty" On / Off toggle to the Enhanced Options Menu |
+
+### v1.1.0 Bug Fixes
+
+- **Every battle counted as a loss** — `BattleHooks` returned `:result => :win`
+  but the tracker read `:won` (boolean). Fixed key to `:won => true/false`.
+- **Opponent stats never read** — `BattleHooks` sent `:opp_fainted` / `:opp_total`
+  but the tracker expected `:opponent_fainted` / `:opponent_total`. Dominance
+  always fell back to defaults. Fixed to consistent key names.
+- **Old save crash** — Loading a pre-DDS save caused `nil` for
+  `$PokemonSystem.dynamic_difficulty`. Added nil-safe reader that defaults to ON.
+
+### v1.1.0 New Features
+
+- **Grace Period** (`GRACE_PERIOD = 5`) — First 5 trainer battles are tracked but
+  don't change the score, giving the player time to settle in.
+- **Trainer Class Weighting** — Score delta is scaled by opponent type.
+  Losing to a Gym Leader (0.6×) hurts less than losing to a Youngster (1.3×).
+  Configurable via `TRAINER_CLASS_WEIGHTS` hash.
+- **Level Difference Scaling** — Dominance bonus is reduced to 30 % when the
+  average level gap exceeds 10. Stomping under-levelled trainers won't inflate
+  your score; losing to over-levelled ones won't tank it.
+- **Badge-Based Tier Cap** — Max AI tier is limited by badge count:
+  0–1 badges → max Mid, 2–3 badges → max Pro, 4+ → uncapped.
+  Prevents Extreme AI before the player has a full team.
+- **Oscillation Damping** — When the last 6 battles alternate W-L-W-L, the score
+  delta is halved to prevent score ping-pong.
+- **Script API** — Event scripters can now call:
+  - `DynamicDifficulty.score` — current score
+  - `DynamicDifficulty.current_tier` — tier label string
+  - `DynamicDifficulty.win_rate` — recent win rate
+  - `DynamicDifficulty.pause!` / `DynamicDifficulty.resume!` — freeze/unfreeze during cutscenes
+  - `DynamicDifficulty.set_score(value)` — force a specific score
+  - `DynamicDifficulty.reset!` — full reset
+  - `DynamicDifficulty.summary` — one-line debug string
+
+### v1.2.0 — Adaptive Team Scaling
+
+New module `DDS_TeamScaler.rb` (~260 lines) dynamically adjusts opponent trainer
+teams **before battle** based on the current DDS tier.  Natural tier is never
+touched — the game plays exactly as the designer intended.
+
+| Tier | Levels | IVs | EVs | Nature | Items |
+|---|---|---|---|---|---|
+| **Beginner** | Player avg −3, preserves team gaps | 0–10 | Cleared | Unchanged | Stripped to berry / nothing |
+| **Mid** | Player avg −1 | 10–20 | Cleared | Unchanged | Keep existing or basic berry |
+| **Natural** | No change | No change | No change | No change | No change |
+| **Pro** | Player avg +1 (never lowers) | 25–31 | Role-based 252/252/4 | Role-optimised (power) | Competitive (random from pool) |
+| **Extreme** | Player max +2 (never lowers) | 31 (perfect) | Role-based 252/252/4 | Role-optimised (speed) | Best-in-slot for role |
+
+**Role Detection** classifies each mon by base stats:
+- Physical / Special Sweeper (high offense + speed)
+- Physical / Special Wall (high bulk, low offense)
+- Bulky Attacker (high offense, lower speed)
+- Balanced (fallback)
+
+**Safeguards:**
+- `TEAM_SCALING_ENABLED` master switch (independent of score tracking)
+- `SCALING_EXEMPT_TRAINERS` list to protect hand-crafted boss teams
+- `SCALING_EXEMPT_SWITCH` game switch for per-event control
+- Pro / Extreme never lower a mon below its original level (`only_up: true`)
+- Items are diversified across the team (avoids 6× Leftovers)
+- All items are existence-checked via `GameData::Item.exists?`
+
+### v1.3.0 — Pool-Based Team Building
+
+New module `DDS_TeamBuilder.rb` (~300 lines) assembles entirely new opponent
+teams from curated species pools before battle.  Unlike TeamScaler (which
+adjusts existing teams' stats), TeamBuilder **replaces the entire party** with
+Pokémon drawn from pools that match the trainer's class theme.
+
+**How it works:**
+1. Each trainer class maps to a pool group (e.g. `:HIKER` → `:rock_ground`,
+   `:LASS` → `:fairy_cute`, `:TEAMROCKET_M` → `:poison_dark`).
+2. Badge count determines the progression stage (`:early` / `:mid` / `:late`).
+3. The builder picks species from the matching pool with **type diversity** —
+   avoids stacking 3+ Pokémon of the same type.
+4. Team size scales with both tier and progression:
+
+| Tier | Early | Mid | Late |
+|---|---|---|---|
+| Beginner | 1–2 | 2–3 | 2–3 |
+| Mid | 2–3 | 2–3 | 3–4 |
+| Pro | 2–3 | 3–4 | 4–5 |
+| Extreme | 3–4 | 4–5 | 5–6 |
+
+5. Pokémon are created at the player's party average level (±2 variance).
+6. Moves come from the species' level-up learnset via `reset_moves`.
+7. **Pro/Extreme** supplement with STAB tutor moves (strongest by base power)
+   and Extreme adds a high-power coverage move.
+8. `TeamScaler` then runs its full pipeline on the built team (IVs/EVs/nature/items).
+
+**15 species pool groups** covering all 40+ generic trainer classes:
+`normal`, `fairy_cute`, `bug`, `rock_ground`, `flying`, `water`,
+`water_fighting`, `fighting`, `psychic`, `ghost`, `dark_fire`,
+`electric_steel`, `grass`, `poison_dark`, `dark_psychic`,
+`mixed_strong`, `mixed_balanced`
+
+**Safeguards:**
+- `TEAM_BUILDING_ENABLED` master switch
+- `BUILDING_EXEMPT_TRAINERS` — all gym leaders, E4, champion, rivals, story
+  bosses, and companions are exempt by default
+- `BUILDING_EXEMPT_SWITCH` — per-event game switch
+- Natural tier never triggers building (original teams preserved)
+- Species existence is validated via `GameData::Species.exists?`
+
+### How it works
+
+1. **Before** each trainer battle → `TierEngine.apply_override` writes
+   `$game_variables[100]` based on the player's performance score.
+2. **Team Building** → `TeamBuilder.build_team` replaces the opponent's party
+   with Pokémon from species pools matching the trainer class + progression.
+3. **Team Scaling** → `TeamScaler.scale_team` adjusts the built (or original)
+   team's IVs, EVs, natures, and items to match the current tier.
+4. **During** the battle → AAI reads the variable and selects the matching
+   skill tier (Beginner / Mid / Natural / Pro / Extreme).
+5. **After** the battle → `PerformanceTracker.record_battle` updates the score
+   (base ± streak ± dominance × level-scale × trainer-weight − decay) and
+   clears the override.
+6. Event-scripted boss fights that set the variable themselves are
+   respected (`RESPECT_EVENT_OVERRIDE`).
+7. The player can toggle the system from the Options menu at any time.
+
+### Tier Mapping (default thresholds)
+
+| Score Range | Tier | Override |
+|---|---|---|
+| ≤ −20 | Beginner | 1 |
+| −19 … −5 | Mid | 2 |
+| −4 … 15 | Natural | none |
+| 16 … 35 | Pro | 3 |
+| > 35 | Extreme | 4 |
 
 ---
 
-**Date**: 2024
-**Developer**: Marcel Weidenauer
-**Status**: ✅ PRODUCTION READY
-**Tier**: HIGH-LADDER COMPETITIVE AI
+## File Overview (48 files, ~23 000+ lines)
+
+```
+[000_AAI] Advanced AI System/
+├── 1_Core/
+│   ├── 0_Settings.rb
+│   ├── Combat_Utilities.rb
+│   ├── Core.rb
+│   ├── Debug_Menu.rb
+│   └── Utilities.rb
+├── 2_Move_Intelligence/
+│   ├── 0_Move_Scorer.rb
+│   ├── Disruption_Moves.rb
+│   ├── Move_Categories.rb
+│   ├── Move_Memory.rb
+│   └── Special_Moves.rb
+├── 3_Combat_Mechanics/
+│   ├── Advanced_Abilities.rb
+│   ├── Critical_Hits.rb
+│   ├── Field_Effects.rb
+│   ├── Hazard_Control.rb
+│   ├── PP_Tracker.rb
+│   ├── Recoil_Tracking.rb
+│   ├── Sleep_Clause.rb
+│   ├── Substitute_Logic.rb
+│   └── Weather_Terrain_Wars.rb
+├── 4_Battle_Strategy/
+│   ├── Advanced_Items.rb
+│   ├── Item_Intelligence.rb
+│   ├── Learning_System.rb
+│   ├── Prediction_System.rb
+│   ├── Role_Detection.rb
+│   ├── Setup_Recognition.rb
+│   ├── Strategic_Awareness.rb      ← NEW
+│   ├── Switch_Intelligence.rb
+│   ├── Tactical_Enhancements.rb    ← NEW
+│   ├── Team_Preview_Intelligence.rb
+│   └── Threat_Assessment.rb
+├── 5_Format_Specific/
+│   ├── Doubles_Coordination.rb
+│   ├── Doubles_Strategy.rb
+│   ├── Pivot_Moves.rb
+│   ├── Priority_Tiers.rb
+│   └── Speed_Tiers.rb
+├── 6_Meta_Mechanics/
+│   ├── Battle_Personalities.rb
+│   ├── Dynamax_Intelligence.rb
+│   ├── Endgame_Scenarios.rb
+│   ├── Mega_Intelligence.rb
+│   ├── Terastallization_Intelligence.rb
+│   ├── Win_Conditions.rb
+│   └── ZMove_Intelligence.rb
+├── 7_Integration/
+│   ├── Console_Fix.rb
+│   ├── Custom_Content.rb
+│   ├── DBK_Compatibility.rb
+│   ├── Debug_Replacement.rb
+│   ├── Hotfixes.rb
+│   └── Mechanics_Hooks.rb
+├── AUDIT_REPORT.md
+└── meta.txt
+```
+
+---
+
+## Compatibility
+
+- **Pokémon Essentials** v21.1
+- **Deluxe Battle Kit** (optional — Wonder Launcher, Terastallization, Dynamax)
+- **Enhanced Options Menu** (used by DDS toggle)
+- **Generation 9 Pack Scripts** (fully integrated)
+- Existing saves are compatible; no save-data migration needed
+  (DDS data is created automatically on first load).
+
+---
+
+## Upgrade Notes
+
+> **Delete the old plugin folder completely before installing this version.**
+
+1. Remove `Plugins/[000_AAI] Advanced AI System/` entirely.
+2. Drop in the new `[000_AAI] Advanced AI System/` folder.
+3. (Optional) Drop in `[SC] Dynamic Difficulty System/` for adaptive difficulty.
+4. Delete `Data/PluginScripts.rxdata` to force recompilation.
+5. Launch the game.

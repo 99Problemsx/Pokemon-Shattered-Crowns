@@ -9,7 +9,7 @@ module GameData
   #=============================================================================
   # Item - Define game items
   #=============================================================================
-  class Item < ScriptBase
+  class Item
     # Item pockets
     POCKETS = {
       items: 1,
@@ -29,6 +29,54 @@ module GameData
       :Mulch, :Apricorn, :Gem, :EvolutionStone, :TypeEnhancer,
       :Hold, :Plate, :Memory, :Incense
     ]
+    
+    attr_reader :id, :name, :name_plural, :pocket, :price, :sell_price, :bp_price
+    attr_reader :category, :field_use, :battle_use, :consumable, :show_quantity
+    attr_reader :move, :flags, :description, :fling_power, :fling_effect
+    attr_reader :natural_gift_type, :natural_gift_power
+    
+    def initialize(data)
+      @id = data[:id]
+      @name = data[:name] || "Unnamed"
+      @name_plural = data[:name_plural] || "#{@name}s"
+      @pocket = data[:pocket] || 1
+      @price = data[:price] || 0
+      @sell_price = data[:sell_price] || (@price / 2)
+      @bp_price = data[:bp_price]
+      @category = data[:category] || :None
+      @field_use = data[:field_use]
+      @battle_use = data[:battle_use]
+      @consumable = data[:consumable]
+      @consumable = true if @consumable.nil?
+      @show_quantity = data[:show_quantity]
+      @show_quantity = true if @show_quantity.nil?
+      @move = data[:move]
+      @flags = data[:flags] || []
+      @description = data[:description]
+      @fling_power = data[:fling_power]
+      @fling_effect = data[:fling_effect]
+      @natural_gift_type = data[:natural_gift_type]
+      @natural_gift_power = data[:natural_gift_power]
+      # Essentials compatibility - map SC field names to Essentials expected names
+      @real_name = @name
+      @real_name_plural = @name_plural
+      @real_description = @description || "???"
+      @real_portion_name = nil
+      @real_portion_name_plural = nil
+      @pbs_file_suffix = ""
+    end
+    
+    def is_key_item?; @pocket == 8; end
+    def is_tm?; @category == :TM; end
+    def is_hm?; @category == :HM; end
+    def is_tr?; @category == :TR; end
+    def is_pokeball?; @category == :PokeBall; end
+    def is_berry?; @category == :Berry; end
+    def is_mail?; @category == :Mail; end
+    def is_mega_stone?; @category == :MegaStone; end
+    def is_gem?; @category == :Gem; end
+    def is_evolution_stone?; @category == :EvolutionStone; end
+    def valuable?; @price > 0; end
     
     #---------------------------------------------------------------------------
     # Define a new item
@@ -52,7 +100,9 @@ module GameData
     # Get item data
     #---------------------------------------------------------------------------
     def self.get(id)
-      ScriptRegistry.get_item(DSL.to_id(id))
+      data = ScriptRegistry.get_item(DSL.to_id(id))
+      return nil unless data
+      self.new(data)
     end
     
     def self.exists?(id)
@@ -60,7 +110,7 @@ module GameData
     end
     
     def self.each
-      ScriptRegistry.items.each { |id, data| yield(id, data) }
+      ScriptRegistry.items.each { |id, data| yield(self.new(data)) }
     end
     
     def self.count

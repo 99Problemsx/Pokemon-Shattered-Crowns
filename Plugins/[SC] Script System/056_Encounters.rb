@@ -9,7 +9,7 @@ module GameData
   #=============================================================================
   # Encounter - Define wild encounters per map
   #=============================================================================
-  class Encounter < ScriptBase
+  class Encounter
     def self.define(map_id, version = 0, &block)
       key = "#{map_id}_#{version}"
       builder = EncounterBuilder.new(map_id, version)

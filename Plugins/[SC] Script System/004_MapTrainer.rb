@@ -5,12 +5,12 @@
 #===============================================================================
 
 module GameData
-  class MapTrainer < ScriptBase
+  class MapTrainer
     # Storage for trainer definitions
     @trainers = {}
     
     class << self
-      attr_accessor :map_id, :trainers
+      attr_accessor :map_id, :trainers, :current_map_id
     end
     
     #---------------------------------------------------------------------------
@@ -79,7 +79,7 @@ module GameData
   # Builder class for trainers (used in DSL blocks)
   #=============================================================================
   class TrainerBuilder
-    attr_accessor :intro, :lose_text, :items, :party
+    attr_accessor :intro, :items
     attr_reader :trainer_type, :name, :version
     
     def initialize(trainer_type, name, version = 0)
@@ -90,6 +90,28 @@ module GameData
       @lose_text = nil
       @items = []
       @party = []
+    end
+    
+    # Defensive getter - ensures party is never nil
+    def party
+      @party ||= []
+    end
+    
+    def party=(val)
+      @party = val
+    end
+    
+    # lose= and lose_text= both set the lose text
+    def lose=(text)
+      @lose_text = text
+    end
+    
+    def lose_text=(text)
+      @lose_text = text
+    end
+    
+    def lose_text
+      @lose_text
     end
     
     #---------------------------------------------------------------------------

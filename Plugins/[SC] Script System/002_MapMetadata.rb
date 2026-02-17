@@ -5,7 +5,7 @@
 #===============================================================================
 
 module GameData
-  class MapMetadata < ScriptBase
+  class MapMetadata
     # Class-level storage for this map's metadata
     class << self
       attr_accessor :map_id, :real_name, :map_BGM, :outdoor_map, :announce_location

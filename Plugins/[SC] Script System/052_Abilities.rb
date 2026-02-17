@@ -9,7 +9,21 @@ module GameData
   #=============================================================================
   # Ability - Define Pokemon abilities
   #=============================================================================
-  class Ability < ScriptBase
+  class Ability
+    attr_reader :id, :name, :real_name, :description, :flags
+    
+    def initialize(data)
+      @id = data[:id]
+      @real_name = data[:name] || "Unnamed"
+      @description = data[:description]
+      @flags = data[:flags] || []
+      # Essentials compatibility - map SC field names to Essentials expected names
+      @real_description = @description || "???"
+      @pbs_file_suffix = ""
+    end
+    
+    def name; @real_name; end
+    
     #---------------------------------------------------------------------------
     # Define a new ability
     # Usage:
@@ -29,7 +43,9 @@ module GameData
     # Get ability data
     #---------------------------------------------------------------------------
     def self.get(id)
-      ScriptRegistry.get_ability(DSL.to_id(id))
+      data = ScriptRegistry.get_ability(DSL.to_id(id))
+      return nil unless data
+      self.new(data)
     end
     
     def self.exists?(id)
@@ -37,7 +53,7 @@ module GameData
     end
     
     def self.each
-      ScriptRegistry.abilities.each { |id, data| yield(id, data) }
+      ScriptRegistry.abilities.each { |id, data| yield(self.new(data)) }
     end
     
     def self.count

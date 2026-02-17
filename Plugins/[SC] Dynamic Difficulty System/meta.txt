@@ -1,0 +1,5 @@
+Name         = Dynamic Difficulty System
+Version      = 1.4.0
+Essentials   = 21.1
+Requires     = Advanced AI System
+Credits      = Nononever

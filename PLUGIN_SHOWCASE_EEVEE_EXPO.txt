@@ -1,0 +1,1305 @@
+[HEADING=1][Plugin] Advanced AI System v3.0 — Master-Tier Intelligence for Pokémon Essentials[/HEADING]
+
+[B][COLOR=rgb(184, 49, 47)]DISCLAIMER: This plugin is a complex system overhaul (~23,000 lines across 48 files). While extensively tested, there may still be unknown bugs. Please report any issues you encounter![/COLOR][/B]
+
+[B]Advanced AI System[/B] is a comprehensive overhaul for the Pokémon Essentials v21.1 AI, designed for high-difficulty gameplay. It replaces the standard decision-making process with a state-aware, competitive-grade system that understands roles, field effects, team composition, win conditions, and long-term strategy.
+
+This plugin transforms your trainers from predictable opponents into tactical masterminds that predict switches, abuse field effects, coordinate in double battles, and use Dynamax/Terastallization strategically.
+
+[B]Essentials Version:[/B] v21.1
+[B]Credits:[/B] Nononever
+[B]Optional Dependencies:[/B] Deluxe Battle Kit (Dynamax, Terastallization, Z-Moves)
+
+[HR][/HR]
+[HEADING=2]Screenshots & Debug Output[/HEADING]
+
+[SPOILER="Console Debug Output"]
+[I]The plugin outputs detailed reasoning to the console when DEBUG_MODE is enabled:[/I]
+[CODE]
+========================================
+=== ADVANCED AI SWITCH ANALYSIS ===
+  Pokemon: Toxapex
+  Trainer Skill: 100
+  Reserves Available: 4
+  
+[Switch] Type disadvantage detected: Ground vs Toxapex
+[Switch] Survival concern: incoming EQ ~85% estimated damage
+[Switch] Best switch: Skarmory (Score: 92)
+  - Type advantage: Ground immune (Flying)
+  - Role synergy: Wall → hazard setter
+  - Entry hazard cost: 12% (Stealth Rock)
+  
+[Strategy] Opponent archetype: hyper_offense (confidence: 0.82)
+[Strategy] Win condition shifted: attrition → stall
+[Strategy] Defensive core detected: Steel/Fairy (Corviknight + Clefable)
+[Strategy] Core-breaking move bonus: +20 for Flamethrower
+========================================
+[/CODE]
+[/SPOILER]
+
+[SPOILER="Move Scoring Example"]
+[I]The AI evaluates every possible move through 20+ scoring factors:[/I]
+[CODE]
+=== MOVE SCORING: Garchomp vs Clefable ===
+  Base Score:                    100
+  + Damage Potential:            +35 (Earthquake, 100 BP, STAB)
+  + Type Effectiveness:          +20 (SE vs Fairy... wait, Ground vs Fairy is neutral)
+  + Iron Head (alternative):     +40 (SE vs Fairy, STAB)
+  - Contact Punishment:          -8  (Rocky Helmet on Clefable)
+  + Setup Recognition:           +25 (Swords Dance available, Clefable is passive)
+  + Role Synergy:                +10 (Sweeper role → favor offense)
+  + Personality Bonus:           +15 (Aggressive personality)
+  + Strategic Awareness:         +12 (Health advantage → safe to set up)
+  + Item Intelligence:           +10 (Choice Band → locked, best move)
+  Final Score: Iron Head = 192, Earthquake = 172, Swords Dance = 160
+  Selected: Iron Head
+========================================
+[/CODE]
+[/SPOILER]
+
+[HR][/HR]
+[HEADING=2]Architecture Overview[/HEADING]
+
+The plugin is organized into 7 specialized subsystems:
+
+[CODE]
+[000_AAI] Advanced AI System/
+├── 1_Core/              → Settings, Pipeline, Utilities, Debug Menu
+├── 2_Move_Intelligence/ → Move Scoring, Memory, Disruption, Special Moves
+├── 3_Combat_Mechanics/  → Weather, Hazards, Sleep, Substitute, PP, Recoil, Crits
+├── 4_Battle_Strategy/   → Roles, Switching, Prediction, Items, Setup, Win Conditions
+├── 5_Format_Specific/   → Doubles (100+ evaluators), Pivots, Speed/Priority Tiers
+├── 6_Meta_Mechanics/    → Personalities, Dynamax, Tera, Z-Moves, Mega, Endgame
+└── 7_Integration/       → DBK Compatibility, Hotfixes, Ability DB, Debug Tools
+[/CODE]
+
+[B]Scoring Pipeline Flow:[/B]
+[CODE]
+pbGetMoveScore (vanilla) 
+  → score_move_advanced (20+ factors)
+    → apply_move_memory        [Skill 50+]
+    → apply_threat_assessment   [Skill 50+]
+    → apply_field_effects       [Skill 50+]
+    → apply_doubles_coordination [Skill 50+, Doubles only]
+    → apply_setup_evaluation    [Skill 55+]
+    → apply_endgame_logic       [Skill 60+]
+    → apply_personality_modifiers [Skill 65+]
+    → apply_strategic_awareness [Skill 70+]
+    → apply_item_intelligence   [Skill 85+]
+    → apply_prediction_logic    [Skill 85+]
+  → pbRegisterMove alias chain (Disruption → Special → Abilities → Recoil → Weather → Items → Doubles → Priority)
+  → Gimmick Pipeline (Mega → Z-Move → Dynamax → Tera)
+[/CODE]
+
+[HR][/HR]
+[HEADING=2]Key Features — Complete List[/HEADING]
+
+[HEADING=3]1. Intelligent Move Scoring (20+ Factors)[/HEADING]
+
+Every move is evaluated through a comprehensive scoring engine:
+
+[SPOILER="All Scoring Factors"]
+[LIST]
+[*][B]Damage Potential[/B] — Simplified damage formula with stats, STAB, and type effectiveness
+[*][B]Type Effectiveness[/B] — Full type chart awareness including abilities (Levitate, Flash Fire, etc.)
+[*][B]Critical Hit Potential[/B] — Sniper builds, Focus Energy, high-crit moves, crit stage calculation
+[*][B]Status Utility[/B] — Paralysis on fast threats, Burn on physical attackers, Toxic for stall
+[*][B]Setup Value[/B] — Evaluates when to boost vs. attack based on board state
+[*][B]Priority Evaluation[/B] — Tactical priority move selection (Sucker Punch risk, Aqua Jet for cleanup)
+[*][B]Accuracy Scoring[/B] — Penalizes inaccurate moves proportionally
+[*][B]Recoil Risk[/B] — Weighs recoil damage against remaining HP
+[*][B]Secondary Effects[/B] — Values flinch chance, stat drops, burn/freeze chance
+[*][B]Contact Punishment[/B] — Avoids contact into Rocky Helmet, Rough Skin, Iron Barbs, etc.
+[*][B]Destiny Bond Awareness[/B] — Won't attack into active Destiny Bond
+[*][B]Sucker Punch Mindgames[/B] — Risk assessment for priority dark moves
+[*][B]Item Disruption (Knock Off)[/B] — Evaluates item removal value
+[*][B]Protect Utility[/B] — Stall for Toxic/burn damage, Leftovers recovery, Speed Boost
+[*][B]Pivot Evaluation[/B] — U-turn/Volt Switch when switching is advantageous
+[*][B]Move Repetition Penalty[/B] — Avoids predictable repetition
+[*][B]Role Synergy[/B] — Score bonuses aligned with detected role (Sweepers favor offense, Walls favor status)
+[*][B]Trapping Moves[/B] — Mean Look + Toxic combo, Arena Trap/Shadow Tag synergy, Ghost escape check
+[*][B]Choice Pre-Lock Analysis[/B] — When holding Choice item, favors best coverage move, penalizes status
+[*][B]Cleric Urgency[/B] — Heal Bell/Aromatherapy scales with number of statused teammates
+[*][B]Destiny Bond (User)[/B] — Uses Destiny Bond when low HP and slower than opponent
+[*][B]Ghost Curse[/B] — Evaluates Ghost-type Curse based on HP cost vs. target value
+[*][B]Counter/Mirror Coat[/B] — Prediction-based scoring, survival check, stat-based heuristic
+[*][B]Disable Optimization[/B] — Uses Move Memory to disable the opponent's strongest/most important move
+[*][B]Healing Wish Targeting[/B] — Evaluates best teammate to revive (BST, injury level, status cure)
+[*][B]Mixed Attacker Awareness[/B] — Penalizes wrong attack category, Psyshock on SpDef walls
+[*][B]Transform (Ditto)[/B] — Targets high-BST, boosted opponents; avoids debuffed targets
+[*][B]PP Check[/B] — Score -1000 for moves with 0 PP
+[*][B]Lock Awareness[/B] — Score -1000 for moves blocked by Choice Lock, Encore, Disable, Taunt, Heal Block
+[/LIST]
+[/SPOILER]
+
+[B]Example — Trapping Move Logic:[/B]
+[CODE=ruby]
+# The AI evaluates trapping moves like Mean Look + Toxic
+# It checks: can the target escape? (Ghost type = yes)
+# Is this a favorable matchup to trap? (+40 bonus)
+# Do we have a stall combo (Toxic + recovery)? (+25 bonus)
+
+TRAPPING_MOVES = [:MEANLOOK, :BLOCK, :SPIRITSHACKLE, :ANCHORSHOT,
+                  :JAWLOCK, :OCTOLOCK, :THOUSANDWAVES, :SHADOWHOLD]
+
+def score_trapping_moves(score, move, user, target)
+  return score unless TRAPPING_MOVES.include?(move.id)
+  real_target = target.respond_to?(:battler) ? target.battler : target
+  # Ghost types can escape trapping
+  if real_target.pbHasType?(:GHOST)
+    score -= 50
+    return score
+  end
+  # Great with Toxic/Perish Song combo
+  user_moves = user.moves.map { |m| m.id }
+  has_toxic = user_moves.include?(:TOXIC) || user_moves.include?(:TOXICSPIKES)
+  has_perish = user_moves.include?(:PERISHSONG)
+  score += 25 if has_toxic
+  score += 35 if has_perish
+  # Favorable matchup? (we wall them)
+  score += 40 if favorable_matchup?(user, target)
+  score
+end
+[/CODE]
+
+[HEADING=3]2. Move Memory System[/HEADING]
+
+The AI remembers every move the player uses throughout the entire battle:
+
+[CODE=ruby]
+# Track opponent moves and use them for predictions
+memory = AdvancedAI.get_memory(battle, opponent)
+# => { moves: [:EARTHQUAKE, :IRONHEAD, :SWORDSDANCE, :STEALTHROCK],
+#      priority: [:BULLETPUNCH], healing: [], setup: [:SWORDSDANCE],
+#      status: [:STEALTHROCK], max_power: 100 }
+
+# Check specific knowledge
+AdvancedAI.knows_move?(battle, opponent, :EARTHQUAKE)  # => true
+AdvancedAI.has_priority_move?(battle, opponent)          # => true
+AdvancedAI.has_setup_move?(battle, opponent)             # => true
+AdvancedAI.strongest_known_move(battle, opponent)        # => :EARTHQUAKE
+AdvancedAI.max_known_damage(battle, opponent, my_pokemon) # => 187
+
+# This data feeds into:
+# - Switch decisions (don't switch into a known Earthquake)
+# - Prediction scoring (expect setup → use Taunt)
+# - Disable targeting (disable their strongest move)
+# - Threat assessment (known coverage = higher threat)
+[/CODE]
+
+[HEADING=3]3. Role Detection System (8 Roles)[/HEADING]
+
+Every Pokémon is automatically classified into roles based on stats, moves, and abilities:
+
+[CODE=ruby]
+# Automatic role detection
+roles = AdvancedAI.detect_roles(garchomp)
+# => [:sweeper, :wallbreaker]
+
+# Role definitions:
+# Sweeper:     Speed ≥ 100 + Atk/SpAtk ≥ 100
+# Wall:        HP+Def+SpDef ≥ 300, Speed < 70
+# Stall:       Wall + stall moveset (Toxic/Protect/Recovery)
+# Tank:        HP ≥ 90, Atk/SpAtk ≥ 100, Speed < 90
+# Wallbreaker: Atk ≥ 120 or SpAtk ≥ 120
+# Support:     Has screens, hazards, cleric, or status moves
+# Pivot:       Has U-turn, Volt Switch, Flip Turn, etc.
+# Lead:        Has hazards + Taunt, or Fake Out, or Fast Taunt
+
+# Counter-pick matrix (used for switches):
+# Sweeper  → counter with Wall
+# Wall     → counter with Wallbreaker
+# Support  → counter with Lead (Taunt)
+# Tank     → counter with Wallbreaker
+# Pivot    → counter with Tank (absorb hits)
+
+# Usage in battle:
+best_wall = AdvancedAI.best_for_role(battle, 0, :wall)
+recommended = AdvancedAI.recommend_role_for_situation(battle, fainted_idx, opponent, skill)
+[/CODE]
+
+[HEADING=3]4. Battle Personalities (4 Playstyles)[/HEADING]
+
+Each trainer automatically receives a personality based on their team composition:
+
+[SPOILER="Personality Details"]
+[TABLE]
+[TR]
+[TH]Personality[/TH]
+[TH]Detection[/TH]
+[TH]Key Behaviors[/TH]
+[/TR]
+[TR]
+[TD][B]Aggressive[/B][/TD]
+[TD]Sweepers + Wallbreakers > 50% of team, ≤1 wall[/TD]
+[TD]+25 damage moves, +15 priority, +40 OHKO, -20 setup, -30 healing[/TD]
+[/TR]
+[TR]
+[TD][B]Defensive[/B][/TD]
+[TD]Walls ≥ 50% or 2+ stall mons[/TD]
+[TD]+40 healing, +30 status, +35 protect, +45 stall combos, +25 hazards[/TD]
+[/TR]
+[TR]
+[TD][B]Balanced[/B][/TD]
+[TD]Default / 2+ pivots / 2+ tanks + support[/TD]
+[TD]+10 damage, +10 setup, +15 healing, +15 status, +15 pivots[/TD]
+[/TR]
+[TR]
+[TD][B]Hyper Offensive[/B][/TD]
+[TD]60%+ sweepers + 4+ setup moves across team[/TD]
+[TD]+50 setup, +30 protect (to enable setup), +15 damage, -40 healing[/TD]
+[/TR]
+[/TABLE]
+
+[B]Override per trainer:[/B]
+[CODE=ruby]
+# Force a specific personality for a named trainer
+AdvancedAI.set_personality("Cynthia", :aggressive)
+AdvancedAI.set_personality("Brock", :defensive)
+
+# Get current personality
+personality = AdvancedAI.get_personality(battle, trainer_index)
+# => :aggressive
+
+# Each personality also affects switch thresholds:
+# Aggressive: 55 (switches less, stays to attack)
+# Defensive: 35 (switches more often for safety)
+# Balanced: 45
+# Hyper Offensive: 60 (almost never switches)
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]5. Competitive Switch Intelligence (1,900+ lines)[/HEADING]
+
+The most complex subsystem — a full switch decision engine:
+
+[SPOILER="Switch Logic Details"]
+[B]6-Factor Switch Score:[/B]
+[LIST=1]
+[*][B]Type Disadvantage[/B] — Am I at a type disadvantage?
+[*][B]Survival Concerns[/B] — Can I survive the next hit? (incoming damage estimation)
+[*][B]Current Stat Stages[/B] — Don't throw away +3 Attack boosts!
+[*][B]Better Options[/B] — Is there a clearly better Pokémon on the bench?
+[*][B]Momentum[/B] — Would switching lose or gain momentum?
+[*][B]Prediction Advantage[/B] — Can I predict the opponent's next move and switch into it?
+[/LIST]
+
+[B]Anti-Loop Protection:[/B]
+[CODE=ruby]
+# The AI prevents infinite switching loops (Toxapex ↔ Blissey)
+# - Won't switch if it just switched in (turn count < 2)
+# - Tracks recent switches to detect ping-pong patterns
+# - Stall archetypes are protected from unnecessary switches
+#   (a Toxapex running Toxic Spikes + Recover STAYS in)
+[/CODE]
+
+[B]Switch Candidate Evaluation:[/B]
+Each potential switch target is scored on:
+[LIST]
+[*]Type matchup vs. current opponent
+[*]Role synergy (counter-pick matrix)
+[*]Entry hazard cost (Stealth Rock damage on switch-in)
+[*]Sacrifice value (is staying to die strategically correct?)
+[*]Pivot move option (U-turn instead of hard switch?)
+[*]Recovery vs. Switch decision
+[/LIST]
+
+[B]Reserve Last Pokémon (Ace):[/B]
+[CODE]
+# In PBS/trainers.txt, add the flag:
+Flags = ReserveLastPokemon
+
+# The AI will never switch its last (ace) Pokémon in
+# until all other Pokémon have fainted.
+# Perfect for rival/champion battles!
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]6. Strategic Awareness (Skill 70+)[/HEADING]
+
+High-level strategic reasoning that understands the big picture:
+
+[SPOILER="Strategic Systems"]
+[B]Opponent Team Archetype Recognition:[/B]
+[CODE=ruby]
+# The AI identifies the opponent's team strategy:
+archetype = AdvancedAI.identify_opponent_archetype(battle, user_index)
+# => { type: :rain, confidence: 0.85 }
+
+# Recognized archetypes:
+# :hyper_offense  — fast, fragile, setup-heavy
+# :balance        — mixed roles
+# :stall          — walls + status + recovery
+# :rain / :sun / :sand / :hail — weather teams
+# :trick_room     — slow heavy hitters
+# :volt_turn      — pivot-based momentum
+
+# Counter-play is automatic:
+# vs. Stall: +30 for Taunt, +20 for wallbreaker moves
+# vs. Hyper Offense: +20 for priority, +15 for defensive plays
+# vs. Weather: +25 for weather override moves
+# vs. Volt-Turn: +30 for Pursuit, +20 for trapping
+[/CODE]
+
+[B]7 Win Condition Types:[/B]
+[CODE=ruby]
+# The AI identifies and pursues win conditions:
+win_con = AdvancedAI.identify_win_condition(battle, user, skill)
+# => :sweep (one mon can clean), :attrition, :stall,
+#    :trade, :setup, :revenge, :speed_control
+
+# Dynamic shifting: if your sweeper gets KO'd,
+# the AI automatically shifts from :sweep to :attrition
+# and adjusts all scoring accordingly.
+[/CODE]
+
+[B]Coverage Gap Mapping:[/B]
+[CODE=ruby]
+# Finds types that the team can't handle
+gaps = AdvancedAI.identify_coverage_gaps(battle, user_index)
+# => [:GROUND, :FIGHTING] — we can't resist OR threaten these types
+
+# The AI protects Pokémon that cover these gaps
+# and avoids risky plays with them (recoil penalty, no sacking)
+[/CODE]
+
+[B]Defensive Core Recognition:[/B]
+[CODE=ruby]
+# Detects common defensive cores:
+cores = AdvancedAI.identify_defensive_cores(battle, side_index)
+# => [{ type: "Fire/Water/Grass", members: ["Heatran", "Toxapex", "Ferrothorn"] }]
+
+# Known core patterns:
+# Fire/Water/Grass (FWG), Steel/Fairy/Dragon, 
+# Ground/Steel/Flying, Water/Grass/Electric,
+# Poison/Steel, Dark/Fighting/Psychic
+
+# Rewards moves that break cores (+15 to +25 bonus)
+[/CODE]
+
+[B]Proactive Sacking:[/B]
+[CODE=ruby]
+# The AI evaluates when sacrificing a Pokémon is strategically correct
+should_sack = AdvancedAI.should_sack?(battle, user, target)
+
+# Sacking criteria:
+# - User will likely faint this turn anyway (< 25% HP, opponent outspeeds)
+# - User has low remaining value (no useful moves for remaining opponents)
+# - A teammate benefits greatly from a free switch-in
+# If sacking: +40 for pivot moves, +20 for heavy damage, -30 for recovery
+[/CODE]
+
+[B]Collective Health Tracking:[/B]
+[CODE=ruby]
+# Tracks team HP% advantage and adjusts playstyle
+health = AdvancedAI.track_health(battle, user_index)
+# => { our_percent: 72.5, opponent_percent: 45.0, advantage: 27.5 }
+
+# Winning (advantage > 30): play safe, avoid recoil, favor healing
+# Losing (advantage < -30): be aggressive, favor power moves, setup
+# Even: no adjustment
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]7. Doubles Coordination (3,600+ lines, 100+ evaluators)[/HEADING]
+
+The largest subsystem — full VGC-tier doubles intelligence:
+
+[SPOILER="Doubles Features"]
+[B]Core Coordination:[/B]
+[LIST]
+[*][B]Overkill Prevention[/B] — Won't double-target a Pokémon that one hit can KO
+[*][B]Move Conflict Avoidance[/B] — Partners won't waste moves on the same target
+[*][B]Spread Move Optimization[/B] — Earthquake next to a Flying partner = bonus
+[*][B]Joint Target Selection[/B] — Optimizes who attacks what, prevents overkill, redirects to low-HP alternates
+[/LIST]
+
+[B]Protective Moves:[/B]
+[LIST]
+[*]Wide Guard / Quick Guard evaluation
+[*]Follow Me / Rage Powder redirection
+[*]Mat Block / Crafty Shield / Spotlight
+[*]Protect + Setup Combo (partner Protects while ally sets up)
+[/LIST]
+
+[B]Speed Control:[/B]
+[LIST]
+[*]Tailwind evaluation (speed advantage calculation)
+[*]Trick Room evaluation (speed inversion benefit)
+[*]Icy Wind / Electroweb / Bulldoze (speed-dropping attacks)
+[/LIST]
+
+[B]Ally Support:[/B]
+[LIST]
+[*]Helping Hand / Coaching bonus
+[*]Ally Heal (Life Dew, Pollen Puff)
+[*]Ally Switch prediction
+[*]After You / Quash turn manipulation
+[*]Instruct evaluation
+[/LIST]
+
+[B]VGC Meta Strategies:[/B]
+[LIST]
+[*]Fake Out timing (turn 1 disruption)
+[*]Perish Trap combos
+[*]Taunt / Encore doubles context
+[*]Imprison evaluation
+[*]Soak type manipulation
+[*]Gravity doubles synergy
+[/LIST]
+
+[B]Ability Synergy:[/B]
+[LIST]
+[*]Intimidate awareness
+[*]Prankster priority checks
+[*]Friend Guard / Telepathy partner safety
+[*]Neutralizing Gas field control
+[*]Power Spot / Battery / Steely Spirit / Flower Gift ally boosting
+[*]Commander (Dondozo) combo detection
+[/LIST]
+
+[B]Item Awareness:[/B]
+[LIST]
+[*]Focus Sash / Weakness Policy / Safety Goggles / Assault Vest detection
+[*]Choice item lock-in awareness
+[*]Eject Button / Eject Pack prediction
+[*]Air Balloon grounding check
+[*]Healing Berry timing
+[*]Stat trigger items (Weakness Policy abuse)
+[/LIST]
+
+[B]Gen 8-9 Strategies:[/B]
+[LIST]
+[*]Max Guard / Max team moves / Max weather-terrain evaluation
+[*]G-Max move-specific evaluation
+[*]Revival Blessing / Shed Tail / Doodle / Tidy Up
+[*]Psychic Terrain priority blocking
+[*]Paradox move evaluation
+[*]Salt Cure, Rage Fist, Order Up, Make It Rain, Triple Arrows
+[/LIST]
+
+[B]Partner Prediction:[/B]
+[CODE=ruby]
+# The AI checks what its partner is targeting
+# to coordinate attacks and avoid waste
+partner_targeting = partner_targets?(battle, partner, target)
+# Checks battle.choices for partner's registered action
+# Falls back to heuristic (low HP target likely shared)
+
+# Joint target bonus adjusts score:
+# - If partner can KO alone: -10 (redirect our attack elsewhere)
+# - SE advantage on alternate target: +10 (focus fire correctly)
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]8. Field Mastery[/HEADING]
+
+[SPOILER="Field Effect Details"]
+[B]Weather Intelligence:[/B]
+[LIST]
+[*]Move type bonuses in matching weather (Fire in Sun, Water in Rain)
+[*]Move type penalties in opposing weather (Fire in Rain, Water in Sun)
+[*]Solar Beam/Solar Blade in Sun = no charge (bonus)
+[*]Thunder/Hurricane in Rain = perfect accuracy (bonus)
+[*]Blizzard in Hail = perfect accuracy (bonus)
+[*]Weather Ball type awareness
+[*]Weather setting evaluation (should we override current weather?)
+[*]Weather extender item awareness (8 turns instead of 5 = +10)
+[*]Utility Umbrella on target = penalize weather-boosted moves (-20)
+[/LIST]
+
+[B]Terrain Intelligence:[/B]
+[LIST]
+[*]Electric Terrain: boosted Electric moves, blocks Sleep
+[*]Grassy Terrain: boosted Grass moves, Earthquake weakened
+[*]Psychic Terrain: priority blocked on grounded targets
+[*]Misty Terrain: Dragon moves weakened, status blocked
+[*]Terrain extender item awareness
+[/LIST]
+
+[B]Room Effects:[/B]
+[LIST]
+[*]Trick Room: speed inversion scoring
+[*]Gravity: accuracy boost, grounding check
+[*]Magic Room / Wonder Room awareness
+[/LIST]
+
+[B]Hazard Control:[/B]
+[CODE=ruby]
+# Full hazard damage calculation
+# Stealth Rock: type-based (6.25% to 50%)
+# Spikes: layer-based (12.5% / 16.7% / 25%)
+# Toxic Spikes: poison on grounded mons
+# Sticky Web: -1 Speed on grounded mons
+
+# The AI evaluates:
+# - When to SET hazards (opponent switches a lot)
+# - When to REMOVE hazards (Defog vs. Rapid Spin decision)
+# - Court Change / Mortal Spin / Tidy Up alternatives
+# - Heavy-Duty Boots negation
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]9. Item Intelligence[/HEADING]
+
+[SPOILER="Item Awareness Details"]
+[B]The AI understands and plays around items:[/B]
+
+[B]Choice Items (Band/Specs/Scarf):[/B]
+[CODE=ruby]
+# Detection
+AdvancedAI.choice_locked?(battler)  # Has it used a move while Choice'd?
+AdvancedAI.choice_item?(battler.item_id)  # Is it holding a Choice item?
+
+# Behavior:
+# - Choice-locked: score -100 for non-locked moves (they'll fail)
+# - Before locking: favor broadest coverage move (+15)
+# - Before locking: penalize status moves (-40)
+# - Pivot moves get +25 (escape the lock)
+# - Choice Scarf detected from turn order observations
+[/CODE]
+
+[B]Damage Boost Items:[/B]
+[CODE=ruby]
+# Life Orb (1.3x), Expert Belt (1.2x SE), Muscle Band, Wise Glasses
+# Score bonus proportional to multiplier: (mult - 1.0) × 50
+# Life Orb = +15, Expert Belt on SE = +10
+[/CODE]
+
+[B]Type Gems (One-Time Boost):[/B]
+[CODE=ruby]
+# 18 type gems recognized (Normal Gem through Fairy Gem)
+# Gem + matching move type = +15 score bonus
+# Great for Fake Out + Normal Gem, Explosion + Normal Gem
+AdvancedAI.has_type_gem?(battler, :NORMAL)  # => true/false
+[/CODE]
+
+[B]Defensive Items:[/B]
+[LIST]
+[*]Focus Sash — won't waste multi-hit on full HP (it survives anyway)
+[*]Assault Vest — won't use status moves against AV holder (they can't use status)
+[*]Air Balloon — avoids Ground moves until balloon pops
+[*]Safety Goggles — powder/spore moves won't work
+[/LIST]
+
+[B]Sticky Barb:[/B]
+[CODE=ruby]
+# Contact moves against Sticky Barb holder = risk inheriting it
+# Score -10 for contact moves against Sticky Barb holders
+AdvancedAI.has_sticky_barb?(target)  # => true/false
+[/CODE]
+
+[B]Mental Herb:[/B]
+[CODE=ruby]
+# Blocks Taunt/Encore/Disable/Torment ONCE
+# Score -25 for those moves against Mental Herb holders
+# (they'll cure it immediately, wasting your turn)
+AdvancedAI.has_mental_herb?(target)  # => true/false
+[/CODE]
+
+[B]Utility Umbrella:[/B]
+[CODE=ruby]
+# Ignores weather effects — Thunder/Hurricane lose weather accuracy,
+# Solar Beam doesn't skip charge, Weather Ball stays Normal
+# Score -20 for weather-dependent moves against Utility Umbrella holders
+AdvancedAI.has_utility_umbrella?(target)  # => true/false
+[/CODE]
+
+[B]Weather Extenders:[/B]
+[CODE=ruby]
+# Heat Rock, Damp Rock, Smooth Rock, Icy Rock, Terrain Extender
+# When holding extender + using matching weather move: +10 bonus
+# (8 turns instead of 5 is a significant advantage)
+[/CODE]
+
+[B]Other Items:[/B]
+[LIST]
+[*]Pinch Berries (Sitrus, Oran) — timing awareness
+[*]Resist Berries (Chople, Occa, etc.) — reduces SE damage prediction
+[*]Eject Button / Eject Pack — forced switch prediction
+[*]Weakness Policy — careful about triggering it (+2 Atk/SpAtk)
+[*]Red Card — forced switch on attacker
+[/LIST]
+[/SPOILER]
+
+[HEADING=3]10. Prediction System (Skill 85+)[/HEADING]
+
+[SPOILER="Prediction Details"]
+[CODE=ruby]
+# The AI predicts what you'll do next:
+
+# Switch prediction — estimates chance you'll switch
+switch_chance = predict_switch_chance(battle, target)
+# Considers: type disadvantage, low HP, setup bait, known moves
+
+# Switch target prediction — guesses WHO you'll switch to
+predicted = predict_switch_target(battle, target)
+# Considers: type matchup, role needs, bench condition
+
+# Move prediction — estimates your likely next move
+predicted_move = predict_next_move(battle, target)
+# Uses: Move Memory, frequency tracking, situation analysis
+
+# Prediction-based scoring:
+# Pursuit vs. predicted switch = +30
+# Setup move vs. predicted status = +20  
+# Coverage move vs. predicted switch-in = +25
+
+# Double Switch detection:
+should_double_switch?(battle, user, target)
+# If AI predicts you'll switch, it switches too to maintain advantage
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]11. Learning System (Skill 86+)[/HEADING]
+
+[SPOILER="Learning System Details"]
+[CODE=ruby]
+# The AI learns your patterns during battle:
+
+# Tracks your tendencies:
+# - How often do you use Protect? (Protect prediction)
+# - How often do you switch? (Switch habit tracking)
+# - What's your most-used move? (Preferred move detection)
+# - How predictable are you? (Predictability scoring)
+
+# This affects scoring:
+# If you Protect often → AI uses setup/status during your Protect turns
+# If you switch often → AI uses Pursuit/hazards/prediction switches
+# If you spam one move → AI predicts and counters it
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]12. Gimmick Intelligence (Mega, Z-Move, Dynamax, Tera)[/HEADING]
+
+[SPOILER="Gimmick Details"]
+[B]Gimmick Priority Pipeline:[/B]
+[CODE]
+Mega Evolution (Skill 90+) → Z-Move (Skill 90+) → Dynamax (Skill 95+) → Tera (Skill 100)
+Only ONE gimmick is selected per decision point.
+[/CODE]
+
+[B]Mega Evolution Intelligence:[/B]
+[LIST]
+[*]4-factor evaluation: stat gain, ability change, type change, battle context
+[*]Weather-setting Mega abilities (Drought Charizard Y): +25
+[*]Power abilities (Huge Power, Parental Bond): +20
+[*]Triggers at score ≥ 20, or when HP ≤ 50% (emergency)
+[/LIST]
+
+[B]Z-Move Intelligence:[/B]
+[LIST]
+[*]Damage Z-Moves: 1.8x damage estimation, KO prediction
+[*]Status Z-Moves: Z-Belly Drum (+30), Z-Splash (+30), Z-Geomancy (+25)
+[*]Triggers at score ≥ 40, or ≥ 20 when low HP
+[/LIST]
+
+[B]Dynamax Intelligence (6 Factors):[/B]
+[CODE=ruby]
+# 6-factor decision system:
+# 1. Timing     (0-35)  — early G-Max setters, mid-game sweepers
+# 2. Offense    (0-40)  — move diversity, power, G-Max bonus
+# 3. Sweep      (0-35)  — boosts, speed advantage, weak enemies left
+# 4. Survival   (0-45)  — HP doubling urgency, OHKO prevention
+# 5. Party Comp (0 to -25) — is a teammate a better Dynamax user?
+# 6. Momentum   (0-30)  — current advantage, pressure
+
+# Thresholds:
+# Score ≥ 100: Dynamax immediately (excellent timing)
+# Score ≥ 70:  Strong candidate
+# Score ≥ 50:  Acceptable if ≤ 2 remaining
+[/CODE]
+
+[B]Terastallization Intelligence (6 Factors):[/B]
+[CODE=ruby]
+# 6-factor decision system:
+# 1. Timing     — team state, battle phase
+# 2. Type Adv   (0-40)  — STAB gain, SE coverage, weakness removal (+25)
+# 3. Sweep      (0-35)  — boosts, HP%, win condition
+# 4. Survival   (0-45)  — emergency HP, imminent KO prevention (+45!)
+# 5. Party Comp (0 to -25) — better Tera candidates on bench?
+# 6. Momentum   (0-25)  — pressure, finishing blow
+
+# Thresholds:
+# Score ≥ 80: Tera immediately (emergency or excellent)
+# Score ≥ 60: Strong candidate
+# Score ≥ 40: Acceptable if ≤ 2 remaining
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]13. Endgame Intelligence[/HEADING]
+
+[SPOILER="Endgame Details"]
+[CODE=ruby]
+# The AI plays differently in 1v1 and 2v2 endgame:
+
+# 1v1 Endgame:
+# - Calculates exact KO potential
+# - Detects "winning move" (OHKO available = +100 score)
+# - Speed tier comparison for priority decisions
+# - Desperation plays when losing (Destiny Bond, Endeavor + Quick Attack)
+# - Will NOT waste turns on setup when they can KO
+
+# 2v2 Endgame:
+# - Similar KO detection with expanded bench options
+# - Sacrifice evaluation (lose one to set up another)
+# - Priority becomes critical (Mach Punch the weakened target)
+
+# Dynamic mode:
+# Winning → play safe, use priority, avoid risks
+# Losing → gamble on high variance (crit moves, OHKO, Destiny Bond)
+[/CODE]
+[/SPOILER]
+
+[HEADING=3]14. Advanced Combat Mechanics[/HEADING]
+
+[SPOILER="Combat Mechanics"]
+[B]Sleep Clause Compliance:[/B]
+[LIST]
+[*]Won't put a second Pokémon to sleep (Sleep Clause)
+[*]Distinguishes Rest from sleep status
+[*]Yawn → delayed sleep evaluation
+[*]Safe setup on sleeping targets (free turns!)
+[*]Rest-Talk combo awareness
+[/LIST]
+
+[B]Substitute Logic:[/B]
+[LIST]
+[*]Sub creation: HP cost vs. safety evaluation
+[*]Sub-breaking: correct tool selection (multi-hit, sound, etc.)
+[*]Focus Punch behind Substitute
+[*]Leech Seed + Sub stall combo
+[*]Disable + Sub lockdown
+[*]Substitute Pass to teammate
+[/LIST]
+
+[B]PP Tracking:[/B]
+[LIST]
+[*]Tracks opponent PP usage throughout battle
+[*]Struggle prediction when PP runs low
+[*]Pressure stall evaluation (double PP drain)
+[*]PP conservation (don't waste 5 PP moves carelessly)
+[/LIST]
+
+[B]Critical Hits:[/B]
+[LIST]
+[*]Crit stage calculation (Super Luck + Scope Lens + high-crit move)
+[*]Sniper build detection (+50% crit damage)
+[*]Focus Energy evaluation
+[*]Crit immunity awareness (Battle Armor, Shell Armor, Lucky Chant)
+[/LIST]
+
+[B]267+ Ability Recognition:[/B]
+[LIST]
+[*]Offensive: Huge Power (+3.0), Adaptability (+2.5), Parental Bond (+2.5)
+[*]Defensive: Wonder Guard (-5.0), Fur Coat (-3.0), Multiscale (-2.5)
+[*]Speed: Speed Boost (+2.0), Unburden (+2.5), Prankster (+2.5)
+[*]Support: Magic Bounce (+2.0), Intimidate (+1.5), all weather/terrain setters
+[*]Mold Breaker / Neutralizing Gas / Gastro Acid awareness
+[/LIST]
+[/SPOILER]
+
+[HEADING=3]15. Speed & Priority Tier System[/HEADING]
+
+[SPOILER="Speed System"]
+[CODE=ruby]
+# Effective speed calculation includes:
+# - Base Speed stat
+# - Choice Scarf detection (from observed turn order)
+# - Paralysis (25% speed)
+# - Tailwind (2x)
+# - Trick Room (inverted)
+# - Abilities: Swift Swim, Chlorophyll, Sand Rush, Slush Rush
+# - Unburden (2x after item consumed)
+# - Items: Quick Claw, Lagging Tail, Iron Ball
+
+# Speed-control move evaluation:
+# Tailwind: calculates how many mons benefit
+# Trick Room: counts slow mons on our side vs. theirs
+# Sticky Web: evaluates opponent's grounded mons
+# Icy Wind, Electroweb: speed-dropping attack value
+
+# Priority Tier Classification:
+# +5: Helping Hand
+# +4: Protect, Detect
+# +3: Fake Out, Quick Guard, Wide Guard
+# +2: Extreme Speed, First Impression
+# +1: Aqua Jet, Bullet Punch, Ice Shard, Mach Punch, Shadow Sneak, Sucker Punch
+# 0:  Normal moves
+# -1: Vital Throw
+# -5: Trick Room
+# -6: Counter, Mirror Coat
+# -7: Roar, Dragon Tail, Circle Throw
+[/CODE]
+[/SPOILER]
+
+[HR][/HR]
+[HEADING=2]Configuration & Usage[/HEADING]
+
+[HEADING=3]1. Installation[/HEADING]
+
+[LIST=1]
+[*]Download the plugin.
+[*]Extract the folder [B][000_AAI] Advanced AI System[/B] into your project's [B]Plugins[/B] directory.
+[*]Start your game. The AI will immediately apply to any trainer with sufficient Skill Level.
+[*]No additional configuration needed — everything works out of the box!
+[/LIST]
+
+[HEADING=3]2. Setting Skill Levels[/HEADING]
+
+The AI activates automatically for any Trainer with [B]Skill Level ≥ 50[/B]. The higher the skill, the more features activate.
+
+Set this in [FILE]PBS/trainer_types.txt[/FILE] (entire class) or [FILE]PBS/trainers.txt[/FILE] (specific battle).
+
+[B]Complete Skill Tier Table:[/B]
+
+[TABLE]
+[TR]
+[TH]Skill[/TH]
+[TH]Tier[/TH]
+[TH]Features Unlocked[/TH]
+[/TR]
+[TR]
+[TD][B]50+[/B][/TD]
+[TD]Beginner[/TD]
+[TD]Move Scoring, Move Memory, Threat Assessment, Field Effects, Doubles Coordination[/TD]
+[/TR]
+[TR]
+[TD][B]55+[/B][/TD]
+[TD]Beginner[/TD]
+[TD]+ Setup Recognition, Baton Pass chain detection[/TD]
+[/TR]
+[TR]
+[TD][B]60+[/B][/TD]
+[TD]Beginner[/TD]
+[TD]+ Endgame Scenarios (1v1/2v2 logic, desperation plays)[/TD]
+[/TR]
+[TR]
+[TD][B]61-85[/B][/TD]
+[TD]Mid[/TD]
+[TD]+ Switch Prediction, Hazard Awareness, Pivot Preference, Recovery Timing[/TD]
+[/TR]
+[TR]
+[TD][B]65+[/B][/TD]
+[TD]Mid[/TD]
+[TD]+ Battle Personalities (auto-detected playstyles)[/TD]
+[/TR]
+[TR]
+[TD][B]70+[/B][/TD]
+[TD]Mid[/TD]
+[TD]+ Strategic Awareness (archetypes, win conditions, coverage gaps, sacking, cores)[/TD]
+[/TR]
+[TR]
+[TD][B]85+[/B][/TD]
+[TD]Mid[/TD]
+[TD]+ Item Intelligence, Prediction System[/TD]
+[/TR]
+[TR]
+[TD][B]86+[/B][/TD]
+[TD]Pro[/TD]
+[TD]+ Learning System (pattern recording, adaptive counter-play)[/TD]
+[/TR]
+[TR]
+[TD][B]90+[/B][/TD]
+[TD]Pro[/TD]
+[TD]+ Mega Evolution Intelligence, Z-Move Intelligence[/TD]
+[/TR]
+[TR]
+[TD][B]95+[/B][/TD]
+[TD]Pro[/TD]
+[TD]+ Dynamax Intelligence (requires DBK)[/TD]
+[/TR]
+[TR]
+[TD][B]100[/B][/TD]
+[TD]Extreme[/TD]
+[TD]+ Terastallization Intelligence (requires DBK), 3-turn prediction depth[/TD]
+[/TR]
+[/TABLE]
+
+[B]Example: Smart Gym Leaders[/B]
+[CODE]
+# PBS/trainer_types.txt
+[LEADER_Brock]
+Name = Gym Leader
+Gender = Male
+SkillLevel = 100
+BaseMoney = 100
+[/CODE]
+
+[B]Example: Trainer with Reserve Ace[/B]
+[CODE]
+# PBS/trainers.txt
+[LEADER_BROCK,Brock,1]
+Items = FULLRESTORE,FULLRESTORE
+LoseText = "Good match!"
+Skill = 100
+Flags = ReserveLastPokemon
+Pokemon = GEODUDE,12
+Pokemon = VULPIX,12
+    Moves = EMBER,QUICKATTACK
+Pokemon = ONIX,14
+    Moves = ROCKTOMB,BIND,TACKLE
+[/CODE]
+[I]With ReserveLastPokemon, Onix won't switch in until Geodude and Vulpix have fainted.[/I]
+
+[HEADING=3]3. Advanced Settings[/HEADING]
+
+Fine-tune the system in [FILE]1_Core/0_Settings.rb[/FILE]:
+
+[SPOILER="All Configuration Options"]
+[CODE=ruby]
+module AdvancedAI
+  # Master switch — disable the entire system
+  ENABLED = true
+
+  # Minimum skill level to activate advanced AI
+  MIN_SKILL_FOR_AUTO_ACTIVATION = 70
+
+  # Debug output
+  DEBUG_MODE = false                 # Verbose console logging
+  DEBUG_SWITCH_INTELLIGENCE = false  # Extra switch decision logging
+  LOG_TO_CONSOLE = false             # Print to console
+  LOG_TO_FILE = false                # Write to Logs/ai_log.txt
+
+  # Show AI decision reasoning in battle text
+  SHOW_MOVE_EXPLANATIONS = true
+
+  # Wild Pokemon AI
+  ENABLE_WILD_POKEMON_AI = true
+  WILD_POKEMON_SKILL_LEVEL = 100
+
+  # Auto-detect personality from team composition
+  AUTO_DETECT_PERSONALITY = true
+
+  # Prevent ace from switching in early
+  RESPECT_RESERVE_LAST_POKEMON = true
+
+  # Game Variable for mode override (0 = auto)
+  AI_MODE_VARIABLE = 100
+
+  # Gen 9 Pack compatibility
+  GEN9_PACK_COMPAT = true
+
+  # DBK Plugin toggles
+  DBK_PLUGINS = {
+    mega_evolution:    true,
+    dynamax:           true,
+    terastallization:  true,
+    z_moves:           true,
+    raid_battles:      true,
+    sos_battles:       true,
+  }
+end
+[/CODE]
+[/SPOILER]
+
+[B]Game Variable Override (Difficulty Toggle):[/B]
+[CODE=ruby]
+# Use Game Variable 100 to override AI behavior globally.
+# Perfect for a "Hard Mode" toggle in your game!
+
+# In an event:
+$game_variables[100] = 0  # Auto (use skill-based logic) — DEFAULT
+$game_variables[100] = 1  # Force Beginner mode
+$game_variables[100] = 2  # Force Mid mode
+$game_variables[100] = 3  # Force Pro mode
+$game_variables[100] = 4  # Force Extreme mode
+
+# Example: Hard Mode switch
+# Event Script:
+if $game_switches[50]  # Hard Mode ON
+  $game_variables[100] = 4  # Force Extreme AI
+else
+  $game_variables[100] = 0  # Normal (auto)
+end
+[/CODE]
+
+[B]Advanced Bit Flags:[/B]
+[CODE=ruby]
+# Fine-grained feature control via bit flags
+# DEFAULT_FLAGS = 0b11111111 (all enabled)
+
+# Individual flags:
+# Bit 0 (0b00000001): Switch Prediction
+# Bit 1 (0b00000010): Setup Chain Detection
+# Bit 2 (0b00000100): Hazard Damage Calculation
+# Bit 3 (0b00001000): Weather Exploitation
+# Bit 4 (0b00010000): Terrain Exploitation
+# Bit 5 (0b00100000): KO Prediction
+# Bit 6 (0b01000000): Revenge Kill Prevention
+# Bit 7 (0b10000000): Momentum Control
+[/CODE]
+
+[HR][/HR]
+[HEADING=2]API Reference — For Developers[/HEADING]
+
+[SPOILER="Complete Public API"]
+[HEADING=3]Activation & Configuration[/HEADING]
+[CODE=ruby]
+AdvancedAI.active?                              # Is system enabled?
+AdvancedAI.activate! / AdvancedAI.deactivate!   # Toggle at runtime
+AdvancedAI.qualifies_for_advanced_ai?(skill)    # Does this skill qualify?
+AdvancedAI.get_ai_tier(skill)                   # :beginner / :mid / :pro / :extreme
+AdvancedAI.feature_enabled?(:prediction, skill) # Is this feature on at this skill?
+AdvancedAI.get_setting(key, default)            # Read config value
+AdvancedAI.dbk_enabled?(:dynamax)              # Is DBK plugin available?
+AdvancedAI.log("message", "Source")             # Write to AI log
+[/CODE]
+
+[HEADING=3]Type System[/HEADING]
+[CODE=ruby]
+AdvancedAI.type_mod(:FIRE, defender)                     # Type multiplier
+AdvancedAI.type_absorbing_immunity?(user, target, :WATER) # Flash Fire, etc.
+AdvancedAI.bulletproof_immune?(user, target, move)        # Ball/Bomb moves
+AdvancedAI.soundproof_immune?(user, target, move)         # Sound moves
+AdvancedAI.status_immune?(atk, target, :BURN, battle)     # Can status land?
+AdvancedAI.grounded?(battler, battle)                     # On the ground?
+[/CODE]
+
+[HEADING=3]Move Memory[/HEADING]
+[CODE=ruby]
+AdvancedAI.get_memory(battle, battler)           # Full memory hash
+AdvancedAI.knows_move?(battle, battler, :EQ)     # Have we seen this move?
+AdvancedAI.has_priority_move?(battle, battler)    # Any priority observed?
+AdvancedAI.has_healing_move?(battle, battler)     # Any recovery observed?
+AdvancedAI.has_setup_move?(battle, battler)       # Any boost observed?
+AdvancedAI.strongest_known_move(battle, battler)  # Highest power seen
+AdvancedAI.max_known_damage(battle, atk, def)     # Damage estimate
+AdvancedAI.last_move(battle, battler)             # Last used move
+AdvancedAI.move_frequency(battle, battler, :EQ)   # Times move was used
+[/CODE]
+
+[HEADING=3]Move Categories[/HEADING]
+[CODE=ruby]
+AdvancedAI.priority_move?(:BULLETPUNCH)   # true
+AdvancedAI.setup_move?(:SWORDSDANCE)      # true
+AdvancedAI.hazard_move?(:STEALTHROCK)     # true
+AdvancedAI.healing_move?(:RECOVER)        # true
+AdvancedAI.ohko_move?(:FISSURE)           # true
+AdvancedAI.spread_move?(:EARTHQUAKE)      # true
+AdvancedAI.protect_move?(:PROTECT)        # true
+AdvancedAI.screen_move?(:REFLECT)         # true
+AdvancedAI.status_move?(:THUNDERWAVE)     # true
+AdvancedAI.pivot_move?(:UTURN)            # true
+AdvancedAI.stall_move?(:TOXIC)            # true
+AdvancedAI.categorize_move(:EARTHQUAKE)   # => :spread (or array of categories)
+AdvancedAI.get_setup_data(:SWORDSDANCE)   # => { stat: :ATTACK, stages: 2, ... }
+[/CODE]
+
+[HEADING=3]Roles & Personalities[/HEADING]
+[CODE=ruby]
+AdvancedAI.detect_roles(battler)                    # => [:sweeper, :pivot]
+AdvancedAI.has_role?(battler, :wall)                # => false
+AdvancedAI.best_for_role(battle, side, :wall)       # Best wall on team
+AdvancedAI.recommend_role_for_situation(...)         # What role to send?
+
+AdvancedAI.detect_personality(battle, trainer_idx)   # => :aggressive
+AdvancedAI.set_personality("Cynthia", :aggressive)   # Override per trainer
+AdvancedAI.get_personality(battle, trainer_idx)       # Read personality
+AdvancedAI.get_personality_switch_threshold(:aggressive) # => 55
+[/CODE]
+
+[HEADING=3]Strategic Awareness[/HEADING]
+[CODE=ruby]
+AdvancedAI.identify_opponent_archetype(battle, idx) # => { type: :stall, confidence: 0.8 }
+AdvancedAI.identify_coverage_gaps(battle, idx)      # => [:GROUND, :FIGHTING]
+AdvancedAI.identify_critical_pokemon(battle, idx)   # Pokemon we can't lose
+AdvancedAI.identify_defensive_cores(battle, side)   # => [{ type: "FWG", ... }]
+AdvancedAI.track_health(battle, idx)                # Team HP% comparison
+AdvancedAI.update_threats(battle, idx)              # Threat tracking
+AdvancedAI.should_sack?(battle, user, target)       # Strategic sacrifice?
+AdvancedAI.strategic_score(battle, user, mv, tgt, skill)  # Combined score
+[/CODE]
+
+[HEADING=3]Item Intelligence[/HEADING]
+[CODE=ruby]
+AdvancedAI.choice_item?(:CHOICEBAND)            # => true
+AdvancedAI.choice_locked?(battler)              # => true/false
+AdvancedAI.blocks_status_moves?(battler)        # Assault Vest check
+AdvancedAI.calculate_item_multiplier(btl, move) # => 1.3 (Life Orb)
+AdvancedAI.get_item_threat_modifier(battler)    # Item threat factor
+AdvancedAI.recommend_item_for_role(pkmn, :sweeper) # => :LIFEORB
+AdvancedAI.has_utility_umbrella?(battler)        # Weather negation
+AdvancedAI.has_type_gem?(battler, :NORMAL)       # Gem check
+AdvancedAI.has_sticky_barb?(battler)             # Contact transfer
+AdvancedAI.has_mental_herb?(battler)             # Anti-Taunt once
+AdvancedAI.gem_damage_bonus(battler, move)       # +15 if matching
+AdvancedAI.mental_herb_penalty(target, move)     # -25 vs Mental Herb
+AdvancedAI.utility_umbrella_penalty(target, move) # -20 weather moves
+[/CODE]
+
+[HEADING=3]Threat & Abilities[/HEADING]
+[CODE=ruby]
+AdvancedAI.assess_threat(battle, target, user, skill) # => 0.0 to 10.0
+AdvancedAI.get_ability_threat(:HUGEPOWER)             # => 3.0
+AdvancedAI.defensive_ability?(:FURCOAT)               # => true
+AdvancedAI.offensive_ability?(:ADAPTABILITY)          # => true
+AdvancedAI.categorize_ability(:SPEEDBOOST)            # => :speed
+AdvancedAI.benefits_from_weather?(battler, :Sun)      # Chlorophyll?
+AdvancedAI.benefits_from_terrain?(battler, :Electric) # Surge Surfer?
+AdvancedAI.contact_punishment(attacker, defender, move) # Rocky Helmet etc.
+AdvancedAI.expected_multi_hits(attacker, move)         # Skill Link = 5
+[/CODE]
+
+[HEADING=3]Win Conditions[/HEADING]
+[CODE=ruby]
+AdvancedAI.identify_win_condition(battle, user, skill)
+# => :sweep | :attrition | :stall | :trade | :setup | :revenge | :speed_control
+[/CODE]
+[/SPOILER]
+
+[HR][/HR]
+[HEADING=2]Compatibility[/HEADING]
+
+[HEADING=3]Essentials Version[/HEADING]
+[LIST]
+[*][B]Pokémon Essentials v21.1[/B] — Designed and tested specifically for this version.
+[/LIST]
+
+[HEADING=3]DBK Plugins (Auto-Detected)[/HEADING]
+The system automatically detects Deluxe Battle Kit plugins — [B]no manual setup required[/B].
+[LIST]
+[*][B]DBK_005 (Dynamax)[/B] — Smart Max Move selection, timing, G-Max evaluation. Wild Pokémon Dynamax support.
+[*][B]DBK_006 (Terastallization)[/B] — Defensive & offensive Tera logic. Wild Pokémon Tera support. Enhanced Battle UI type display.
+[*][B]DBK_004 (Z-Moves)[/B] — Status Z-Move evaluation, OHKO prediction.
+[*][B]DBK_003 (Raid Battles)[/B] — Compatible.
+[*][B]DBK_002 (SOS Battles)[/B] — Compatible.
+[*][B]Enhanced Battle UI[/B] — Tera type icons for wild Pokémon.
+[/LIST]
+
+[HEADING=3]Hotfix Coverage[/HEADING]
+Built-in hotfixes for known compatibility issues:
+[LIST]
+[*]Wonder Launcher battles
+[*]AIMove method delegation safety
+[*]Effectiveness recursion guard (prevents SystemStackError)
+[*]NilSafeEffects (prevents nil errors on effects arrays)
+[*]RGSS `pp` method safety
+[/LIST]
+
+[HR][/HR]
+[HEADING=2]Plugin Statistics[/HEADING]
+
+[TABLE]
+[TR]
+[TH]Metric[/TH]
+[TH]Value[/TH]
+[/TR]
+[TR]
+[TD]Total Files[/TD]
+[TD]48 Ruby files[/TD]
+[/TR]
+[TR]
+[TD]Total Lines of Code[/TD]
+[TD]~23,000[/TD]
+[/TR]
+[TR]
+[TD]Unique AI Methods[/TD]
+[TD]200+[/TD]
+[/TR]
+[TR]
+[TD]Classified Moves[/TD]
+[TD]900+ (13 categories)[/TD]
+[/TR]
+[TR]
+[TD]Recognized Abilities[/TD]
+[TD]267+[/TD]
+[/TR]
+[TR]
+[TD]Doubles Evaluators[/TD]
+[TD]100+[/TD]
+[/TR]
+[TR]
+[TD]Scoring Factors per Move[/TD]
+[TD]20+[/TD]
+[/TR]
+[TR]
+[TD]Skill Tiers[/TD]
+[TD]4 (Beginner / Mid / Pro / Extreme)[/TD]
+[/TR]
+[TR]
+[TD]Personality Types[/TD]
+[TD]4 (Aggressive / Defensive / Balanced / Hyper Offensive)[/TD]
+[/TR]
+[TR]
+[TD]Detected Roles[/TD]
+[TD]8 (Sweeper, Wall, Stall, Tank, Wallbreaker, Support, Pivot, Lead)[/TD]
+[/TR]
+[TR]
+[TD]Win Condition Types[/TD]
+[TD]7 (Sweep, Attrition, Stall, Trade, Setup, Revenge, Speed Control)[/TD]
+[/TR]
+[TR]
+[TD]Team Archetypes Recognized[/TD]
+[TD]8 (HO, Balance, Stall, Rain, Sun, Sand, Hail, Trick Room, Volt-Turn)[/TD]
+[/TR]
+[TR]
+[TD]Gimmick Systems[/TD]
+[TD]4 (Mega / Z-Move / Dynamax / Tera)[/TD]
+[/TR]
+[TR]
+[TD]Largest File[/TD]
+[TD]Doubles_Coordination.rb (3,637 lines)[/TD]
+[/TR]
+[/TABLE]
+
+[HR][/HR]
+[HEADING=2]FAQ[/HEADING]
+
+[B]Q: Will this slow down my game?[/B]
+A: No noticeable slowdown. The AI calculations run during the opponent's turn and take negligible time even on the full pipeline. Each decision is resolved in under a frame.
+
+[B]Q: Do I need DBK installed?[/B]
+A: No! DBK plugins are optional. The system auto-detects them. Without DBK, Dynamax/Tera/Z-Move intelligence is simply disabled. Everything else works perfectly.
+
+[B]Q: Can I use this for only certain trainers?[/B]
+A: Yes. The system only activates for trainers with [B]Skill Level ≥ 50[/B]. Set skill to 0 or leave default for vanilla AI behavior.
+
+[B]Q: How do I make an "impossible" boss battle?[/B]
+A: Set Skill to 100, use `Flags = ReserveLastPokemon` for their ace, give them Full Restores, and use Game Variable 100 = 4 to force Extreme mode. The AI will use every tool available: prediction, learning, strategic sacking, and gimmick optimization.
+
+[B]Q: Does this work in double battles?[/B]
+A: Absolutely — doubles are a first-class feature with 3,600+ lines of dedicated coordination logic and 100+ evaluators covering VGC-level play.
+
+[B]Q: Can the AI use items / healing items in battle?[/B]
+A: The AI does not override item usage — that's handled by Essentials' built-in trainer item system. But the AI is [I]aware[/I] of items on all battlers and adjusts scoring accordingly.
+
+[B]Q: Is there a debug mode to see what the AI is thinking?[/B]
+A: Yes! Set [ICODE]DEBUG_MODE = true[/ICODE] in Settings, or press F9 during battle to open the AI Debug Menu. You can see exact move scores and switch reasoning.
+
+[HR][/HR]
+[HEADING=2]Changelog[/HEADING]
+
+[SPOILER="v3.0 — Strategic Intelligence Update"]
+[B]New Systems:[/B]
+[LIST]
+[*][B]Strategic Awareness[/B] — Opponent archetype recognition, win condition shifting, coverage gap mapping, defensive core identification, proactive sacking, collective health tracking, threat persistence
+[*][B]10 New Tactical Scoring Methods[/B] — Trapping moves, Choice pre-lock, Cleric urgency, Destiny Bond (user), Ghost Curse, Counter/Mirror Coat, Disable optimization, Healing Wish targeting, Mixed attacker awareness, Transform/Ditto logic
+[*][B]Advanced Item Awareness[/B] — Utility Umbrella, Type Gems (18 types), Sticky Barb, Mental Herb, Weather Extender evaluation
+[*][B]Joint Target Selection[/B] — Doubles partner coordination for overkill prevention and target optimization
+[*][B]Doubles Partner Prediction[/B] — Checks partner's registered action to avoid move conflicts
+[/LIST]
+[B]Bug Fixes:[/B]
+[LIST]
+[*]Fixed infinite switching loop between stall Pokémon (anti-ping-pong logic)
+[*]Fixed nil reference in Mechanics_Hooks when user has no trainer
+[*]Fixed undefined `has_method` call in Core.rb
+[*]Fixed calls to nonexistent `Effectiveness.calculate_multiplier` (2 files)
+[*]Fixed wrong Move Memory key (`:moves_seen` → `:moves`) (2 files)
+[*]Fixed duplicate HealUserHalfOfTotalHP handler
+[*]Removed THUNDERBOLT from Priority Tiers (it's not a priority move!)
+[*]Fixed NilSafeEffects returning `0` instead of `false` for boolean effects
+[*]Removed duplicate `log` method definition
+[*]Wired 6 dead pipeline stubs to their actual implementations
+[*]Replaced duplicate `is_setup_move?` with centralized `AdvancedAI.setup_move?`
+[/LIST]
+[/SPOILER]
+
+[HR][/HR]
+[HEADING=2]Credits & License[/HEADING]
+
+[B]Plugin Author:[/B] Nononever
+[B]Essentials:[/B] v21.1 by Maruno
+[B]Optional:[/B] Deluxe Battle Kit by Lucidious89
+
+Free to use in fan games. Credit required. Do not redistribute as your own work.

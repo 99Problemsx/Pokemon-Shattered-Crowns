@@ -62,6 +62,11 @@ module GameData
     def start_at(node_name)
       @start_node = node_name
     end
+
+    def default(&block)
+      node(:default, &block)
+      start_at(:default)
+    end
     
     #---------------------------------------------------------------------------
     # Run the dialogue

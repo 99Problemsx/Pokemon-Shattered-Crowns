@@ -30,8 +30,12 @@ module SCScripts
       load_trainer_scripts    # Trainers need Pokemon
       load_encounter_scripts  # Encounters need Pokemon
       load_ribbon_scripts     # Ribbons
+      load_config_scripts     # Metadata, town maps, phone contacts (needs types for trainer_type)
+      load_dungeon_scripts    # Dungeon parameters (needs to be before maps)
       load_map_scripts        # Maps and encounters
       load_animation_scripts  # Battle animations
+      load_story_scripts      # Story/chapter definitions
+      load_battle_facility_scripts # Battle Tower/Facility data
       load_example_scripts    # Example/extra scripts
       
       # Load Plugin-specific scripts
@@ -170,6 +174,26 @@ module SCScripts
       load_scripts_from(SCScripts::ANIMATION_SCRIPTS_PATH, "animation scripts")
     end
     
+    def self.load_config_scripts
+      path = "Data/Scripts/Config"
+      load_scripts_from(path, "config scripts (metadata, town maps, etc.)")
+    end
+    
+    def self.load_dungeon_scripts
+      path = "Data/Scripts/Dungeons"
+      load_scripts_from(path, "dungeon definitions")
+    end
+    
+    def self.load_story_scripts
+      path = "Data/Scripts/Story"
+      load_scripts_from(path, "story scripts")
+    end
+    
+    def self.load_battle_facility_scripts
+      path = "Data/Scripts/BattleFacility"
+      load_scripts_from(path, "battle facility scripts")
+    end
+    
     def self.load_example_scripts
       path = "Data/Scripts/Examples"
       load_scripts_from(path, "example scripts")
@@ -258,4 +282,8 @@ module SCScripts
 end
 
 # Trigger on game start (after other plugins load)
-SCScripts::GameStartup.trigger if $DEBUG || SCScripts::DEBUG
+EventHandlers.add(:on_start, :sc_script_system_startup,
+  proc {
+    SCScripts::GameStartup.trigger
+  }
+)

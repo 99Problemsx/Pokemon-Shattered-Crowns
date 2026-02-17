@@ -34,32 +34,35 @@
 
 #===============================================================================
 # ENCOUNTERS - Route 101 wild Pokemon
+# NOTE: Use species hashes, NOT Pokemon.new - objects can't be created at load time
+#       because $game_switches doesn't exist yet.
 #===============================================================================
 class Route101Encounters < GameData::MapEncounter
   register :Land, 25 do
-    add(30, Pokemon.new(:PIDGEY), level(2, 4))
-    add(25, Pokemon.new(:RATTATA), level(2, 4))
-    add(20, Pokemon.new(:CATERPIE), level(3, 5))
-    add(15, Pokemon.new(:WEEDLE), level(3, 5))
-    add(10, Pokemon.new(:PIKACHU), level(3, 5))
+    add(30, { species: :PIDGEY }, level(2, 4))
+    add(25, { species: :RATTATA }, level(2, 4))
+    add(20, { species: :CATERPIE }, level(3, 5))
+    add(15, { species: :WEEDLE }, level(3, 5))
+    add(10, { species: :PIKACHU }, level(3, 5))
   end
 end
 
 #===============================================================================
 # TRAINERS - Route 101 trainers
+# NOTE: Use species hashes, NOT Pokemon.new - objects can't be created at load time
 #===============================================================================
 class Route101Trainers < GameData::MapTrainer
   register 5, :YOUNGSTER, 'Joey' do |t|
     t.intro = "Hey! Are you a trainer too?"
     t.lose = "Wow, you're strong!"
-    t.party << Pokemon.new(:RATTATA, 4)
+    t.party << { species: :RATTATA, level: 4 }
   end
   
   register 6, :LASS, 'Marie' do |t|
     t.intro = "Let's have a battle!"
     t.lose = "You're really good!"
-    t.party << Pokemon.new(:PIDGEY, 3)
-    t.party << Pokemon.new(:RATTATA, 3)
+    t.party << { species: :PIDGEY, level: 3 }
+    t.party << { species: :RATTATA, level: 3 }
   end
 end
 

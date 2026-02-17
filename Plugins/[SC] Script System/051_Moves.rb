@@ -9,19 +9,80 @@ module GameData
   #=============================================================================
   # Move - Define battle moves
   #=============================================================================
-  class Move < ScriptBase
+  class Move
+    attr_reader :id, :name, :description, :type, :category, :power, :accuracy
+    attr_reader :pp, :priority, :target, :function_code, :effect_chance
+    attr_reader :flags, :multi_hit, :recoil, :drain, :z_power, :z_effect, :max_power
+    attr_reader :contact, :protect, :mirror_move, :snatch, :magic_coat, :kings_rock
+    attr_reader :sound, :gravity, :heal_block, :punch, :bite, :pulse, :bomb
+    attr_reader :powder, :dance, :high_crit
+    
+    def initialize(data)
+      @id = data[:id]
+      @name = data[:name] || "Unnamed"
+      @description = data[:description]
+      @type = data[:type] || :NORMAL
+      # Normalize category: SC uses symbols, Essentials expects integers (0/1/2)
+      raw_cat = data[:category] || :physical
+      @category = case raw_cat
+                  when Integer then raw_cat
+                  when :physical, :Physical, "physical" then 0
+                  when :special, :Special, "special" then 1
+                  when :status, :Status, "status" then 2
+                  else 0
+                  end
+      @power = data[:power] || 0
+      @accuracy = data[:accuracy] || 100
+      @pp = data[:pp] || 5
+      @priority = data[:priority] || 0
+      @target = data[:target] || :NearOther
+      @function_code = data[:function_code] || "None"
+      @effect_chance = data[:effect_chance] || 0
+      
+      @flags = data[:flags] || []
+      @multi_hit = data[:multi_hit]
+      @recoil = data[:recoil]
+      @drain = data[:drain]
+      @z_power = data[:z_power]
+      @z_effect = data[:z_effect]
+      @max_power = data[:max_power]
+      
+      # Essentials compatibility - map SC field names to Essentials expected names
+      @total_pp = @pp
+      @real_name = @name
+      @real_description = @description || "???"
+      @pbs_file_suffix = ""
+      
+      # Boolean flags
+      @contact = data[:contact]
+      @protect = data[:protect]
+      @mirror_move = data[:mirror_move]
+      @snatch = data[:snatch]
+      @magic_coat = data[:magic_coat]
+      @kings_rock = data[:kings_rock]
+      @sound = data[:sound]
+      @gravity = data[:gravity]
+      @heal_block = data[:heal_block]
+      @punch = data[:punch]
+      @bite = data[:bite]
+      @pulse = data[:pulse]
+      @bomb = data[:bomb]
+      @powder = data[:powder]
+      @dance = data[:dance]
+      @high_crit = data[:high_crit]
+    end
+    
+    def physical?; @category == 0; end
+    def special?; @category == 1; end
+    def status?; @category == 2; end
+    def damaging?; @category != 2; end
+    
     #---------------------------------------------------------------------------
     # Define a new move
     # Usage:
     #   GameData::Move.define :THUNDERBOLT do |move|
     #     move.name "Thunderbolt"
-    #     move.type :ELECTRIC
-    #     move.category :special
-    #     move.power 90
-    #     move.accuracy 100
-    #     move.pp 15
-    #     move.effect :Paralyze
-    #     move.effect_chance 10
+    #     ...
     #   end
     #---------------------------------------------------------------------------
     def self.define(id, &block)
@@ -35,7 +96,9 @@ module GameData
     # Get move data
     #---------------------------------------------------------------------------
     def self.get(id)
-      ScriptRegistry.get_move(DSL.to_id(id))
+      data = ScriptRegistry.get_move(DSL.to_id(id))
+      return nil unless data
+      self.new(data)
     end
     
     def self.exists?(id)
@@ -43,7 +106,7 @@ module GameData
     end
     
     def self.each
-      ScriptRegistry.moves.each { |id, data| yield(id, data) }
+      ScriptRegistry.moves.each { |id, data| yield(self.new(data)) }
     end
     
     def self.count
@@ -74,7 +137,7 @@ module GameData
         id: id,
         name: id.to_s.split('_').map(&:capitalize).join(' '),
         type: :NORMAL,
-        category: :physical,
+        category: 0,
         power: 0,
         accuracy: 100,
         pp: 5,
@@ -109,20 +172,22 @@ module GameData
     def type(val); @data[:type] = DSL.to_id(val); end
     
     # Category
+    CATEGORY_MAP = { physical: 0, special: 1, status: 2 }
     def category(val)
-      val = val.to_sym.downcase
-      raise "Invalid category: #{val}" unless CATEGORIES.include?(val)
-      @data[:category] = val
+      val = val.to_s.downcase.to_sym
+      raise "Invalid category: #{val}" unless CATEGORY_MAP.key?(val)
+      @data[:category] = CATEGORY_MAP[val]
     end
-    def physical; @data[:category] = :physical; end
-    def special; @data[:category] = :special; end
-    def status; @data[:category] = :status; end
+    def physical; @data[:category] = 0; end
+    def special; @data[:category] = 1; end
+    def status; @data[:category] = 2; end
     
     # Battle stats
     def power(val); @data[:power] = val; end
     def base_power(val); @data[:power] = val; end
     def accuracy(val); @data[:accuracy] = val; end
     def pp(val); @data[:pp] = val; end
+    alias_method :total_pp, :pp
     def priority(val); @data[:priority] = val; end
     
     # Target

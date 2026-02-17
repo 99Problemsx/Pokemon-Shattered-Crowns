@@ -5,7 +5,7 @@
 #===============================================================================
 
 module GameData
-  class MapEncounter < ScriptBase
+  class MapEncounter
     # Storage for encounter definitions
     @encounters = {}
     @current_type = nil
@@ -94,7 +94,9 @@ module GameData
     # Inherit and set map ID
     #---------------------------------------------------------------------------
     def self.inherited(subclass)
-      subclass.map_id = current_map_id if current_map_id
+      if defined?(GameData::ScriptBase) && GameData::ScriptBase.current_map_id
+        subclass.map_id = GameData::ScriptBase.current_map_id 
+      end
       subclass.encounters = {}
     end
   end

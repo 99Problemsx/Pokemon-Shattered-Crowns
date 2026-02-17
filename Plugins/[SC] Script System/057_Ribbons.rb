@@ -9,7 +9,7 @@ module GameData
   #=============================================================================
   # Ribbon - Define achievement ribbons
   #=============================================================================
-  class Ribbon < ScriptBase
+  class Ribbon
     def self.define(id, &block)
       id = DSL.to_id(id)
       builder = RibbonBuilder.new(id)

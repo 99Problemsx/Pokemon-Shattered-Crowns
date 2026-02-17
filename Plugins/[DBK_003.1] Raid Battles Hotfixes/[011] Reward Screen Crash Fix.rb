@@ -100,7 +100,9 @@ class RaidScene
 end
 
 # Override the global function to redirect to instance method
-alias original_pbRaidRewardsScreen pbRaidRewardsScreen rescue nil
+if respond_to?(:pbRaidRewardsScreen)
+  alias original_pbRaidRewardsScreen pbRaidRewardsScreen
+end
 
 def pbRaidRewardsScreen(outcome, rules = nil, pkmn = nil)
   echoln "[RAID DEN DEBUG] Global pbRaidRewardsScreen called - looking for RaidScene instance"

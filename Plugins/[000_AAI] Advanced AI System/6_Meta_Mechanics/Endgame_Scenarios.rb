@@ -408,3 +408,30 @@ module AdvancedAI
     EndgameScenarios.desperation_bonus(battle, user, move)
   end
 end
+
+#===============================================================================
+# Integration in Battle::AI - Wires endgame logic into scoring pipeline
+#===============================================================================
+class Battle::AI
+  def apply_endgame_logic(score, move, user, target)
+    return score unless move
+    skill = @trainer&.skill || 100
+    
+    # Apply endgame scenario scoring (1v1, 2v2 adjustments)
+    if AdvancedAI.is_endgame?(@battle)
+      score = AdvancedAI.score_endgame_move(@battle, user, target, move, score)
+      
+      # Add desperation bonus when losing badly
+      desp = AdvancedAI.desperation_bonus(@battle, user, move)
+      score += desp if desp && desp > 0
+    end
+    
+    # Apply win condition bonus (works at any point, not just endgame)
+    if skill >= 70
+      win_bonus = AdvancedAI.apply_win_condition_bonus(@battle, user, move, target, skill)
+      score += win_bonus if win_bonus && win_bonus > 0
+    end
+    
+    return score
+  end
+end

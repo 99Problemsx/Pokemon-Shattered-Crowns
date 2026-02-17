@@ -9,12 +9,49 @@ module GameData
   #=============================================================================
   # Type - Define Pokemon types
   #=============================================================================
-  class Type < ScriptBase
+  class Type
     # Type effectiveness multipliers
     SUPER_EFFECTIVE = 2.0
     NOT_EFFECTIVE = 0.5
     NO_EFFECT = 0.0
     NORMAL = 1.0
+    
+    #---------------------------------------------------------------------------
+    # Define a new type
+    # Usage:
+    #   GameData::Type.define :FIRE do |type|
+    #     type.name "Fire"
+    #     type.icon_position 1
+    #     type.special_type  # Pre-Gen 4 physical/special split
+    #     type.super_effective_against :GRASS, :ICE, :BUG, :STEEL
+    #     type.not_effective_against :FIRE, :WATER, :ROCK, :DRAGON
+    #   end
+    #---------------------------------------------------------------------------
+    attr_reader :id, :name, :icon_position, :super_effective, :not_effective
+    attr_reader :no_effect, :weaknesses, :resistances, :immunities, :flags
+    
+    def initialize(data)
+      @id = data[:id]
+      @name = data[:name] || "Unnamed"
+      @icon_position = data[:icon_position] || 0
+      @is_pseudo_type = data[:is_pseudo_type] || false
+      @special_type = data[:special_type] || false
+      @flags = data[:flags] || []
+      @super_effective = data[:super_effective] || []
+      @not_effective = data[:not_effective] || []
+      @no_effect = data[:no_effect] || []
+      @weaknesses = data[:weaknesses] || []
+      @resistances = data[:resistances] || []
+      @immunities = data[:immunities] || []
+      # Essentials compatibility - map SC field names to Essentials expected names
+      @real_name = @name
+      @pseudo_type = @is_pseudo_type
+      @pbs_file_suffix = ""
+    end
+    
+    def pseudo_type?; @is_pseudo_type; end
+    def special_type?; @special_type; end
+    def physical_type?; !@special_type; end
     
     #---------------------------------------------------------------------------
     # Define a new type
@@ -50,7 +87,9 @@ module GameData
     # Get type data
     #---------------------------------------------------------------------------
     def self.get(id)
-      ScriptRegistry.get_type(DSL.to_id(id))
+      data = ScriptRegistry.get_type(DSL.to_id(id))
+      return nil unless data
+      self.new(data)
     end
     
     def self.exists?(id)
@@ -58,7 +97,7 @@ module GameData
     end
     
     def self.each
-      ScriptRegistry.types.each { |id, data| yield(id, data) }
+      ScriptRegistry.types.each { |id, data| yield(self.new(data)) }
     end
     
     def self.count
@@ -134,10 +173,28 @@ module GameData
       @data[:no_effect].concat(types.flatten.map { |t| DSL.to_id(t) })
     end
     
-    # Alias methods
+    # Alias methods (offensive directions only)
     alias_method :strong_against, :super_effective_against
     alias_method :weak_against, :not_effective_against
     alias_method :immune_to_damage_from, :no_effect_against
+    
+    # Defensive properties - what types THIS type is weak/resistant/immune to
+    def weaknesses(*types)
+      @data[:weaknesses] ||= []
+      @data[:weaknesses].concat(types.flatten.map { |t| DSL.to_id(t) })
+    end
+    
+    def resistances(*types)
+      @data[:resistances] ||= []
+      @data[:resistances].concat(types.flatten.map { |t| DSL.to_id(t) })
+    end
+    
+    def immunities(*types)
+      @data[:immunities] ||= []
+      @data[:immunities].concat(types.flatten.map { |t| DSL.to_id(t) })
+    end
+    
+    alias_method :icon_pos, :icon_position
     
     # Flags
     def flags(*vals)
@@ -148,6 +205,9 @@ module GameData
       @data[:super_effective].uniq!
       @data[:not_effective].uniq!
       @data[:no_effect].uniq!
+      @data[:weaknesses]&.uniq!
+      @data[:resistances]&.uniq!
+      @data[:immunities]&.uniq!
       @data[:flags].uniq!
       @data.compact
     end

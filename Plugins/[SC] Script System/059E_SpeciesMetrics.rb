@@ -8,14 +8,22 @@
 module GameData
   class SpeciesMetrics
     class << self
-      def define(species_id, &block)
+      def define(species_id, form = nil, gender = nil, &block)
         species_sym = species_id.is_a?(Symbol) ? species_id : species_id.to_s.upcase.to_sym
+        # Build composite key when form or gender is specified
+        key = species_sym
+        if form || gender
+          parts = [species_sym.to_s]
+          parts << (form.nil? ? "0" : form.to_s)
+          parts << gender.to_s if gender
+          key = parts.join("_").to_sym
+        end
         
-        builder = SpeciesMetricsBuilder.new(species_sym)
+        builder = SpeciesMetricsBuilder.new(key)
         yield(builder) if block_given?
         data = builder.build
         
-        ScriptRegistry.register(:species_metrics, species_sym, data)
+        ScriptRegistry.register_species_metrics(key, data)
         
         data
       end
@@ -69,19 +77,27 @@ end
 # ScriptRegistry Extensions
 #===============================================================================
 
-module ScriptRegistry
-  class << self
-    def get_species_metrics(species_id)
-      species_sym = species_id.is_a?(Symbol) ? species_id : species_id.to_s.upcase.to_sym
-      @data ||= {}
-      @data[:species_metrics] ||= {}
-      @data[:species_metrics][species_sym]
-    end
-    
-    def all_species_metrics
-      @data ||= {}
-      @data[:species_metrics] ||= {}
-      @data[:species_metrics]
+module GameData
+  module ScriptRegistry
+    class << self
+      def register_species_metrics(key, data)
+        @data ||= {}
+        @data[:species_metrics] ||= {}
+        @data[:species_metrics][key] = data
+      end
+
+      def get_species_metrics(species_id)
+        species_sym = species_id.is_a?(Symbol) ? species_id : species_id.to_s.upcase.to_sym
+        @data ||= {}
+        @data[:species_metrics] ||= {}
+        @data[:species_metrics][species_sym]
+      end
+      
+      def all_species_metrics
+        @data ||= {}
+        @data[:species_metrics] ||= {}
+        @data[:species_metrics]
+      end
     end
   end
 end

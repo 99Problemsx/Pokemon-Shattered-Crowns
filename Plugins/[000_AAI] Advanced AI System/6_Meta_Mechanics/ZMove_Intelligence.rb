@@ -7,7 +7,7 @@ class Battle::AI
   # Main entry point for checking Z-Moves usage
   def should_z_move?(user, skill)
     return false unless AdvancedAI.dbk_enabled?(:z_moves)
-    # Check if user can use Z-Moves (handled by DBK check mostly, but good to be safe)
+    # Check if user can use Z-Moves (uses fixed helper method)
     return false unless user.can_z_move?
     
     score = 0
@@ -95,9 +95,18 @@ end
 
 class Battle::Battler
   def can_z_move?
-    return false unless defined?(Settings::ZMOVE_TRIGGER_KEY)
     # Check if we have a Z-Crystal held and appropriate move
-    # DBK method: pbCanZMove?(idxBattler)
-    return @battle.pbCanZMove?(@index)
+    # Use the DBK method directly
+    return @battle.pbCanZMove?(@index) if @battle.respond_to?(:pbCanZMove?)
+    return false
+  end
+end
+
+class Battle::AI::AIBattler
+  def can_z_move?
+    return @battler.can_z_move? if @battler.respond_to?(:can_z_move?)
+    # Fallback: check via battle reference
+    return false unless @battler && @battler.battle
+    return @battler.battle.pbCanZMove?(@battler.index) rescue false
   end
 end

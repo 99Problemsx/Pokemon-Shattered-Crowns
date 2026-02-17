@@ -36,23 +36,23 @@ class Battle::AI
       return nil if @battle.allOwnedByTrainer(@user.index).any? { |b| @battle.choices[b.index][0] == :UseItem }
     end
     predicted_to_faint = @user.rough_end_of_round_damage >= @user.hp
-	choices = []
+    choices = []
     items.each do |item|
       itemData = GameData::Item.get(item)
       useType = (@battle.launcherBattle?) ? itemData.launcher_use : itemData.battle_use
       case useType
       #-------------------------------------------------------------------------
       # Items used on a battler or party Pokemon.
-	  # 1 = OnPokemon, 2 = OnMove
+      # 1 = OnPokemon, 2 = OnMove
       when 1, 2
-	    next if useType == 2 && predicted_to_faint
+        next if useType == 2 && predicted_to_faint
         @battle.eachInTeamFromBattlerIndex(@user.index) do |p, idxParty|
-		  battler = @battle.pbFindBattler(idxParty, @user.side)
+          battler = @battle.pbFindBattler(idxParty, @user.side)
           ai_battler = (battler) ? @battlers[battler.index] : @user
-		  # Items used on a move (Ether, Leppa Berry, etc.)
+          # Items used on a move (Ether, Leppa Berry, etc.)
           if useType == 2
             p.moves.length.times do |idxMove|
-			  next if !item_usable_on_pokemon?(item, useType, @user, idxParty, idxMove)
+              next if !item_usable_on_pokemon?(item, useType, @user, idxParty, idxMove)
               score = ITEM_BASE_SCORE
               moveName = p.moves[idxMove].name
               PBDebug.log_ai("#{@user.name} is considering using item #{itemData.name} on party #{p.name} (party index #{idxParty}) [#{moveName}]...")
@@ -60,9 +60,9 @@ class Battle::AI
               score = Battle::AI::Handlers.apply_general_item_score_modifiers(score, item, idxParty, idxMove, self, @battle)
               choices.push([score, item, idxParty, idxMove])
             end
-		  # Items used on a Pokemon (Potions, Revives, Status cures, etc.)
+          # Items used on a Pokemon (Potions, Revives, Status cures, etc.)
           else
-		    next if !item_usable_on_pokemon?(item, useType, @user, idxParty)
+            next if !item_usable_on_pokemon?(item, useType, @user, idxParty)
             score = ITEM_BASE_SCORE
             PBDebug.log_ai("#{@user.name} is considering using item #{itemData.name} on party #{p.name} (party index #{idxParty})...")
             score = Battle::AI::Handlers.pokemon_item_score(item, score, p, ai_battler, nil, self, @battle)
@@ -72,15 +72,15 @@ class Battle::AI
         end
       #-------------------------------------------------------------------------
       # Items used only on an active battler (X Stat items, Wonder Launcher items)
-	  # 3 = OnBattler, 6 = OnTarget
+      # 3 = OnBattler, 6 = OnTarget
       when 3, 6
-	    next if predicted_to_faint
+        next if predicted_to_faint
         @battle.allBattlers.each do |b|
           if useType == 3 # Items only usable on user's own battlers (X Attack, Dire Hit, etc.)
             next if @user.side != b.idxOwnSide
             next if @trainer.trainer_index != @battle.pbGetOwnerIndexFromBattlerIndex(b.index)
           end
-		  next if !item_usable_on_pokemon?(item, useType, @user, b.pokemonIndex)
+          next if !item_usable_on_pokemon?(item, useType, @user, b.pokemonIndex)
           score = ITEM_BASE_SCORE
           PBDebug.log_ai("#{@user.name} is considering using item #{itemData.name} on battler #{@battlers[b.index].name}...")
           idxTarget = (useType == 3) ? b.pokemonIndex : b.index
@@ -90,10 +90,10 @@ class Battle::AI
         end
       #-------------------------------------------------------------------------
       # Items used directly in battle. (Poke Flute, Guard Spec, etc.)
-	  # 4 = OnFoe, 5 = Direct
+      # 4 = OnFoe, 5 = Direct
       when 4, 5
-	    next if predicted_to_faint
-		next if !item_usable_on_pokemon?(item, useType, @user, @user.party_index)
+        next if predicted_to_faint
+        next if !item_usable_on_pokemon?(item, useType, @user, @user.party_index)
         score = ITEM_BASE_SCORE
         PBDebug.log_ai("#{@user.name} is considering using item #{itemData.name}...")
         score = Battle::AI::Handlers.item_score(item, score, @user, self, @battle, @battle.pbIsFirstAction?(@user.index))
@@ -168,7 +168,7 @@ class Battle::AI
     battler = @battle.pbFindBattler(party_index, user.side)
     firstAction = @battle.pbIsFirstAction?(user.index)
     return false if !@battle.pbCanUseItemOnPokemon?(item, pkmn, battler, @battle.scene, false)
-    args = [item, pkmn, battler, move_index, firstAction, self, @battle.scene, false]
+    args = [item, pkmn, battler, move_index, firstAction, @battle, @battle.scene, false]
     args.push(user.index) if @battle.launcherBattle?
     return false if !ItemHandlers.triggerCanUseInBattle(*args)
     return false if @battle.pbItemAlreadyInUse?(item, user.index, (useType >= 4 ? -1 : party_index), move_index)

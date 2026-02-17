@@ -214,7 +214,9 @@ module AdvancedAI
   def self.log(message, source = "AAI")
     return unless DEBUG_MODE || LOG_TO_CONSOLE || LOG_TO_FILE
     
-    formatted = "[#{source}] #{message}"
+    # Escape % characters to prevent printf formatting issues
+    safe_message = message.to_s.gsub('%', '%%')
+    formatted = "[#{source}] #{safe_message}"
     
     # Console output
     if DEBUG_MODE || LOG_TO_CONSOLE
@@ -311,11 +313,11 @@ module AdvancedAI
     # 1. Try PluginManager check (most reliable)
     if defined?(PluginManager) && PluginManager.respond_to?(:installed?)
       plugin_id = case plugin
-        when :dynamax           then "DBK_005"
-        when :terastallization  then "DBK_006"
-        when :z_moves           then "DBK_004"
-        when :raid_battles      then "DBK_003"
-        when :sos_battles       then "DBK_002"
+        when :dynamax           then "[DBK] Dynamax"
+        when :terastallization  then "[DBK] Terastalization"
+        when :z_moves           then "[DBK] Z-Power"
+        when :raid_battles      then "[DBK] Raid Battles"
+        when :sos_battles       then "[DBK] SOS Battles"
         else nil
       end
       return true if plugin_id && PluginManager.installed?(plugin_id)
@@ -332,7 +334,7 @@ module AdvancedAI
       # Check if Terastallization methods exist
       return defined?(Battle) && Battle.instance_methods.include?(:pbCanTerastallize?)
     when :z_moves
-      return defined?(Settings::ZMOVE_TRIGGER_KEY)
+      return defined?(Battle) && Battle.instance_methods.include?(:pbCanZMove?)
     when :raid_battles
       return defined?(Battle) && Battle.instance_methods.include?(:pbRaidBattle?)
     when :sos_battles
@@ -340,14 +342,6 @@ module AdvancedAI
     else
       return false
     end
-  end
-  
-  # Debug logging
-  def self.log(message, category = "AI")
-    return unless DEBUG_MODE
-    # Escape % characters to prevent printf formatting issues
-    safe_message = message.to_s.gsub('%', '%%')
-    Console.echoln_li("[#{category}] #{safe_message}")
   end
 end
 
