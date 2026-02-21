@@ -287,7 +287,9 @@ class Battle
       # Only evolve via level-up methods
       if method == :Level || method == :LevelMale || method == :LevelFemale || 
          method == :Ninjask || method == :Shedinja
+        original_level = pkmn.level  # Save level before species change
         pkmn.species = evo[0]
+        pkmn.level = original_level  # Restore level (species= nils @level, causing growth-rate mismatch)
         pkmn.calc_stats
         return pkmn
       end

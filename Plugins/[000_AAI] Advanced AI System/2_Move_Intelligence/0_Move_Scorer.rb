@@ -799,8 +799,17 @@ class Battle::AI
       
     # Status Infliction
     when "ParalyzeTarget"
+      # Type immunity: Electric-types can't be paralyzed
+      if target.pbHasType?(:ELECTRIC)
+        score -= 200  # Will fail
+      # Ground-types are immune to Electric-type moves (Thunder Wave)
+      elsif target.pbHasType?(:GROUND) && move.type == :ELECTRIC
+        score -= 200  # Will fail
+      # Grass-types are immune to powder moves (Stun Spore)
+      elsif target.pbHasType?(:GRASS) && [:STUNSPORE].include?(move.id)
+        score -= 200  # Powder move blocked
       # Thunder Wave - CRITICAL vs faster targets
-      if target.pbSpeed > user.pbSpeed && target.status == :NONE
+      elsif target.pbSpeed > user.pbSpeed && target.status == :NONE
         score += 80  # Massive bonus - cripple faster threats
         # Extra bonus if we can KO after paralyze
         target_speed_after = target.pbSpeed / 2
@@ -812,13 +821,16 @@ class Battle::AI
       end
       
     when "BurnTarget"
+      # Type immunity: Fire-types can't be burned
+      if target.pbHasType?(:FIRE)
+        score -= 200  # Will fail
       # Will-O-Wisp - CRITICAL vs physical attackers
-      if target.attack > target.spatk && target.status == :NONE
+      elsif target.attack > target.spatk && target.status == :NONE
         score += 100  # Massive bonus - nerf physical attackers
         # Extra bonus if we resist their attacks
         if target.lastRegularMoveUsed
           last_move = GameData::Move.try_get(target.lastRegularMoveUsed)
-          if last_move && last_move.physicalMove?
+          if last_move && last_move.physical?
             score += 40  # They're locked into physical damage
           end
         end
@@ -827,8 +839,11 @@ class Battle::AI
       end
       
     when "PoisonTarget"
+      # Type immunity: Poison/Steel-types can't be poisoned
+      if target.pbHasType?(:POISON) || target.pbHasType?(:STEEL)
+        score -= 200  # Will fail
       # Basic Poison - good chip damage
-      if target.status == :NONE && target.hp > target.totalhp * 0.7
+      elsif target.status == :NONE && target.hp > target.totalhp * 0.7
         score += 35
         # Bonus vs bulky targets
         if target.defense + target.spdef > 200
@@ -837,8 +852,11 @@ class Battle::AI
       end
       
     when "BadPoisonTarget"
+      # Type immunity: Poison/Steel-types can't be poisoned
+      if target.pbHasType?(:POISON) || target.pbHasType?(:STEEL)
+        score -= 200  # Will fail
       # Toxic - CRITICAL vs walls and stall
-      if target.status == :NONE
+      elsif target.status == :NONE
         score += 60  # Strong base value
         # HUGE bonus vs bulky/recovery Pokemon
         if target.defense + target.spdef > 200
@@ -857,8 +875,11 @@ class Battle::AI
       end
       
     when "SleepTarget"
+      # Grass-types are immune to powder sleep moves (Sleep Powder, Spore)
+      if [:SLEEPPOWDER, :SPORE].include?(move.id) && target.pbHasType?(:GRASS)
+        score -= 200  # Powder move blocked by Grass type
       # Sleep - CRITICAL control move
-      if target.status == :NONE
+      elsif target.status == :NONE
         score += 90  # Sleep is incredibly powerful
         # Bonus if we can setup during sleep
         setup_moves = user.battler.moves.any? { |m| AdvancedAI.setup_move?(m.id) }
@@ -872,12 +893,49 @@ class Battle::AI
       end
       
     # Stat Drops
-    when "LowerTargetAttack1", "LowerTargetAttack2"
-      score += 30 if target.attack > target.spatk
-    when "LowerTargetSpeed1", "LowerTargetSpeed2"
-      score += 35 if target.pbSpeed > user.pbSpeed
-    when "LowerTargetDefense1", "LowerTargetDefense2"
-      score += 25 if user.attack > user.spatk
+    when "LowerTargetAttack1", "LowerTargetAttack2",
+         "LowerTargetSpeed1", "LowerTargetSpeed2",
+         "LowerTargetDefense1", "LowerTargetDefense2",
+         "LowerTargetSpAtk1", "LowerTargetSpAtk2",
+         "LowerTargetSpDef1", "LowerTargetSpDef2",
+         "LowerTargetAtkDef1", "LowerTargetEvasion1", "LowerTargetEvasion2"
+      # Stat-drop immunity: Clear Body, White Smoke, Full Metal Body, Clear Amulet
+      stat_drop_blocked = false
+      if !AdvancedAI::Utilities.ignores_ability?(user)
+        if [:CLEARBODY, :WHITESMOKE, :FULLMETALBODY].include?(target.ability_id)
+          score -= 200  # Move will completely fail
+          stat_drop_blocked = true
+        end
+      end
+      if !stat_drop_blocked && AdvancedAI::Utilities.has_clear_amulet?(target)
+        score -= 200  # Move will completely fail
+        stat_drop_blocked = true
+      end
+      # Stat-specific scoring (only if not blocked by immunity)
+      if !stat_drop_blocked
+        case move.function_code
+        when "LowerTargetAttack1", "LowerTargetAttack2"
+          score -= 200 if target.stages[:ATTACK] <= -6
+          score += 30 if target.attack > target.spatk
+        when "LowerTargetSpeed1", "LowerTargetSpeed2"
+          score -= 200 if target.stages[:SPEED] <= -6
+          score += 35 if target.pbSpeed > user.pbSpeed
+        when "LowerTargetDefense1", "LowerTargetDefense2"
+          score -= 200 if target.stages[:DEFENSE] <= -6
+          score += 25 if user.attack > user.spatk
+        when "LowerTargetSpAtk1", "LowerTargetSpAtk2"
+          score -= 200 if target.stages[:SPECIAL_ATTACK] <= -6
+          score += 30 if target.spatk > target.attack
+        when "LowerTargetSpDef1", "LowerTargetSpDef2"
+          score -= 200 if target.stages[:SPECIAL_DEFENSE] <= -6
+          score += 25 if user.spatk > user.attack
+        when "LowerTargetEvasion1", "LowerTargetEvasion2"
+          score -= 200 if target.stages[:EVASION] <= -6
+          score += 20
+        when "LowerTargetAtkDef1"
+          score += 35
+        end
+      end
     end
     
     return score
@@ -887,6 +945,64 @@ class Battle::AI
   def score_setup_value(move, user, target, skill, status_multiplier = 1.0)
     return 0 unless skill >= 55
     score = 0
+    
+    # === HARD COUNTERS: Abilities that negate stat boosts entirely ===
+    # Unaware: Target ignores ALL of our stat changes when taking/dealing damage
+    if target.ability_id == :UNAWARE && !AdvancedAI::Utilities.ignores_ability?(user)
+      return -60  # Setting up is literally pointless
+    end
+    
+    # === ANTI-SETUP THREAT DETECTION ===
+    # Check if the opponent has moves that punish or negate setup
+    anti_setup_penalty = 0
+    
+    target.moves.each do |tmove|
+      next unless tmove
+      move_id = tmove.id rescue (tmove.respond_to?(:id) ? tmove.id : nil)
+      next unless move_id
+      
+      case move_id
+      # Phazing: Forces switch, ALL boosts are lost
+      when :ROAR, :WHIRLWIND, :DRAGONTAIL, :CIRCLETHROW
+        anti_setup_penalty -= 80
+      # Stat Reset: Directly removes all stat changes
+      when :HAZE
+        anti_setup_penalty -= 90
+      when :CLEARSMOG
+        anti_setup_penalty -= 70  # Damaging but also resets stats
+      # Boost Theft/Reversal
+      when :SPECTRALTHIEF
+        anti_setup_penalty -= 80  # Steals your boosts AND damages
+      when :TOPSYTURVY
+        anti_setup_penalty -= 90  # Turns +6 into -6
+      # Encore: Locks you into the setup move, wasting turns
+      when :ENCORE
+        anti_setup_penalty -= 60
+      # Yawn: You'll fall asleep before benefiting from boosts
+      when :YAWN
+        anti_setup_penalty -= 50
+      # Perish Song: You'll be forced out or die, boosts wasted
+      when :PERISHSONG
+        anti_setup_penalty -= 40
+      # Trick/Switcheroo with Choice item: Locks you into setup move
+      when :TRICK, :SWITCHEROO
+        anti_setup_penalty -= 30
+      # Taunt: Will prevent further setup
+      when :TAUNT
+        anti_setup_penalty -= 25
+      # Disable: Can lock you out of your boosted attack
+      when :DISABLE
+        anti_setup_penalty -= 20
+      end
+    end
+    
+    # Cap the anti-setup penalty (one hard counter is enough to discourage)
+    anti_setup_penalty = [anti_setup_penalty, -100].max
+    
+    # If opponent has major anti-setup tools, return the penalty directly
+    if anti_setup_penalty <= -60
+      return anti_setup_penalty
+    end
     
     # Safe to setup?
     safe_to_setup = is_safe_to_setup?(user, target)
@@ -903,17 +1019,20 @@ class Battle::AI
       elsif move.function_code.start_with?("RaiseUser")
         # Extract boost amount from function code (e.g., "RaiseUserAttack1" -> 1)
         total_boosts = move.function_code.scan(/\d+/).last.to_i
-        total_boosts = 1 if total_boosts == 0 # Default to 1 if no number (e.g., "RaiseUserAllStats1")
+        total_boosts = 1 if total_boosts == 0
       else
         total_boosts = 1
       end
       
-      score += total_boosts * 40 * status_multiplier # Increased value per boost
+      score += total_boosts * 40 * status_multiplier
       
       # Sweep Potential
       if user.hp > user.totalhp * 0.7
         score += 30
       end
+      
+      # Apply the (milder) anti-setup penalty even when "safe"
+      score += anti_setup_penalty
     else
       score -= 40  # Dangerous to setup
     end
@@ -940,10 +1059,22 @@ class Battle::AI
       end
       
       # Ability Blockers (Dazzling, Queenly Majesty, Armor Tail)
-      # These abilities block priority moves targeting the user
+      # These abilities block priority moves targeting ANY ally on that side
       blocking_abilities = [:DAZZLING, :QUEENLYMAJESTY, :ARMORTAIL]
-      if blocking_abilities.include?(target.ability_id) && !user.hasMoldBreaker?
-        return -100
+      unless user.hasMoldBreaker?
+        # Check target itself
+        if blocking_abilities.include?(target.ability_id)
+          return -100
+        end
+        # Check target's allies (these abilities protect the whole side)
+        if @battle.pbSideSize(target.index) > 1
+          @battle.allSameSideBattlers(target.index).each do |ally|
+            next if ally == target || ally.fainted?
+            if blocking_abilities.include?(ally.ability_id)
+              return -100
+            end
+          end
+        end
       end
     end
     
@@ -1014,13 +1145,14 @@ class Battle::AI
       end
     end
     
-    # Stat Drops on Target
+    # Stat Drops on Target (secondary effect on damaging moves)
     if move.function_code.start_with?("LowerTarget")
       # Clear Amulet / Clear Body / White Smoke prevent stat drops
       if AdvancedAI::Utilities.has_clear_amulet?(target)
-        score -= 10  # Wasted effect
-      elsif [:CLEARBODY, :WHITESMOKE, :FULLMETALBODY].include?(target.ability_id)
-        score -= 10
+        score -= 30  # Secondary stat-drop wasted
+      elsif !AdvancedAI::Utilities.ignores_ability?(user) &&
+            [:CLEARBODY, :WHITESMOKE, :FULLMETALBODY].include?(target.ability_id)
+        score -= 30  # Secondary stat-drop wasted
       else
         score += 20
       end
@@ -1575,15 +1707,40 @@ class Battle::AI
     # HP Check
     return false if user.hp < user.totalhp * 0.5
     
-    # Speed Check
+    # Already drowsy from Yawn — will fall asleep, no time to setup
+    yawn_val = (user.effects[PBEffects::Yawn] rescue 0)
+    return false if yawn_val.is_a?(Numeric) && yawn_val > 0
+    
+    # Perish count active — will be forced out or die
+    perish_val = (user.effects[PBEffects::PerishSong] rescue 0)
+    return false if perish_val.is_a?(Numeric) && perish_val > 0
+    
+    # Already confused — may hit ourselves instead of benefiting
+    confusion_val = (user.effects[PBEffects::Confusion] rescue 0)
+    return false if confusion_val.is_a?(Numeric) && confusion_val > 0
+    
+    # Encored — locked into the setup move, can't use boosted attacks
+    encore_val = (user.effects[PBEffects::Encore] rescue 0)
+    return false if encore_val.is_a?(Numeric) && encore_val > 0
+    
+    # Speed Check — opponent outspeeds by a lot, likely KOs before we benefit
     return false if target.pbSpeed > user.pbSpeed * 1.5
     
-    # Type Matchup Check
+    # Type Matchup Check — opponent has super-effective moves
     target.moves.each do |move|
       next unless move && move.damagingMove?
       type_mod = Effectiveness.calculate(move.type, user.types[0], user.types[1])
       return false if Effectiveness.super_effective?(type_mod)
     end
+    
+    # Incoming damage check — if opponent can 2HKO us, setup is risky
+    max_incoming = 0
+    target.moves.each do |move|
+      next unless move && move.damagingMove?
+      dmg = (calculate_rough_damage(move, target, user) rescue 0)
+      max_incoming = dmg if dmg > max_incoming
+    end
+    return false if max_incoming > user.hp * 0.55  # Would 2HKO us
     
     return true
   end
@@ -1700,8 +1857,9 @@ class Battle::AI
     end
     
     # Target just used an attacking move? More likely to attack again
-    if target.battler.lastMoveUsed
-      last_move_data = GameData::Move.try_get(target.battler.lastMoveUsed)
+    real_target = target.respond_to?(:battler) ? target.battler : target
+    if real_target.lastMoveUsed
+      last_move_data = GameData::Move.try_get(real_target.lastMoveUsed)
       if last_move_data && last_move_data.damaging?
         score += 15  # Pattern suggests attacking
       end
@@ -2264,6 +2422,28 @@ class Battle::AI
     # 5. STATUS INFLICTION (tactical value)
     if [:THUNDERWAVE, :WILLOWISP, :TOXIC, :SLEEPPOWDER, :SPORE].include?(move.id)
       if target.status == :NONE
+        # === TYPE IMMUNITY CHECKS ===
+        # Fire-types can't be burned
+        if move.id == :WILLOWISP && target.pbHasType?(:FIRE)
+          return PriorityMoveResult.new  # Will fail — no boost
+        end
+        # Electric-types can't be paralyzed; Ground-types are immune to T-Wave
+        if move.id == :THUNDERWAVE
+          if target.pbHasType?(:ELECTRIC) || target.pbHasType?(:GROUND)
+            return PriorityMoveResult.new  # Will fail — no boost
+          end
+        end
+        # Poison/Steel-types can't be poisoned
+        if move.id == :TOXIC
+          if target.pbHasType?(:POISON) || target.pbHasType?(:STEEL)
+            return PriorityMoveResult.new  # Will fail — no boost
+          end
+        end
+        # Grass-types are immune to powder moves
+        if [:SLEEPPOWDER, :SPORE].include?(move.id) && target.pbHasType?(:GRASS)
+          return PriorityMoveResult.new  # Will fail — no boost
+        end
+        
         # Thunder Wave - cripple faster threats
         if move.id == :THUNDERWAVE && target.pbSpeed > user.pbSpeed
           return PriorityMoveResult.new(priority_boost: 180)
@@ -2859,17 +3039,17 @@ class Battle::AI
     if predicted_move
       pred_data = GameData::Move.try_get(predicted_move)
       if pred_data
-        if move.id == :COUNTER && pred_data.physicalMove?
+        if move.id == :COUNTER && pred_data.physical?
           score += 50
           AdvancedAI.log("  Counter vs predicted physical: +50", "Tactic")
-        elsif move.id == :MIRRORCOAT && pred_data.specialMove?
+        elsif move.id == :MIRRORCOAT && pred_data.special?
           score += 50
           AdvancedAI.log("  Mirror Coat vs predicted special: +50", "Tactic")
         elsif move.id == :METALBURST && pred_data.power > 0
           score += 35  # Metal Burst reflects both
-        elsif move.id == :COUNTER && !pred_data.physicalMove?
+        elsif move.id == :COUNTER && !pred_data.physical?
           score -= 40  # Wrong type
-        elsif move.id == :MIRRORCOAT && !pred_data.specialMove?
+        elsif move.id == :MIRRORCOAT && !pred_data.special?
           score -= 40
         end
       end

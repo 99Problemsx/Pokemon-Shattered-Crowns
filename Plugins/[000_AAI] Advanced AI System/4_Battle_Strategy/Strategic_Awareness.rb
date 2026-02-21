@@ -817,8 +817,8 @@ module AdvancedAI
         types = get_pokemon_types(user)
         eff = type_effectiveness_against(move_data.type, types)
         base = move_data.power * eff
-        atk_stat = move_data.physicalMove? ? get_stat(target, :attack) : get_stat(target, :spatk)
-        def_stat = move_data.physicalMove? ? get_stat(user, :defense) : get_stat(user, :spdef)
+        atk_stat = move_data.physical? ? get_stat(target, :attack) : get_stat(target, :spatk)
+        def_stat = move_data.physical? ? get_stat(user, :defense) : get_stat(user, :spdef)
         rough = (base * atk_stat.to_f / [def_stat, 1].max * 0.5).to_i
         max_dmg = rough if rough > max_dmg
       end if moves

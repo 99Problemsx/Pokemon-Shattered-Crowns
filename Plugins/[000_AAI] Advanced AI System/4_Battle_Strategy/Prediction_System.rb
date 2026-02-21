@@ -195,7 +195,7 @@ module AdvancedAI
       
       # 2. Resistance against predicted Move (+25)
       if move.category != :Status
-        effectiveness = Effectiveness.calculate(predicted_move_data.type, user.type1, user.type2)
+        effectiveness = AdvancedAI::Utilities.type_mod(predicted_move_data.type, user)
         if Effectiveness.not_very_effective?(effectiveness) || Effectiveness.ineffective?(effectiveness)
           bonus += 25
         end
@@ -203,7 +203,7 @@ module AdvancedAI
       
       # 3. Counter-Move (+35)
       # E.g. Opponent uses Physical Move → Burn
-      if move.id == :WILLOWISP && predicted_move_data.physicalMove?
+      if move.id == :WILLOWISP && predicted_move_data.physical?
         bonus += 35
       end
       
@@ -333,7 +333,7 @@ module AdvancedAI
       attack = move.physicalMove? ? attacker.attack : attacker.spatk
       defense = move.physicalMove? ? defender.defense : defender.spdef
       
-      effectiveness = Effectiveness.calculate(move.type, defender.type1, defender.type2)
+      effectiveness = AdvancedAI::Utilities.type_mod(move.type, defender)
       # Effectiveness.calculate already returns the multiplier directly
       multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER.to_f
       

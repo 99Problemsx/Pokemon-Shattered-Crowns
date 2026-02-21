@@ -48,13 +48,20 @@ class Battle::AI
       end
     end
     # Pick a move randomly from choices weighted by their scores
-    randNum = pbAIRandom(total_score)
-    choices.each do |c|
-      randNum -= c[3]
-      next if randNum >= 0
+    if total_score == 0
+      # Safety net: all moves scored equally — pick one at random
+      c = choices.sample
       @battle.pbRegisterMove(user_battler.index, c[0], false)
       @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] >= 0
-      break
+    else
+      randNum = pbAIRandom(total_score)
+      choices.each do |c|
+        randNum -= c[3]
+        next if randNum >= 0
+        @battle.pbRegisterMove(user_battler.index, c[0], false)
+        @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] >= 0
+        break
+      end
     end
     # Log the result
     if @battle.choices[user_battler.index][2]

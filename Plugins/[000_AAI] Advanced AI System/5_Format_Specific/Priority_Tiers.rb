@@ -74,6 +74,25 @@ module AdvancedAI
       
       score = 0
       
+      # === PRIORITY BLOCKERS (Dazzling, Queenly Majesty, Armor Tail) ===
+      # These abilities block priority moves targeting ANY Pokémon on that side
+      if move_priority > 0 && move.damagingMove?
+        blocking_abilities = [:DAZZLING, :QUEENLYMAJESTY, :ARMORTAIL]
+        unless user.respond_to?(:hasMoldBreaker?) && user.hasMoldBreaker?
+          # Check target
+          target_ability = target.respond_to?(:ability_id) ? target.ability_id : nil
+          return -100 if blocking_abilities.include?(target_ability)
+          # Check target's allies (protects the whole side)
+          if battle.pbSideSize(target.index) > 1
+            battle.allSameSideBattlers(target.index).each do |ally|
+              next if ally == target || ally.fainted?
+              ally_ability = ally.respond_to?(:ability_id) ? ally.ability_id : nil
+              return -100 if blocking_abilities.include?(ally_ability)
+            end
+          end
+        end
+      end
+      
       # === POSITIVE PRIORITY ===
       if move_priority > 0
         # Check speed comparison

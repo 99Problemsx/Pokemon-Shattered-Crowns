@@ -206,8 +206,8 @@ module AdvancedAI
           score = 85
           score += count_setup_stages(target) * 10
           
-          # Type effectiveness
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          # Type effectiveness (handle both Battler and Pokemon)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           score += 20 if Effectiveness.super_effective?(effectiveness)
           score -= 20 if Effectiveness.not_very_effective?(effectiveness)
           

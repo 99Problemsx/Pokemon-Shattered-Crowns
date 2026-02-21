@@ -141,7 +141,7 @@ module AdvancedAI
       
       # If Partner is setting up, use Protect
       if move.id == :PROTECT || move.id == :DETECT
-        partner_setup = partner.moves.any? { |m| m && m.stat_up.any? }
+        partner_setup = partner.moves.any? { |m| m && (AdvancedAI.setup_move?(m.id) || m.function_code.to_s.start_with?("RaiseUser")) }
         return 50 if partner_setup && partner.hp > partner.totalhp * 0.7
       end
       

@@ -149,10 +149,12 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
       echoln "    [#{idx}] #{original_species} Lv.#{pokemon.level} => #{randomized_species}"
       
       if randomized_species != original_species
+        original_level = pokemon.level  # Save level BEFORE species change
         pokemon.species = randomized_species
+        pokemon.level = original_level  # Restore level (species= nils @level, causing growth-rate mismatch)
         pokemon.calc_stats
         pokemon.reset_moves
-        echoln "      ✓ Randomized successfully"
+        echoln "      ✓ Randomized successfully (Lv.#{pokemon.level})"
       else
         echoln "      = No change"
       end

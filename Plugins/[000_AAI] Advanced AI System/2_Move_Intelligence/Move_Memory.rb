@@ -67,7 +67,21 @@ module AdvancedAI
       return {} unless battle && battler
       initialize_battle(battle)
       
-      battler_key = "#{battler.index}_#{battler.pokemon.personalID}"
+      # Handle both Battler/AIBattler (have .index) and Pokemon (no .index)
+      if battler.respond_to?(:index)
+        pkmn = battler.respond_to?(:pokemon) ? battler.pokemon : battler
+        battler_key = "#{battler.index}_#{pkmn.personalID}"
+      elsif battler.respond_to?(:personalID)
+        # Pokemon object — search all keys for matching personalID
+        pid = battler.personalID
+        store = @battle_memory[battle.object_id]
+        store.each do |key, val|
+          return val if key.end_with?("_#{pid}")
+        end
+        return {}
+      else
+        return {}
+      end
       @battle_memory[battle.object_id][battler_key] || {}
     end
     

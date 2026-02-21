@@ -119,6 +119,39 @@ if defined?(Battle::AI::AIBattler)
       return @battler.hasActiveItem?(item) if @battler
       return false
     end
+    
+    #---------------------------------------------------------------------------
+    # Delegate stat accessors to underlying battler
+    # The AAI scoring code calls user.attack, user.speed, etc. directly,
+    # but AIBattler only exposes stats through base_stat(:STAT) / rough_stat(:STAT).
+    # Without these delegations, every stat access raises NoMethodError which
+    # silently kills move scoring (caught by logonerr) and makes the AI think
+    # ALL moves are terrible → endless switch loop.
+    #---------------------------------------------------------------------------
+    def attack;  return @battler.attack  if @battler; 0; end
+    def defense; return @battler.defense if @battler; 0; end
+    def spatk;   return @battler.spatk   if @battler; 0; end
+    def spdef;   return @battler.spdef   if @battler; 0; end
+    def speed;   return @battler.speed   if @battler; 0; end
+    def pbSpeed; return @battler.pbSpeed if @battler; 0; end
+    
+    #---------------------------------------------------------------------------
+    # Catch-all: Delegate any other missing methods to the underlying battler.
+    # The AAI uses dozens of Battle::Battler methods on AIBattler objects
+    # (poisoned?, burned?, affectedByTerrain?, lastMoveUsed, airborne?, etc.)
+    # that aren't explicitly delegated. Instead of listing them all, we use
+    # method_missing to transparently forward to @battler.
+    #---------------------------------------------------------------------------
+    def method_missing(method, *args, &block)
+      if @battler && @battler.respond_to?(method)
+        return @battler.send(method, *args, &block)
+      end
+      super
+    end
+    
+    def respond_to_missing?(method, include_private = false)
+      (@battler && @battler.respond_to?(method, include_private)) || super
+    end
   end
 end
 
@@ -192,86 +225,96 @@ if defined?(GameData::Type)
   end
 end
 
-puts "[Advanced AI] Hotfixes loaded: Wonder Launcher, Item AI, Type Effectiveness"
-
 #===============================================================================
-# Nil-Safe Effects Array Wrapper
+# Missing Method Shims
 #===============================================================================
-# AIBattler.effects delegates to battler.effects which returns a raw Array.
-# Some PBEffects indices may not be initialized, returning nil. Comparisons
-# like `effects[PBEffects::Wish] > 0` then crash with NoMethodError.
-# This wrapper returns 0 for nil numeric effects.
+# Problem: AAI code calls Effectiveness.calculate_one, GameData::Move#physicalMove?,
+#          and AdvancedAI::StrategicAwareness.battle_state — none of which exist
+#          in Essentials v21.1. Every call raises NoMethodError, gets caught by
+#          logonerr, and kills move scoring → "Terrible Moves" every turn.
+# Solution: Add compatibility shims that delegate to the real API.
 #===============================================================================
-class NilSafeEffects
-  # PBEffects that are boolean (true/false) rather than numeric counters
-  # These must return false (not 0) when nil, since 0 is truthy in Ruby
-  BOOLEAN_EFFECTS = [
-    PBEffects::AquaRing, PBEffects::Charge, PBEffects::CurseGhost,
-    PBEffects::Endure, PBEffects::FocusEnergy, PBEffects::GastroAcid,
-    PBEffects::Grudge, PBEffects::HelpingHand, PBEffects::Imprison,
-    PBEffects::Ingrain, PBEffects::MagicCoat, PBEffects::MudSport,
-    PBEffects::Powder, PBEffects::Snatch, PBEffects::WaterSport,
-    PBEffects::SmackDown, PBEffects::Torment
-  ].compact.freeze rescue [].freeze
 
-  def initialize(arr)
-    @arr = arr || []
+# --- Effectiveness.calculate_one(atk_type, def_type) --------------------------
+# Returns a float multiplier (0.0 / 0.5 / 1.0 / 2.0) for a single type matchup.
+# Used by Strategic_Awareness, 0_Move_Scorer, and Doubles_Coordination.
+module Effectiveness
+  module_function
+
+  def calculate_one(attack_type, defend_type)
+    get_type_effectiveness(attack_type, defend_type) / NORMAL_EFFECTIVE.to_f
+  end
+end
+
+# --- GameData::Move#physicalMove? / #specialMove? -----------------------------
+# GameData::Move stores category as :physical / :special / :status.
+# Only Battle::Move has physicalMove?. The AAI's estimate_max_incoming calls
+# physicalMove? on GameData::Move objects obtained via GameData::Move.try_get.
+class GameData::Move
+  def physicalMove?
+    self.category == :physical
   end
 
-  def [](idx)
-    val = @arr[idx]
-    return val unless val.nil?
-    # Return false for boolean effects, 0 for numeric effects
-    return false if BOOLEAN_EFFECTS.include?(idx)
-    0
+  def specialMove?
+    self.category == :special
   end
+end
 
-  def []=(idx, val)
-    @arr[idx] = val
-  end
-
-  def length;  @arr.length;  end
-  def size;    @arr.size;    end
-  def each(&block); @arr.each(&block); end
-
-  def respond_to_missing?(method, include_private = false)
-    @arr.respond_to?(method, include_private) || super
-  end
-
-  def method_missing(method, *args, &block)
-    if @arr.respond_to?(method)
-      @arr.send(method, *args, &block)
-    else
-      super
+# --- AdvancedAI::StrategicAwareness.battle_state(battle) ----------------------
+# The actual method is get_state(battle). Tactical_Enhancements.rb calls
+# battle_state which doesn't exist.
+module AdvancedAI
+  module StrategicAwareness
+    def self.battle_state(battle)
+      get_state(battle)
     end
   end
 end
 
+puts "[Advanced AI] Hotfixes loaded: Wonder Launcher, Item AI, Type Effectiveness"
+
 #===============================================================================
-# AIBattler: Nil-safe effects for battler effects array
+# Nil-Safe Comparisons for PBEffects
 #===============================================================================
-class Battle::AI::AIBattler
-  def effects
-    NilSafeEffects.new(battler.effects)
-  end
+# Problem: Some PBEffects values may be nil. Code like `effects[X] > 0`
+#          crashes with `NoMethodError: undefined method '>' for nil:NilClass`.
+#
+# OLD FIX (NilSafeEffects wrapper) was BROKEN:
+#   It converted nil → 0, but 0 is TRUTHY in Ruby. Effects like ChoiceBand
+#   store nil (not active) or a move Symbol (locked). Converting nil → 0
+#   made EVERY battler appear choice-locked → every move scored -1000 →
+#   "Terrible Moves" every turn → AI does nothing.
+#
+# NEW FIX: Monkey-patch NilClass to handle comparison operators safely.
+#   nil stays nil (falsy), so `if effects[ChoiceBand]` correctly tests false.
+#   But `nil > 0` returns false instead of crashing.
+#===============================================================================
+class NilClass
+  def >(other);  false; end
+  def <(other);  false; end
+  def >=(other); other.nil?; end
+  def <=(other); other.nil?; end
 end
 
 #===============================================================================
-# ActiveSide / ActiveField: Nil-safe effects for side & field arrays
-# This covers ALL access paths: @battle.sides[i].effects, user.pbOwnSide.effects,
-# target.pbOpposingSide.effects, @battle.field.effects, etc.
+# ReserveLastPokemon: Opt-In Only
 #===============================================================================
-class Battle::ActiveSide
-  alias _aai_original_effects effects unless method_defined?(:_aai_original_effects)
-  def effects
-    NilSafeEffects.new(_aai_original_effects)
-  end
-end
-
-class Battle::ActiveField
-  alias _aai_original_effects effects unless method_defined?(:_aai_original_effects)
-  def effects
-    NilSafeEffects.new(_aai_original_effects)
+# Problem: Essentials v21.1 auto-adds "ReserveLastPokemon" to every trainer
+#          with skill >= 100. This causes the AI to hard-block the last party
+#          slot from being switched in — even when it's the perfect counter
+#          (e.g. refusing to send Mega Houndoom against Psychic/Ice).
+# Fix:     Strip the auto-added flag. Only keep it if the trainer's PBS data
+#          explicitly includes "ReserveLastPokemon" in their Flags field.
+#===============================================================================
+class Battle::AI::AITrainer
+  alias aai_set_up_skill_flags set_up_skill_flags
+  def set_up_skill_flags
+    aai_set_up_skill_flags
+    # Remove auto-added ReserveLastPokemon UNLESS explicitly set in PBS trainer flags
+    explicitly_set = @trainer && @trainer.flags.include?("ReserveLastPokemon")
+    if !explicitly_set && @skill_flags.include?("ReserveLastPokemon")
+      @skill_flags.delete("ReserveLastPokemon")
+    end
   end
 end
 

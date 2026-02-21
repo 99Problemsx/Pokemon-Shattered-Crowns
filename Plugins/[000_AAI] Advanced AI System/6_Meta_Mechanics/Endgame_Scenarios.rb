@@ -324,8 +324,8 @@ module AdvancedAI
       defense = (move.physicalMove? ? target.defense : target.spdef)
       defense = [defense, 1].max  # Prevent division by zero
       
-      # Type effectiveness
-      effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+      # Type effectiveness (use Utilities.type_mod to handle both Battler and Pokemon)
+      effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
       # Convert effectiveness to multiplier (divide by normal effective value)
       multiplier = effectiveness.to_f / Effectiveness::NORMAL_EFFECTIVE
       

@@ -261,7 +261,8 @@ module AdvancedAI
         next if setup_moves.empty?
         
         # Check if setup would enable sweep
-        current_stages = mon.stages[:ATTACK] + mon.stages[:SPECIAL_ATTACK]
+        mon_stages = mon.respond_to?(:stages) ? mon.stages : {}
+        current_stages = (mon_stages[:ATTACK] || 0) + (mon_stages[:SPECIAL_ATTACK] || 0)
         
         if current_stages >= 2
           # Already set up - can we sweep?
@@ -443,7 +444,8 @@ module AdvancedAI
         if win_con[:pokemon] == user
           if [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :QUIVERDANCE, :CALMMIND,
               :SHELLSMASH, :AGILITY].include?(move.id)
-            score += 35 if user.stages[:ATTACK] < 2 && user.stages[:SPECIAL_ATTACK] < 2
+            user_stg = user.respond_to?(:stages) ? user.stages : {}
+            score += 35 if (user_stg[:ATTACK] || 0) < 2 && (user_stg[:SPECIAL_ATTACK] || 0) < 2
           end
         end
         

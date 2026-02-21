@@ -586,14 +586,23 @@ class Battle::AI
         PBDebug.log(log_msg)
       end
     end
-    randNum = pbAIRandom(total_score)
-    choices.each do |c|
-      randNum -= c[3]
-      next if randNum >= 0
+    # Safety net: if all moves scored at or below threshold, pick one at random
+    if total_score == 0
+      c = choices.sample
+      PBDebug.log_ai("   All moves scored equally — picking #{c[4].name} at random")
       pbRegisterEnemySpecialActionFromMove(user_battler, c[4])
       @battle.pbRegisterMove(user_battler.index, c[0], false)
       @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] && c[2] >= 0
-      break
+    else
+      randNum = pbAIRandom(total_score)
+      choices.each do |c|
+        randNum -= c[3]
+        next if randNum >= 0
+        pbRegisterEnemySpecialActionFromMove(user_battler, c[4])
+        @battle.pbRegisterMove(user_battler.index, c[0], false)
+        @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] && c[2] >= 0
+        break
+      end
     end
     if @battle.choices[user_battler.index][2]
       move_name = @battle.choices[user_battler.index][2].name

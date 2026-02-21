@@ -381,7 +381,8 @@ module AdvancedAI
         when :HUGEPOWER, :PUREPOWER
           modifier *= 2.0 if move.physicalMove?
         when :ADAPTABILITY
-          modifier *= 2.0 if move.type == attacker.type1 || move.type == attacker.type2
+          atk_types = attacker.respond_to?(:pbTypes) ? attacker.pbTypes(true) : [attacker.type1, attacker.type2].compact
+          modifier *= 2.0 if atk_types.include?(move.type)
         when :TOUGHCLAWS
           modifier *= 1.3 if move.contactMove?
         when :SHEERFORCE
@@ -393,7 +394,7 @@ module AdvancedAI
         when :STRONGJAW
           modifier *= 1.5 if move.biting_move?
         when :TINTEDLENS
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           modifier *= 2.0 if Effectiveness.not_very_effective?(effectiveness)
         when :MINDSEYE
           # Ignore target evasion stages and hit Ghost with Normal/Fighting
@@ -409,7 +410,7 @@ module AdvancedAI
         when :MULTISCALE, :SHADOWSHIELD
           modifier *= 0.5 if target.hp == target.totalhp
         when :FILTER, :SOLIDROCK, :PRISMARMOR
-          effectiveness = Effectiveness.calculate(move.type, target.type1, target.type2)
+          effectiveness = AdvancedAI::Utilities.type_mod(move.type, target)
           modifier *= 0.75 if Effectiveness.super_effective?(effectiveness)
         when :FURCOAT
           modifier *= 0.5 if move.physicalMove?
