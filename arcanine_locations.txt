@@ -1,7 +1,0 @@
-Match #1 at line 1543
-  Name = Arcanine
-  Types = FIRE
-  BaseStats = 90,110,80,95,100,80
-  GenderRatio = Female25Percent
-  GrowthRate = Slow
---------------------
