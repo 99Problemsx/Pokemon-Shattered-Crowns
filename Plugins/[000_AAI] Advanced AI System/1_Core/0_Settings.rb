@@ -189,6 +189,10 @@ module AdvancedAI
   # preventing their ace (last Pokemon) from being switched in early
   RESPECT_RESERVE_LAST_POKEMON = true
   
+  # If true, the AI enforces Sleep Clause (won't put a second Pokemon to sleep)
+  # Set to false to allow the AI to use sleep moves freely
+  ENFORCE_SLEEP_CLAUSE = true
+  
   # ============================================================================
   # COMPATIBILITY SETTINGS
   # ============================================================================

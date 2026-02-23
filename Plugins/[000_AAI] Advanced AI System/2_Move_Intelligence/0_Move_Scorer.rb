@@ -1857,9 +1857,8 @@ class Battle::AI
     end
     
     # Target just used an attacking move? More likely to attack again
-    real_target = target.respond_to?(:battler) ? target.battler : target
-    if real_target.lastMoveUsed
-      last_move_data = GameData::Move.try_get(real_target.lastMoveUsed)
+    if target.lastMoveUsed
+      last_move_data = GameData::Move.try_get(target.lastMoveUsed)
       if last_move_data && last_move_data.damaging?
         score += 15  # Pattern suggests attacking
       end
@@ -2539,7 +2538,14 @@ class Battle::AI
       
       # Status moves are the wall's way to threaten
       if AdvancedAI.status_move?(move_id) || [:TOXIC, :WILLOWISP, :THUNDERWAVE].include?(move_id)
-        score += 15 if target.status == :NONE
+        if target.status == :NONE
+          # Don't boost status moves the target is immune to
+          immune = false
+          immune = true if move_id == :TOXIC && (target.pbHasType?(:POISON) || target.pbHasType?(:STEEL))
+          immune = true if move_id == :WILLOWISP && target.pbHasType?(:FIRE)
+          immune = true if move_id == :THUNDERWAVE && (target.pbHasType?(:ELECTRIC) || target.pbHasType?(:GROUND))
+          score += 15 unless immune
+        end
       end
       
       # Phazing racks up hazard damage
@@ -2745,6 +2751,19 @@ class Battle::AI
     when :passive_damage
       # === TOXIC / LEECH SEED / WILL-O-WISP ===
       # These are the WIN CONDITION for stall teams
+      # But only if the target can actually be affected
+      if [:TOXIC, :WILLOWISP, :THUNDERWAVE].include?(move.id)
+        # Check type immunity before boosting status moves
+        if move.id == :TOXIC && (target.pbHasType?(:POISON) || target.pbHasType?(:STEEL))
+          return 0  # Poison/Steel immune to Toxic — no stall synergy
+        elsif move.id == :WILLOWISP && target.pbHasType?(:FIRE)
+          return 0  # Fire immune to burn — no stall synergy
+        elsif move.id == :THUNDERWAVE && target.pbHasType?(:ELECTRIC)
+          return 0  # Electric immune to paralysis — no stall synergy
+        elsif move.id == :THUNDERWAVE && target.pbHasType?(:GROUND)
+          return 0  # Ground immune to Thunder Wave — no stall synergy
+        end
+      end
       if target.status == :NONE
         score += 40  # Applying status IS the stall gameplan
         

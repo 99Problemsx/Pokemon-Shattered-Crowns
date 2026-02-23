@@ -11,6 +11,7 @@ module AdvancedAI
     
     # Check if using a sleep move would violate sleep clause
     def self.would_violate_sleep_clause?(battle, attacker, target)
+      return false unless AdvancedAI::ENFORCE_SLEEP_CLAUSE
       return false unless target
       
       # Check if opponent already has a sleeping Pokemon
