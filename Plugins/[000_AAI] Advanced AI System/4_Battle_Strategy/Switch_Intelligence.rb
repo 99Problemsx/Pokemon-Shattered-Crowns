@@ -378,27 +378,11 @@ class Battle::AI
       reserved_idx = party.length - 1
       echoln "[AAI DEBUG] ReserveLastPokemon Active! Reserved Index: #{reserved_idx}"
       
-      # Smart reserve: allow the Ace through if it's dramatically better than alternatives
-      if available_switches.length > 1
-        ace_mon = available_switches.find { |pkmn| party.index(pkmn) == reserved_idx }
-        non_ace = available_switches.reject { |pkmn| party.index(pkmn) == reserved_idx }
-        
-        if ace_mon && non_ace.length > 0
-          # Compare matchups to decide if we should override the reserve
-          ace_matchup = evaluate_switch_matchup(ace_mon, current_user)
-          best_non_ace_matchup = non_ace.map { |p| evaluate_switch_matchup(p, current_user) }.max
-          ace_advantage = ace_matchup - best_non_ace_matchup
-          
-          if ace_advantage >= 30
-            echoln "[AAI DEBUG] Ace #{ace_mon.name} has +#{ace_advantage} matchup advantage — keeping in options"
-            # Don't filter — leave the Ace in available_switches
-          else
-            available_switches = non_ace
-            echoln "[AAI DEBUG] Filtering Ace #{ace_mon.name} (advantage only +#{ace_advantage})"
-          end
-        else
-          available_switches = non_ace unless non_ace.empty?
-        end
+      # Strictly reserve the Ace — never include it in voluntary switch evaluation
+      non_ace = available_switches.reject { |pkmn| party.index(pkmn) == reserved_idx }
+      if non_ace.length > 0
+        available_switches = non_ace
+        echoln "[AAI DEBUG] Ace reserved — excluded from voluntary switch evaluation"
       end
     else
       echoln "[AAI DEBUG] ReserveLastPokemon skipped. Enabled: #{AdvancedAI::RESPECT_RESERVE_LAST_POKEMON}, Trainer Found: #{!!ai_trainer}"
@@ -754,19 +738,9 @@ class Battle::AI
       non_ace   = available_switches.reject { |item| item[2] == reserved_idx }
       
       if ace_entry && non_ace.length > 0
-        # We have both the Ace and other options — check if Ace is dramatically better
-        best_non_ace_score = non_ace.max_by { |_, s, _| s }[1]
-        ace_advantage = ace_entry[1] - best_non_ace_score
-        
-        if ace_advantage >= 30
-          # Ace is overwhelmingly better (e.g. Mega Houndoom vs Psychic/Ice)
-          # Let it through — holding it back would be strategically terrible
-          echoln "  [AAI] ReserveLastPokemon: Ace has +#{ace_advantage} matchup advantage — overriding reserve"
-        else
-          # Ace is not dramatically better — save it for later
-          available_switches = non_ace
-          echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from options"
-        end
+        # Strictly reserve the Ace — save it for when all others are down
+        available_switches = non_ace
+        echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from switch options"
       elsif ace_entry && non_ace.empty?
         # Ace is the only option
         if is_voluntary_switch

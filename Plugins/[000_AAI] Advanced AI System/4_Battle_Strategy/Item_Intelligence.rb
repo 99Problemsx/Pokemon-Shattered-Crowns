@@ -585,7 +585,7 @@ class Battle::AI
         :SNOWSCAPE  => "hail",
       }
       wtype = weather_moves[move.id]
-      if wtype && ItemIntelligence.extends_weather?(real_user, wtype)
+      if wtype && AdvancedAI::ItemIntelligence.extends_weather?(real_user, wtype)
         score += 10  # 8 turns instead of 5 is significant
       end
     end
