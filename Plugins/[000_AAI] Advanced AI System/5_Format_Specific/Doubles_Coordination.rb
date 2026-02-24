@@ -2787,7 +2787,7 @@ module AdvancedAI
             end
             
             # Encore them into something we resist
-            if last_move.damagingMove?
+            if last_move.damaging?
               type_mod = Effectiveness.calculate(last_move.type, attacker.types[0], attacker.types[1])
               if Effectiveness.not_very_effective?(type_mod)
                 score += 40
@@ -3610,7 +3610,7 @@ class Battle::AI
     if target
       real_user = user.respond_to?(:battler) ? user.battler : user
       real_target = target.respond_to?(:battler) ? target.battler : target
-      score += DoublesCoordination.joint_target_bonus(@battle, real_user, move, real_target, skill) rescue 0
+      score += AdvancedAI::DoublesCoordination.joint_target_bonus(@battle, real_user, move, real_target, skill) rescue 0
     end
     
     return score

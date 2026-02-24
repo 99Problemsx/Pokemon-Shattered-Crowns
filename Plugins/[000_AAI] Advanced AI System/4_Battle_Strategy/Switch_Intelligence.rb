@@ -121,11 +121,11 @@ class Battle::AI
       echoln("  [10/12] Just Switched In (malus): -40")
     end
     
-    # 11. PENALTY: No better option (-15 Points)
+    # 11. PENALTY: No better option (-30 Points)
     # If better_score is 0, it means either no switches exist OR the best switch isn't significantly better
     if better_score <= 0
-      score -= 15
-      echoln("  [11/12] No Better Option (malus): -15")
+      score -= 30
+      echoln("  [11/12] No Better Option (malus): -30")
     end
     
     # 12. PENALTY: Can KO Opponent (-60 Points)
