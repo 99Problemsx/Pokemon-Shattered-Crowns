@@ -14,7 +14,7 @@ class Pokemon
     validate value => Integer
     if value < 1 || value > GameData::GrowthRate.max_level
       max_lvl = GameData::GrowthRate.max_level
-      limit = (value < 1)? ["below the minimum  of level 1", "1"] : ["above the maximum of level #{max_lvl}", "#{max_lvl}"]
+      limit = (value < 1)? ["below the minimum of level 1", "1"] : ["above the maximum of level #{max_lvl}", "#{max_lvl}"]
       echoln _INTL("Level {1} for {2} is not a valid level as it goes {3}. The level has been reset to {4}",
                     value, self, limit[0], limit[1])
       value = value.clamp(1, GameData::GrowthRate.max_level)
@@ -22,6 +22,7 @@ class Pokemon
     
     # Additional check for level caps - but respect bypass switch
     # SC Fix: Guard against $game_switches being nil during early initialization
+    # Note: Obedience cap does NOT clamp level — it allows overlevel but causes disobedience
     if $game_switches && !$game_switches[LevelCapsEX::LEVEL_CAP_BYPASS_SWITCH]
       if (LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?) && value > LevelCapsEX.level_cap
         value = LevelCapsEX.level_cap
@@ -32,9 +33,12 @@ class Pokemon
     @level = value
   end
 
-  def crosses_level_cap?
+  def at_level_cap?
     return (LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?) && self.level >= LevelCapsEX.level_cap
   end
+
+  # Alias for backwards compatibility
+  alias crosses_level_cap? at_level_cap?
 
   def level
     @level = growth_rate.level_from_exp(@exp) if !@level
@@ -66,13 +70,15 @@ class Battle
     end
     
     # Apply level caps to opponent Pokemon only if bypass is OFF
-    if opponent && opponent.respond_to?(:party)
-      opponent.party.each do |pkmn|
-        next if !pkmn
-        if pkmn.level > LevelCapsEX.level_cap
-          old_level = pkmn.level
-          pkmn.level = LevelCapsEX.level_cap
-          pkmn.calc_stats
+    if opponent && opponent.is_a?(Array)
+      opponent.each do |trainer|
+        next if !trainer || !trainer.party
+        trainer.party.each do |pkmn|
+          next if !pkmn
+          if pkmn.level > LevelCapsEX.level_cap
+            pkmn.level = LevelCapsEX.level_cap
+            pkmn.calc_stats
+          end
         end
       end
     end
@@ -116,6 +122,10 @@ class Battle
     
     # Hard level cap check - completely block exp gain
     if LevelCapsEX.hard_cap? && pkmn.level >= LevelCapsEX.level_cap
+      # Store blocked EXP if storage is enabled (awarded when cap increases)
+      if LevelCapsEX::EXP_STORAGE_ENABLED
+        LevelCapsEX.store_blocked_exp(pkmn, idxParty, defeatedBattler, numPartic, expShare, expAll)
+      end
       return
     end
     
@@ -188,7 +198,15 @@ class Battle
     over_level_cap = false
     if LevelCapsEX.soft_cap? && pkmn.level >= LevelCapsEX.level_cap
       over_level_cap = true
-      exp = (exp / 10).to_i
+      levels_over = pkmn.level - LevelCapsEX.level_cap
+      if LevelCapsEX::SOFT_CAP_SCALED
+        # Smooth curve: 50% per level over, minimum 1% 
+        reduction = [0.5 ** (levels_over + 1), 0.01].max
+        exp = (exp * reduction).to_i
+      else
+        # Original flat 1/10 reduction
+        exp = (exp / 10).to_i
+      end
       exp = 1 if exp < 1
     end
     # Make sure Exp doesn't exceed the maximum
@@ -281,9 +299,10 @@ class Battle::Battler
     @disobeyed = false
     return ret if ret || db
     # Level Cap Disobedience checks
-    return true if LevelCapsEX.level_cap_mode != 3
+    return true if !LevelCapsEX.obedience_cap?
     lv_diff = @level - LevelCapsEX.level_cap
-    lv_diff = 5 if lv_diff >= 5
+    return true if lv_diff <= 0
+    lv_diff = 5 if lv_diff > 5
     disobedient = rand(5 - lv_diff) == 0
     return pbDisobey(args[0], (lv_diff * 2)) if lv_diff >= 5 || disobedient
     return true
@@ -365,11 +384,9 @@ class Pokemon_Trainer
     return unless LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?
     
     cap = LevelCapsEX.level_cap
-    @party&.each_with_index do |pkmn, index|
+    @party&.each do |pkmn|
       next if !pkmn
-      echoln("Checking Pokemon #{index + 1}: #{pkmn.name} Level #{pkmn.level}")
       if pkmn.level > cap
-        old_level = pkmn.level
         pkmn.level = cap
         pkmn.calc_stats
       end

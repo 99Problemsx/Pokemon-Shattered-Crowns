@@ -1,0 +1,463 @@
+AddGhostTypeToTarget: TRICKORTREAT
+AddGrassTypeToTarget: FORESTSCURSE
+AddMoneyGainedFromBattle: PAYDAY
+AddMoneyGainedFromBattleLowerUserSpAtk1: MAKEITRAIN
+AddSpikesToFoeSide: SPIKES
+AddStealthRocksToFoeSide: STEALTHROCK
+AddStickyWebToFoeSide: STICKYWEB
+AddToxicSpikesToFoeSide: TOXICSPIKES
+AllBattlersConsumeBerry: TEATIME
+AllBattlersLoseHalfHPUserSkipsNextTurn: SHADOWHALF
+AlwaysCriticalHit: WICKEDBLOW, STORMTHROW, FLOWERTRICK, FROSTBREATH
+AttackAndSkipNextTurn: ROAROFTIME, ETERNABEAM, METEORASSAULT, BLASTBURN, FRENZYPLANT, GIGAIMPACT, HYPERBEAM, PRISMATICLASER, ROCKWRECKER, HYDROCANNON
+AttackerFaintsIfUserFaints: DESTINYBOND
+AttackTwoTurnsLater: FUTURESIGHT, DOOMDESIRE
+AttractTarget: ATTRACT
+BadPoisonTarget: POISONFANG, TOXIC, MALIGNANTCHAIN
+BindTarget: INFESTATION, THUNDERCAGE, MAGMASTORM, FIRESPIN, SNAPTRAP, SANDTOMB, BIND, WRAP, CLAMP
+BindTargetDoublePowerIfTargetUnderwater: WHIRLPOOL
+BounceBackProblemCausingStatusMoves: MAGICCOAT
+BurnAttackerBeforeUserActs: BEAKBLAST
+BurnFlinchTarget: FIREFANG
+BurnTarget: BLUEFLARE, FIREBLAST, HEATWAVE, INFERNO, SACREDFIRE, SEARINGSHOT, FLAMETHROWER, BLAZEKICK, LAVAPLUME, FIREPUNCH, FLAMEWHEEL, EMBER, WILLOWISP, PYROBALL, SCORCHINGSANDS, SHADOWFIRE, SCALD, STEAMERUPTION
+BurnTargetAlwaysHitsInRain: SANDSEARSTORM
+BurnTargetIfTargetStatsRaisedThisTurn: BURNINGJEALOUSY
+CannotBeRedirected: SNIPESHOT
+CannotMakeTargetFaint: FALSESWIPE, HOLDBACK
+CantSelectConsecutiveTurns: BLOODMOON, GIGATONHAMMER
+CategoryDependsOnHigherDamageIgnoreTargetAbility: PHOTONGEYSER
+CategoryDependsOnHigherDamagePoisonTarget: SHELLSIDEARM
+ConfuseTarget: SIGNALBEAM, SWEETKISS, STRANGESTEAM, DYNAMICPUNCH, CHATTER, CONFUSERAY, ROCKCLIMB, DIZZYPUNCH, SUPERSONIC, TEETERDANCE, PSYBEAM, CONFUSION, SHADOWPANIC, WATERPULSE
+ConfuseTargetAlwaysHitsInRainHitsTargetInSky: HURRICANE
+ConfuseTargetIfTargetStatsRaisedThisTurn: ALLURINGVOICE
+CorrodeTargetItem: CORROSIVEGAS
+CounterDamagePlusHalf: COMEUPPANCE, METALBURST
+CounterPhysicalDamage: COUNTER
+CounterSpecialDamage: MIRRORCOAT
+CrashDamageIfFails: SUPERCELLSLAM
+CrashDamageIfFailsConfuseTarget: AXEKICK
+CrashDamageIfFailsUnusableInGravity: HIGHJUMPKICK, JUMPKICK
+CureTargetBurn: SPARKLINGARIA
+CureTargetStatusHealUserHalfOfTotalHP: PURIFY
+CureUserBurnPoisonParalysis: REFRESH
+CureUserPartyStatus: AROMATHERAPY, HEALBELL
+CurseTargetOrLowerUserSpd1RaiseUserAtkDef1: CURSE
+DamageTargetAlly: FLAMEBURST
+DestroyTargetBerryOrGem: INCINERATE
+DisableTargetHealingMoves: HEALBLOCK
+DisableTargetHealingMoves2Turns: PSYCHICNOISE
+DisableTargetLastMoveUsed: DISABLE
+DisableTargetMovesKnownByUser: IMPRISON
+DisableTargetSoundMoves: THROATCHOP
+DisableTargetStatusMoves: TAUNT
+DisableTargetUsingDifferentMove: ENCORE
+DisableTargetUsingSameMoveConsecutively: TORMENT
+DoesNothingCongratulations: CELEBRATE
+DoesNothingFailsIfNoAlly: HOLDHANDS
+DoesNothingUnusableInGravity: SPLASH
+DoubleDamageOnDynamaxTargets: DYNAMAXCANNON, BEHEMOTHBASH, BEHEMOTHBLADE
+DoubleMoneyGainedFromBattle: HAPPYHOUR
+DoublePowerAfterFusionBolt: FUSIONFLARE
+DoublePowerAfterFusionFlare: FUSIONBOLT
+DoublePowerIfAllyFaintedLastTurn: RETALIATE
+DoublePowerIfTargetActed: PAYBACK
+DoublePowerIfTargetAsleepCureTarget: WAKEUPSLAP
+DoublePowerIfTargetHPLessThanHalf: BRINE
+DoublePowerIfTargetInSky: GUST
+DoublePowerIfTargetLostHPThisTurn: ASSURANCE
+DoublePowerIfTargetNotActed: BOLTBEAK, FISHIOUSREND
+DoublePowerIfTargetParalyzedCureTarget: SMELLINGSALTS
+DoublePowerIfTargetPoisoned: VENOSHOCK
+DoublePowerIfTargetPoisonedPoisonTarget: BARBBARRAGE
+DoublePowerIfTargetStatusProblem: HEX
+DoublePowerIfTargetStatusProblemBurnTarget: INFERNALPARADE
+DoublePowerIfTargetUnderground: EARTHQUAKE
+DoublePowerIfTargetUnderwater: SHADOWSTORM, SURF
+DoublePowerIfUserHasNoItem: ACROBATICS
+DoublePowerIfUserLastMoveFailed: TEMPERFLARE, STOMPINGTANTRUM
+DoublePowerIfUserLostHPThisTurn: REVENGE, AVALANCHE
+DoublePowerIfUserPoisonedBurnedParalyzed: FACADE
+DoublePowerIfUserStatsLoweredThisTurn: LASHOUT
+DoublePowerInElectricTerrain: RISINGVOLTAGE
+EffectDependsOnEnvironment: SECRETPOWER
+EffectivenessIncludesFlyingType: FLYINGPRESS
+EnsureNextCriticalHit: LASERFOCUS
+EnsureNextMoveAlwaysHits: LOCKON, MINDREADER
+FailsIfNotUserFirstTurn: FIRSTIMPRESSION
+FailsIfTargetActed: SUCKERPUNCH, THUNDERCLAP
+FailsIfTargetHasNoItem: POLTERGEIST
+FailsIfUserDamagedThisTurn: FOCUSPUNCH
+FailsIfUserHasUnusedMove: LASTRESORT
+FailsIfUserNotConsumedBerry: BELCH
+FailsUnlessTargetSharesTypeWithUser: SYNCHRONOISE
+FirePledge: FIREPLEDGE
+FixedDamage20: SONICBOOM
+FixedDamage40: DRAGONRAGE
+FixedDamageHalfTargetHP: RUINATION, NATURESMADNESS, SUPERFANG
+FixedDamageUserLevel: SEISMICTOSS, NIGHTSHADE
+FixedDamageUserLevelRandom: PSYWAVE
+FlinchTarget: STEAMROLLER, DARKPULSE, BITE, FIERYWRATH, DRAGONRUSH, ZINGZAP, ROLLINGKICK, AIRSLASH, ASTONISH, NEEDLEARM, BONECLUB, ICICLECRASH, MOUNTAINGALE, HYPERFANG, HEADBUTT, STOMP, EXTRASENSORY, ZENHEADBUTT, HEARTSTAMP, ROCKSLIDE, IRONHEAD, WATERFALL
+FlinchTargetDoublePowerIfTargetInSky: TWISTER
+FlinchTargetFailsIfNotUserFirstTurn: FAKEOUT
+FlinchTargetFailsIfTargetNotUsingPriorityMove: UPPERHAND
+FlinchTargetFailsIfUserNotAsleep: SNORE
+FreezeFlinchTarget: ICEFANG
+FreezeTarget: ICEBEAM, ICEPUNCH, POWDERSNOW, FREEZINGGLARE, SHADOWCHILL
+FreezeTargetAlwaysHitsInHail: BLIZZARD
+FreezeTargetSuperEffectiveAgainstWater: FREEZEDRY
+GiveUserStatusToTarget: PSYCHOSHIFT
+GrassPledge: GRASSPLEDGE
+HealAllyOrDamageFoe: POLLENPUFF
+HealTargetDependingOnGrassyTerrain: FLORALHEALING
+HealTargetHalfOfTotalHP: HEALPULSE
+HealUserAndAlliesQuarterOfTotalHP: LIFEDEW
+HealUserAndAlliesQuarterOfTotalHPCureStatus: JUNGLEHEALING, LUNARBLESSING
+HealUserByHalfOfDamageDone: LEECHLIFE, PARABOLICCHARGE, DRAINPUNCH, BITTERBLADE, GIGADRAIN, HORNLEECH, MEGADRAIN, ABSORB
+HealUserByHalfOfDamageDoneBurnTarget: MATCHAGOTCHA
+HealUserByHalfOfDamageDoneIfTargetAsleep: DREAMEATER
+HealUserByTargetAttackLowerTargetAttack1: STRENGTHSAP
+HealUserByThreeQuartersOfDamageDone: DRAININGKISS, OBLIVIONWING
+HealUserDependingOnSandstorm: SHOREUP
+HealUserDependingOnUserStockpile: SWALLOW
+HealUserDependingOnWeather: MOONLIGHT, SYNTHESIS, MORNINGSUN
+HealUserFullyAndFallAsleep: REST
+HealUserHalfOfTotalHP: HEALORDER, MILKDRINK, RECOVER, SLACKOFF, SOFTBOILED
+HealUserHalfOfTotalHPLoseFlyingTypeThisTurn: ROOST
+HealUserPositionNextTurn: WISH
+HigherPriorityInGrassyTerrain: GRASSYGLIDE
+HitOncePerUserTeamMember: BEATUP
+HitsAllFoesAndPowersUpInPsychicTerrain: EXPANDINGFORCE
+HitsTargetInSky: SKYUPPERCUT
+HitsTargetInSkyGroundsTarget: THOUSANDARROWS, SMACKDOWN
+HitTenTimes: POPULATIONBOMB
+HitThreeTimes: TRIPLEDIVE
+HitThreeTimesAlwaysCriticalHit: SURGINGSTRIKES
+HitThreeTimesPowersUpWithEachHit: TRIPLEKICK, TRIPLEAXEL
+HitTwoTimes: DUALCHOP, DOUBLEKICK, DUALWINGBEAT, BONEMERANG, DOUBLEHIT, TWINBEAM, GEARGRIND, TACHYONCUTTER
+HitTwoTimesFlinchTarget: DOUBLEIRONBASH
+HitTwoTimesPoisonTarget: TWINEEDLE
+HitTwoTimesTargetThenTargetAlly: DRAGONDARTS
+HitTwoToFiveTimes: PINMISSILE, ARMTHRUST, BULLETSEED, BONERUSH, ICICLESPEAR, TAILSLAP, SPIKECANNON, COMETPUNCH, FURYSWIPES, BARRAGE, DOUBLESLAP, FURYATTACK, ROCKBLAST
+HitTwoToFiveTimesOrThreeForAshGreninja: WATERSHURIKEN
+HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1: SCALESHOT
+HoopaRemoveProtectionsBypassSubstituteLowerUserDef1: HYPERSPACEFURY
+IgnoreTargetAbility: MOONGEISTBEAM, SUNSTEELSTRIKE
+IgnoreTargetDefSpDefEvaStatStages: DARKESTLARIAT, SACREDSWORD, CHIPAWAY
+IgnoreTargetDefSpDefEvaStatStagesHitFairyType: NIHILLIGHT
+IncreasePowerEachFaintedAlly: LASTRESPECTS
+IncreasePowerEachTimeHit: RAGEFIST
+IncreasePowerInElectricTerrain: PSYBLADE
+IncreasePowerInSunWeather: HYDROSTEAM
+IncreasePowerSuperEffective: ELECTRODRIFT, COLLISIONCOURSE
+InvertTargetStatStages: TOPSYTURVY
+LowerPoisonedTargetAtkSpAtkSpd1: VENOMDRENCH
+LowerPPOfTargetLastMoveBy3: EERIESPELL
+LowerPPOfTargetLastMoveBy4: SPITE
+LowerTargetAccuracy1: NIGHTDAZE, LEAFTORNADO, MUDBOMB, MUDSLAP, SANDATTACK, FLASH, SMOKESCREEN, KINESIS, MIRRORSHOT, MUDDYWATER, OCTAZOOKA
+LowerTargetAtkDef1: TICKLE
+LowerTargetAtkSpAtk1: NOBLEROAR, TEARFULLOOK
+LowerTargetAtkSpAtk1SwitchOutUser: PARTINGSHOT
+LowerTargetAttack1: LUNGE, BREAKINGSWIPE, PLAYROUGH, BABYDOLLEYES, SPRINGTIDESTORM, BITTERMALICE, TROPKICK, AURORABEAM, GROWL, CHILLINGWATER
+LowerTargetAttack1BypassSubstitute: PLAYNICE
+LowerTargetAttack2: CHARM, FEATHERDANCE
+LowerTargetDefense1: CRUNCH, ROCKSMASH, THUNDEROUSKICK, FIRELASH, SHADOWBONE, CRUSHCLAW, LEER, TAILWHIP, IRONTAIL, RAZORSHELL, LIQUIDATION
+LowerTargetDefense1FlinchTarget: TRIPLEARROWS
+LowerTargetDefense1PowersUpInGravity: GRAVAPPLE
+LowerTargetDefense2: SCREECH, SHADOWDOWN
+LowerTargetEvasion1RemoveSideEffects: DEFOG
+LowerTargetEvasion2: SWEETSCENT, SHADOWMIST
+LowerTargetHPToUserHP: ENDEAVOR
+LowerTargetSpAtk1: STRUGGLEBUG, SKITTERSMACK, SNARL, MOONBLAST, SPIRITBREAK, MYSTICALFIRE, CONFIDE, MISTBALL
+LowerTargetSpAtk2: EERIEIMPULSE
+LowerTargetSpAtk2IfCanAttract: CAPTIVATE
+LowerTargetSpDef1: BUGBUZZ, FOCUSBLAST, SHADOWBALL, ENERGYBALL, APPLEACID, EARTHPOWER, ACID, PSYCHIC, LUSTERPURGE, FLASHCANNON
+LowerTargetSpDef2: FAKETEARS, SEEDFLARE, ACIDSPRAY, LUMINACRASH, METALSOUND
+LowerTargetSpeed1: POUNCE, ELECTROWEB, LOWSWEEP, DRUMBEATING, MUDSHOT, GLACIATE, ICYWIND, CONSTRICT, ROCKTOMB, BUBBLEBEAM, BUBBLE
+LowerTargetSpeed1AlwaysHitsInRain: BLEAKWINDSTORM
+LowerTargetSpeed1MakeTargetWeakerToFire: TARSHOT
+LowerTargetSpeed1WeakerInGrassyTerrain: BULLDOZE
+LowerTargetSpeed2: STRINGSHOT, COTTONSPORE, SCARYFACE
+LowerTargetSpeedOverTime: SYRUPBOMB
+LowerUserAtkDef1: SUPERPOWER
+LowerUserDefense1: CLANGINGSCALES
+LowerUserDefSpDef1: CLOSECOMBAT, ARMORCANNON, DRAGONASCENT, HEADLONGRUSH
+LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2: SHELLSMASH
+LowerUserDefSpDefSpd1: VCREATE
+LowerUserSpAtk2: DRACOMETEOR, FLEURCANNON, OVERHEAT, LEAFSTORM, PSYCHOBOOST
+LowerUserSpeed1: HAMMERARM, ICEHAMMER
+LowerUserSpeed2: SPINOUT
+MaxUserAttackLoseHalfOfTotalHP: BELLYDRUM
+MultiTurnAttackBideThenReturnDoubleDamage: BIDE
+MultiTurnAttackConfuseUserAtEnd: OUTRAGE, RAGINGFURY, PETALDANCE, THRASH
+MultiTurnAttackPowersUpEachTurn: ICEBALL, ROLLOUT
+MultiTurnAttackPreventSleeping: UPROAR
+NegateTargetAbility: GASTROACID
+NegateTargetAbilityIfTargetActed: COREENFORCER
+None: MEGAHORN, ATTACKORDER, XSCISSOR, NIGHTSLASH, FEINTATTACK, BRUTALSWING, FALSESURRENDER, KOWTOWCLEAVE, SPACIALREND, DRAGONPULSE, DRAGONCLAW, DRAGONHAMMER, SHOCKWAVE, OVERDRIVE, DAZZLINGGLEAM, DISARMINGVOICE, FAIRYWIND, CROSSCHOP, AURASPHERE, VITALTHROW, KARATECHOP, MACHPUNCH, VACUUMWAVE, AEROBLAST, DRILLPECK, AERIALACE, WINGATTACK, AIRCUTTER, PECK, SHADOWCLAW, SHADOWPUNCH, SHADOWSNEAK, ASTRALBARRAGE, POWERWHIP, LEAFBLADE, SEEDBOMB, MAGICALLEAF, RAZORLEAF, VINEWHIP, PETALBLIZZARD, LEAFAGE, BRANCHPOKE, DRILLRUN, PRECIPICEBLADES, LANDSWRATH, HIGHHORSEPOWER, ICESHARD, GLACIALLANCE, MEGAKICK, EGGBOMB, HYPERVOICE, EXTREMESPEED, MEGAPUNCH, SLAM, STRENGTH, SLASH, HORNATTACK, SWIFT, VICEGRIP, CUT, TACKLE, POUND, QUICKATTACK, SCRATCH, BOOMBURST, VISEGRIP, HYPERDRILL, PSYCHOCUT, STONEEDGE, POWERGEM, ROCKTHROW, ACCELEROCK, MIGHTYCLEAVE, SHADOWBLAST, SHADOWBREAK, SHADOWRAVE, SHADOWRUSH, SHADOWWAVE, SHADOWBLITZ, MAGNETBOMB, BULLETPUNCH, SMARTSTRIKE, HYDROPUMP, AQUATAIL, CRABHAMMER, AQUAJET, WATERGUN, ORIGINPULSE, AQUACUTTER, JETPUNCH
+NormalMovesBecomeElectric: IONDELUGE, PLASMAFISTS
+OHKO: GUILLOTINE, HORNDRILL
+OHKOHitsUndergroundTarget: FISSURE
+OHKOIce: SHEERCOLD
+ParalyzeBurnOrFreezeTarget: TRIATTACK
+ParalyzeFlinchTarget: THUNDERFANG
+ParalyzeTarget: DRAGONBREATH, BOLTSTRIKE, ZAPCANNON, THUNDERBOLT, DISCHARGE, THUNDERPUNCH, SPARK, THUNDERSHOCK, NUZZLE, FORCEPALM, LICK, STUNSPORE, BODYSLAM, GLARE, SHADOWBOLT
+ParalyzeTargetAlwaysHitsInRain: WILDBOLTSTORM
+ParalyzeTargetAlwaysHitsInRainHitsTargetInSky: THUNDER
+ParalyzeTargetIfNotTypeImmune: THUNDERWAVE
+PoisonParalyzeOrSleepTarget: DIRECLAW
+PoisonTarget: GUNKSHOT, SLUDGEWAVE, SLUDGEBOMB, POISONJAB, CROSSPOISON, SLUDGE, POISONTAIL, SMOG, POISONSTING, POISONGAS, POISONPOWDER
+PoisonTargetLowerTargetSpeed1: TOXICTHREAD
+PowerDependsOnUserStockpile: SPITUP
+PowerHigherWithConsecutiveUse: FURYCUTTER
+PowerHigherWithConsecutiveUseOnUserSide: ECHOEDVOICE
+PowerHigherWithLessPP: TRUMPCARD
+PowerHigherWithTargetFasterThanUser: GYROBALL
+PowerHigherWithTargetHP: CRUSHGRIP, WRINGOUT
+PowerHigherWithTargetHP100PowerRange: HARDPRESS
+PowerHigherWithTargetPositiveStatStages: PUNISHMENT
+PowerHigherWithTargetWeight: LOWKICK, GRASSKNOT
+PowerHigherWithUserFasterThanTarget: ELECTROBALL
+PowerHigherWithUserHappiness: RETURN
+PowerHigherWithUserHeavierThanTarget: HEATCRASH, HEAVYSLAM
+PowerHigherWithUserHP: DRAGONENERGY, ERUPTION, WATERSPOUT
+PowerHigherWithUserPositiveStatStages: POWERTRIP, STOREDPOWER
+PowerLowerWithUserHappiness: FRUSTRATION
+PowerLowerWithUserHP: REVERSAL, FLAIL
+PowerUpAllyMove: HELPINGHAND
+ProtectUser: DETECT, PROTECT
+ProtectUserBanefulBunker: BANEFULBUNKER
+ProtectUserBurningBulwark: BURNINGBULWARK
+ProtectUserFromDamagingMovesKingsShield: KINGSSHIELD
+ProtectUserFromDamagingMovesObstruct: OBSTRUCT
+ProtectUserFromDamagingMovesSilkTrap: SILKTRAP
+ProtectUserFromTargetingMovesSpikyShield: SPIKYSHIELD
+ProtectUserSideFromDamagingMovesIfUserFirstTurn: MATBLOCK
+ProtectUserSideFromMultiTargetDamagingMoves: WIDEGUARD
+ProtectUserSideFromPriorityMoves: QUICKGUARD
+ProtectUserSideFromStatusMoves: CRAFTYSHIELD
+PursueSwitchingFoe: PURSUIT
+RaiseAlliesAtkDef1: COACHING
+RaiseAlliesCriticalHitRate1DragonTypes2: DRAGONCHEER
+RaiseGrassBattlersDef1: FLOWERSHIELD
+RaiseGroundedGrassBattlersAtkSpAtk1: ROTOTILLER
+RaisePlusMinusUserAndAlliesAtkSpAtk1: GEARUP
+RaisePlusMinusUserAndAlliesDefSpDef1: MAGNETICFLUX
+RaiseTargetAtkLowerTargetDef2: SPICYEXTRACT
+RaiseTargetAtkSpAtk2: DECORATE
+RaiseTargetAttack1: HOWL
+RaiseTargetAttack2ConfuseTarget: SWAGGER
+RaiseTargetRandomStat2: ACUPRESSURE
+RaiseTargetSpAtk1ConfuseTarget: FLATTER
+RaiseTargetSpDef1: AROMATICMIST
+RaiseUserAtk1Spd2: SHIFTGEAR
+RaiseUserAtkAcc1: HONECLAWS
+RaiseUserAtkDef1: BULKUP
+RaiseUserAtkDefAcc1: COIL
+RaiseUserAtkDefSpd1: VICTORYDANCE
+RaiseUserAtkSpAtk1: WORKUP
+RaiseUserAtkSpAtk1Or2InSun: GROWTH
+RaiseUserAtkSpAtkSpeed2LoseHalfOfTotalHP: FILLETAWAY
+RaiseUserAtkSpd1: DRAGONDANCE
+RaiseUserAtkSpd1RemoveHazardsSubstitutes: TIDYUP
+RaiseUserAttack1: POWERUPPUNCH, SHARPEN, MEDITATE, METEORMASH, METALCLAW
+RaiseUserAttack2: SWORDSDANCE
+RaiseUserAttack3IfTargetFaints: FELLSTINGER
+RaiseUserCriticalHitRate2: FOCUSENERGY
+RaiseUserDefense1: HARDEN, PSYSHIELDBASH, STEELWING, WITHDRAW
+RaiseUserDefense1CurlUpUser: DEFENSECURL
+RaiseUserDefense2: ACIDARMOR, BARRIER, DIAMONDSTORM, IRONDEFENSE, SHELTER
+RaiseUserDefense3: COTTONGUARD
+RaiseUserDefSpDef1: DEFENDORDER, COSMICPOWER
+RaiseUserEvasion1: DOUBLETEAM
+RaiseUserEvasion2MinimizeUser: MINIMIZE
+RaiseUserMainStats1: SILVERWIND, OMINOUSWIND, ANCIENTPOWER
+RaiseUserMainStats1LoseThirdOfTotalHP: CLANGOROUSSOUL
+RaiseUserMainStats1TrapUserInBattle: NORETREAT
+RaiseUserSpAtk1: CHARGEBEAM, FIERYDANCE, TORCHSONG, MYSTICALPOWER
+RaiseUserSpAtk2: NASTYPLOT
+RaiseUserSpAtk3: TAILGLOW
+RaiseUserSpAtkSpDef1: CALMMIND
+RaiseUserSpAtkSpDef1CureStatus: TAKEHEART
+RaiseUserSpAtkSpDefSpd1: QUIVERDANCE
+RaiseUserSpDef1PowerUpElectricMove: CHARGE
+RaiseUserSpDef2: AMNESIA
+RaiseUserSpeed1: FLAMECHARGE, TRAILBLAZE, ESPERWING, AQUASTEP
+RaiseUserSpeed2: AGILITY, ROCKPOLISH
+RaiseUserSpeed2LowerUserWeight: AUTOTOMIZE
+RaiseUserStat1Commander: ORDERUP
+RandomlyDamageOrHealTarget: PRESENT
+RandomlyDealsDoubleDamage: FICKLEBEAM
+RandomPowerDoublePowerIfTargetUnderground: MAGNITUDE
+RecoilHalfOfDamageDealt: LIGHTOFRUIN, HEADSMASH
+RecoilHalfOfTotalHP: CHLOROBLAST
+RecoilQuarterOfDamageDealt: WILDCHARGE, SUBMISSION, HEADCHARGE, TAKEDOWN
+RecoilThirdOfDamageDealt: BRAVEBIRD, WOODHAMMER, DOUBLEEDGE, WAVECRASH
+RecoilThirdOfDamageDealtBurnTarget: FLAREBLITZ
+RecoilThirdOfDamageDealtParalyzeTarget: VOLTTACKLE
+RedirectAllMovesToTarget: SPOTLIGHT
+RedirectAllMovesToUser: RAGEPOWDER, FOLLOWME
+RemoveAllScreens: SHADOWSHED
+RemoveProtections: FEINT
+RemoveProtectionsBypassSubstitute: HYPERSPACEHOLE
+RemoveScreens: BRICKBREAK, PSYCHICFANGS
+RemoveTargetItem: KNOCKOFF
+RemoveTerrain: STEELROLLER
+RemoveTerrainIceSpinner: ICESPINNER
+RemoveUserBindingAndEntryHazards: RAPIDSPIN
+RemoveUserBindingAndEntryHazardsPoisonTarget: MORTALSPIN
+ReplaceMoveThisBattleWithTargetLastMoveUsed: MIMIC
+ReplaceMoveWithTargetLastMoveUsed: SKETCH
+ResetAllBattlersStatStages: HAZE
+ResetTargetStatStages: CLEARSMOG
+RestoreUserConsumedItem: RECYCLE
+RevivePokemonHalfHP: REVIVALBLESSING
+SetAttackerMovePPTo0IfUserFaints: GRUDGE
+SetTargetAbilityToInsomnia: WORRYSEED
+SetTargetAbilityToSimple: SIMPLEBEAM
+SetTargetAbilityToUserAbility: ENTRAINMENT
+SetTargetTypesToPsychic: MAGICPOWDER
+SetTargetTypesToWater: SOAK
+SetUserAbilityToTargetAbility: ROLEPLAY
+SetUserAlliesAbilityToTargetAbility: DOODLE
+SetUserTypesBasedOnEnvironment: CAMOUFLAGE
+SetUserTypesToResistLastAttack: CONVERSION2
+SetUserTypesToTargetTypes: REFLECTTYPE
+SetUserTypesToUserMoveType: CONVERSION
+SleepTarget: GRASSWHISTLE, SLEEPPOWDER, SPORE, LOVELYKISS, SING, HYPNOSIS
+SleepTargetChangeUserMeloettaForm: RELICSONG
+SleepTargetIfUserDarkrai: DARKVOID
+SleepTargetNextTurn: YAWN
+SplintersTargetGen8AddSpikesGen9: CEASELESSEDGE
+SplintersTargetGen8AddStealthRocksGen9: STONEAXE
+StarmobileBurnTarget: BLAZINGTORQUE
+StarmobileConfuseTarget: MAGICALTORQUE
+StarmobileParalyzeTarget: COMBATTORQUE
+StarmobilePoisonTarget: NOXIOUSTORQUE
+StarmobileSleepTarget: WICKEDTORQUE
+StartDamageTargetEachTurnIfTargetAsleep: NIGHTMARE
+StartElectricTerrain: ELECTRICTERRAIN
+StartGrassyTerrain: GRASSYTERRAIN
+StartGravity: GRAVITY
+StartHailWeather: HAIL, SNOWSCAPE
+StartHealUserEachTurn: AQUARING
+StartHealUserEachTurnTrapUserInBattle: INGRAIN
+StartLeechSeedTarget: LEECHSEED
+StartMistyTerrain: MISTYTERRAIN
+StartNegateHeldItems: MAGICROOM
+StartNegateTargetEvasionStatStageAndDarkImmunity: MIRACLEEYE
+StartNegateTargetEvasionStatStageAndGhostImmunity: FORESIGHT, ODORSLEUTH
+StartPerishCountsForAllBattlers: PERISHSONG
+StartPreventCriticalHitsAgainstUserSide: LUCKYCHANT
+StartPsychicTerrain: PSYCHICTERRAIN
+StartRainWeather: RAINDANCE
+StartRaiseUserAtk1WhenDamaged: RAGE
+StartSaltCureTarget: SALTCURE
+StartSandstormWeather: SANDSTORM
+StartShadowSkyWeather: SHADOWSKY
+StartSlowerBattlersActFirst: TRICKROOM
+StartSunWeather: SUNNYDAY
+StartSwapAllBattlersBaseDefensiveStats: WONDERROOM
+StartTargetAirborneAndAlwaysHitByMoves: TELEKINESIS
+StartTargetCannotUseItem: EMBARGO
+StartUserAirborne: MAGNETRISE
+StartUserSideDoubleSpeed: TAILWIND
+StartUserSideImmunityToInflictedStatus: SAFEGUARD
+StartUserSideImmunityToStatStageLowering: MIST
+StartWeakenDamageAgainstUserSideIfHail: AURORAVEIL
+StartWeakenElectricMoves: MUDSPORT
+StartWeakenFireMoves: WATERSPORT
+StartWeakenPhysicalDamageAgainstUserSide: REFLECT
+StartWeakenSpecialDamageAgainstUserSide: LIGHTSCREEN
+StealAndUseBeneficialStatusMove: SNATCH
+SwapSideEffects: COURTCHANGE
+SwitchOutTargetDamagingMove: DRAGONTAIL, CIRCLETHROW
+SwitchOutTargetStatusMove: ROAR, WHIRLWIND
+SwitchOutUserDamagingMove: UTURN, VOLTSWITCH, FLIPTURN
+SwitchOutUserPassOnEffects: BATONPASS
+SwitchOutUserStartHailWeather: CHILLYRECEPTION
+SwitchOutUserStatusMove: TELEPORT
+TargetActsLast: QUASH
+TargetActsNext: AFTERYOU
+TargetMovesBecomeElectric: ELECTRIFY
+TargetNextFireMoveDamagesTarget: POWDER
+TargetTakesUserItem: BESTOW
+TargetUsesItsLastUsedMoveAgain: INSTRUCT
+TerapagosCategoryDependsOnHigherDamage: TERASTARSTORM
+ThrowUserItemAtTarget: FLING
+TransformUserIntoTarget: TRANSFORM
+TrapAllBattlersInBattleForOneTurn: FAIRYLOCK
+TrapTargetInBattle: SPIDERWEB, SPIRITSHACKLE, BLOCK, MEANLOOK, SHADOWHOLD, ANCHORSHOT
+TrapTargetInBattleLowerTargetDefSpDef1EachTurn: OCTOLOCK
+TrapTargetInBattleMainEffect: THOUSANDWAVES
+TrapUserAndTargetInBattle: JAWLOCK
+TwoTurnAttack: RAZORWIND
+TwoTurnAttackBurnTarget: ICEBURN
+TwoTurnAttackChargeRaiseUserDefense1: SKULLBASH
+TwoTurnAttackChargeRaiseUserSpAtk1: METEORBEAM
+TwoTurnAttackFlinchTarget: SKYATTACK
+TwoTurnAttackInvulnerableInSky: FLY
+TwoTurnAttackInvulnerableInSkyParalyzeTarget: BOUNCE
+TwoTurnAttackInvulnerableInSkyTargetCannotAct: SKYDROP
+TwoTurnAttackInvulnerableRemoveProtections: SHADOWFORCE, PHANTOMFORCE
+TwoTurnAttackInvulnerableUnderground: DIG
+TwoTurnAttackInvulnerableUnderwater: DIVE
+TwoTurnAttackOneTurnInRainRaiseUserSpAtk1: ELECTROSHOT
+TwoTurnAttackOneTurnInSun: SOLARBEAM, SOLARBLADE
+TwoTurnAttackParalyzeTarget: FREEZESHOCK
+TwoTurnAttackRaiseUserSpAtkSpDefSpd2: GEOMANCY
+TypeAndPowerDependOnTerrain: TERRAINPULSE
+TypeAndPowerDependOnUserBerry: NATURALGIFT
+TypeAndPowerDependOnWeather: WEATHERBALL
+TypeDependsOnUserDrive: TECHNOBLAST
+TypeDependsOnUserIVs: HIDDENPOWER
+TypeDependsOnUserMemory: MULTIATTACK
+TypeDependsOnUserMorpekoFormRaiseUserSpeed1: AURAWHEEL
+TypeDependsOnUserPlate: JUDGMENT
+TypeIsUserFirstType: REVELATIONDANCE
+TypeIsUserSecondType: IVYCUDGEL
+TypeIsUserSecondTypeRemoveScreens: RAGINGBULL
+UsedAfterAllyRoundWithDoublePower: ROUND
+UsedAfterUserTakesPhysicalDamage: SHELLTRAP
+UseLastMoveUsed: COPYCAT
+UseLastMoveUsedByTarget: MIRRORMOVE
+UseMoveDependingOnEnvironment: NATUREPOWER
+UseMoveTargetIsAboutToUse: MEFIRST
+UserAddStockpileRaiseDefSpDef1: STOCKPILE
+UseRandomMove: METRONOME
+UseRandomMoveFromUserParty: ASSIST
+UseRandomUserMoveIfAsleep: SLEEPTALK
+UserConsumeBerryRaiseDefense2: STUFFCHEEKS
+UserConsumeTargetBerry: BUGBITE, PLUCK
+UserCopyTargetStatStages: PSYCHUP
+UserEnduresFaintingThisTurn: ENDURE
+UserFaintsExplosive: EXPLOSION, SELFDESTRUCT
+UserFaintsFixedDamageUserHP: FINALGAMBIT
+UserFaintsHealAndCureReplacement: HEALINGWISH
+UserFaintsHealAndCureReplacementRestorePP: LUNARDANCE
+UserFaintsLowerTargetAtkSpAtk2: MEMENTO
+UserFaintsPowersUpInMistyTerrainExplosive: MISTYEXPLOSION
+UserLosesElectricType: DOUBLESHOCK
+UserLosesFireType: BURNUP
+UserLosesHalfHP: SHADOWEND
+UserLosesHalfOfTotalHP: STEELBEAM
+UserLosesHalfOfTotalHPExplosive: MINDBLOWN
+UserMakeSubstitute: SUBSTITUTE
+UserMakeSubstituteSwitchOut: SHEDTAIL
+UserStealTargetPositiveStatStages: SPECTRALTHIEF
+UserSwapBaseAtkDef: POWERSHIFT, POWERTRICK
+UserSwapsPositionsWithAlly: ALLYSWITCH
+UserTakesTargetItem: THIEF, COVET
+UserTargetAverageBaseAtkSpAtk: POWERSPLIT
+UserTargetAverageBaseDefSpDef: GUARDSPLIT
+UserTargetAverageHP: PAINSPLIT
+UserTargetSwapAbilities: SKILLSWAP
+UserTargetSwapAtkSpAtkStages: POWERSWAP
+UserTargetSwapBaseSpeed: SPEEDSWAP
+UserTargetSwapDefSpDefStages: GUARDSWAP
+UserTargetSwapItems: SWITCHEROO, TRICK
+UserTargetSwapStatStages: HEARTSWAP
+UserVulnerableUntilNextAction: GLAIVERUSH
+UseTargetAttackInsteadOfUserAttack: FOULPLAY
+UseTargetDefenseInsteadOfTargetSpDef: SECRETSWORD, PSYSTRIKE, PSYSHOCK
+UseUserDefenseInsteadOfUserAttack: BODYPRESS
+WaterPledge: WATERPLEDGE

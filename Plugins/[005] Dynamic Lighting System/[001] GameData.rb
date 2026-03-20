@@ -8,7 +8,17 @@
 # - Day/Night conditional lighting
 # - Event-attached lights (follow characters)
 # - Multi-layer glow effects
+# - Flickering, color cycling, fade in/out
+# - Flashlight / lantern with smooth direction sweep
+# - Light intensity control
+# - Switch-triggered visibility
 # ===============================================================================
+
+# Extend PokemonGlobalMetadata so flashlight state survives save/load
+class PokemonGlobalMetadata
+  attr_accessor :flashlight_active
+  attr_accessor :saved_lights       # Array of hashes for runtime-added lights
+end
 
 module GameData
   class LightEffect
@@ -25,6 +35,53 @@ module GameData
     attr_reader :stop_anim
     attr_reader :hide
     attr_reader :day
+    attr_reader :flicker
+    attr_reader :color_cycle
+    attr_reader :cycle_speed
+    attr_reader :switch
+    attr_reader :group
+    attr_reader :on_hour
+    attr_reader :off_hour
+    attr_reader :pulse
+    attr_reader :proximity
+    attr_accessor :intensity
+    attr_accessor :fade_speed
+    attr_accessor :fade_opacity
+    attr_accessor :fade_target
+    attr_reader :cone_spread       # Degrees for cone light spread (default 60)
+    attr_accessor :cone_angle      # Current cone direction in screen degrees (0=right, 90=down)
+    attr_reader :lifespan          # Frames until auto-expire (nil = infinite)
+    attr_accessor :created_at      # Graphics.frame_count at creation
+    attr_reader :path              # Array of [x,y] tile waypoints for animated travel
+    attr_reader :path_speed        # Tiles per second along path (default 1.0)
+    attr_accessor :path_index      # Current waypoint index
+    attr_accessor :path_t          # Interpolation progress [0.0, 1.0)
+    attr_reader :heat_shimmer      # Boolean: enable heat shimmer wobble
+    attr_reader :shadows           # Boolean: enable soft shadow casting
+    attr_reader :sync_group        # Symbol: lights with same sync_group animate in unison
+    attr_reader :water_reflect     # Boolean: render flipped reflection on water tiles below
+    attr_reader :embers            # Boolean: spawn ember particles above this light
+    attr_reader :beam              # Boolean: project visible light beam rays
+    attr_reader :window            # Boolean: project angled window light spill on ground
+    attr_reader :blend             # :additive, :subtractive, :multiply per-light blend mode
+    attr_reader :keyframes         # Array of {t:, radius:, color:, intensity:} for animation
+    attr_reader :sound             # SE filename to auto-play when player is nearby
+    attr_reader :sound_range       # Tile distance for sound audibility (default 3)
+    attr_reader :item_glow         # Boolean: faint hint glow for hidden items
+    attr_reader :layer             # :ground, :mid, :overhead — Z-priority layer
+    attr_reader :color_var         # Game variable ID: light color changes based on variable value
+    attr_reader :power_grid        # Boolean: participates in flickering power grid
+    attr_reader :crystal_refract   # Boolean: splits into rainbow sub-beams
+    attr_reader :flame_sprite      # Boolean: show animated flame overlay
+    attr_reader :color_bleed       # Boolean: tint adjacent tiles with light color
+    attr_reader :on_activate       # Proc: called when light activates
+    attr_reader :on_deactivate     # Proc: called when light deactivates
+    attr_accessor :_was_active     # Internal: previous active state for trigger detection
+    attr_reader :follow_target     # :player, :nearest_event, or event_id — spotlight follow target
+    attr_reader :follow_range      # Max tile distance for follow tracking (default 6)
+    attr_reader :cull_distance     # Max tile distance from player before skipping render (nil = no limit)
+    attr_accessor :chain_to        # ID of another light to chain toggle/fade with
+    attr_reader :seasonal          # Boolean: outdoor light color auto-shifts by season
     attr_writer :x                 
     attr_writer :y
     attr_writer :event
@@ -37,16 +94,22 @@ module GameData
     def self.load; end
     def self.save; end
 
+    @@next_auto_id = 0
+
     def self.add(hash)
-      hash[:id] = rand(1000000) unless hash[:id]
+      unless hash[:id]
+        @@next_auto_id += 1
+        hash[:id] = :"_auto_#{@@next_auto_id}_#{Time.now.to_i}"
+      end
       hash[:map_id] = $game_map.map_id if !hash.key?(:map_id) && $game_map
       self.register(hash)
     end
 
     def self.bulk_add_circle(map_id, coords, radius = 64, day = false)
       coords.each do |coord|
+        @@next_auto_id += 1
         hash = {
-          :id => rand(1000000),
+          :id => :"_auto_#{@@next_auto_id}_#{Time.now.to_i}",
           :map_id => map_id, 
           :type => :circle,
           :radius => radius,
@@ -73,6 +136,53 @@ module GameData
       @stop_anim    = hash[:stop_anim]  || false
       @hide         = hash[:hide]       || false
       @day          = hash[:day]        || false
+      @flicker      = hash[:flicker]    || false
+      @color_cycle  = hash[:color_cycle]|| nil
+      @cycle_speed  = hash[:cycle_speed]|| 2.0
+      @switch       = hash[:switch]     || nil
+      @group        = hash[:group]      || nil
+      @on_hour      = hash[:on_hour]    || nil
+      @off_hour     = hash[:off_hour]   || nil
+      @pulse        = hash[:pulse]      || nil
+      @proximity    = hash[:proximity]  || nil
+      @intensity    = hash[:intensity]  || 1.0
+      @fade_speed   = hash[:fade_speed] || 0.05
+      @fade_opacity = 1.0
+      @fade_target  = 1.0
+      @cone_spread  = hash[:cone_spread]  || 60
+      @cone_angle   = hash[:cone_angle]   || 0
+      @lifespan     = hash[:lifespan]     || nil
+      @created_at   = (defined?(Graphics) ? Graphics.frame_count : 0) rescue 0
+      @path         = hash[:path]         || nil
+      @path_speed   = hash[:path_speed]   || 1.0
+      @path_index   = 0
+      @path_t       = 0.0
+      @heat_shimmer = hash[:heat_shimmer] || false
+      @shadows      = hash[:shadows]      || false
+      @sync_group   = hash[:sync_group]   || nil
+      @water_reflect= hash[:water_reflect]|| false
+      @embers       = hash[:embers]       || false
+      @beam         = hash[:beam]         || false
+      @window       = hash[:window]       || false
+      @blend        = hash[:blend]        || nil
+      @keyframes    = hash[:keyframes]    || nil
+      @sound        = hash[:sound]        || nil
+      @sound_range  = hash[:sound_range]  || 3
+      @item_glow    = hash[:item_glow]    || false
+      @layer        = hash[:layer]        || nil
+      @color_var    = hash[:color_var]    || nil
+      @power_grid   = hash[:power_grid]   || false
+      @crystal_refract = hash[:crystal_refract] || false
+      @flame_sprite = hash[:flame_sprite] || false
+      @color_bleed  = hash[:color_bleed]  || false
+      @on_activate  = hash[:on_activate]  || nil
+      @on_deactivate= hash[:on_deactivate]|| nil
+      @_was_active  = nil
+      @follow_target= hash[:follow_target]|| nil
+      @follow_range = hash[:follow_range] || 6
+      @cull_distance= hash[:cull_distance]|| nil
+      @chain_to     = hash[:chain_to]     || nil
+      @seasonal     = hash[:seasonal]     || false
       @x            = hash[:x]          || nil
       @y            = hash[:y]          || nil
       @event        = hash[:event]      || nil
@@ -100,7 +210,87 @@ module GameData
     end
 
     def event
+      return nil if @event.nil?
       return pbMapInterpreter.get_character(@event)
+    end
+
+    def current_color
+      return @color if !@color_cycle || @color_cycle.empty?
+      total_frames = (@cycle_speed * Graphics.frame_rate).to_i
+      total_frames = 1 if total_frames <= 0
+      progress = (Graphics.frame_count % total_frames) / total_frames.to_f
+      idx = (progress * @color_cycle.length).floor
+      next_idx = (idx + 1) % @color_cycle.length
+      t = (progress * @color_cycle.length) - idx
+      c1 = @color_cycle[idx]
+      c2 = @color_cycle[next_idx]
+      Color.new(
+        c1.red + (c2.red - c1.red) * t,
+        c1.green + (c2.green - c1.green) * t,
+        c1.blue + (c2.blue - c1.blue) * t
+      )
+    end
+
+    def update_fade
+      return if @fade_opacity == @fade_target
+      if @fade_opacity < @fade_target
+        @fade_opacity = [@fade_opacity + @fade_speed, @fade_target].min
+      else
+        @fade_opacity = [@fade_opacity - @fade_speed, @fade_target].max
+      end
+    end
+
+    def expired?
+      return false if !@lifespan
+      return (Graphics.frame_count - @created_at) >= @lifespan
+    end
+
+    # Serialize to a hash for save/load persistence
+    def to_save_hash
+      h = {
+        :id => @id, :type => @type, :map_x => @map_x, :map_y => @map_y,
+        :map_id => @map_id, :radius => @radius, :width => @width, :height => @height,
+        :day => @day, :intensity => @intensity, :stop_anim => @stop_anim,
+        :flicker => @flicker, :pulse => @pulse, :group => @group,
+        :on_hour => @on_hour, :off_hour => @off_hour, :switch => @switch,
+        :sync_group => @sync_group, :water_reflect => @water_reflect,
+        :embers => @embers, :hide => @hide, :beam => @beam,
+        :window => @window, :item_glow => @item_glow,
+        :layer => @layer, :color_var => @color_var,
+        :power_grid => @power_grid, :crystal_refract => @crystal_refract,
+        :flame_sprite => @flame_sprite, :color_bleed => @color_bleed,
+        :follow_target => @follow_target, :follow_range => @follow_range,
+        :cull_distance => @cull_distance, :chain_to => @chain_to,
+        :seasonal => @seasonal
+      }
+      h[:color] = [@color.red, @color.green, @color.blue] if @color
+      h[:tone] = [@tone.red, @tone.green, @tone.blue, @tone.gray] if @tone
+      if @color_cycle && !@color_cycle.empty?
+        h[:color_cycle] = @color_cycle.map { |c| [c.red, c.green, c.blue] }
+      end
+      h[:cycle_speed] = @cycle_speed if @color_cycle
+      h[:proximity] = @proximity if @proximity
+      h[:cone_spread] = @cone_spread if @type == :cone
+      h[:cone_angle] = @cone_angle if @type == :cone
+      h[:lifespan] = @lifespan if @lifespan
+      h[:path] = @path if @path
+      h[:path_speed] = @path_speed if @path
+      return h
+    end
+
+    # Reconstruct a LightEffect from a saved hash (deserialize Color objects)
+    def self.from_save_hash(h)
+      h = h.dup
+      if h[:color].is_a?(Array)
+        h[:color] = Color.new(h[:color][0], h[:color][1], h[:color][2])
+      end
+      if h[:tone].is_a?(Array)
+        h[:tone] = Tone.new(h[:tone][0], h[:tone][1], h[:tone][2], h[:tone][3] || 0)
+      end
+      if h[:color_cycle].is_a?(Array)
+        h[:color_cycle] = h[:color_cycle].map { |c| Color.new(c[0], c[1], c[2]) }
+      end
+      self.register(h)
     end
 
     def width_px; return @width * Game_Map::TILE_WIDTH; end
@@ -135,3 +325,411 @@ module GameData
     end
   end
 end
+
+# ===============================================================================
+# Light Presets / Templates — named shortcuts for common light setups
+# ===============================================================================
+LIGHT_PRESETS = {
+  :torch => {
+    :type => :circle, :radius => 48, :color => Color.new(255, 180, 80),
+    :flicker => 0.2, :pulse => :candle, :day => false, :embers => true
+  },
+  :streetlamp => {
+    :type => :circle, :radius => 72, :color => Color.new(255, 240, 200),
+    :day => false, :stop_anim => true, :intensity => 0.9
+  },
+  :neon_sign => {
+    :type => :rect, :width => 2, :height => 1,
+    :color_cycle => [Color.new(255, 0, 100), Color.new(0, 200, 255), Color.new(255, 255, 0)],
+    :cycle_speed => 3.0, :day => false, :stop_anim => true
+  },
+  :campfire => {
+    :type => :circle, :radius => 56,
+    :color_cycle => [Color.new(255, 160, 40), Color.new(255, 120, 20), Color.new(255, 200, 60)],
+    :cycle_speed => 1.5, :pulse => :candle, :flicker => 0.25, :embers => true, :day => false
+  },
+  :candle => {
+    :type => :circle, :radius => 28, :color => Color.new(255, 200, 100),
+    :pulse => :candle, :flicker => 0.15, :day => false
+  },
+  :crystal => {
+    :type => :circle, :radius => 40, :color => Color.new(120, 200, 255),
+    :pulse => :heartbeat, :day => true, :intensity => 0.6
+  },
+  :lava => {
+    :type => :circle, :radius => 44,
+    :color_cycle => [Color.new(255, 80, 0), Color.new(255, 40, 0), Color.new(255, 120, 20)],
+    :cycle_speed => 2.0, :pulse => :candle, :flicker => 0.3, :heat_shimmer => true
+  },
+  :moonbeam => {
+    :type => :circle, :radius => 64, :color => Color.new(180, 200, 255),
+    :day => false, :stop_anim => true, :intensity => 0.35
+  },
+  :spotlight => {
+    :type => :circle, :radius => 96, :color => Color.new(255, 255, 255),
+    :stop_anim => true, :intensity => 1.0
+  },
+  :damaged_neon => {
+    :type => :rect, :width => 2, :height => 1,
+    :color_cycle => [Color.new(255, 0, 100), Color.new(0, 200, 255)],
+    :cycle_speed => 2.0, :pulse => :damaged_neon, :day => false, :stop_anim => true
+  },
+  :window_warm => {
+    :type => :rect, :width => 1, :height => 1,
+    :color => Color.new(255, 200, 120), :day => false, :window => true,
+    :stop_anim => true, :intensity => 0.7
+  },
+  :crystal_cave => {
+    :type => :circle, :radius => 40, :color => Color.new(120, 200, 255),
+    :pulse => :heartbeat, :day => true, :intensity => 0.6,
+    :crystal_refract => true
+  },
+  :wall_torch => {
+    :type => :circle, :radius => 48, :color => Color.new(255, 180, 80),
+    :pulse => :candle, :day => false, :embers => true, :flame_sprite => true
+  },
+  :power_lamp => {
+    :type => :circle, :radius => 60, :color => Color.new(255, 240, 200),
+    :day => false, :stop_anim => true, :power_grid => true
+  },
+  :deep_sea_glow => {
+    :type => :circle, :radius => 36, :color => Color.new(80, 200, 255),
+    :pulse => :candle, :day => true, :intensity => 0.5
+  },
+  :ore_vein => {
+    :type => :circle, :radius => 20, :color => Color.new(200, 160, 60),
+    :pulse => :heartbeat, :day => true, :intensity => 0.3
+  },
+  :spotlight_follow => {
+    :type => :circle, :radius => 72, :color => Color.new(255, 255, 255),
+    :stop_anim => true, :intensity => 0.9,
+    :follow_target => :nearest_event, :follow_range => 8
+  },
+  :lava_floor => {
+    :type => :circle, :radius => 32,
+    :color_cycle => [Color.new(255, 80, 0), Color.new(255, 40, 0), Color.new(255, 120, 20)],
+    :cycle_speed => 2.5, :pulse => :candle, :day => true, :intensity => 0.5
+  }
+}
+
+# ===============================================================================
+# Script Command Helpers — for easy use in event "Script" commands
+# ===============================================================================
+
+# Add a circle light at the given tile coordinates.
+# Returns the generated ID.
+#   pbAddLight(x, y)
+#   pbAddLight(x, y, radius)
+#   pbAddLight(x, y, radius, color)
+#   pbAddLight(x, y, preset: :torch)
+def pbAddLight(x, y, radius = 64, color = nil, day: false, intensity: 1.0, preset: nil)
+  if preset && LIGHT_PRESETS[preset]
+    hash = LIGHT_PRESETS[preset].dup
+    hash[:map_x] = x
+    hash[:map_y] = y
+    # Allow overrides
+    hash[:radius] = radius if radius != 64
+    hash[:color] = color if color
+    hash[:day] = day if day != false
+    hash[:intensity] = intensity if intensity != 1.0
+  else
+    hash = {
+      :type      => :circle,
+      :radius    => radius,
+      :map_x     => x,
+      :map_y     => y,
+      :day       => day,
+      :intensity => intensity
+    }
+    hash[:color] = color if color
+  end
+  GameData::LightEffect.add(hash)
+  id = hash[:id]
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  lighting.refresh_all(true) if lighting && !lighting.disposed?
+  return id
+end
+
+# Remove a light by its ID.
+def pbRemoveLight(id)
+  GameData::LightEffect::DATA.delete(id)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  lighting.refresh_all(true) if lighting && !lighting.disposed?
+end
+
+# Smoothly fade a light in or out.
+#   pbFadeLight(id, :in)
+#   pbFadeLight(id, :out)
+#   pbFadeLight(id, :in, 0.02)   # slower
+def pbFadeLight(id, direction = :in, speed = nil)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  if direction == :in
+    lighting.fade_in(id, speed)
+  else
+    lighting.fade_out(id, speed)
+  end
+end
+
+# Attach an existing light to a map event so it follows the event.
+#   pbAttachLight(light_id, event_id)
+def pbAttachLight(light_id, event_id)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  lighting.attach(light_id, event_id)
+end
+
+# Set intensity of an existing light (0.0 to 1.0).
+def pbSetLightIntensity(id, value)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  effect = lighting.get(id)
+  effect.intensity = [[value, 0.0].max, 1.0].min if effect
+end
+
+# ===============================================================================
+# Group Commands — control all lights sharing the same :group tag at once
+# ===============================================================================
+
+# Fade in all lights in a group.
+#   pbGroupFadeIn(:house_lights)
+#   pbGroupFadeIn(:house_lights, 0.02)
+def pbGroupFadeIn(group, speed = nil)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  GameData::LightEffect.each do |effect|
+    next if effect.group != group
+    lighting.fade_in(effect.id, speed)
+  end
+end
+
+# Fade out all lights in a group.
+def pbGroupFadeOut(group, speed = nil)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  GameData::LightEffect.each do |effect|
+    next if effect.group != group
+    lighting.fade_out(effect.id, speed)
+  end
+end
+
+# Hide all lights in a group instantly.
+def pbGroupHide(group)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  GameData::LightEffect.each do |effect|
+    next if effect.group != group
+    lighting.hide(effect.id)
+  end
+end
+
+# Show all lights in a group instantly.
+def pbGroupShow(group)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return if !lighting || lighting.disposed?
+  GameData::LightEffect.each do |effect|
+    next if effect.group != group
+    lighting.show(effect.id)
+  end
+end
+
+# Set intensity for all lights in a group.
+def pbGroupSetIntensity(group, value)
+  GameData::LightEffect.each do |effect|
+    next if effect.group != group
+    effect.intensity = [[value, 0.0].max, 1.0].min
+  end
+end
+
+# ===============================================================================
+# Light Effect Chaining — link two lights so toggling one affects the other
+# ===============================================================================
+
+# Chain two lights together (bidirectional).
+#   pbChainLights(:light_a, :light_b)
+def pbChainLights(id1, id2)
+  e1 = GameData::LightEffect.try_get(id1)
+  e2 = GameData::LightEffect.try_get(id2)
+  return if !e1 || !e2
+  e1.chain_to = id2
+  e2.chain_to = id1
+end
+
+# Unchain a light from its partner (bidirectional).
+def pbUnchainLight(id)
+  e = GameData::LightEffect.try_get(id)
+  return if !e || !e.chain_to
+  partner = GameData::LightEffect.try_get(e.chain_to)
+  partner.chain_to = nil if partner
+  e.chain_to = nil
+end
+
+# ===============================================================================
+# Save/Load Light State — persist runtime-added lights across save/load
+# ===============================================================================
+
+# Save all current runtime lights into $PokemonGlobal
+def pbSaveLights
+  return if !$PokemonGlobal
+  lights = []
+  GameData::LightEffect.each do |effect|
+    next if effect.id == :player_flashlight
+    next if effect.id == :follower_light
+    next if effect.id.to_s.start_with?("_evt_light_")   # Event-spawned, auto-rebuilt
+    next if effect.id.to_s.start_with?("_door_bleed_")   # Door bleed, auto-rebuilt
+    lights << effect.to_save_hash
+  end
+  $PokemonGlobal.saved_lights = lights
+end
+
+# Restore saved lights (called after loading a save)
+def pbRestoreLights
+  return if !$PokemonGlobal || !$PokemonGlobal.saved_lights
+  $PokemonGlobal.saved_lights.each do |h|
+    next if GameData::LightEffect::DATA[h[:id]]
+    GameData::LightEffect.from_save_hash(h)
+  end
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  lighting.refresh_all(true) if lighting && !lighting.disposed?
+end
+
+# Hook into Game.save to auto-persist lights before marshaling
+module Game
+  class << self
+    alias _lighting_save save
+    def save(save_file = SaveData::FILE_PATH, safe: false)
+      pbSaveLights
+      _lighting_save(save_file, safe: safe)
+    end
+  end
+end
+
+# Restore lights when the map scene starts after a load
+EventHandlers.add(:on_enter_map, :restore_saved_lights,
+  proc {
+    pbRestoreLights if $PokemonGlobal&.saved_lights && !$PokemonGlobal.saved_lights.empty?
+  }
+)
+
+# ===============================================================================
+# Light Puzzle Helper — check if a tile is illuminated by any active light
+# ===============================================================================
+# Returns true if any active light's radius covers the given tile.
+#   pbTileIlluminated?(x, y)
+def pbTileIlluminated?(x, y)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return false if !lighting || lighting.disposed?
+  return lighting.tile_illuminated?(x, y)
+end
+
+# ===============================================================================
+# Dark Zone Encounters — multiplier for wild encounter rate when no lights nearby
+# ===============================================================================
+# Returns a Float multiplier (e.g. 1.5 = 50% more encounters).
+# Call from encounter rate formulas or event conditions.
+#   pbDarkZoneEncounterMult(range = 4, dark_mult = 1.5)
+def pbDarkZoneEncounterMult(range = 4, dark_mult = 1.5)
+  lighting = $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+  return 1.0 if !lighting || lighting.disposed?
+  return lighting.dark_zone_mult($game_player.x, $game_player.y, range, dark_mult)
+end
+
+# ===============================================================================
+# Bulk PBS Light Import — load lights.txt definitions at game startup
+# Format per line: MAP_ID,X,Y,TYPE,RADIUS,PRESET,keywords...
+# Lines starting with # are comments. Blank lines are skipped.
+# Examples:
+#   5,10,12,circle,48
+#   5,14,8,circle,0,torch
+#   8,3,5,rect,0,,width:2 height:1 red day
+# ===============================================================================
+def pbLoadLightsFromPBS
+  path = "PBS/lights.txt"
+  return if !FileTest.exist?(path)
+  count = 0
+  File.readlines(path, encoding: "UTF-8").each_with_index do |raw_line, line_num|
+    line = raw_line.strip
+    next if line.empty? || line.start_with?("#")
+    parts = line.split(",", 6)
+    next if parts.length < 4
+    map_id = parts[0].to_i
+    tx     = parts[1].to_i
+    ty     = parts[2].to_i
+    type   = parts[3].strip.downcase.to_sym
+    next if ![:circle, :rect, :cone].include?(type)
+    radius = parts[4] ? parts[4].strip.to_i : 48
+    preset_and_kw = parts[5] ? parts[5].strip : ""
+
+    # Check for preset name before keywords
+    tokens = preset_and_kw.split(/\s+/)
+    hash = { :type => type, :map_x => tx, :map_y => ty, :map_id => map_id, :day => false }
+
+    if !tokens.empty? && defined?(LIGHT_PRESETS) && LIGHT_PRESETS[tokens[0].to_sym]
+      preset = LIGHT_PRESETS[tokens.shift.to_sym]
+      preset.each { |k, v| hash[k] = v }
+    end
+    hash[:radius] = radius if radius > 0
+
+    # Parse remaining keyword tokens (same syntax as event comment tags)
+    tokens.each do |token|
+      case token.downcase
+      when 'red'     then hash[:color] = Color.new(255, 80, 80)
+      when 'blue'    then hash[:color] = Color.new(80, 80, 255)
+      when 'yellow'  then hash[:color] = Color.new(255, 255, 80)
+      when 'green'   then hash[:color] = Color.new(80, 255, 80)
+      when 'orange'  then hash[:color] = Color.new(255, 160, 40)
+      when 'warm'    then hash[:color] = Color.new(255, 200, 120)
+      when 'day'     then hash[:day] = true
+      when 'flicker' then hash[:flicker] = true
+      when 'embers'  then hash[:embers] = true
+      when 'reflect' then hash[:water_reflect] = true
+      when 'beam'    then hash[:beam] = true
+      when 'window'  then hash[:window] = true
+      when /^blend:(\w+)$/i
+        b = $1.to_sym
+        hash[:blend] = b if [:additive, :subtractive, :multiply].include?(b)
+      when /^sound:(.+)$/i       then hash[:sound] = $1
+      when /^sound_range:(\d+)$/i then hash[:sound_range] = $1.to_i
+      when /^color:(\d+),(\d+),(\d+)$/i
+        hash[:color] = Color.new($1.to_i.clamp(0,255), $2.to_i.clamp(0,255), $3.to_i.clamp(0,255))
+      when /^pulse:(\w+)$/i      then hash[:pulse] = $1.to_sym
+      when /^intensity:([\d.]+)$/i then hash[:intensity] = $1.to_f
+      when /^group:(\w+)$/i       then hash[:group] = $1.to_sym
+      when /^switch:(\d+)$/i      then hash[:switch] = $1.to_i
+      when /^width:(\d+)$/i       then hash[:width] = $1.to_i
+      when /^height:(\d+)$/i      then hash[:height] = $1.to_i
+      when /^sync:(\w+)$/i        then hash[:sync_group] = $1.to_sym
+      when /^on_hour:(\d+)$/i     then hash[:on_hour] = $1.to_i
+      when /^off_hour:(\d+)$/i    then hash[:off_hour] = $1.to_i
+      when 'power_grid' then hash[:power_grid] = true
+      when 'crystal'    then hash[:crystal_refract] = true
+      when 'flame'      then hash[:flame_sprite] = true
+      when 'bleed'      then hash[:color_bleed] = true
+      when 'seasonal'   then hash[:seasonal] = true
+      when /^follow:(\w+)$/i
+        ft = $1.downcase
+        hash[:follow_target] = ft == 'player' ? :player : (ft == 'nearest' ? :nearest_event : ft.to_i)
+      when /^follow_range:(\d+)$/i then hash[:follow_range] = $1.to_i
+      when /^cull:(\d+)$/i then hash[:cull_distance] = $1.to_i
+      when /^chain:(.+)$/i then hash[:chain_to] = $1.strip.to_sym
+      when /^layer:(\w+)$/i
+        l = $1.to_sym
+        hash[:layer] = l if [:ground, :mid, :overhead].include?(l)
+      when /^color_var:(\d+)$/i then hash[:color_var] = $1.to_i
+      end
+    end
+
+    GameData::LightEffect.add(hash)
+    count += 1
+  end
+  echoln("Lighting: Loaded #{count} lights from PBS/lights.txt") if $DEBUG && count > 0
+end
+
+# Load PBS lights once when the game starts
+EventHandlers.add(:on_enter_map, :pbs_light_import,
+  proc {
+    next if $game_temp && $game_temp.instance_variable_get(:@_pbs_lights_loaded)
+    pbLoadLightsFromPBS
+    $game_temp.instance_variable_set(:@_pbs_lights_loaded, true) if $game_temp
+  }
+)

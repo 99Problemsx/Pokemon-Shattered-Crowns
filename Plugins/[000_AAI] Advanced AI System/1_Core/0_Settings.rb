@@ -18,7 +18,7 @@ module AdvancedAI
   MIN_SKILL_FOR_AUTO_ACTIVATION = 70
   
   # Debug mode - detailed logging in console
-  DEBUG_MODE = false
+  DEBUG_MODE = true
   
   # Debug switch intelligence specifically (verbose logging)
   DEBUG_SWITCH_INTELLIGENCE = false
@@ -27,7 +27,7 @@ module AdvancedAI
   SHOW_MOVE_EXPLANATIONS = true
   
   # Logging options
-  LOG_TO_CONSOLE = false  # Print logs to console window
+  LOG_TO_CONSOLE = true   # Print logs to console window
   LOG_TO_FILE = false     # Write logs to file (Logs/ai_log.txt)
   
   # ============================================================================
@@ -234,7 +234,7 @@ module AdvancedAI
         File.open("Logs/ai_log.txt", "a") do |f|
           f.puts "[#{Time.now.strftime("%H:%M:%S")}] #{formatted}"
         end
-      rescue
+      rescue SystemCallError, IOError
         # Silent fail if file writing fails
       end
     end
@@ -318,7 +318,7 @@ module AdvancedAI
     if defined?(PluginManager) && PluginManager.respond_to?(:installed?)
       plugin_id = case plugin
         when :dynamax           then "[DBK] Dynamax"
-        when :terastallization  then "[DBK] Terastalization"
+        when :terastallization  then "[DBK] Terastallization"
         when :z_moves           then "[DBK] Z-Power"
         when :raid_battles      then "[DBK] Raid Battles"
         when :sos_battles       then "[DBK] SOS Battles"

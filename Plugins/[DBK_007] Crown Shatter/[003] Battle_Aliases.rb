@@ -115,12 +115,12 @@ class Battle
   # End of battle — reset
   #=============================================================================
   alias shatter_pbEndOfBattle pbEndOfBattle
-  def pbEndOfBattle(result)
+  def pbEndOfBattle
     # Clear Shatter field if still active
     if @field.effects[PBEffects::ShatterField] > 0
       @field.effects[PBEffects::ShatterField]     = 0
       @field.effects[PBEffects::ShatterFieldType] = nil
     end
-    shatter_pbEndOfBattle(result)
+    shatter_pbEndOfBattle
   end
 end

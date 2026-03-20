@@ -140,7 +140,8 @@ class Battle::Move
       # Dragon: Primordial Field — multi-hit moves fail
       #-------------------------------------------------------------------------
       if effects[:block_multihit]
-        if pbNumHits(user, []) > 1 rescue false
+        is_multihit = (pbNumHits(user, []) > 1 rescue false)
+        if is_multihit
           @battle.pbDisplay(_INTL("{1}'s multi-hit move was disrupted by the Primordial Field!", user.pbThis))
           return true
         end
@@ -168,22 +169,22 @@ class Battle::Move
   #=============================================================================
   # Critical hit rate (Dragon: Primordial Field — +1 crit stage)
   #=============================================================================
-  alias shatter_pbCalcCriticalHitChance pbCalcCriticalHitChance
-  def pbCalcCriticalHitChance(user, target, c)
-    c = shatter_pbCalcCriticalHitChance(user, target, c)
+  alias shatter_crit_stage_bonuses crit_stage_bonuses
+  def crit_stage_bonuses(user)
+    bonus = shatter_crit_stage_bonuses(user)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :DRAGON
       effects = (CrownShatter::SHATTER_FIELDS[:DRAGON] || {})[:effects] || {}
-      c += effects[:crit_boost] if effects[:crit_boost]
+      bonus += effects[:crit_boost] if effects[:crit_boost]
     end
-    return c
+    return bonus
   end
 
   #=============================================================================
   # Flinch chance (Ground: Quake Field — +10% flinch)
   #=============================================================================
   alias shatter_pbFlinchChance pbFlinchChance
-  def pbFlinchChance(user, target, move)
-    ret = shatter_pbFlinchChance(user, target, move)
+  def pbFlinchChance(user, target)
+    ret = shatter_pbFlinchChance(user, target)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :GROUND
       effects = (CrownShatter::SHATTER_FIELDS[:GROUND] || {})[:effects] || {}
       if effects[:flinch_chance]

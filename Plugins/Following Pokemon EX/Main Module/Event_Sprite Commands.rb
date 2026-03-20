@@ -119,9 +119,18 @@ module FollowingPkmn
   end
   #-----------------------------------------------------------------------------
   # Forcefully refresh Following Pokemon sprite with animation (if specified)
+  # [PERF FIX] Throttle to prevent rapid successive refreshes during continuous
+  # movement across connected map boundaries. Max once per 6 frames (~100ms).
   #-----------------------------------------------------------------------------
+  @@last_refresh_frame = -999
   def self.refresh(anim = false)
     return if !FollowingPkmn.can_check?
+    # Throttle: skip non-animated refreshes if we refreshed very recently
+    current_frame = Graphics.frame_count
+    if !anim && (current_frame - @@last_refresh_frame) < 6
+      return @@can_refresh
+    end
+    @@last_refresh_frame = current_frame
     event = FollowingPkmn.get_event
     FollowingPkmn.remove_sprite
     event&.calculate_bush_depth

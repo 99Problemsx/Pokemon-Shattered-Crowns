@@ -40,6 +40,8 @@ module SCScripts
         parse_trainer_types(content)
       when /encounters/
         parse_encounters(content)
+      when /map_metadata/
+        parse_map_metadata(content)
       else
         SCScripts.warn("Unknown PBS file type: #{filename}")
         nil
@@ -603,10 +605,98 @@ module SCScripts
     end
     
     #---------------------------------------------------------------------------
+    # Parse map_metadata PBS format
+    #---------------------------------------------------------------------------
+    def self.parse_map_metadata(content)
+      maps = {}
+      current_id = nil
+      current_data = nil
+      
+      content.each_line do |line|
+        line = line.strip
+        next if line.empty? || line.start_with?('#')
+        
+        if line =~ /^\[(\d+)\]/
+          maps[current_id] = current_data if current_id && current_data
+          current_id = $1.to_i
+          current_data = { id: current_id, flags: [] }
+        elsif line.include?('=') && current_data
+          key, value = line.split('=', 2).map(&:strip)
+          case key.downcase
+          when 'name'
+            current_data[:real_name] = value
+          when 'outdoor'
+            current_data[:outdoor_map] = (value.downcase == 'true')
+          when 'showarea'
+            current_data[:announce_location] = (value.downcase == 'true')
+          when 'bicycle'
+            current_data[:can_bicycle] = (value.downcase == 'true')
+          when 'bicyclealways'
+            current_data[:always_bicycle] = (value.downcase == 'true')
+          when 'healingspot'
+            parts = value.split(',').map { |v| v.strip.to_i }
+            current_data[:teleport_destination] = parts
+          when 'weather'
+            parts = value.split(',').map(&:strip)
+            current_data[:weather] = [parts[0].to_sym, (parts[1] || 100).to_i]
+          when 'mapposition'
+            parts = value.split(',').map { |v| v.strip.to_i }
+            current_data[:town_map_position] = parts
+          when 'divemap'
+            current_data[:dive_map_id] = value.to_i
+          when 'darkmap'
+            current_data[:dark_map] = (value.downcase == 'true')
+          when 'safarimap'
+            current_data[:safari_map] = (value.downcase == 'true')
+          when 'snapedges'
+            current_data[:snap_edges] = (value.downcase == 'true')
+          when 'stillreflections'
+            current_data[:still_reflections] = (value.downcase == 'true')
+          when 'dungeon'
+            current_data[:random_dungeon] = (value.downcase == 'true')
+          when 'battleback'
+            current_data[:battle_background] = value
+          when 'wildbattlebgm'
+            current_data[:wild_battle_BGM] = value
+          when 'trainerbattlebgm'
+            current_data[:trainer_battle_BGM] = value
+          when 'wildvictorybgm'
+            current_data[:wild_victory_BGM] = value
+          when 'trainervictorybgm'
+            current_data[:trainer_victory_BGM] = value
+          when 'wildcaptureme'
+            current_data[:wild_capture_ME] = value
+          when 'mapsize'
+            parts = value.split(',').map(&:strip)
+            current_data[:town_map_size] = [parts[0].to_i, parts[1].to_s]
+          when 'environment'
+            current_data[:battle_environment] = value.to_sym
+          when 'flags'
+            current_data[:flags] = value.split(',').map(&:strip)
+          end
+        end
+      end
+      
+      maps[current_id] = current_data if current_id && current_data
+      maps
+    end
+    
+    #---------------------------------------------------------------------------
     # Load and register all PBS data
     #---------------------------------------------------------------------------
     def self.load_all_pbs
       SCScripts.log("Loading PBS data into registry...")
+      
+      # Load base map metadata from PBS_Backup first (full definitions),
+      # before plugin PBS which may add flags (e.g. PowerSpot from DBK)
+      backup_map_meta = "PBS_Backup/map_metadata.txt"
+      if File.exist?(backup_map_meta)
+        data = parse_file(backup_map_meta)
+        if data
+          register_parsed_data(data, { name: "map_metadata.txt", type: :backup })
+          SCScripts.log("Loaded base map metadata from PBS_Backup")
+        end
+      end
       
       SCScripts.all_pbs_files.each do |file_info|
         data = parse_file(file_info[:path])
@@ -658,6 +748,20 @@ module SCScripts
       when /encounters/
         data.each { |key, d| GameData::ScriptRegistry.register_encounter(key, d) }
         SCScripts.log("Registered #{data.count} encounter tables from #{file_info[:name]}")
+      when /map_metadata/
+        data.each do |map_id, d|
+          existing = GameData::ScriptRegistry.get_map(map_id)
+          if existing
+            # Merge flags from plugin PBS (e.g. DBK adds PowerSpot)
+            new_flags = d[:flags] || []
+            existing[:flags] ||= []
+            new_flags.each { |f| existing[:flags] << f unless existing[:flags].include?(f) }
+            d.each { |k, v| existing[k] = v unless k == :flags }
+          else
+            GameData::ScriptRegistry.register_map(map_id, d)
+          end
+        end
+        SCScripts.log("Registered #{data.count} map metadata entries from #{file_info[:name]}")
       end
     end
   end

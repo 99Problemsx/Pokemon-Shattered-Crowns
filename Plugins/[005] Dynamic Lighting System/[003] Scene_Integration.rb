@@ -17,10 +17,8 @@ class Scene_Map
   alias lighting_transfer_player transfer_player
   def transfer_player(cancelVehicles = true)
     lighting_transfer_player(cancelVehicles)
-    # Refresh lighting when changing maps
-    if @spritesetGlobal && @spritesetGlobal.lighting && !@spritesetGlobal.lighting.disposed?
-      @spritesetGlobal.lighting.refresh_all(true)
-    end
+    # Note: createSpritesets (called internally) already builds a fresh
+    # Lighting object with full setup, so no extra refresh_all needed here.
   end
 end
 

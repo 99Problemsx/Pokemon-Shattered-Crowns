@@ -18,30 +18,72 @@ if defined?(PkmnAR)
   })
 end
 #-------------------------------------------------------------------------------
-# Special Dialogue when statused
+# Special Dialogue when statused (expanded with multiple messages per status)
 #-------------------------------------------------------------------------------
 EventHandlers.add(:following_pkmn_talk, :status, proc { |pkmn, _random_val|
   case pkmn.status
   when :POISON
     FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_POISON)
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
-    pbMessage(_INTL("{1} is shivering with the effects of being poisoned.", pkmn.name))
+    messages = [
+      _INTL("{1} is shivering with the effects of being poisoned."),
+      _INTL("{1} looks really sick from the poison..."),
+      _INTL("{1}'s face is pale and it looks unwell."),
+      _INTL("{1} is trying to bear with the poison, but it looks rough."),
+      _INTL("{1} is swaying a little... The poison must be taking its toll."),
+      _INTL("{1} looks at {2} with pained eyes. The poison is clearly hurting."),
+      _INTL("{1} stumbled a little. The poison seems to be getting worse...")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
   when :BURN
     FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ANGRY)
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
-    pbMessage(_INTL("{1}'s burn looks painful.", pkmn.name))
+    messages = [
+      _INTL("{1}'s burn looks painful."),
+      _INTL("{1} is wincing from its burn..."),
+      _INTL("{1} keeps trying to cool down the burn mark."),
+      _INTL("{1} seems distressed by the burn on its body."),
+      _INTL("{1} is moving gingerly because of the burn."),
+      _INTL("The burn on {1} is still glowing red... That must hurt.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
   when :FROZEN
     FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
-    pbMessage(_INTL("{1} seems very cold. It's frozen solid!", pkmn.name))
+    messages = [
+      _INTL("{1} seems very cold. It's frozen solid!"),
+      _INTL("{1} is completely encased in ice!"),
+      _INTL("{1} can barely move... It's frozen stiff!"),
+      _INTL("{1} is shaking, trying to break free from the ice."),
+      _INTL("{1} looks like an ice sculpture right now..."),
+      _INTL("Poor {1}... It's completely frozen and can't move.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
   when :SLEEP
     FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
-    pbMessage(_INTL("{1} seems really tired.", pkmn.name))
+    messages = [
+      _INTL("{1} seems really tired."),
+      _INTL("{1} is fast asleep... Zzz..."),
+      _INTL("{1} is snoring softly. It must be having a nice dream."),
+      _INTL("{1} is completely knocked out. Must be exhausted."),
+      _INTL("{1} is sleeping so peacefully... Better not wake it."),
+      _INTL("{1} is mumbling in its sleep... Is it dreaming about battling?"),
+      _INTL("{1} is curled up and sleeping soundly.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
   when :PARALYSIS
     FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
-    pbMessage(_INTL("{1} is standing still and twitching.", pkmn.name))
+    messages = [
+      _INTL("{1} is standing still and twitching."),
+      _INTL("{1}'s body is sparking with static... It can't move well."),
+      _INTL("{1} is trying to walk, but its legs keep locking up."),
+      _INTL("{1} flinched from a jolt of paralysis!"),
+      _INTL("{1} looks frustrated that it can't move its body properly."),
+      _INTL("{1} is twitching and sparking. The paralysis is really bothering it.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
   end
   next true if pkmn.status != :NONE
 })
@@ -412,6 +454,342 @@ EventHandlers.add(:following_pkmn_talk, :sunny_weather, proc { |pkmn, _random_va
         _INTL("{1} shielded its vision against the sparkling light!")
       ]
     end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------# Low HP Warning - Pokemon reacts when its health is critically low
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :low_hp, proc { |pkmn, _random_val|
+  if pkmn.hp > 0 && pkmn.hp <= (pkmn.totalhp / 4.0)
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1} looks like it's about to collapse..."),
+      _INTL("{1} is panting heavily. It's badly injured!"),
+      _INTL("{1} is barely holding on... It needs healing soon!"),
+      _INTL("{1} is wobbling unsteadily. Its injuries are serious."),
+      _INTL("{1} looks exhausted and beaten up. Maybe visit a Pokémon Center?"),
+      _INTL("{1} is trying to stay upright, but it's clearly struggling."),
+      _INTL("{1} whimpered softly... It looks like it's in real pain."),
+      _INTL("{1} is looking at {2} with worried eyes. It needs help!")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Friendship-dependent dialogue - reacts based on bond strength
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :friendship, proc { |pkmn, _random_val|
+  # Only trigger sometimes (30% chance) to keep it fresh
+  next false if rand(100) >= 30
+  happiness = pkmn.happiness
+  if happiness >= 220
+    # Very high friendship
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HEART)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1} is looking at {2} with absolute adoration!"),
+      _INTL("{1} pressed itself against {2} lovingly!"),
+      _INTL("{1} looks incredibly happy just being with {2}!"),
+      _INTL("{1} practically glows with happiness around {2}!"),
+      _INTL("{1} nuzzled up against {2}'s hand affectionately."),
+      _INTL("{1} seems like it would do anything for {2}!"),
+      _INTL("{1} chirped happily and did a little spin for {2}!"),
+      _INTL("{1} seems to trust {2} completely."),
+      _INTL("{1} and {2} seem to share an unbreakable bond!"),
+      _INTL("{1} looks content and peaceful by {2}'s side.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  elsif happiness <= 50
+    # Very low friendship
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ANGRY)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1} doesn't seem to like {2} very much..."),
+      _INTL("{1} turned away coldly."),
+      _INTL("{1} looks at {2} with distrust."),
+      _INTL("{1} seems wary and keeps its distance."),
+      _INTL("{1} doesn't look like it wants to be petted."),
+      _INTL("{1} growled quietly when {2} reached out."),
+      _INTL("{1} is ignoring {2} and looking the other way."),
+      _INTL("{1} seems unhappy about something...")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Specific message if the map has the Cave metadata flag or map name
+# includes "Cave", "Tunnel", "Cavern", or "Mine"
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :cave_map, proc { |pkmn, _random_val|
+  is_cave = $game_map.metadata&.has_flag?("Cave") ||
+            $game_map.metadata&.has_flag?("Dungeon") ||
+            ["Cave", "Tunnel", "Cavern", "Mine", "Grotto"].any? { |w| $game_map.name.include?(w) }
+  if is_cave
+    if [:ROCK, :GROUND, :STEEL].any? { |type| pkmn.hasType?(type) }
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} seems right at home in this cave!"),
+        _INTL("{1} is examining the rock walls with interest."),
+        _INTL("{1} picked up a small pebble and seems fascinated by it."),
+        _INTL("{1} is sniffing the mineral-rich walls enthusiastically."),
+        _INTL("{1} looks thrilled to be underground!"),
+        _INTL("{1} found a shiny rock and is showing it to {2}!")
+      ]
+    elsif [:GHOST, :DARK].any? { |type| pkmn.hasType?(type) }
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_MUSIC)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} seems to feel comfortable in the darkness."),
+        _INTL("{1}'s eyes are glowing faintly in the dark cave."),
+        _INTL("{1} is moving through the shadows effortlessly."),
+        _INTL("{1} seems energized by the darkness of the cave."),
+        _INTL("{1} is practically invisible in the cave's shadows..."),
+        _INTL("{1} seems to be enjoying the spooky atmosphere.")
+      ]
+    elsif pkmn.hasType?(:FIRE)
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1}'s body is lighting up the cave around it!"),
+        _INTL("{1} is providing a warm glow to guide the way."),
+        _INTL("{1}'s flames are casting dancing shadows on the walls."),
+        _INTL("{1} seems proud to be lighting the path for {2}.")
+      ]
+    else
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} seems a bit nervous in the dark cave."),
+        _INTL("{1} is staying close to {2} in the darkness."),
+        _INTL("{1}'s footsteps are echoing off the cave walls."),
+        _INTL("{1} just bumped into a stalagmite!"),
+        _INTL("{1} seems startled by the echoes bouncing around."),
+        _INTL("{1} tripped on a rock in the dim light!"),
+        _INTL("{1} is peering cautiously into the dark tunnels."),
+        _INTL("{1} seems unsettled by the dripping water echoing nearby."),
+        _INTL("{1} is staying very close to {2}. The cave makes it uneasy."),
+        _INTL("{1} squeaked when something moved in the shadows!")
+      ]
+    end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Night-time specific dialogue (between 8 PM and 5 AM)
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :nighttime, proc { |pkmn, _random_val|
+  # Only trigger at night on outdoor maps
+  if PBDayNight.isNight? && $game_map.metadata&.outdoor_map
+    # Only trigger 40% of the time to not override everything
+    next false if rand(100) >= 40
+    if [:DARK, :GHOST].any? { |type| pkmn.hasType?(type) }
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} seems to come alive at night!"),
+        _INTL("{1} is practically glowing with energy in the moonlight."),
+        _INTL("{1} seems most at home under the night sky."),
+        _INTL("{1} is prowling around excitedly in the darkness."),
+        _INTL("{1} is basking in the moonlight with a content expression."),
+        _INTL("The night seems to invigorate {1}!")
+      ]
+    else
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} is looking up at the stars curiously."),
+        _INTL("{1} seems a bit sleepy. It's getting late..."),
+        _INTL("{1} is yawning. It must be past its bedtime."),
+        _INTL("{1} is squinting in the darkness."),
+        _INTL("{1} is staying extra close to {2} in the dark."),
+        _INTL("{1} was startled by a noise in the dark!"),
+        _INTL("{1} is gazing at the moon with wide eyes."),
+        _INTL("{1} seems fascinated by the fireflies flickering nearby."),
+        _INTL("{1} stumbled over something in the dark!"),
+        _INTL("{1} let out a big yawn. Time for bed soon?"),
+        _INTL("{1} is blinking sleepily but trying to stay alert for {2}.")
+      ]
+    end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Morning-time specific dialogue (between 5 AM and 10 AM)
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :morning, proc { |pkmn, _random_val|
+  if PBDayNight.isMorning? && $game_map.metadata&.outdoor_map
+    next false if rand(100) >= 30
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1} stretched its body in the morning light!"),
+      _INTL("{1} seems refreshed by the cool morning air."),
+      _INTL("{1} took a deep breath of the crisp morning air!"),
+      _INTL("{1} is watching the sunrise with a peaceful expression."),
+      _INTL("{1} seems energized and ready for a new day!"),
+      _INTL("{1} is still waking up... It keeps blinking sleepily."),
+      _INTL("{1} yawned and rubbed its eyes. Good morning, {1}!"),
+      _INTL("The morning dew is glistening on {1}'s body.")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Specific messages for inside towns/cities
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :town_map, proc { |pkmn, _random_val|
+  is_town = $game_map.metadata&.has_flag?("Town") ||
+            $game_map.metadata&.has_flag?("City") ||
+            ["Town", "City", "Village"].any? { |w| $game_map.name.include?(w) }
+  if is_town
+    next false if rand(100) >= 35
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1} is looking around the town with curiosity!"),
+      _INTL("{1} seems fascinated by all the people walking around."),
+      _INTL("{1} noticed a shop and seems interested in what's inside!"),
+      _INTL("{1} is enjoying the lively atmosphere of the town."),
+      _INTL("{1} is watching the other Pokémon walking with their trainers."),
+      _INTL("{1} got distracted by a delicious smell from somewhere nearby..."),
+      _INTL("{1} is looking at the buildings with wide eyes."),
+      _INTL("{1} seems to be enjoying the buzz of town life!"),
+      _INTL("{1} perked up when it heard music playing from a nearby building."),
+      _INTL("{1} is trotting along happily on the cobblestone path."),
+      _INTL("{1} seems to like watching the townspeople go about their day."),
+      _INTL("A child waved at {1} and it chirped back happily!"),
+      _INTL("{1} is sniffing the air... Something smells delicious nearby."),
+      _INTL("{1} stopped to look at its reflection in a shop window!")
+    ]
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Specific messages for mountain or high-altitude maps
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :mountain_map, proc { |pkmn, _random_val|
+  is_mountain = $game_map.metadata&.has_flag?("Mountain") ||
+                ["Mountain", "Peak", "Summit", "Cliff", "Ridge"].any? { |w| $game_map.name.include?(w) }
+  if is_mountain
+    if pkmn.hasType?(:FLYING)
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} is soaring happily on the mountain updrafts!"),
+        _INTL("{1} seems to love being this high up!"),
+        _INTL("{1} spread its wings wide and is enjoying the view!"),
+        _INTL("{1} looks like it wants to take off and fly from the summit!")
+      ]
+    else
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} is panting from the steep climb..."),
+        _INTL("{1} looked down from the cliff and got a little dizzy!"),
+        _INTL("{1} is amazed by the view from up here!"),
+        _INTL("{1} seems a bit nervous about the height."),
+        _INTL("{1} is being careful not to slip on the rocky path."),
+        _INTL("{1} is braving the thin mountain air alongside {2}!"),
+        _INTL("The wind is strong up here! {1} is holding its ground firmly."),
+        _INTL("{1} is impressed by how far it can see from this height!")
+      ]
+    end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Specific messages near water / lakes / rivers
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :lake_map, proc { |pkmn, _random_val|
+  is_water_area = $game_map.metadata&.has_flag?("Lake") ||
+                  ["Lake", "River", "Pond", "Falls", "Waterfall", "Harbor", "Port", "Dock"].any? { |w| $game_map.name.include?(w) }
+  if is_water_area
+    if pkmn.hasType?(:WATER)
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} is splashing around excitedly near the water!"),
+        _INTL("{1} dove right into the water and is swimming in circles!"),
+        _INTL("{1} looks totally at home near the water."),
+        _INTL("{1} is happily watching the water shimmer."),
+        _INTL("{1} keeps looking at the water longingly. It wants to jump in!")
+      ]
+    else
+      FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_MUSIC)
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+      messages = [
+        _INTL("{1} is watching the water ripple peacefully."),
+        _INTL("{1} dipped a toe into the water and shivered!"),
+        _INTL("{1} seems relaxed by the sound of flowing water."),
+        _INTL("{1} is watching fish Pokémon swim beneath the surface."),
+        _INTL("{1} is staring at its own reflection in the water."),
+        _INTL("{1} is enjoying the cool breeze coming off the water."),
+        _INTL("{1} almost fell in the water! That was close!")
+      ]
+    end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Fog weather dialogue
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :fog_weather, proc { |pkmn, _random_val|
+  if :Fog == $game_screen.weather_type
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_ELIPSES)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    if pkmn.hasType?(:GHOST) || pkmn.hasType?(:FAIRY)
+      messages = [
+        _INTL("{1} seems to enjoy the foggy atmosphere."),
+        _INTL("{1} is dancing playfully through the fog."),
+        _INTL("{1} keeps appearing and disappearing in the mist!"),
+        _INTL("{1} seems right at home in this eerie fog."),
+        _INTL("The fog seems to swirl around {1} mysteriously.")
+      ]
+    else
+      messages = [
+        _INTL("{1} can barely see through the thick fog!"),
+        _INTL("{1} is sticking very close to {2}. It can't see well in this fog."),
+        _INTL("{1} bumped into something in the fog!"),
+        _INTL("{1} seems disoriented by the dense fog."),
+        _INTL("{1} is peering through the fog nervously."),
+        _INTL("{1} nearly walked right past {2} in this fog!"),
+        _INTL("{1} seems a bit creeped out by the fog...")
+      ]
+    end
+    pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
+    next true
+  end
+})
+#-------------------------------------------------------------------------------
+# Shiny-specific dialogue - special reaction for shiny Pokémon
+#-------------------------------------------------------------------------------
+EventHandlers.add(:following_pkmn_talk, :shiny_pokemon, proc { |pkmn, _random_val|
+  if pkmn.shiny?
+    # Only trigger 15% of the time so it's a subtle flavour
+    next false if rand(100) >= 15
+    FollowingPkmn.animation(FollowingPkmn::ANIMATION_EMOTE_HAPPY)
+    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20])
+    messages = [
+      _INTL("{1}'s unusual coloring is drawing attention from passersby!"),
+      _INTL("{1}'s body sparkled for a brief moment in the light!"),
+      _INTL("{1} seems to glow with a special radiance!"),
+      _INTL("A trainer passing by noticed {1}'s rare coloring and looked amazed!"),
+      _INTL("{1}'s unique colors shimmer beautifully!"),
+      _INTL("{1} seems proud of its unusual appearance!"),
+      _INTL("{1} sparkled! Its rare coloring really stands out.")
+    ]
     pbMessage(_INTL(messages.sample, pkmn.name, $player.name))
     next true
   end

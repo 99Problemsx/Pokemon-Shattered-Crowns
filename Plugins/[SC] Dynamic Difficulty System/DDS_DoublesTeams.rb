@@ -177,11 +177,10 @@ module DynamicDifficulty
         core: [:WHIMSICOTT, :GARCHOMP, :INCINEROAR, :RILLABOOM, :DRAGAPULT, :SYLVEON],
         lead: [:WHIMSICOTT, :DRAGAPULT],
       },
-    ]
 
-    #=========================================================================
-    # TIER 1 — Beginner doubles: simple pairs, no synergy required
-    #=========================================================================
+      #=========================================================================
+      # TIER 1 — Beginner doubles: simple pairs, no synergy required
+      #=========================================================================
     {
       name: "Bug Buddies",
       tier: 1,
@@ -270,6 +269,7 @@ module DynamicDifficulty
       core: [:MIGHTYENA, :KROKOROK, :HAUNTER, :GOLBAT, :METANG, :PUPITAR],
       lead: [:MIGHTYENA, :KROKOROK],
     },
+    ]
 
     #=========================================================================
     # Lookup

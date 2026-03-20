@@ -42,25 +42,6 @@ module NightTilesetHelper
 end
 
 # ===============================================================================
-# AnimatedBitmap Override - Load night variants
-# ===============================================================================
-
-class AnimatedBitmap
-  alias night_tileset_initialize initialize
-  
-  def initialize(file, hue = 0)
-    # Check for night variant
-    if file.is_a?(String)
-      night_file = NightTilesetHelper.get_night_variant(file)
-      file = night_file if night_file
-    end
-    
-    # Call original initialize
-    night_tileset_initialize(file, hue)
-  end
-end
-
-# ===============================================================================
 # Tileset and Autotile Loading Functions Override
 # ===============================================================================
 
@@ -215,8 +196,8 @@ class Game_Event
   def character_name
     original_name = night_tileset_character_name
     
-    # Check for _n variant at night
-    if original_name && !original_name.empty? && PBDayNight.isNight?
+    # Check for _n variant at night (respects per-map disable flag)
+    if original_name && !original_name.empty? && PBDayNight.isNight? && NightTilesetHelper.night_tileset_enabled?
       night_name = original_name + "_n"
       if pbResolveBitmap("Graphics/Characters/#{night_name}")
         return night_name

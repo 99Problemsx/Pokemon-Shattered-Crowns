@@ -1,0 +1,19 @@
+# ===============================================================================
+# Dynamic Lighting System — Bulk Light Definitions
+# ===============================================================================
+# Format: MAP_ID,X,Y,TYPE,RADIUS,PRESET keywords...
+#
+# TYPE:    circle, rect, cone
+# RADIUS:  Size in pixels (0 to use preset default)
+# PRESET:  (optional) Name from LIGHT_PRESETS: torch, streetlamp, campfire, etc.
+# Keywords (after preset, space-separated):
+#   Colors:     red blue yellow green orange warm color:R,G,B
+#   Flags:      day flicker embers reflect beam
+#   Parameters: pulse:candle intensity:0.8 group:my_group switch:42
+#               width:2 height:1 sync:my_sync on_hour:18 off_hour:6
+#
+# Examples:
+#   5,10,12,circle,48,torch
+#   5,14,8,circle,64,,warm flicker
+#   8,3,5,rect,0,,width:2 height:1 red day
+# ===============================================================================

@@ -94,9 +94,11 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
     shatter_path = Settings::SHATTER_GRAPHICS_PATH rescue path
     if pbResolveBitmap(shatter_path + "cursor_shatter")
       @actionButtonBitmap[:shatter] = AnimatedBitmap.new(shatter_path + "cursor_shatter")
+    elsif pbResolveBitmap(path + "cursor_shatter")
+      @actionButtonBitmap[:shatter] = AnimatedBitmap.new(path + "cursor_shatter")
     else
-      # Fallback: use the base path
-      @actionButtonBitmap[:shatter] = AnimatedBitmap.new(path + "cursor_shatter") rescue nil
+      # No cursor_shatter graphic found — leave as nil (handled by refreshSpecialActionButton)
+      @actionButtonBitmap[:shatter] = nil
     end
   end
 
@@ -120,8 +122,8 @@ end
 if defined?(Battle::Scene::PokemonDataBox)
   class Battle::Scene::PokemonDataBox
     alias shatter_draw_special_form_icon draw_special_form_icon
-    def draw_special_form_icon(battler, _x, _y)
-      shatter_draw_special_form_icon(battler, _x, _y)
+    def draw_special_form_icon
+      shatter_draw_special_form_icon
       # Could draw a crown shard icon when Shatter field is active
       # Placeholder for future sprite work
     end

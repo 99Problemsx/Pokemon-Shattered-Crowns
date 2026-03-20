@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" width="900" height="280">
+  <defs>
+    <!-- Gradient for CROWNS text (pink to purple/blue) -->
+    <linearGradient id="crownsGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d94fa0;stop-opacity:1" />
+      <stop offset="35%" style="stop-color:#c44aaf;stop-opacity:1" />
+      <stop offset="65%" style="stop-color:#9b5fc7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7b7fdb;stop-opacity:1" />
+    </linearGradient>
+    <!-- Subtle shadow for SHATTERED -->
+    <filter id="textShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- SHATTERED text - white, serif, small-caps style -->
+  <text x="450" y="120" 
+        font-family="'Times New Roman', 'Georgia', 'Garamond', serif" 
+        font-weight="400"
+        font-size="130" 
+        fill="#e8e4e8" 
+        text-anchor="middle" 
+        letter-spacing="8"
+        filter="url(#textShadow)">
+    <tspan font-size="140" font-weight="400">S</tspan><tspan font-size="105" font-weight="400">HATTERED</tspan>
+  </text>
+  
+  <!-- CROWNS text - gradient, serif, small-caps style -->
+  <text x="450" y="245" 
+        font-family="'Times New Roman', 'Georgia', 'Garamond', serif" 
+        font-weight="400"
+        font-style="normal"
+        font-size="130" 
+        fill="url(#crownsGradient)" 
+        text-anchor="middle" 
+        letter-spacing="10"
+        filter="url(#textShadow)">
+    <tspan font-size="140" font-weight="400">C</tspan><tspan font-size="105" font-weight="400">ROWNS</tspan>
+  </text>
+</svg>

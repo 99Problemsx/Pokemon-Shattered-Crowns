@@ -1,0 +1,40 @@
+Utilities.rb:93: [:WATERABSORB, :heal],      # Heals 25% HP
+Utilities.rb:95: [:STORMDRAIN, :boost_spa],  # +1 SpA
+Utilities.rb:98: [:VOLTABSORB, :heal],       # Heals 25% HP
+Utilities.rb:99: [:LIGHTNINGROD, :boost_spa], # +1 SpA
+Utilities.rb:100: [:MOTORDRIVE, :boost_speed], # +1 Speed
+Utilities.rb:103: [:FLASHFIRE, :boost_fire],  # Boosts Fire moves 1.5x
+Utilities.rb:107: [:SAPSIPPER, :boost_atk],   # +1 Attack
+Utilities.rb:110: [:EARTHEATER, :heal],       # Heals 25% HP (Gen 9)
+Utilities.rb:597: EARTHEATER: { ground_immune: true, heal: true },
+0_Move_Scorer.rb:2358: if user.hasActiveAbility?(:FLASHFIRE) && effective_type == :FIRE
+0_Move_Scorer.rb:2359: if defined?(PBEffects::FlashFire) && (user.effects[PBEffects::FlashFire] rescue false)
+Switch_Intelligence.rb:867: return 0.0 if [:VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE].include?(defender_ability) && move_type == :ELECTRIC
+Switch_Intelligence.rb:869: return 0.0 if [:WATERABSORB, :STORMDRAIN, :DRYSKIN].include?(defender_ability) && move_type == :WATER
+Switch_Intelligence.rb:871: return 0.0 if defender_ability == :FLASHFIRE && move_type == :FIRE
+Switch_Intelligence.rb:875: return 0.0 if defender_ability == :SAPSIPPER && move_type == :GRASS
+Switch_Intelligence.rb:877: return 0.0 if defender_ability == :EARTHEATER && move_type == :GROUND
+Tactical_Enhancements.rb:52: :FLASHFIRE, :WATERABSORB, :VOLTABSORB, :LIGHTNINGROD,
+Tactical_Enhancements.rb:53: :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN,
+Tactical_Enhancements.rb:54: :WELLBAKEDBODY, :EARTHEATER,
+Tactical_Enhancements.rb:81: when :FLASHFIRE, :WATERABSORB, :VOLTABSORB, :LIGHTNINGROD,
+Tactical_Enhancements.rb:82: :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN,
+Tactical_Enhancements.rb:83: :WELLBAKEDBODY, :EARTHEATER
+Threat_Assessment.rb:364: if [:SPEEDBOOST, :UNBURDEN, :MOTORDRIVE].include?(ability)
+Threat_Assessment.rb:394: if [:WELLBAKEDBODY, :EARTHEATER].include?(ability)
+Doubles_Coordination.rb:1017: :EARTHQUAKE => [:LEVITATE, :FLYINGTYPE, :AIRBALLOON, :TELEKINESIS, :EARTHEATER],
+Doubles_Coordination.rb:1018: :SURF => [:WATERABSORB, :DRYSKIN, :STORMDRAIN],
+Doubles_Coordination.rb:1019: :DISCHARGE => [:LIGHTNINGROD, :VOLTABSORB, :MOTORDRIVE],
+Doubles_Coordination.rb:1020: :HEATWAVE => [:FLASHFIRE, :WELLBAKEDBODY],
+Doubles_Strategy.rb:39: REDIRECTION_ABILITIES = [:LIGHTNINGROD, :STORMDRAIN]
+Custom_Content.rb:111: :VOLTABSORB         => -1.5, # Electric immunity + heal
+Custom_Content.rb:112: :WATERABSORB        => -1.5, # Water immunity + heal
+Custom_Content.rb:113: :FLASHFIRE          => -1.5, # Fire immunity + boost
+Custom_Content.rb:114: :SAPSIPPER          => -1.5, # Grass immunity + Atk boost
+Custom_Content.rb:115: :STORMDRAIN         => -2.0, # Water immunity + SpAtk boost
+Custom_Content.rb:116: :LIGHTNINGROD       => -2.0, # Electric immunity + SpAtk boost
+Custom_Content.rb:117: :MOTORDRIVE         => -1.8, # Electric immunity + Speed boost
+Custom_Content.rb:149: :EARTHEATER         => -2.0, # Ground immunity + heal
+Custom_Content.rb:183: :MOTORDRIVE         => 1.5,  # +1 Speed on Electric hit
+Custom_Content.rb:218: :LIGHTNINGROD       => 1.5,  # Redirect Electric
+Custom_Content.rb:219: :STORMDRAIN         => 1.5,  # Redirect Water
