@@ -88,7 +88,7 @@ if defined?(AdvancedAI)
         # Crit boost in Dragon field: encourage high-crit moves
         #-----------------------------------------------------------------------
         if effects[:crit_boost]
-          high_crit_moves = [:CROSSPOISON, :NIGHTSLASH, :STONEEMGE, :PSYCHOCUT,
+          high_crit_moves = [:CROSSPOISON, :NIGHTSLASH, :STONEEDGE, :PSYCHOCUT,
                              :LEAFBLADE, :RAZORWIND, :SLASH, :AEROBLAST, :SPACIALREND]
           score += 8 if high_crit_moves.include?(move.id)
         end

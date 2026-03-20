@@ -345,7 +345,7 @@ Battle::AI::Handlers::PokemonItemEffectScore.add(:BURNHEAL,
                                battler.opponent_side_has_function?(
             "DoublePowerIfTargetStatusProblem"         # Hex
           )
-          if wants_status && !foe_perfers_status 
+          if wants_status && !foe_prefers_status
             score += 20
             PBDebug.log_score_change(score - old_score, "curing #{logName}'s #{statusName} status")
           else
@@ -862,7 +862,7 @@ Battle::AI::Handlers::PokemonItemEffectScore.add(:ELIXIR,
       tryScore = Battle::AI::Handlers.pokemon_item_score(tryItem, score, pkmn, battler, i, ai, battle)
       tryScores.push(tryScore - old_score) if tryScore > Battle::AI::ITEM_USELESS_SCORE
     end
-    score = tryScores.sum
+    score = old_score + tryScores.sum
     next score
   }
 )

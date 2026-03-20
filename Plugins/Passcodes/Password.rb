@@ -19,6 +19,8 @@ module PasswordModule
     SuperHardMode: 96,
     NoCash: 183,
     Hoarder: 33,
+    FeliStarter: 92,
+    IChooseYou: 93,
     Monotype: 81
   }
 
@@ -60,7 +62,7 @@ class Passwords
       $bag.add(:TIMIDMINT,5)
       $bag.add(:HASTYMINT,5)
       $bag.add(:JOLLYMINT,5)
-      $bag.add(:NAIVEYMINT,5)
+      $bag.add(:NAIVEMINT,5)
       $bag.add(:SERIOUSMINT,5)
     end
   end
@@ -234,6 +236,8 @@ class PasswordEntering
           Passwords.SuperHardMode
         when "TRADEEXPERT"
           Passwords.Tradeexpert
+        when "NOCASH"
+          Passwords.NoCash
         when "HOARDER"
           Passwords.Hoarder
         else

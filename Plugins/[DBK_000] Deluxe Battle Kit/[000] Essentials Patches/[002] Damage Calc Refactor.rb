@@ -494,8 +494,8 @@ class Battle::AI::AIMove
         next if !@ai.battle.pbCheckGlobalAbility(ability)
         category = (i < 2) ? physicalMove?(calc_type) : specialMove?(calc_type)
         category = !category if i.odd? && @ai.battle.field.effects[PBEffects::WonderRoom] > 0
-        mult = (i.even?) ? multipliers[:attack_multiplier] : multipliers[:defense_multiplier]
-        mult *= 0.75 if !user.has_active_ability?(ability) && category
+        key = (i.even?) ? :attack_multiplier : :defense_multiplier
+        multipliers[key] *= 0.75 if !user.has_active_ability?(ability) && category
       end
     end
   end
@@ -638,7 +638,7 @@ class Battle::AI::AIMove
         if calc_type == :ELECTRIC
           multipliers[:power_multiplier] *= terrain_multiplier if user.battler.affectedByTerrain?
         elsif function_code == "IncreasePowerInElectricTerrain"
-          multipliers[:power_multiplier] *= 1.5 if user_battler.affectedByTerrain?
+          multipliers[:power_multiplier] *= 1.5 if user.battler.affectedByTerrain?
         end
       when :Grassy
         multipliers[:power_multiplier] *= terrain_multiplier if calc_type == :GRASS && user.battler.affectedByTerrain?
@@ -877,7 +877,7 @@ class Battle::AI::AIMove
       return -1 if crit_stage < 0
     end
     if target.item_active?
-      crit_stage = Battle::ItemEffects.triggerCriticalCalcFromTarget(user_battler.item,
+      crit_stage = Battle::ItemEffects.triggerCriticalCalcFromTarget(target_battler.item,
          user_battler, target_battler, crit_stage)
       return -1 if crit_stage < 0
     end

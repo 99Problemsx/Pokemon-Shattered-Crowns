@@ -66,8 +66,8 @@ class Phenomenon
       for y in y_range[0]..y_range[1]
         unless blocked_tiles.nil?
           next if blocked_tiles[:x] && blocked_tiles[:x].include?(x)
-          next if blocked_tiles[:y] && blocked_tiles[:x].include?(y)
-          next if blocked_tiles[:tiles] && blocked_tiles[:x].include?([x, y])
+          next if blocked_tiles[:y] && blocked_tiles[:y].include?(y)
+          next if blocked_tiles[:tiles] && blocked_tiles[:tiles].include?([x, y])
         end
         terrain_tag = $game_map.terrain_tag(x, y)
         if hasGrass && terrain_tag.id == :Grass

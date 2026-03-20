@@ -17,7 +17,7 @@ class Battle::Scene::Animation
       case poke
       when Pokemon
         poke.species_data.apply_dynamax_metrics_to_sprite(@pictureSprites[sprite], 1)
-        @pictureSprites[sprite].set_dynamax_pattern(pkmn.species_data.id, true)
+        @pictureSprites[sprite].set_dynamax_pattern(poke.species_data.id, true)
       when Hash
         species_data = GameData::Species.get_species_form(poke[:species], poke[:form])
         data = [species_data.species, species_data.form]

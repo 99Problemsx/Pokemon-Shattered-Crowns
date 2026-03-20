@@ -133,7 +133,11 @@ module GameData
     end
     
     def self.get_active
-      @active_quests.map { |q| @quests[q[:id]].merge(progress: q) }
+      @active_quests.filter_map { |q|
+        quest = @quests[q[:id]]
+        next nil unless quest
+        quest.merge(progress: q)
+      }
     end
   end
   
@@ -293,7 +297,7 @@ module SCScripts
       $PokemonGlobal.sc_active_quests = GameData::Quest.active_quests
       $PokemonGlobal.sc_completed_quests = GameData::Quest.completed_quests
     end
-    
+
     def self.load
       if $PokemonGlobal.sc_active_quests
         GameData::Quest.active_quests = $PokemonGlobal.sc_active_quests
@@ -303,4 +307,11 @@ module SCScripts
       end
     end
   end
+end
+
+# Register save/load hooks so quest progress persists across sessions
+SaveData.register(:sc_quest_data) do
+  save_value { SCScripts::QuestSaveData.save; nil }
+  load_value { |_value| SCScripts::QuestSaveData.load }
+  new_game_value { nil }
 end

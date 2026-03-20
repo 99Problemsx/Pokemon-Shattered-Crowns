@@ -168,20 +168,15 @@ module BoxAutoSortOverride
   end
 end
 
-# Wait briefly and then override ALL storage classes
-Thread.new do
-  sleep(2) # Wait 2 seconds for all plugins to load
-  
-  # Standard Storage Screen
-  if defined?(PokemonStorageScreen)
+# Override ALL storage classes after plugins finish loading
+EventHandlers.add(:on_game_map_setup, :box_auto_sort_prepend, proc {
+  if defined?(PokemonStorageScreen) && !PokemonStorageScreen.ancestors.include?(BoxAutoSortOverride)
     PokemonStorageScreen.prepend(BoxAutoSortOverride)
   end
-  
-  # BW Storage Screen
-  if defined?(PokemonStorageScreenBW)
+  if defined?(PokemonStorageScreenBW) && !PokemonStorageScreenBW.ancestors.include?(BoxAutoSortOverride)
     PokemonStorageScreenBW.prepend(BoxAutoSortOverride)
   end
-end
+})
 
 # =============================================================================
 # Debug Commands for Testing

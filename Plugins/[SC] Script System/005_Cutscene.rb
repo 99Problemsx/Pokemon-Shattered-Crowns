@@ -38,8 +38,9 @@ module GameData
       if defined?(StoryChoices) && StoryChoices.enabled?
         choice_name = "#{name}_choice".to_sym
         if @cutscenes.key?(choice_name)
+          original_name = name
           name = choice_name
-          SCScripts.log("Story Choice Mode: Redirecting '#{name}' to '#{choice_name}'")
+          SCScripts.log("Story Choice Mode: Redirecting '#{original_name}' to '#{choice_name}'")
         end
       end
 

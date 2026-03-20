@@ -317,7 +317,7 @@ Battle::AI::Handlers::BattlerItemEffectScore.add(:ABILITYURGE,
         :ORICHALCUMPULSE => :Sun,
         :DRIZZLE         => :Rain,
         :SNOWWARNING     => :Hail,
-        :SANDSTREAM      => :Sandstream,
+        :SANDSTREAM      => :Sandstorm,
         :DESOLATELAND    => :HarshSun,
         :PRIMORDIALSEA   => :HeavyRain,
         :DELTASTREAM     => :StrongWinds
@@ -447,7 +447,7 @@ Battle::AI::Handlers::BattlerItemEffectScore.add(:ABILITYURGE,
           if battle.field.terrain != :None
             value = ai.get_score_for_terrain(battle.field.terrain, battler)
             (opposes) ? score += value : score -= value
-            weatherName = GameData::BattleTerrain.get(battle.field.terrain).name
+            terrainName = GameData::BattleTerrain.get(battle.field.terrain).name
             PBDebug.log_score_change(score - old_score, "clearing #{terrainName} Terrain")
           end
         end

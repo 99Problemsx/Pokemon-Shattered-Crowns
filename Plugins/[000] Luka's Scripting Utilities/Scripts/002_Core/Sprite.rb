@@ -14,7 +14,7 @@ class ::Sprite
     view_h = large ? viewport.height * 1.5 : viewport.height
 
     !(apparent_x + apparent_width  < view_x - 64 ||
-      apparent_y + apparent_height < view_x - 64 ||
+      apparent_y + apparent_height < view_y - 64 ||
       apparent_x > view_x + view_w + 64 ||
       apparent_y > view_y + view_h + 64)
   end

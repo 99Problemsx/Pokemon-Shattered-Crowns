@@ -10,7 +10,7 @@ class Battle
   alias stolen_init initialize
   def initialize(*args)
     stolen_init(*args)
-    @stolenItems = [Array.new(@party1.length, []), Array.new(@party2.length, [])]
+    @stolenItems = [Array.new(@party1.length) { [] }, Array.new(@party2.length) { [] }]
     @caughtPartyIndicies = []
   end
 end

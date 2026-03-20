@@ -7,16 +7,20 @@ class Battle
   # Override storage specifically for raid battles
   alias raid_fix_pbStorePokemon pbStorePokemon if method_defined?(:pbStorePokemon)
   def pbStorePokemon(pkmn)
-    # In raid battles, force normal storage behavior
+    # In raid battles, use the default storage logic
     if @raid
-      # Check if party has space
       if $player.party.length < Settings::MAX_PARTY_SIZE
-        return true  # Allow storage in party
+        $player.party.push(pkmn)
+        return true
       else
-        return false # Party full, will go to PC
+        # Party full — store to PC via original method
+        if respond_to?(:raid_fix_pbStorePokemon)
+          return raid_fix_pbStorePokemon(pkmn)
+        end
+        return false
       end
     end
-    
+
     # For non-raid battles, use the original method
     if respond_to?(:raid_fix_pbStorePokemon)
       return raid_fix_pbStorePokemon(pkmn)

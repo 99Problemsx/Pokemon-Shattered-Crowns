@@ -36,7 +36,7 @@ module DynamicDifficulty
       matching = entries.select do |s|
         s[:tier] == tier &&
           (s[:form] || 0) == form &&
-          (s[:format] || :singles) == format || (s[:format] == :any)
+          ((s[:format] || :singles) == format || s[:format] == :any)
       end
 
       # Relax format filter if nothing found

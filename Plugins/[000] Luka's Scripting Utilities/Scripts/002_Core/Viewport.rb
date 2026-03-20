@@ -36,7 +36,7 @@ class ::Viewport
   #  removes any applied color
   #-----------------------------------------------------------------------------
   def reset_color
-    color = Color.new(0, 0, 0, 0)
+    self.color = Color.new(0, 0, 0, 0)
   end
   #-----------------------------------------------------------------------------
   #  returns the viewport metrics

@@ -29,7 +29,7 @@ Battle::AI::Handlers::ItemRanking.add(:GRISEOUSCORE,
 Battle::AI::Handlers::ItemRanking.add(:LEGENDPLATE,
   proc { |item, score, battler, ai|
     next score if battler.battler.isSpecies?(:ARCEUS) &&
-                  battler.target.has_move_with_function?("TypeDependsOnUserPlate")
+                  battler.has_move_with_function?("TypeDependsOnUserPlate")
     next 0
   }
 )

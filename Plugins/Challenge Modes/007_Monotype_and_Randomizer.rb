@@ -25,7 +25,7 @@ class Battle
     return false if !__monotype__pbCanSwitchIn?(idxBattler, idxParty, partyScene)
     
     if ChallengeModes.on?(:MONOTYPE_MODE)
-      pokemon = @sides[idxBattler].party[idxParty]
+      pokemon = pbParty(idxBattler)[idxParty]
       if pokemon && !ChallengeModes.valid_monotype_battle?(pokemon)
         return false
       end
@@ -171,12 +171,14 @@ end
 # Reset challenge data including new modes
 #-------------------------------------------------------------------------------
 module ChallengeModes
-  alias __new_modes__reset reset unless method_defined?(:__new_modes__reset)
-  def reset
-    __new_modes__reset
-    return if !$PokemonGlobal
-    $PokemonGlobal.challenge_monotype_type = nil
-    $PokemonGlobal.challenge_randomizer_seed = nil
-    $PokemonGlobal.challenge_randomizer_map = nil
+  class << self
+    alias __new_modes__reset reset
+    def reset
+      __new_modes__reset
+      return if !$PokemonGlobal
+      $PokemonGlobal.challenge_monotype_type = nil
+      $PokemonGlobal.challenge_randomizer_seed = nil
+      $PokemonGlobal.challenge_randomizer_map = nil
+    end
   end
-end 
+end

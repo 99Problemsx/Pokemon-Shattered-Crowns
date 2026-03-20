@@ -273,6 +273,7 @@ module ChallengeModes
     
     # Get list of possible Pokemon
     possible_species = []
+    regional_dex_list = pbLoadRegionalDexes[0]
     GameData::Species.each do |species|
       next if species.form != 0  # Only base forms
       next if species.mega_stone || species.mega_move  # No mega evolutions
@@ -290,9 +291,6 @@ module ChallengeModes
         next if (species_bst - original_bst).abs > 100  # BST difference threshold
       end
       
-      # Restrict to Regional Dex (Dex 0)
-      # This fixes issues where PBS has extra Pokemon (like Gen 9) but no graphics for them
-      regional_dex_list = pbLoadRegionalDexes[0]
       if regional_dex_list
         next if !regional_dex_list.include?(species.species)
       end
@@ -302,7 +300,7 @@ module ChallengeModes
     
     # Select random species using seeded randomization
     srand($PokemonGlobal.challenge_randomizer_seed + original_species.to_s.hash)
-    randomized_species = possible_species.sample
+    randomized_species = possible_species.sample || original_species
     srand()  # Reset random seed
     
     # Store the mapping for consistency

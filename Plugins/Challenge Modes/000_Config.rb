@@ -130,6 +130,21 @@ module ChallengeModes
   ITEM_RESTRICTIONS_CONFIG = {
     :banned_x_items => true,          # Ban X-Items (X Attack, X Defense, etc.)
     :max_revives_per_battle => 2,     # Max Revives/Max Revives per battle
-    :max_full_restores_per_battle => 1 # Max Full Restores per battle
+    :max_full_restores_per_battle => 1, # Max Full Restores per battle
+    :banned_items => [
+      :XATTACK, :XDEFEND, :XSPATK, :XSPDEF, :XSPEED, :XACCURACY,
+      :XATTACK2, :XDEFEND2, :XSPATK2, :XSPDEF2, :XSPEED2, :XACCURACY2,
+      :XATTACK3, :XDEFEND3, :XSPATK3, :XSPDEF3, :XSPEED3, :XACCURACY3,
+      :XATTACK6, :XDEFEND6, :XSPATK6, :XSPDEF6, :XSPEED6, :XACCURACY6,
+      :DIREHIT, :GUARDSPEC
+    ],
+    :limited_items => [:REVIVE, :MAXREVIVE, :FULLRESTORE, :MAXHONEY, :REVIVALHERB],
+    :item_limits => {
+      :REVIVE        => 2,
+      :MAXREVIVE     => 2,
+      :MAXHONEY      => 2,
+      :REVIVALHERB   => 2,
+      :FULLRESTORE   => 1
+    }
   }
 end

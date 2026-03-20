@@ -322,7 +322,7 @@ def pbDynamaxAutoPositionAll(spriteStyle = 0)
     end
     if bitmap2&.bitmap
       metrics.dmax_front_sprite[0] = 0
-      metrics.dmax_front_sprite[1] = ((bitmap2.height - (findBottom(bitmap2.bitmap) + 1)) / 2).foor
+      metrics.dmax_front_sprite[1] = ((bitmap2.height - (findBottom(bitmap2.bitmap) + 1)) / 2).floor
       metrics.dmax_front_sprite[1] += (metrics.dmax_front_sprite[1] * 1.5).round - metrics.dmax_front_sprite[1]
       metrics.dmax_front_sprite[1] += 6
     end

@@ -43,7 +43,7 @@ EventHandlers.add(:on_game_map_setup, :box_auto_sort_integration,
             end
           when :SORT
             # Our Sort feature
-            AutoSort.show_sort_dialog(@scene, @storage)
+            BoxAutoSort.show_sort_menu(@storage, @storage.currentBox)
           when :WALL
             papers = @storage.availableWallpapers
             index = 0
@@ -74,7 +74,7 @@ EventHandlers.add(:on_game_map_setup, :box_auto_sort_integration,
             destbox = @scene.pbChooseBox(_INTL("Jump to which Box?"))
             @scene.pbJumpToBox(destbox) if destbox >= 0
           when 1  # Sort
-            AutoSort.show_sort_dialog(@scene, @storage)
+            BoxAutoSort.show_sort_menu(@storage, @storage.currentBox)
           when 2  # Wallpaper
             papers = @storage.availableWallpapers
             index = 0

@@ -139,7 +139,7 @@ Battle::AI::Handlers::BattlerItemEffectScore.add(:DIREHIT,
         end
       end
       PBDebug.log_score_change(score - old_score, "raising #{battler.name}'s critical hit ratio")
-    elsif desire_mul < 0
+    elsif desire_mult < 0
       score += 5
       PBDebug.log_score_change(score - old_score, "#{battler.name} doesn't benefit from raised critical hit ratio")
     else

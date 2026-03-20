@@ -213,7 +213,7 @@ module DynamicDifficulty
         faint_ratio = player_fainted.to_f / [player_total, 1].max
         opp_survival = 1.0 - (opponent_fainted.to_f / [opponent_total, 1].max)
         raw = -((faint_ratio * 2 + opp_survival * 2).round)
-        [raw, DynamicDifficulty::DOMINANCE_LOSS_CAP].min
+        [raw, DynamicDifficulty::DOMINANCE_LOSS_CAP].max
       end
     end
 

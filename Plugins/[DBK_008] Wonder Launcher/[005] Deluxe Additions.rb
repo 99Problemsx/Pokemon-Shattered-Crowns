@@ -117,7 +117,7 @@ MidbattleHandlers.add(:midbattle_triggers, "setLP",
       trainerName = battle.pbGetOwnerName(index)
       maxPoints = Settings::WONDER_LAUNCHER_MAX_POINTS
       oldPoints = battle.launcherPoints[side][idxTrainer]
-      newPoints = oldPoints += pnts
+      newPoints = oldPoints + pnts
       if newPoints > maxPoints
         newPoints = maxPoints
       elsif newPoints < 0

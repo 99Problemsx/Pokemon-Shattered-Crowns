@@ -30,7 +30,7 @@ module ModularMenu
   # function to add a conditional for an existing entry
   #-----------------------------------------------------------------------------
   def self.add_condition(ref, &block)
-    raise "No condition code block defined for Modular Menu entry: #{name}." if block.nil?
+    raise "No condition code block defined for Modular Menu entry: #{ref}." if block.nil?
     @@available[ref] = block
   end
   #-----------------------------------------------------------------------------

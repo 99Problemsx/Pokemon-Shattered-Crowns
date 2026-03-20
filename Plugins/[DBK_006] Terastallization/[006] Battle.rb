@@ -12,8 +12,8 @@ class Battle
   def initialize(*args)
     tera_initialize(*args)
     @boosted_tera_types = [
-       [[]] * (@player ? @player.length : 1),
-       [[]] * (@opponent ? @opponent.length : 1)
+       Array.new(@player ? @player.length : 1) { [] },
+       Array.new(@opponent ? @opponent.length : 1) { [] }
     ]
     @terastallize = [
        [-1] * (@player ? @player.length : 1),

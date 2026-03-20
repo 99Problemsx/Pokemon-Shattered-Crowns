@@ -159,8 +159,12 @@ class Battle::Move
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :BUG
       effects = (CrownShatter::SHATTER_FIELDS[:BUG] || {})[:effects] || {}
       if effects[:max_multihit] && hits > 1
-        # Multi-hit moves hit maximum (5 for most, or the move-specific max)
-        hits = [hits, 5].max
+        # Only boost variable multi-hit moves (2-5 hit range) to max hits
+        # Don't change fixed-count moves like Double Kick (2), Triple Axel (3), etc.
+        if self.function_code == "HitTwoToFiveTimes" ||
+           self.is_a?(Battle::Move::HitTwoToFiveTimes)
+          hits = 5
+        end
       end
     end
     return hits
@@ -255,7 +259,7 @@ end
 class Battle
   alias shatter_pbCanSwitch? pbCanSwitch?
   def pbCanSwitch?(idxBattler, idxParty = -1, showMessages = false)
-    if shatterFieldActive? && shatterFieldType == :FIGHTING
+    if shatterFieldActive? && shatterFieldType == :FIGHTING && idxParty < 0
       effects = (CrownShatter::SHATTER_FIELDS[:FIGHTING] || {})[:effects] || {}
       if effects[:block_switching]
         pbDisplay(_INTL("The Arena Field prevents switching!")) if showMessages
@@ -317,7 +321,7 @@ class Battle::Move
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :NORMAL
       effects = (CrownShatter::SHATTER_FIELDS[:NORMAL] || {})[:effects] || {}
       if effects[:typeless_moves]
-        return nil  # Typeless — no STAB, no effectiveness
+        return :QMARKS  # Typeless — no STAB, no effectiveness
       end
     end
     return ret

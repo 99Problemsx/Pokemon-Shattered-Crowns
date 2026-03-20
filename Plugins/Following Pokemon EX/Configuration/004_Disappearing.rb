@@ -50,8 +50,8 @@ EventHandlers.add(:on_enter_map, :clear_following_pkmn_height_cache, proc {
 #-------------------------------------------------------------------------------
 EventHandlers.add(:following_pkmn_appear, :map_flag_remove, proc { |pkmn|
   metadata = $game_map.metadata
-  # Don't follow if map has the approriate flag to show
-  next true if metadata && metadata.has_flag?("HideFollowingPkmn")
+  # Don't follow if map has the approriate flag to hide
+  next false if metadata && metadata.has_flag?("HideFollowingPkmn")
 })
 #-------------------------------------------------------------------------------
 EventHandlers.add(:following_pkmn_appear, :surfing, proc { |pkmn|

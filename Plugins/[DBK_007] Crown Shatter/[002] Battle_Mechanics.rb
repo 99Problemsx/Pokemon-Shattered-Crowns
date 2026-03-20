@@ -347,6 +347,9 @@ class Battle
       if fainted_types.length > 0
         allBattlers.each do |b|
           next if b.fainted?
+          # Check if any fainted type is super effective against this battler
+          dominated = fainted_types.any? { |t| Effectiveness.super_effective_type?(t, *b.pbTypes(true)) }
+          next unless dominated
           damage = [b.totalhp / fraction, 1].max
           b.pbReduceHP(damage, false)
           pbDisplay(_INTL("{1} is haunted by lingering spirits!", b.pbThis))

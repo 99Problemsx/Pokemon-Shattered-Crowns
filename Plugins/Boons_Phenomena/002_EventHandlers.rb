@@ -28,7 +28,7 @@ EventHandlers.add(
       elsif Phenomenon.waiting?
         # echoln 'Phenomenon.waiting?'
         Phenomenon.generate if Graphics.frame_count >= Phenomenon.instance.timer
-      elsif Phenomenon.instance.nil? && Phenomenon.types.size && (PhenomenonConfig::Switch == -1 || $game_switches[PhenomenonConfig::Switch])
+      elsif Phenomenon.instance.nil? && !Phenomenon.types.empty? && (PhenomenonConfig::Switch == -1 || $game_switches[PhenomenonConfig::Switch])
         # echoln 'Phenomenon.instance.nil? && Phenomenon.types.size && (PhenomenonConfig::Switch == -1 || $game_switches[PhenomenonConfig::Switch]'
         Phenomenon.instance = PhenomenonInstance.new(Phenomenon.types)
       end

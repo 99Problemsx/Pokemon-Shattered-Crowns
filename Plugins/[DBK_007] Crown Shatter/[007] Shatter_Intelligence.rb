@@ -33,7 +33,7 @@ module AdvancedAI
       # Decision thresholds
       return true if score >= SHATTER_GUARANTEE_SCORE
       return true if score >= SHATTER_STRONG_SCORE && rand(100) < 80
-      remaining = battle.pbTeamAllFainted?(user.index) rescue 3
+      remaining = battle.pbAbleTeamCounts(user.idxOwnSide).length rescue 3
       return true if score >= SHATTER_MODERATE_SCORE && remaining <= 2
       return false
     end
@@ -292,7 +292,7 @@ module AdvancedAI
       else
         score -= 10  # Current field is fine or neutral — don't waste Shatter counter
       end
-      score.clamp(0, 20)
+      score = score.clamp(-10, 20)
     end
   end
 end

@@ -48,7 +48,7 @@ end
 class Pokemon
   alias legacy_learn_move learn_move
   def learn_move(move_id)
-    if GameData::Move.exists?(move_id) && !@moves.include?(move_id)
+    if GameData::Move.exists?(move_id) && !hasMove?(move_id)
       legacy_data[:move_count] += 1
     end
     legacy_learn_move(move_id)

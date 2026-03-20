@@ -24,7 +24,7 @@ module Compiler
   
   alias memento_validate_compiled_trainer validate_compiled_trainer
   def validate_compiled_trainer(hash)
-    memento_validate_compiled_trainer
+    memento_validate_compiled_trainer(hash)
     hash[:pokemon].each do |pkmn|
       if pkmn[:size] && pkmn[:size] > 255
         raise _INTL("Bad size: {1} (must be 0-255).\n{2}", pkmn[:size], FileLineData.linereport)

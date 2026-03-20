@@ -95,7 +95,7 @@ class Battle::AI
         end
       end
       # Immunity because of Commander
-      return true if target.has_active_ability?(:COMMANDER) && target.battler.isCommander?
+      return true if @target.has_active_ability?(:COMMANDER) && @target.battler.isCommander?
       # Good As Gold Pokémon immunity to status moves
       return true if @move.statusMove?  && @target.has_active_ability?(:GOODASGOLD) && 
                                           !(@user.has_active_ability?(:MYCELIUMMIGHT))
@@ -784,7 +784,7 @@ Battle::AI::Handlers::GeneralMoveScore.add(:electrocuting_move_when_drowsy,
 #===============================================================================
 Battle::AI::Handlers::GeneralMoveAgainstTargetScore.add(:thawing_move_against_frozen_target,
   proc { |score, move, user, target, ai, battle|
-    if ai.trainer.medium_skill? && [:FROZEN, :FROSTBITE].include?(user.status)
+    if ai.trainer.medium_skill? && [:FROZEN, :FROSTBITE].include?(target.status)
       if move.rough_type == :FIRE || (Settings::MECHANICS_GENERATION >= 6 && move.move.thawsUser?)
         old_score = score
         score -= 20
@@ -802,7 +802,7 @@ Battle::AI::Handlers::GeneralMoveAgainstTargetScore.add(:electrocuting_move_agai
   proc { |score, move, user, target, ai, battle|
     drowsy_statuses = [:DROWSY]
     drowsy_statuses.push(:SLEEP) if Settings::ELECTROCUTE_MOVES_CURE_SLEEP
-    if ai.trainer.medium_skill? && drowsy_statuses.include?(user.status)
+    if ai.trainer.medium_skill? && drowsy_statuses.include?(target.status)
       if move.move.electrocuteUser? 
         old_score = score
         score -= 20

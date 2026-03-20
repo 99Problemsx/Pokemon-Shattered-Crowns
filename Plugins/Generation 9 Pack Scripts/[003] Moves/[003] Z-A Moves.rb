@@ -21,10 +21,7 @@ end
 # Water Shuriken
 #===============================================================================
 class Battle::Move::HitTwoToFiveTimesOrThreeForAshGreninja < Battle::Move::HitTwoToFiveTimes
-  def multiHitMove?
-    return false if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja
-    return super
-  end
+  def multiHitMove?; return true; end
 
   def pbNumHits(user, targets)
     return 1 if user.isSpecies?(:GRENINJA) && user.form == 3 # Mega Greninja

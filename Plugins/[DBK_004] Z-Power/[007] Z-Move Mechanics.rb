@@ -116,7 +116,7 @@ MidbattleHandlers.add(:midbattle_global, :wild_zpower_battle,
           foe.stages[s.id] = 0 if foe.stages[s.id] > 0
         end
       end
-      battle.zMove[1][0] == -2
+      battle.zMove[1][0] = -2
       battle.noBag = false
       battle.disablePokeBalls = false
       battle.pbDisplayPaused(_INTL("{1}'s aura faded!\nIt may now be captured!", foe.pbThis))

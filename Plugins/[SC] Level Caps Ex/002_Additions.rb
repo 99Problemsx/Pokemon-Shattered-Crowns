@@ -247,8 +247,9 @@ module LevelCapsEX
   end
 
   def level_cap_mode
+    return 0 unless $game_variables
     lv_cap_mode = $game_variables[LEVEL_CAP_MODE_VARIABLE]
-    return lv_cap_mode if $game_variables && [1, 2, 3].include?(lv_cap_mode)
+    return lv_cap_mode if [1, 2, 3].include?(lv_cap_mode)
     return 0
   end
 

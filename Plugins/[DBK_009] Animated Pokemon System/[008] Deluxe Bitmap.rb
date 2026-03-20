@@ -166,7 +166,7 @@ class DeluxeBitmapWrapper
     end
     if !self.is_bitmap?
       @total_frames = @bitmaps.length
-      @temp_bmp = Bitmap.new(@bitmaps[0].width, @bitmaps[0].width)
+      @temp_bmp = Bitmap.new(@bitmaps[0].width, @bitmaps[0].height)
     end
   end
   

@@ -3,28 +3,29 @@
 # Limits the number of Pokémon Center visits per area/town
 #===============================================================================
 
+class PokemonGlobalMetadata
+  attr_accessor :challenge_healing_counter
+end
+
 module ChallengeModes
-  # Initialize healing counter hash if not exists
-  @healing_counter ||= {}
-  
   # Check if Limited Healing rule is active
   def self.limited_healing?
     return on?(:LIMITED_HEALING)
   end
-  
-  # Get healing count for current map
+
+  # Get healing count for current map (stored in $PokemonGlobal for save persistence)
   def self.get_healing_count(map_id = nil)
     map_id ||= $game_map.map_id
-    @healing_counter ||= {}
-    return @healing_counter[map_id] || 0
+    $PokemonGlobal.challenge_healing_counter ||= {}
+    return $PokemonGlobal.challenge_healing_counter[map_id] || 0
   end
-  
+
   # Increment healing count for current map
   def self.increment_healing_count(map_id = nil)
     map_id ||= $game_map.map_id
-    @healing_counter ||= {}
-    @healing_counter[map_id] ||= 0
-    @healing_counter[map_id] += 1
+    $PokemonGlobal.challenge_healing_counter ||= {}
+    $PokemonGlobal.challenge_healing_counter[map_id] ||= 0
+    $PokemonGlobal.challenge_healing_counter[map_id] += 1
   end
   
   # Check if healing is allowed on current map
@@ -45,7 +46,7 @@ module ChallengeModes
   
   # Reset healing counter (for new runs or debugging)
   def self.reset_healing_counter
-    @healing_counter = {}
+    $PokemonGlobal.challenge_healing_counter = {} if $PokemonGlobal
   end
 end
 

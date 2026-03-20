@@ -11,7 +11,7 @@ class Window_CommandPokemonColor < Window_CommandPokemon
     :Blue   => [Color.new(  0,  80, 160), Color.new(128, 192, 240)],
     :Green  => [Color.new( 96, 176,  72), Color.new(174, 208, 144)],
     :Orange => [Color.new(236,  88,   0), Color.new(255, 170,  51)],
-    :Purple => [Color.new(149,  33, 246), Color.new(255, 161, 326)],
+    :Purple => [Color.new(149,  33, 246), Color.new(255, 161, 226)],
     :Gray   => [Color.new(184, 184, 184), Color.new( 96,  96,  96)]
   }
 

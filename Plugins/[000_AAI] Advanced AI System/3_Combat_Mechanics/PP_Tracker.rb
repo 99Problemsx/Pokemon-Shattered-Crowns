@@ -349,8 +349,9 @@ module AdvancedAI
     private
     
     def self.battler_key(battler)
-      # Unique key combining slot index and species (prevents same-species collision in doubles)
-      "#{battler.index}_#{battler.species}"
+      # Unique key using personalID to prevent same-species collision on replacement
+      pid = battler.pokemon.personalID rescue battler.personalID rescue 0
+      "#{battler.index}_#{pid}"
     end
     
     def self.only_viable_move?(attacker, move)

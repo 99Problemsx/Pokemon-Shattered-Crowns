@@ -811,12 +811,12 @@ class DynamaxSpritePositioner < SpritePositioner
     sprite.visible = true
     2.times do |i|
       @sprites["pokemon_#{i}"].iconBitmap.reanimate
-      @sprites["shadow_#{i}"].iconBitmap.deanimate
+      @sprites["shadow_#{i}"].iconBitmap.reanimate
     end
     pbUpdateShinyInfo
     return ret
   end
-  
+
   def pbMenu
     refresh
     cw = Window_CommandPokemon.new(

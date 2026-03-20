@@ -130,7 +130,7 @@ def pbSketchPartySkill(pkmn, movename, screen, party, party_idx)
         elsif newmove.type == :SHADOW
             screen.scene.pbDisplay(_INTL("{1} can't be sketched.", newmove.name))
         elsif screen.scene.pbConfirmMessage(_INTL("Sketch {1}?", newmove.name))
-          for i in 0..pkmn.moves.length
+          for i in 0...pkmn.moves.length
             if pkmn.moves[i].id == :SKETCH
               pkmn.moves[i] = Pokemon::Move.new(newmove.id)
               screen.scene.pbMessage(_INTL("\\se[]{1} learned {2}!\\se[Pkmn move learnt]", pkmn.name, newmove.name))

@@ -64,9 +64,10 @@ Battle::AbilityEffects::StatusCure.add(:INSOMNIA,
   proc { |ability, battler|
     next if ![:SLEEP, :DROWSY].include?(battler.status)
     battler.battle.pbShowAbilitySplash(battler)
+    old_status = battler.status
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH
-      case battler.status
+      case old_status
       when :SLEEP  then msg = _INTL("{1}'s {2} woke it up!", battler.pbThis, battler.abilityName)
       when :DROWSY then msg = _INTL("{1}'s {2} made it alert again!", battler.pbThis, battler.abilityName)
       end
@@ -97,9 +98,10 @@ Battle::AbilityEffects::StatusCure.add(:MAGMAARMOR,
   proc { |ability, battler|
     next if ![:FROZEN, :FROSTBITE].include?(battler.status)
     battler.battle.pbShowAbilitySplash(battler)
+    old_status = battler.status
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH
-      case battler.status
+      case old_status
       when :FROZEN    then msg = _INTL("{1}'s {2} defrosted it!", battler.pbThis, battler.abilityName)
       when :FROSTBITE then msg = _INTL("{1}'s {2} healed its frostbite!", battler.pbThis, battler.abilityName)
       end

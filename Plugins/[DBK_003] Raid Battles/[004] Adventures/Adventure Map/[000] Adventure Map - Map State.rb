@@ -75,12 +75,12 @@ class RaidAdventureState
       @loot.each { |itm, qty| $bag.add(itm, qty) }
     when 3 # Defeated by boss - Add partial loot to bag.
 	  @loot.each_key do |key|
-	    case rand(1)
+	    case rand(2)
 		when 0
-		  @loot.delete_key(key)
+		  @loot.delete(key)
 		when 1
-		  @loot[key] = [@loot[key] / 2, 1].min
-		  $bag.add(itm, qty)
+		  @loot[key] = [@loot[key] / 2, 1].max
+		  $bag.add(key, @loot[key])
 		end
 	  end
     end

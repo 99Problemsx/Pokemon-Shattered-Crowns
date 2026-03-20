@@ -248,7 +248,8 @@ class Pokemon
   def takeRibbon(ribbon)
     ribbon_data = GameData::Ribbon.try_get(ribbon)
     return if !ribbon_data
-    @ribbons.delete_at(@ribbons.index(ribbon_data.id))
+    idx = @ribbons.index(ribbon_data.id)
+    @ribbons.delete_at(idx) if idx
     @memento = nil if @memento == ribbon
   end
   alias takeMemento takeRibbon

@@ -247,7 +247,7 @@ Battle::AI::Handlers::CheerEffectScore.add(:Counter,
 	case cheer_lvl
 	when 1
 	  ai.each_battler do |b|
-	    raises = drops = []
+	    raises = []; drops = []
         GameData::Stat.each_battle do |s|
           if b.stages[s.id] > 0
             drops.push(s.id)
