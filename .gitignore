@@ -1,0 +1,25 @@
+# Visual Studio / VS Code IDE files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Temporary development files
+fc_map.txt
+gen9_fc.txt
+gen9_handlers.txt
+pbeffects_all.txt
+sc_function_codes.txt
+temp_r24.txt
+unique_fc.txt
+
+# Log files
+traceback.log
+errorlogEBDX.txt
+luts_log.txt
+*.log
+
+# OS-specific
+Thumbs.db
+.DS_Store

@@ -25,7 +25,7 @@ class Pokemon
   end
   
   def can_terastallize?
-    return false if egg? || shadowPokemon? || mega? || primal? || dynamax? || celestial?
+    return false if egg? || shadowPokemon? || mega? || primal? || dynamax? || (respond_to?(:celestial?) ? celestial? : false)
     return species_data.terastal_able?
   end
   

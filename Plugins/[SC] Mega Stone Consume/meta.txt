@@ -1,0 +1,6 @@
+Name       = Mega Stone Consume
+Version    = 1.0.0
+Essentials = 21.1
+Requires   = Deluxe Battle Kit,1.0
+Website    = no
+Credits    = Shattered Crowns Team

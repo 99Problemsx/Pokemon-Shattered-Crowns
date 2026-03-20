@@ -173,9 +173,25 @@ class Game_FollowingPkmn < Game_Follower
           map = $map_factory.getMap(t[0])
           next if !map || !map.valid?(t[1], t[2])
           
-          # Check for blocking events (excluding through events)
-          blocked_by_event = map.events.values.any? do |e|
-            !e.through && e.at_coordinate?(t[1], t[2]) && e != self && e != leader
+          # [PERF FIX] Only check events at the target coordinate instead of
+          # iterating ALL events on the map. Use coordinate-based lookup.
+          blocked_by_event = false
+          if map.respond_to?(:events_xy)
+            # Use spatial lookup if available (Essentials v21+)
+            map.events_xy(t[1], t[2]).each do |e|
+              if !e.through && e != self && e != leader
+                blocked_by_event = true
+                break
+              end
+            end
+          else
+            # Fallback: iterate events but break early
+            map.events.each_value do |e|
+              next if e.through || !e.at_coordinate?(t[1], t[2])
+              next if e == self || e == leader
+              blocked_by_event = true
+              break
+            end
           end
           next if blocked_by_event
           
@@ -309,25 +325,53 @@ class Game_FollowingPkmn < Game_Follower
   end
 
   #-----------------------------------------------------------------------------
+  # [PERF FIX] Cache offset and passability lookups. These methods are called
+  # every frame during rendering. The old code did party iteration +
+  # map.passable? (event iteration) per call — now we cache per-tile.
+  #-----------------------------------------------------------------------------
+  def refresh_offset_cache
+    pkmn = FollowingPkmn.get_pokemon
+    @_cached_offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
+    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+      @_cached_offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
+    end
+    @_cached_species = pkmn&.species
+    @_cached_passable = {}
+    @_cached_tile = [self.x, self.y, self.map&.map_id]
+  end
+
+  def cached_offset
+    cur_tile = [self.x, self.y, self.map&.map_id]
+    cur_species = FollowingPkmn.get_pokemon&.species
+    if !@_cached_tile || @_cached_tile != cur_tile || @_cached_species != cur_species
+      refresh_offset_cache
+    end
+    @_cached_offset
+  end
+
+  def cached_passable?(dir)
+    cur_tile = [self.x, self.y, self.map&.map_id]
+    if !@_cached_tile || @_cached_tile != cur_tile
+      refresh_offset_cache
+    end
+    if @_cached_passable[dir].nil?
+      @_cached_passable[dir] = self.map.passable?(self.x, self.y, dir)
+    end
+    @_cached_passable[dir]
+  end
+
+  #-----------------------------------------------------------------------------
   # Adjust screen_x to account for visual offset (prevents overlap)
   #-----------------------------------------------------------------------------
   def screen_x(*args)
     ret = super(*args)
     return ret unless FollowingPkmn.active?
-    
-    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
-    pkmn = FollowingPkmn.get_pokemon
-    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
-      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
-    end
-    
-    # Move opposite to facing direction to "push away" from what it's facing (usually player)
-    # Check passability to ensure we don't visual clip into walls
+    offset = cached_offset
     case self.direction
     when 4 # Facing Left -> Move Right
-      ret += offset if self.map.passable?(self.x, self.y, 6)
+      ret += offset if cached_passable?(6)
     when 6 # Facing Right -> Move Left
-      ret -= offset if self.map.passable?(self.x, self.y, 4)
+      ret -= offset if cached_passable?(4)
     end
     return ret
   end
@@ -338,20 +382,12 @@ class Game_FollowingPkmn < Game_Follower
   def screen_y(*args)
     ret = super(*args)
     return ret unless FollowingPkmn.active?
-
-    offset = FollowingPkmn::FOLLOWER_DISTANCE_OFFSET
-    pkmn = FollowingPkmn.get_pokemon
-    if pkmn && FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
-      offset = FollowingPkmn::FOLLOWER_DISTANCE_EXCEPTIONS[pkmn.species]
-    end
-    
-    # Move opposite to facing direction to "push away" from what it's facing (usually player)
-    # Check passability to ensure we don't visual clip into walls
+    offset = cached_offset
     case self.direction
     when 2 # Facing Down -> Move Up
-      ret -= offset if self.map.passable?(self.x, self.y, 8)
+      ret -= offset if cached_passable?(8)
     when 8 # Facing Up -> Move Down
-      ret += offset if self.map.passable?(self.x, self.y, 2)
+      ret += offset if cached_passable?(2)
     end
     return ret
   end

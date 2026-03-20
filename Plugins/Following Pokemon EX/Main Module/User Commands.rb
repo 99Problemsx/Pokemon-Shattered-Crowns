@@ -69,6 +69,8 @@ module FollowingPkmn
   end
   #-----------------------------------------------------------------------------
   # Script Command for talking to Following Pokemon
+  # Plays the Pokemon's cry, shows a greeting jump, then triggers dialogue
+  # based on status, weather, map, friendship, and random flavour.
   #-----------------------------------------------------------------------------
   def self.talk
     return false if !FollowingPkmn.can_talk?(true)
@@ -76,7 +78,13 @@ module FollowingPkmn
     event = FollowingPkmn.get_event
     pbTurnTowardEvent(event, $game_player)
     first_pkmn = FollowingPkmn.get_pokemon
+    # Play the Pokemon's cry sound from Audio/SE/Cries/ (handled by Essentials)
     first_pkmn&.play_cry
+    # Small greeting jump to make the interaction feel alive
+    if event && !FollowingPkmn.airborne_follower?
+      FollowingPkmn.move_route([PBMoveRoute::JUMP, 0, 0])
+      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 8])
+    end
     random_val = rand(6)
     if $PokemonGlobal&.follower_hold_item
       EventHandlers.trigger_2(:following_pkmn_item, first_pkmn, random_val)

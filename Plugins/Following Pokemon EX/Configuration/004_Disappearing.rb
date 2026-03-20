@@ -16,12 +16,35 @@ EventHandlers.add(:following_pkmn_appear, :map_flag_keep, proc { |pkmn|
   next true if metadata && metadata.has_flag?("ShowFollowingPkmn")
 })
 #-------------------------------------------------------------------------------
+# [PERF FIX] Cache height check result per map+species to avoid expensive
+# species lookup + encounter table iteration on every refresh_internal call.
+# The cache is invalidated when the map changes or the follower species changes.
+#-------------------------------------------------------------------------------
+$__following_pkmn_height_cache = {}
 EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   metadata = $game_map.metadata
   if metadata && metadata.outdoor_map != true && $PokemonEncounters
-    # Don't follow if the Pokemon's height is greater than 3 meters and there are no encounters ie a building or something
-    height =  GameData::Species.get_species_form(pkmn.species, pkmn.form).height
-    next false if (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here?
+    cache_key = [$game_map.map_id, pkmn.species, pkmn.form]
+    if $__following_pkmn_height_cache[:key] == cache_key
+      next false if $__following_pkmn_height_cache[:result] == :hide
+    else
+      height = GameData::Species.get_species_form(pkmn.species, pkmn.form).height
+      should_hide = (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here?
+      $__following_pkmn_height_cache = { key: cache_key, result: should_hide ? :hide : :show }
+      next false if should_hide
+    end
+  end
+})
+# Invalidate height cache only on non-connected map transitions (teleportation).
+# Connected map scrolling keeps the same encounter data, so the cache stays valid.
+EventHandlers.add(:on_enter_map, :clear_following_pkmn_height_cache, proc {
+  # Only clear if the cached map isn't connected to the current map
+  old_map_id = $__following_pkmn_height_cache.dig(:key, 0)
+  if old_map_id && $map_factory
+    connected = $map_factory.areConnected?(old_map_id, $game_map.map_id) rescue false
+    $__following_pkmn_height_cache = {} unless connected
+  else
+    $__following_pkmn_height_cache = {}
   end
 })
 #-------------------------------------------------------------------------------

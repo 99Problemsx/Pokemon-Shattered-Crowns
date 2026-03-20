@@ -10,11 +10,7 @@ unless defined?(OpenStruct)
   class OpenStruct
     def initialize(hash = {})
       @table = {}
-      hash.each do |k, v|
-        @table[k.to_sym] = v
-        define_singleton_method(k) { @table[k.to_sym] }
-        define_singleton_method("#{k}=") { |val| @table[k.to_sym] = val }
-      end
+      hash.each { |k, v| @table[k.to_sym] = v }
     end
 
     def [](key)
@@ -110,7 +106,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           # Fall back to ScriptRegistry + OpenStruct wrapper
@@ -125,7 +121,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_pokemon(id)
@@ -138,7 +134,7 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_pokemon(id)
@@ -148,25 +144,48 @@ module SCScripts
         # Override get_species_form: try original first, then ScriptRegistry
         define_method(:get_species_form) do |species, form = 0|
           return nil if !species
-          species = species.species if species.respond_to?(:species)
-          species = species.to_sym if species.is_a?(String)
-          # Try original first (handles DATA properly)
-          if respond_to?(:original_get_species_form)
-            begin
-              result = original_get_species_form(species, form || 0)
-              return result if result
-            rescue
+          # Recursion guard — prevents stack overflow from circular calls
+          @_gsf_depth ||= 0
+          if @_gsf_depth > 3
+            return nil
+          end
+          @_gsf_depth += 1
+          begin
+            # Safely convert species-like objects to Symbol
+            if species.respond_to?(:species) && !species.is_a?(Symbol) && !species.is_a?(String)
+              species = species.species
             end
+            species = species.to_sym if species.is_a?(String)
+            # Direct DATA lookup — bypasses validate to prevent stack overflow
+            f = form || 0
+            if self.const_defined?(:DATA)
+              data_hash = self::DATA
+              trial = sprintf("%s_%d", species, f).to_sym
+              species_key = data_hash[trial] ? trial : species
+              result = data_hash[species_key]
+              return result if result
+            end
+            # Fall back to ScriptRegistry (with cache to avoid repeated OpenStruct creation)
+            @_wrapped_cache ||= {}
+            if form && form > 0
+              form_id = sprintf("%s_%d", species, form).to_sym
+              return @_wrapped_cache[form_id] if @_wrapped_cache.key?(form_id)
+              script_data = GameData::ScriptRegistry.get_pokemon(form_id)
+              if script_data
+                @_wrapped_cache[form_id] = wrap_script_species(form_id, script_data)
+                return @_wrapped_cache[form_id]
+              end
+            end
+            return @_wrapped_cache[species] if @_wrapped_cache.key?(species)
+            script_data = GameData::ScriptRegistry.get_pokemon(species)
+            if script_data
+              @_wrapped_cache[species] = wrap_script_species(species, script_data)
+              return @_wrapped_cache[species]
+            end
+            nil
+          ensure
+            @_gsf_depth -= 1
           end
-          # Fall back to ScriptRegistry
-          if form && form > 0
-            form_id = sprintf("%s_%d", species, form).to_sym
-            script_data = GameData::ScriptRegistry.get_pokemon(form_id)
-            return wrap_script_species(form_id, script_data) if script_data
-          end
-          script_data = GameData::ScriptRegistry.get_pokemon(species)
-          return wrap_script_species(species, script_data) if script_data
-          nil
         end
         
         # Wrapper to convert script data to GameData::Species format
@@ -207,7 +226,7 @@ module SCScripts
           species_data.shape = data[:shape] || :Head
           species_data.habitat = data[:habitat] || :None
           species_data.generation = data[:generation] || 0
-          species_data.flags = data[:flags] || []
+          species_data.flags = (data[:flags] || []).map { |f| f.to_s }
           
           # Moves / eggs
           species_data.moves = data[:moves] || []
@@ -379,7 +398,44 @@ module SCScripts
             [min || 1, 1].max
           end
           
+          # DBK Dynamax compatibility: species eligibility check
+          def species_data.dynamax_able?
+            return false if self[:mega_stone] || self[:mega_move]
+            return false if has_flag?("CannotDynamax")
+            return true
+          end
+          
+          def species_data.dynamax_form?
+            return true if self[:gmax_move]
+            return false
+          end
+          
           species_data
+        end
+        
+        # Unified each: yields species from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |species|
+              next if seen[species.id]
+              seen[species.id] = true
+              block.call(species)
+            end
+          end
+          registry = GameData::ScriptRegistry.pokemon rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              block.call(wrap_script_species(id, data))
+            end
+          end
+        end
+        
+        define_method(:each_species) do |&block|
+          self.each(&block)
         end
       end
       
@@ -404,7 +460,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           # Fall back to ScriptRegistry + OpenStruct wrapper
@@ -420,7 +476,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_move(id)
@@ -433,7 +489,7 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_move(id)
@@ -463,7 +519,7 @@ module SCScripts
           move_data.target           = data[:target] || :NearOther
           move_data.priority         = data[:priority] || 0
           move_data.function_code    = data[:function_code] || "None"
-          move_data.flags            = data[:flags] || []
+          move_data.flags            = (data[:flags] || []).map { |f| f.to_s }
           move_data.effect_chance    = data[:effect_chance] || 0
           move_data.pbs_file_suffix  = data[:pbs_file_suffix] || ""
           # Methods Essentials expects
@@ -494,6 +550,27 @@ module SCScripts
           end
           move_data
         end
+        
+        # Unified each: yields moves from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |move|
+              next if seen[move.id]
+              seen[move.id] = true
+              block.call(move)
+            end
+          end
+          registry = GameData::ScriptRegistry.moves rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              block.call(wrap_script_move(id, data))
+            end
+          end
+        end
       end
       
       SCScripts.debug("Move hooks installed")
@@ -519,7 +596,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_ability(id)
@@ -534,7 +611,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_ability(id)
@@ -548,7 +625,7 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_ability(id)
@@ -558,6 +635,27 @@ module SCScripts
         define_method(:wrap_script_ability) do |id, data|
           return nil unless data
           GameData::Ability.new(data)
+        end
+        
+        # Unified each: yields abilities from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |ability|
+              next if seen[ability.id]
+              seen[ability.id] = true
+              block.call(ability)
+            end
+          end
+          registry = GameData::ScriptRegistry.abilities rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              block.call(wrap_script_ability(id, data))
+            end
+          end
         end
       end
       
@@ -582,7 +680,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_item(id)
@@ -596,7 +694,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_item(id)
@@ -609,7 +707,7 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_item(id)
@@ -620,10 +718,48 @@ module SCScripts
           return nil unless data
           item_data = OpenStruct.new(data)
           item_data.id = id
-          item_data.real_name = data[:name]
-          item_data.real_name_plural = data[:name_plural]
-          item_data.real_description = data[:description]
+          item_data.real_name = data[:name] || data[:real_name]
+          item_data.real_name_plural = data[:name_plural] || data[:real_name_plural]
+          item_data.real_description = data[:description] || data[:real_description]
+          
+          def item_data.has_flag?(flag)
+            flags = self[:flags]
+            return false unless flags
+            flags.any? { |f| f.to_s.downcase == flag.to_s.downcase }
+          end
+          
+          def item_data.name
+            self[:real_name] || self[:name] || self[:id].to_s
+          end
+          
+          def item_data.portion_name
+            self.name
+          end
+          
           item_data
+        end
+        
+        # Unified each: yields items from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          # 1. Yield from compiled PBS DATA (if any exist)
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |item|
+              next if seen[item.id]
+              seen[item.id] = true
+              block.call(item)
+            end
+          end
+          # 2. Yield from ScriptRegistry (SC-defined items)
+          registry = GameData::ScriptRegistry.items rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              block.call(wrap_script_item(id, data))
+            end
+          end
         end
       end
       
@@ -648,7 +784,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           # Fall back to ScriptRegistry + OpenStruct wrapper
@@ -663,7 +799,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_type(id)
@@ -676,7 +812,7 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_type(id)
@@ -694,7 +830,7 @@ module SCScripts
           type_data.weaknesses      = data[:weaknesses]      || data[:super_effective] || []
           type_data.resistances     = data[:resistances]     || data[:not_effective]   || []
           type_data.immunities      = data[:immunities]      || data[:no_effect]       || []
-          type_data.flags           = data[:flags]           || []
+          type_data.flags           = (data[:flags] || []).map { |f| f.to_s }
           type_data.pbs_file_suffix = data[:pbs_file_suffix] || ""
           # Methods that Essentials expects on Type objects
           def type_data.name
@@ -708,6 +844,27 @@ module SCScripts
             f.any? { |fl| fl.to_s.downcase == flag.to_s.downcase }
           end
           type_data
+        end
+        
+        # Unified each: yields types from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |type|
+              next if seen[type.id]
+              seen[type.id] = true
+              block.call(type)
+            end
+          end
+          registry = GameData::ScriptRegistry.types rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              block.call(wrap_script_type(id, data))
+            end
+          end
         end
       end
       
@@ -777,7 +934,7 @@ module SCScripts
             begin
               result = original_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_trainer_type(id)
@@ -805,7 +962,7 @@ module SCScripts
             begin
               result = original_try_get(id)
               return result if result
-            rescue
+            rescue StandardError
             end
           end
           script_data = GameData::ScriptRegistry.get_trainer_type(id)
@@ -832,11 +989,34 @@ module SCScripts
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
-            rescue
+            rescue StandardError
             end
           end
           return true if GameData::ScriptRegistry.get_trainer_type(id)
           false
+        end
+        
+        # Unified each: yields trainer types from both DATA and ScriptRegistry
+        define_method(:each) do |&block|
+          return unless block
+          seen = {}
+          if self.const_defined?(:DATA)
+            self::DATA.each_value do |tt|
+              next if seen[tt.id]
+              seen[tt.id] = true
+              block.call(tt)
+            end
+          end
+          registry = GameData::ScriptRegistry.trainer_types rescue nil
+          if registry
+            registry.each do |id, data|
+              next if seen[id]
+              seen[id] = true
+              normalized = data.dup
+              normalized[:gender] = GameData::TrainerTypeBuilder.normalize_gender(normalized[:gender]) if defined?(GameData::TrainerTypeBuilder)
+              block.call(GameData::TrainerType.new(normalized))
+            end
+          end
         end
       end
       
@@ -870,7 +1050,7 @@ module SCScripts
                 block.call(trainer)
               end
             end
-          rescue
+          rescue StandardError
           end
           # Then yield from ScriptRegistry (SC DSL trainers)
           begin
@@ -889,7 +1069,7 @@ module SCScripts
                 begin
                   trainer = wrap_script_trainer(tr_type, tr_name, tr_ver, data)
                   block.call(trainer) if trainer
-                rescue
+                rescue StandardError
                   # If wrapping fails, yield a minimal OpenStruct-like object
                   wrapper = OpenStruct.new
                   wrapper.trainer_type = tr_type
@@ -900,7 +1080,7 @@ module SCScripts
                 end
               end
             end
-          rescue
+          rescue StandardError
           end
         end
         
@@ -912,7 +1092,7 @@ module SCScripts
               return result if result.is_a?(GameData::Trainer)
               # SC's get returns raw hash — wrap it into a proper Trainer object
               return wrap_script_trainer(trainer_type, name, version, result) if result.is_a?(Hash)
-            rescue
+            rescue StandardError
             end
           end
           # Fall back to ScriptRegistry
@@ -924,7 +1104,7 @@ module SCScripts
             data_key = [trainer_type.to_sym, name.to_s, version.to_i]
             result = self::DATA[data_key]
             return result if result.is_a?(GameData::Trainer)
-          rescue
+          rescue StandardError
           end
           nil
         end
@@ -937,7 +1117,7 @@ module SCScripts
               return result if result.is_a?(GameData::Trainer)
               # SC's try_get returns raw hash — wrap it
               return wrap_script_trainer(trainer_type, name, version, result) if result.is_a?(Hash)
-            rescue
+            rescue StandardError
             end
           end
           # Fall back to ScriptRegistry
@@ -949,7 +1129,7 @@ module SCScripts
             data_key = [trainer_type.to_sym, name.to_s, version.to_i]
             result = self::DATA[data_key]
             return result if result.is_a?(GameData::Trainer)
-          rescue
+          rescue StandardError
           end
           nil
         end
@@ -960,7 +1140,7 @@ module SCScripts
           if has_original
             begin
               return true if original_exists?(trainer_type, name, version)
-            rescue
+            rescue StandardError
             end
           end
           key = "#{trainer_type}_#{name}_#{version}"
@@ -1116,6 +1296,12 @@ module SCScripts
           metadata = OpenStruct.new(data)
           metadata.id = map_id
           metadata.real_name = data[:real_name]
+          # Add has_flag? method for DBK compatibility (e.g. PowerSpot, DistortionWorld)
+          flags = data[:flags] || []
+          def metadata.has_flag?(flag)
+            f = self[:flags] || []
+            f.any? { |fl| fl.to_s.downcase == flag.to_s.downcase }
+          end
           metadata
         end
       end
@@ -1383,16 +1569,21 @@ SCScripts::CompilerHook.install
 
 #===============================================================================
 # Override MapFactoryHelper.getMapConnections to handle missing dat file
-# This method does a direct load_data() call that bypasses GameData hooks.
+# and load from GameData::MapConnection::RAW_CONNECTIONS (Script System DSL).
 #===============================================================================
 module MapFactoryHelper
   def self.getMapConnections
     if !@@MapConnections
       @@MapConnections = []
+      # Try loading compiled PBS data first
       begin
         conns = load_data("Data/map_connections.dat")
       rescue Errno::ENOENT
         conns = []
+      end
+      # If no compiled data, fall back to Script System DSL definitions
+      if conns.empty? && defined?(GameData::MapConnection::RAW_CONNECTIONS)
+        conns = GameData::MapConnection::RAW_CONNECTIONS.map { |c| c.clone }
       end
       conns.each do |conn|
         dimensions = getMapDims(conn[0])

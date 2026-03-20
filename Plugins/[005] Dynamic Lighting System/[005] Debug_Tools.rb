@@ -2,6 +2,13 @@
 # Debug Tools für Lighting System
 # ===============================================================================
 
+# Define missing Input key constants (Windows virtual key codes)
+module Input
+  L = 0x4C unless defined?(Input::L)
+  P = 0x50 unless defined?(Input::P)
+  N = 0x4E unless defined?(Input::N)
+end
+
 # Zeige Map-Koordinaten bei Tastendruck
 EventHandlers.add(:on_frame_update, :lighting_debug,
   proc {
@@ -29,6 +36,13 @@ MenuHandlers.add(:debug_menu, :lighting_system, {
     commands.push(_INTL("Add Red Circle Light"))
     commands.push(_INTL("Add Blue Circle Light"))
     commands.push(_INTL("Add Yellow Circle Light"))
+    commands.push(_INTL("Add Preset Light"))
+    commands.push(_INTL("Toggle Light Preview"))
+    
+    if !$scene.is_a?(Scene_Map) || !$scene.spritesetGlobal&.lighting
+      pbMessage("Lighting system not available (not on map).")
+      next
+    end
     
     choice = pbMessage(_INTL("Lighting Debug"), commands, -1)
     
@@ -79,8 +93,25 @@ MenuHandlers.add(:debug_menu, :lighting_system, {
       end
       
     when 3  # Remove Nearest Light
-      # TODO: Implementierung
-      pbMessage("Not yet implemented")
+      px = $game_player.x
+      py = $game_player.y
+      nearest = nil
+      nearest_dist = Float::INFINITY
+      GameData::LightEffect.each do |effect|
+        next if effect.map_id != $game_map.map_id
+        dist = (effect.map_x - px).abs + (effect.map_y - py).abs
+        if dist < nearest_dist
+          nearest_dist = dist
+          nearest = effect
+        end
+      end
+      if nearest
+        GameData::LightEffect::DATA.delete(nearest.id)
+        $scene.spritesetGlobal.lighting.refresh_all(true)
+        pbMessage("Removed light #{nearest.id} at (#{nearest.map_x}, #{nearest.map_y})")
+      else
+        pbMessage("No lights found on this map.")
+      end
       
     when 4  # Toggle All Lights
       if $scene.spritesetGlobal.lighting
@@ -160,29 +191,30 @@ MenuHandlers.add(:debug_menu, :lighting_system, {
       })
       $scene.spritesetGlobal.lighting.refresh_all(true)
       pbMessage("Yellow circle light added at (#{x}, #{y})\\nID: #{id}")
+
+    when 9  # Add Preset Light
+      preset_names = LIGHT_PRESETS.keys.map { |k| k.to_s }
+      choice2 = pbMessage("Choose preset:", preset_names, -1)
+      if choice2 >= 0
+        x = $game_player.x
+        y = $game_player.y
+        preset_sym = LIGHT_PRESETS.keys[choice2]
+        id = pbAddLight(x, y, preset: preset_sym)
+        pbMessage("Preset :#{preset_sym} added at (#{x}, #{y})\\nID: #{id}")
+      end
+
+    when 10  # Toggle Light Preview
+      lighting = $scene.spritesetGlobal.lighting
+      state = lighting.toggle_debug_preview
+      pbMessage("Light Preview: #{state ? 'ON' : 'OFF'}\\nShows positions/radii without darkness.")
     end
   }
 })
 
-# Schnellbefehl: Strg+L = Position anzeigen und Licht hinzufügen
+# Schnellbefehl: Strg+L = Lighting Info
 EventHandlers.add(:on_frame_update, :quick_add_light,
   proc {
-    if Input.press?(Input::CTRL) && Input.trigger?(Input::L)
-      x = $game_player.x
-      y = $game_player.y
-      pbMessage("GameData::LightEffect.add({\\n" +
-                "  :id => :light_#{x}_#{y},\\n" +
-                "  :type => :rect,\\n" +
-                "  :width => 1,\\n" +
-                "  :height => 1,\\n" +
-                "  :map_x => #{x},\\n" +
-                "  :map_y => #{y},\\n" +
-                "  :map_id => #{$game_map.map_id},\\n" +
-                "  :day => false\\n" +
-                "})")
-    end
-    
-    # Strg+L = Lighting Info
+    next if !$DEBUG
     if Input.press?(Input::CTRL) && Input.trigger?(Input::L)
       if $scene.is_a?(Scene_Map) && $scene.instance_variable_get(:@spritesetGlobal)
         lighting = $scene.instance_variable_get(:@spritesetGlobal).lighting
@@ -199,6 +231,27 @@ EventHandlers.add(:on_frame_update, :quick_add_light,
         else
           pbMessage("Lighting system not initialized!")
         end
+      end
+    end
+    # Ctrl+P = Toggle light editor preview
+    if Input.press?(Input::CTRL) && Input.trigger?(Input::P)
+      if $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+        state = $scene.spritesetGlobal.lighting.toggle_debug_preview
+        echoln("Light Preview: #{state ? 'ON' : 'OFF'}")
+      end
+    end
+    # Ctrl+Shift+L = Toggle performance profiler overlay
+    if Input.press?(Input::CTRL) && Input.press?(Input::SHIFT) && Input.trigger?(Input::L)
+      if $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+        state = $scene.spritesetGlobal.lighting.toggle_profiler
+        echoln("Lighting Profiler: #{state ? 'ON' : 'OFF'}")
+      end
+    end
+    # Ctrl+Shift+C = Toggle light counter HUD
+    if Input.press?(Input::CTRL) && Input.press?(Input::SHIFT) && Input.trigger?(Input::C)
+      if $scene.is_a?(Scene_Map) && $scene.spritesetGlobal&.lighting
+        state = $scene.spritesetGlobal.lighting.toggle_light_counter
+        echoln("Light Counter HUD: #{state ? 'ON' : 'OFF'}")
       end
     end
   }

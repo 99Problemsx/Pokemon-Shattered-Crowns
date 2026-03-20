@@ -19,22 +19,34 @@ end
 class FollowerSprites
   #-----------------------------------------------------------------------------
   # Updating the refresh method to allow clearing of base event in all maps,
-  # add reflections and prevent crash when base map/event is deleted
+  # add reflections and prevent crash when base map/event is deleted.
+  # [PERF FIX] Only erase the event on its original map instead of iterating
+  # ALL connected maps. Also avoid calling FollowingPkmn.refresh from inside
+  # the sprite refresh to prevent cascading refresh chains.
   #-----------------------------------------------------------------------------
   alias __followingpkmn__refresh refresh unless method_defined?(:__followingpkmn__refresh)
   def refresh(*args)
     ret = __followingpkmn__refresh(*args)
     return ret if !FollowingPkmn.can_check?
     event = FollowingPkmn.get_event
+    data = FollowingPkmn.get_data
+    is_following = data&.following_pkmn?
     @sprites.each do |spr|
-      next if !FollowingPkmn.get_data&.following_pkmn?
+      next if !is_following
       spr.set_reflection(@viewport, event)
     end
-    data = FollowingPkmn.get_data
-    $map_factory.maps.each { |map|
-      map&.events&.[](data.event_id)&.erase if data && data.original_map_id == map&.events&.[](data.event_id)&.map_id
-    }
-    FollowingPkmn.refresh(false)
+    # Only erase the base event on its original map (not all connected maps)
+    if data && data.original_map_id
+      orig_map = $map_factory.getMap(data.original_map_id) rescue nil
+      if orig_map
+        orig_event = orig_map.events&.[](data.event_id)
+        orig_event&.erase if orig_event && orig_event.map_id == data.original_map_id
+      end
+    end
+    # [PERF FIX] Do NOT queue call_refresh here. The old code called
+    # FollowingPkmn.refresh(false) synchronously which created a cascading
+    # refresh chain every sprite rebuild. Refreshes are already handled by
+    # step_taken hooks, Scene_Map#update, and explicit trigger points.
   end
 
   #-----------------------------------------------------------------------------
