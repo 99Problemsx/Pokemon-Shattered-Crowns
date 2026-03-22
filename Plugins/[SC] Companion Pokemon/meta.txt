@@ -1,0 +1,6 @@
+Name         = Shattered Crowns Companion Pokemon
+Version      = 3.1.0
+Essentials   = 21.1
+Website      = https://github.com/99Problemsx/Pokemon-Shattered-Crowns
+Credits      = Nononever, Shattered Crowns Team
+Requires     = Shattered Crowns Pokemon Affection
