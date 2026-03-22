@@ -7,7 +7,7 @@ A
 Normal Form
 Normalform
 Normal Forme
-Normal Forme
+Normalform
 Plant Cloak
 Pflanzenumhang
 Overcast Form
@@ -15,15 +15,15 @@ Wolkenform
 West Sea
 Westliches Meer
 Rotom
-Rotom
+West
 Altered Forme
 Wandelform
 Land Forme
 Landform
 Normal Type
-Normal Type
+Normal-Typ
 Red-Striped
-Red-Striped
+Rotgestreift
 Standard Mode
 Normalmodus
 Spring Form
@@ -35,7 +35,7 @@ Standardform
 Aria Forme
 Gesangsform
 Normal
-Normal
+Einzel
 Archipelago Pattern
 Archipelmuster
 Red Flower
@@ -43,7 +43,7 @@ Rotblütler
 Natural Form
 Zottelform
 Male
-Männlich
+Zottel
 Shield Forme
 Schildform
 Small Size
@@ -67,13 +67,13 @@ Meteorform
 Disguised Form
 Verkleidete Form
 Amped Form
-Hoch-Form
+Mega
 Phony Form
 Fälschungsform
 Vanilla Cream
-Vanille-Creme
+Hoch
 Ice Face
-Tiefkühlkopf
+Rappenreiter
 Full Belly Mode
 Pappsattmuster
 Hero of Many Battles
@@ -81,71 +81,71 @@ Heldenhafter Krieger
 Single Strike Style
 Fokussierten Stil
 Family of Four
-Family of Four
+Dreierfamilie
 Green Plumage
-Green Plumage
+Grünes Gefieder
 Zero Form
-Zero Form
+Nullform
 Curly Form
-Curly Form
+Rollform
 Two-Segment Form
-Two-Segment Form
+Zweiteilige Form
 Chest Form
-Chest Form
+Schatullenform
 Counterfeit Form
-Counterfeit Form
+Falschmünzform
 Unremarkable Form
-Unremarkable Form
+Gewöhnliche Form
 Teal Mask
-Teal Mask
+Türkismaske
 Mega Venusaur
-Mega Venusaur
+Mega-Bisaflor
 Mega Charizard X
-Mega Charizard X
+Mega-Glurak X
 Mega Charizard Y
-Mega Charizard Y
+Mega-Glurak Y
 Mega Blastoise
-Mega Blastoise
+Mega-Turtok
 Mega Beedrill
-Mega Beedrill
+Mega-Bibor
 Mega Pidgeot
-Mega Pidgeot
+Mega-Tauboss
 Alolan
-Alolan
+Alola
 Galarian
-Galarian
+Galar
 Hisuian
-Hisuian
+Hisui
 Mega Alakazam
-Mega Alakazam
+Mega-Simsala
 Mega Slowbro
-Mega Slowbro
+Mega-Lahmus
 Mega Gengar
-Mega Gengar
+Mega-Gengar
 Mega Kangaskhan
-Mega Kangaskhan
+Mega-Kangama
 Mega Pinsir
-Mega Pinsir
+Mega-Pinsir
 Paldean (Combat Breed)
-Paldean (Combat Breed)
+Paldea (Kampf-Typ)
 Paldean (Blaze Breed)
-Paldean (Blaze Breed)
+Paldea (Feuer-Typ)
 Paldean (Aqua Breed)
-Paldean (Aqua Breed)
+Paldea (Wasser-Typ)
 Mega Gyarados
-Mega Gyarados
+Mega-Garados
 Mega Aerodactyl
-Mega Aerodactyl
+Mega-Aerodactyl
 Mega Mewtwo X
-Mega Mewtwo X
+Mega-Mewtu X
 Mega Mewtwo Y
-Mega Mewtwo Y
+Mega-Mewtu Y
 Spiky-Eared
-Spiky-Eared
+Stachelohren
 Mega Ampharos
-Mega Ampharos
+Mega-Ampharos
 Paldean
-Paldean
+Paldea
 B
 B
 C
@@ -201,39 +201,39 @@ Z
 !
 !
 Mega Steelix
-Mega Steelix
+Mega-Stahlos
 Mega Scizor
-Mega Scizor
+Mega-Scherox
 Mega Heracross
-Mega Heracross
+Mega-Skaraborn
 Mega Houndoom
-Mega Houndoom
+Mega-Hundemon
 Mega Tyranitar
-Mega Tyranitar
+Mega-Despotar
 Mega Sceptile
-Mega Sceptile
+Mega-Gewaldro
 Mega Blaziken
-Mega Blaziken
+Mega-Lohgock
 Mega Swampert
-Mega Swampert
+Mega-Sumpex
 Mega Gardevoir
-Mega Gardevoir
+Mega-Guardevoir
 Mega Sableye
-Mega Sableye
+Mega-Zobiris
 Mega Mawile
-Mega Mawile
+Mega-Flunkifer
 Mega Aggron
-Mega Aggron
+Mega-Stolloss
 Mega Medicham
-Mega Medicham
+Mega-Meditalis
 Mega Manectric
-Mega Manectric
+Mega-Voltenso
 Mega Sharpedo
-Mega Sharpedo
+Mega-Tohaido
 Mega Camerupt
-Mega Camerupt
+Mega-Camerupt
 Mega Altaria
-Mega Altaria
+Mega-Altaria
 Sunny Form
 Sonnenform
 Rainy Form
@@ -241,19 +241,19 @@ Regenform
 Snowy Form
 Schneeform
 Mega Banette
-Mega Banette
+Mega-Banette
 Mega Absol
-Mega Absol
+Mega-Absol
 Mega Glalie
-Mega Glalie
+Mega-Frosdedje
 Mega Salamence
-Mega Salamence
+Mega-Brutalanda
 Mega Metagross
-Mega Metagross
+Mega-Metagross
 Mega Latias
-Mega Latias
+Mega-Latias
 Mega Latios
-Mega Latios
+Mega-Latios
 Primal Kyogre
 Primal Kyogre
 Primal Groudon
@@ -263,7 +263,7 @@ Mega Rayquaza
 Attack Forme
 Angriffsform
 Defense Forme
-Defense Forme
+Verteidigungsform
 Speed Forme
 Initiativeform
 Sandy Cloak
@@ -275,15 +275,15 @@ Speed Forme
 East Sea
 Östliches Meer
 Mega Lopunny
-Mega Lopunny
+Mega-Schlapor
 Mega Garchomp
-Mega Garchomp
+Mega-Knakrack
 Mega Lucario
-Mega Lucario
+Mega-Lucario
 Mega Abomasnow
-Mega Abomasnow
+Mega-Rexblisar
 Mega Gallade
-Mega Gallade
+Mega-Galavant
 Heat Rotom
 Hitze-Rotom
 Wash Rotom
@@ -299,53 +299,53 @@ Urform
 Sky Forme
 Zenitform
 Fighting Type
-Fighting Type
+Kampf-Typ
 Flying Type
-Flying Type
+Flug-Typ
 Poison Type
-Poison Type
+Gift-Typ
 Ground Type
-Ground Type
+Boden-Typ
 Rock Type
-Rock Type
+Gesteins-Typ
 Bug Type
-Bug Type
+Käfer-Typ
 Ghost Type
-Ghost Type
+Geist-Typ
 Steel Type
-Steel Type
+Stahl-Typ
 Unknown Type
-Unknown Type
+Unbekannt-Typ
 Fire Type
-Fire Type
+Feuer-Typ
 Water Type
-Water Type
+Wasser-Typ
 Grass Type
-Grass Type
+Pflanzen-Typ
 Electric Type
-Electric Type
+Elektro-Typ
 Psychic Type
-Psychic Type
+Psycho-Typ
 Ice Type
-Ice Type
+Eis-Typ
 Dragon Type
-Dragon Type
+Drachen-Typ
 Dark Type
-Dark Type
+Unlicht-Typ
 Fairy Type
-Fairy Type
+Fee-Typ
 Mega Audino
-Mega Audino
+Mega-Ohrdoch
 Blue-Striped
-Blue-Striped
+Blaugestreift
 White-Striped
-White-Striped
+Weißgestreift
 Zen Mode
 Trance-Modus
 Galarian Standard Mode
-Galarian Standard Mode
+Galar Normalmodus
 Galarian Zen Mode
-Galarian Zen Mode
+Galar Trance-Modus
 Summer Form
 Sommerform
 Autumn Form
@@ -363,13 +363,13 @@ Resolutform
 Pirouette Forme
 Tanzform
 Shock Drive
-Shock Drive
+Schockantrieb
 Burn Drive
-Burn Drive
+Feuerantrieb
 Chill Drive
-Chill Drive
+Eisantrieb
 Douse Drive
-Douse Drive
+Wasserantrieb
 Ash-Greninja
 Ash-Greninja
 Continental Pattern
@@ -439,7 +439,7 @@ Kabuki-Schnitt
 Pharaoh Trim
 Herrscherschnitt
 Female
-Weiblich
+Herrscher
 Blade Forme
 Klingenform
 Average Size
@@ -487,7 +487,7 @@ Typ: Geist
 Type: Steel
 Typ: Stahl
 Type: Unknown
-Type: Unknown
+Typ: Unbekannt
 Type: Fire
 Typ: Feuer
 Type: Water
@@ -539,23 +539,23 @@ Tief-Form
 Antique Form
 Originalform
 Ruby Cream
-Ruby-Creme
+Tief
 Matcha Cream
-Matcha-Creme
+Rubin
 Mint Cream
-Minz-Creme
+Matcha
 Lemon Cream
-Zitronen-Creme
+Minz
 Salted Cream
-Salz-Creme
+Zitronen
 Ruby Swirl
-Ruby-Mix
+Salz
 Caramel Swirl
-Karamell-Mix
+Ruby
 Rainbow Swirl
-Trio-Mix
+Karamell
 Noice Face
-Wohlfühlkopf
+Trio
 Hangry Mode
 Kohldampfmuster
 Crowned Sword
@@ -569,38 +569,38 @@ Schimmelreiter
 Shadow Rider
 Rappenreiter
 Bloodmoon Ursaluna
-Bloodmoon Ursaluna
+Blutmond-Ursaluna
 Therian Form
-Therian Form
+Tiergeistform
 Family of Three
-Family of Three
+Helden
 Blue Plumage
-Blue Plumage
+Blaues Gefieder
 Yellow Plumage
-Yellow Plumage
+Gelbes Gefieder
 White Plumage
-White Plumage
+Weißes Gefieder
 Hero Form
-Hero Form
+Heldenform
 Droopy Form
-Droopy Form
+Schlaffform
 Stretchy Form
-Stretchy Form
+Streckform
 Three-Segment Form
-Three-Segment Form
+Dreiteilige Form
 Roaming Form
-Roaming Form
+Wanderform
 Artisan Form
-Artisan Form
+Handwerkerform
 Masterpiece Form
-Masterpiece Form
+Meisterstückform
 Wellspring Mask
-Wellspring Mask
+Quellenmaske
 Hearthflame Mask
-Hearthflame Mask
+Herdflammenmaske
 Cornerstone Mask
-Cornerstone Mask
+Ecksteinmaske
 Terastal Form
-Terastal Form
+Terakristall-Form
 Stellar Form
-Stellar Form
+Stellar-Form

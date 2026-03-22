@@ -5,13 +5,13 @@
 Seed
 Samen
 Lizard
-Echse
+Echsen
 Flame
 Flamme
 Tiny Turtle
-Minikröte
+Minikröten
 Turtle
-Kröte
+Kröten
 Shellfish
 Schaltier
 Worm
@@ -51,7 +51,7 @@ Fledermaus
 Weed
 Unkraut
 Flower
-Blume
+Blumen
 Mushroom
 Pilz
 Insect
@@ -61,27 +61,27 @@ Giftmotte
 Mole
 Maulwurf
 Scratch Cat
-Katze
+Katzen
 Classy Cat
-Rassekatze
+Rassekatzen
 Duck
-Ente
+Enten
 Pig Monkey
-Schwein / Affe
+Schwein/Affe
 Puppy
-Welpen
+Welpe
 Legendary
 Legendär
 Tadpole
-Kaulquappe
+Kaulquappen
 Psi
 Psi
 Superpower
 Kraftprotz
 Flycatcher
-Fliegentot
+Fliegentod
 Jellyfish
-Qualle
+Quallen
 Rock
 Gestein
 Megaton
@@ -95,7 +95,7 @@ Symbiose
 Magnet
 Magnet
 Wild Duck
-Wildente
+Wildenten
 Twin Bird
 Duovogel
 Triple Bird
@@ -115,7 +115,7 @@ Felsnatter
 Hypnosis
 Hypnose
 River Crab
-Krabbe
+Krabben
 Pincer
 Kneifer
 Ball
@@ -135,15 +135,15 @@ Puncher
 Licking
 Schlecker
 Poison Gas
-Giftwolke
+Giftwolken
 Spikes
 Stachler
 Vine
-Ranke
+Ranken
 Parent
 Muttertier
 Dragon
-Drache
+Drachen
 Goldfish
 Goldfisch
 Star Shape
@@ -151,19 +151,19 @@ Sternform
 Mysterious
 Mysteriös
 Barrier
-Barrier
+Sperren
 Mantis
 Mantis
 Human Shape
 Humanotyp
 Electric
-Electric
+Elektro
 Spitfire
 Brenner
 Stag Beetle
 Kneifkäfer
 Wild Bull
-Wildbulle
+Wildbullen
 Fish
 Fisch
 Atrocious
@@ -173,15 +173,15 @@ Transport
 Transform
 Transform
 Evolution
-Evolution
+Evolutions
 Bubble Jet
-Blubblase
+Blubbblasen
 Lightning
 Gewitter
 Virtual
 Virtuell
 Spiral
-Spirale
+Spiralen
 Fossil
 Fossil
 Sleeping
@@ -189,7 +189,7 @@ Tagträumer
 Freeze
 Eis
 Genetic
-Genmutant
+Genmutanten
 New Species
 Neue Art
 Leaf
@@ -207,7 +207,7 @@ Späher
 Long Body
 Langleib
 Owl
-Eule
+Eulen
 Five Star
 Fünf-Punkt
 String Spit
@@ -223,7 +223,7 @@ Babymaus
 Spike Ball
 Zackenball
 Happiness
-Freude
+Freuden
 Mystic
 Mystik
 Wool
@@ -231,9 +231,9 @@ Wolle
 Aqua Mouse
 Aquamaus
 Aqua Rabbit
-Aquahase
+Aquahasen
 Imitation
-Imitation
+Imitations
 Frog
 Frosch
 Cottonweed
@@ -241,7 +241,7 @@ Löwenzahn
 Long Tail
 Langschweif
 Sun
-Sonne
+Sonnen
 Clear Wing
 Libelle
 Water Fish
@@ -253,19 +253,19 @@ Finsternis
 Royal
 Monarch
 Screech
-Screech
+Kreischer
 Symbol
 Symbol
 Patient
-Geduld
+Gedulds
 Long Neck
 Langhals
 Bagworm
 Beutelwurm
 Land Snake
-Schlange
+Erdschlange
 Fly Scorpion
-Flugskorpion
+Flugskorpi
 Iron Snake
 Stahlboa
 Mold
@@ -273,7 +273,7 @@ Schimmel
 Single Horn
 Einzelhorn
 Sharp Claw
-Stichklaue
+Stichklauen
 Little Bear
 Kleinbär
 Hibernator
@@ -285,11 +285,11 @@ Ferkel
 Swine
 Schwein
 Coral
-Koralle
+Korallen
 Jet
 Hochdruck
 Delivery
-Lieferant
+Lieferanten
 Kite
 Flugrochen
 Armor Bird
@@ -307,7 +307,7 @@ Maler
 Scuffle
 Racker
 Handstand
-Handstand
+Kopfstand
 Kiss
 Kuss
 Live Coal
@@ -321,7 +321,7 @@ Polarlicht
 Rock Skin
 Felshaut
 Hard Shell
-Hartschale
+Hartschalen
 Diving
 Taucher
 Rainbow
@@ -337,19 +337,19 @@ Küken
 Young Fowl
 Kleinhahn
 Blaze
-Blaze
+Großbrand
 Mud Fish
 Lehmhüpfer
 Bite
-Bite
+Biss
 Tiny Raccoon
 Kleindachs
 Rushing
 Sprinter
 Water Weed
-Wasserlinse
+Wasserlinsen
 Jolly
-Froh
+Frohmut
 Carefree
 Sorglos
 Acorn
@@ -363,15 +363,15 @@ Schwälblein
 Swallow
 Schwalbe
 Seagull
-Seemöwe
+Seemöwen
 Water Bird
 Wasservogel
 Feeling
-Gefühl
+Gefühls
 Emotion
-Emotion
+Emotions
 Embrace
-Umarmung
+Umarmungs
 Pond Skater
 Wassergeher
 Eyeball
@@ -387,7 +387,7 @@ Vorbereiter
 Ninja
 Ninja
 Shed
-Häutung
+Häutungs
 Whisper
 Flüster
 Big Voice
@@ -397,7 +397,7 @@ Krach
 Guts
 Courage
 Arm Thrust
-Armstoß
+Armwurf
 Polka Dot
 Gepunktet
 Compass
@@ -407,17 +407,17 @@ Kätzchen
 Prim
 Eingebildet
 Deceiver
-Schwindel
+Schwindler
 Iron Armor
 Eisenpanzer
 Meditate
 Meditation
 Discharge
-Entladung
+Entladungs
 Cheering
 Jubel
 Firefly
-Libelle
+Glühwürmchen
 Thorn
 Dorn
 Stomach
@@ -439,15 +439,15 @@ Ausbruch
 Coal
 Kohle
 Bounce
-Bounce
+Sprungfeder
 Manipulate
-Manipulate
+Manipulator
 Spot Panda
 Punkt-Panda
 Ant Pit
-Ameisenlöwe
+Ameisenlöwen
 Vibration
-Vibration
+Vibrations
 Cactus
 Kaktus
 Scarecrow
@@ -457,11 +457,11 @@ Wollvogel
 Humming
 Summsel
 Cat Ferret
-Cat Ferret
+Frettkatz
 Fang Snake
 Reißzahn
 Meteorite
-Meterorit
+Meteoriten
 Whiskers
 Barthaar
 Ruffian
@@ -469,17 +469,17 @@ Grobian
 Rogue
 Schlingel
 Clay Doll
-Lehmpuppe
+Lehmpuppen
 Sea Lily
-Seeanemone
+Seeanemonen
 Barnacle
 Rankfüßer
 Old Shrimp
-Krebssenior
+Urgarnelen
 Plate
 Schild
 Tender
-Zartheit
+Zartheits
 Weather
 Wetter
 Color Swap
@@ -525,7 +525,7 @@ Durchsteher
 Iron Ball
 Eisenkugel
 Iron Claw
-Eisenklaue
+Eisenklauen
 Iron Leg
 Eisenfuß
 Rock Peak
@@ -551,7 +551,7 @@ Winziglaub
 Grove
 Hain
 Chimp
-Schimpanse
+Schimpansen
 Playful
 Verspielt
 Penguin
@@ -569,13 +569,13 @@ Biber
 Cricket
 Zirper
 Flash
-Flash
+Flacker
 Spark
-Spark
+Funken
 Gleam Eyes
-Glühauge
+Glühaugen
 Bud
-Knospe
+Knospen
 Bouquet
 Blumenstrauß
 Head Butt
@@ -583,25 +583,25 @@ Kopfstoß
 Shield
 Schutzschild
 Moth
-Fruchtmotte
+Motte
 Tiny Bee
-Baby-Biene
+Kleinbienen
 Beehive
 Bienenstock
 EleSquirrel
 Elektrohörnchen
 Sea Weasel
-Sea Weasel
+Meereswiesel
 Cherry
-Kirsche
+Kirschen
 Blossom
-Blüte
+Blüten
 Sea Slug
-Seeschnecke
+Seeschnecken
 Blimp
 Luftschiff
 Rabbit
-Hase
+Hasen
 Magical
 Magisch
 Big Boss
@@ -617,11 +617,11 @@ Stinktier
 Bronze
 Bronze
 Bronze Bell
-Bronzeglocke
+Bronzeglocken
 Bonsai
 Bonsai
 Mime
-Mime
+Mimen
 Playhouse
 Spielhaus
 Music Note
@@ -631,7 +631,7 @@ Verboten
 Land Shark
 Landhai
 Cave
-Höhle
+Höhlen
 Mach
 Rasanz
 Big Eater
@@ -643,7 +643,7 @@ Aura
 Hippo
 Flusspferd
 Heavyweight
-Schwergewicht
+Schwergewichts
 Scorpion
 Skorpion
 Ogre Scorpion
@@ -659,11 +659,11 @@ Neon
 Frost Tree
 Frostbaum
 Magnet Area
-Magnetgebiet
+Magnetgebiets
 Thunderbolt
-Thunderbolt
+Donnerkeil
 Blast
-Detonation
+Detonations
 Jubilee
 Jubilierer
 Ogre Darner
@@ -677,15 +677,15 @@ Zahnskorpi
 Twin Tusk
 Doppelstoßzahn
 Blade
-Klinge
+Klingen
 Gripper
 Greifer
 Snow Land
-Schneegebiet
+Schneegebiets
 Plasma
 Plasma
 Knowledge
-Wissen
+Wissens
 Willpower
 Willenskraft
 Temporal
@@ -697,7 +697,7 @@ Lavadom
 Colossal
 Kolossal
 Renegade
-Rebell
+Rebellen
 Lunar
 Lunar
 Sea Drifter
@@ -707,7 +707,7 @@ Seefahrer
 Pitch-Black
 Dunkelnacht
 Gratitude
-Gratitude
+Dankbarkeit
 Alpha
 Alpha
 Victory
@@ -743,19 +743,19 @@ Stachelaffe
 High Temp
 Hitze
 Ember
-Ember
+Funkenregen
 Spray
 Wasserstrahl
 Geyser
 Drainage
 Dream Eater
-Dream Eater
+Traumfresser
 Drowsing
 Halbschlaf
 Tiny Pigeon
 Täubchen
 Wild Pigeon
-Wildtaube
+Wildtauben
 Proud
 Stolz
 Electrified
@@ -765,7 +765,7 @@ Erdmantel
 Ore
 Erz
 Compressed
-Kompression
+Kompressions
 Courting
 Balz
 Subterrene
@@ -799,11 +799,11 @@ Wurzel
 Flowering
 Blumenzier
 Hostile
-Grobheit
+Grobheits
 Desert Croc
 Wüstenkroko
 Intimidation
-Abschreckung
+Abschreckungs
 Zen Charm
 Lampion
 Blazing
@@ -815,21 +815,21 @@ Felshaus
 Shedding
 Hautwechsel
 Hoodlum
-Halunke
+Halunken
 Avianoid
 Vogelgleich
 Spirit
-Seele
+Seelen
 Coffin
 Sarkophag
 Prototurtle
-Urzeitkröte
+Urzeitkröten
 First Bird
 Urzeitvogel
 Trash Bag
-Mülltüte
+Mülltüten
 Trash Heap
-Müllhalde
+Müllhalden
 Tricky Fox
 Lausefuchs
 Illusion Fox
@@ -841,13 +841,13 @@ Schal
 Fixation
 Glotz
 Astral Body
-Gestirn
+Gestirns
 Cell
-Zelle
+Zellen
 Mitosis
-Zellteilung
+Zellteilungs
 Multiplying
-Vermehrung
+Vermehrungs
 White Bird
 Schwan
 Icy Snow
@@ -869,7 +869,7 @@ Fürsorge
 Attaching
 Kleben
 EleSpider
-Stromspinne
+Stromspinnen
 Thorn Seed
 Dornfrucht
 Thorn Pod
@@ -881,9 +881,9 @@ Stromfisch
 Cerebral
 Grips
 Candle
-Kerze
+Kerzen
 Lamp
-Lampe
+Lampen
 Luring
 Geleit
 Tusk
@@ -891,39 +891,39 @@ Stoßzahn
 Axe Jaw
 Beilkiefer
 Chill
-Eisscholle
+Eisschollen
 Freezing
 Packeis
 Crystallizing
 Kristall
 Snail
-Schnecke
+Schnecken
 Shell Out
-Entschalung
+Entschalungs
 Trap
 Falle
 Martial Arts
 Kampfkünste
 Automaton
-Automaton
+Urgolem
 Sharp Blade
-Stahlklinge
+Stahlklingen
 Sword Blade
-Schwertklinge
+Schwertklingen
 Bash Buffalo
 Kopfstoßrind
 Eaglet
 Adlerküken
 Valiant
-Kühnheit
+Kühnheits
 Diapered
 Windel
 Bone Vulture
 Knochenadler
 Anteater
-Ameisenbär
+Ameisenbären
 Iron Ant
-Eisenameise
+Eisenameisen
 Irate
 Haudrauf
 Torch
@@ -931,27 +931,27 @@ Fackel
 Iron Will
 Eisenkern
 Cavern
-Felsenhöhle
+Felsenhöhlen
 Grassland
-Wiese
+Wiesen
 Cyclone
 Wirbelsturm
 Bolt Strike
-Bolt Strike
+Torpedo
 Vast White
 Wahres Weiß
 Deep Black
 Reines Schwarz
 Abundance
-Reichtum
+Reichtums
 Boundary
-Schwelle
+Schwellen
 Colt
 Fohlen
 Melody
 Melodie
 Paleozoic
-Paläozoikum
+Paläozoikums
 Spiny Nut
 Stachelkopf
 Spiny Armor
@@ -963,7 +963,7 @@ Baugräber
 Tiny Robin
 Rotkehlchen
 Scorching
-Stichflamme
+Stichflammen
 Scatterdust
 Puderinsekt
 Scale
@@ -981,13 +981,13 @@ Gaunerblick
 Poodle
 Pudel
 Restraint
-Zügelung
+Zügelungs
 Constraint
-Fassung
+Fassungs
 Sword
 Klingenkraft
 Royal Sword
-Königsklinge
+Königsklingen
 Perfume
 Parfüm
 Fragrance
@@ -997,33 +997,33 @@ Zuckerwatte
 Meringue
 Schlagsahne
 Revolving
-Rotation
+Rotations
 Overturning
-Inversion
+Inversions
 Two-Handed
 Krallenduo
 Collective
-Ballung
+Ballungs
 Mock Kelp
 Tangmimikry
 Water Gun
-Water Gun
+Aquapistolen
 Howitzer
-Aquawumme
+Aquawummen
 Generator
-Generator
+Generatoren
 Royal Heir
 Kronprinz
 Despot
-Tyrann
+Tyrannen
 Tundra
 Tundra
 Intertwining
-Bindung
+Bindungs
 Wrestling
 Wrestling
 Antenna
-Antenne
+Antennen
 Jewel
 Edelstein
 Soft Tissue
@@ -1041,11 +1041,11 @@ Eisklumpen
 Sound Wave
 Schallwellen
 Life
-Leben
+Lebens
 Destruction
-Zerstörung
+Zerstörungs
 Order
-Ordnung
+Ordnungs
 Mischief
 Schabernack
 Steam
@@ -1053,31 +1053,31 @@ Dampf
 Grass Quill
 Laubflügel
 Blade Quill
-Flügelklinge
+Flügelklingen
 Arrow Quill
 Pfeilflügel
 Fire Cat
-Feuerkatze
+Feuerkatzen
 Heel
-Fiesling
+Fieslings
 Pop Star
 Popsternchen
 Soloist
-Solist
+Solisten
 Woodpecker
 Specht
 Bugle Beak
-Bugle Beak
+Trompete
 Cannon
 Kanone
 Loitering
-Patrouullie
+Patrouille
 Stakeout
-Stakeout
+Beschattung
 Larva
-Larve
+Larven
 Battery
-Battery
+Batterie
 Boxing
 Boxkampf
 Woolly Crab
@@ -1085,9 +1085,9 @@ Fellkrabbe
 Dancing
 Tanz
 Bee Fly
-Hummelfliege
+Hummelfliegen
 Wolf
-Wolf
+Wolfs
 Small Fry
 Kleinfisch
 Brutal Star
@@ -1097,7 +1097,7 @@ Packesel
 Draft Horse
 Zugpferd
 Water Bubble
-Water Bubble
+Wasserblasen
 Sickle Grass
 Grassichel
 Bloom Sickle
@@ -1105,7 +1105,7 @@ Blumensichel
 Illuminating
 Lumineszenz
 Toxic Lizard
-Giftechse
+Giftechsen
 Flailing
 Wildfang
 Strong Arm
@@ -1113,33 +1113,33 @@ Kraftarme
 Posy Picker
 Blumenkranz
 Sage
-Weisheit
+Weisheits
 Teamwork
 Teamwork
 Turn Tail
 Laufschritt
 Hard Scale
-Rüstung
+Rüstungs
 Sand Heap
 Sandhaufen
 Sand Castle
 Sandschloss
 Sea Cucumber
-Seegurke
+Seegurken
 Synthetic
-Modifikation
+Modifikations
 Meteor
 Meteor
 Blast Turtle
-Knallkröte
+Knallkröten
 Roly-Poly
 Einigler
 Disguise
-Disguise
+Kostümspuk
 Gnash Teeth
 Knirschzahn
 Placid
-Gelassenheit
+Gelassenheits
 Sea Creeper
 Seetang
 Scaly
@@ -1149,19 +1149,19 @@ Schutzpatron
 Nebula
 Nebula
 Protostar
-Urgestirn
+Urgestirns
 Sunne
 Sonnenkreis
 Moone
-Mondscheibe
+Mondscheiben
 Parasite
-Parasit
+Parasiten
 Swollen
-Ausdehnung
+Ausdehnungs
 Lissome
 Eleganz
 Glowing
-Illumination
+Illuminations
 Launch
 Raketenstart
 Drawn Sword
@@ -1171,13 +1171,13 @@ Gaumenfolter
 Prism
 Prisma
 Artificial
-Fabrikat
+Fabrikats
 Gloomdweller
 Dunkelwesen
 Rampart
 Steinmauer
 Fireworks
-Feuerwerk
+Feuerwerks
 Thunderclap
 Blitzsturm
 Hex Nut
@@ -1189,7 +1189,7 @@ Drummer
 Striker
 Torschützen
 Water Lizard
-Wasserechse
+Wasserechsen
 Secret Agent
 Geheimagenten
 Cheeky
@@ -1197,7 +1197,7 @@ Raffbacken
 Greedy
 Gierschlund
 Raven
-Krähe
+Krähen
 Radome
 Radarkuppel
 Seven Spot
@@ -1209,7 +1209,7 @@ Schaf
 Snapping
 Schnapp
 Dog
-Welpene
+Hund
 Apple Core
 Apfelhaus
 Apple Wing
@@ -1233,17 +1233,17 @@ Exotherm
 Tantrum
 Balg
 Jujitsu
-Jiu-jitsu
+Jiu-Jitsu
 Black Tea
 Schwarztee
 Calm
-Calm
+Geruhsam
 Serene
-Serene
+Ruhe
 Silent
 Stille
 Bulk Up
-Bulk Up
+Muskelaufbau
 Blocking
 Barrikaden
 Viking
@@ -1251,7 +1251,7 @@ Wikinger
 Comedian
 Komiker
 Grudge
-Grudge
+Gram
 Cream
 Sahne
 Formation
@@ -1265,7 +1265,7 @@ Megalithen
 Two-Sided
 Alter Ego
 Copperderm
-Kuperfant
+Kupferfant
 Alloy
 Legierungs
 Lingering
@@ -1285,7 +1285,7 @@ Finsteraffen
 Electron
 Elektronen
 Dragon Orb
-Dragon Orb
+Drachenkugel
 Wild Horse
 Wildblut
 Swift Horse
@@ -1293,174 +1293,174 @@ Flinkblut
 King
 Königs
 Axe
-Axe
+Axt
 Peat
-Peat
+Torf
 Big Fish
-Big Fish
+Großfisch
 Free Climb
-Free Climb
+Kletterei
 Pin Cluster
-Pin Cluster
+Tausenddorn
 Love-Hate
-Love-Hate
+Hassliebe
 Grass Cat
-Grass Cat
+Graskatze
 Magician
-Magician
+Magier
 Fire Croc
-Fire Croc
+Feuerkroko
 Singer
-Singer
+Sänger
 Duckling
-Duckling
+Jungente
 Practicing
-Practicing
+Übung
 Dancer
-Dancer
+Tänzer
 Hog
-Hog
+Schwein
 String Ball
-String Ball
+Fadenkugel
 Grasshopper
-Grasshopper
+Heuschrecke
 Hands-On
-Hands-On
+Behandlung
 Couple
-Couple
+Paar
 Family
-Family
+Familie
 Olive
 Olive
 Parrot
-Parrot
+Sittich
 Rock Salt
-Rock Salt
+Steinsalz
 Fire Child
-Fire Child
+Feuerkind
 Fire Warrior
-Fire Warrior
+Feuerrüstung
 Fire Blades
-Fire Blades
+Feuerklingen
 EleTadpole
-EleTadpole
+Stromquappe
 EleFrog
-EleFrog
+Stromfrosch
 Storm Petrel
-Storm Petrel
+Sturmvogel
 Frigatebird
-Frigatebird
+Fregattvogel
 Rascal
-Rascal
+Halbstark
 Boss
-Boss
+Oberhaupt
 Toxic Mouse
-Toxic Mouse
+Giftmaus
 Toxic Monkey
-Toxic Monkey
+Giftaffe
 Tumbleweed
-Tumbleweed
+Rollgras
 Woodear
-Woodear
+Quallenpilz
 Ambush
-Ambush
+Lauer
 Spicy Pepper
-Spicy Pepper
+Habanero
 Rolling
-Rolling
+Wälz
 Frill
-Frill
+Rüschen
 Ostrich
-Ostrich
+Strauß
 Metalsmith
-Metalsmith
+Schmied
 Hammer
 Hammer
 Garden Eel
-Garden Eel
+Meeraal
 Item Drop
-Item Drop
+Abwurf
 Dolphin
-Dolphin
+Delfin
 Single-Cyl
-Single-Cyl
+Einzylinder
 Multi-Cyl
-Multi-Cyl
+Mehrzylinder
 Earthworm
-Earthworm
+Regenwurm
 Ghost Dog
-Ghost Dog
+Geisterhund
 Synchronize
-Synchronize
+Synchron
 Terra Whale
-Terra Whale
+Landwal
 Jettison
-Jettison
+Abtrennung
 Big Catfish
-Big Catfish
+Großwels
 Mimicry
-Mimicry
+Mimesen
 Rage Monkey
-Rage Monkey
+Zornaffe
 Spiny Fish
-Spiny Fish
+Dornfisch
 Big Blade
-Big Blade
+Langschwert
 Paradox
 Paradox
 Ice Fin
-Ice Fin
+Eisfinne
 Ice Dragon
-Ice Dragon
+Eisdrache
 Coin Chest
-Coin Chest
+Schatztruhe
 Coin Entity
-Coin Entity
+Schatzwesen
 Ruinous
-Ruinous
+Unheil
 Candy Apple
-Candy Apple
+Kandisapfel
 Matcha
 Matcha
 Retainer
-Retainer
+Diener
 Mask
-Mask
+Maske
 Apple Hydra
-Apple Hydra
+Apfelhydra
 Tera
 Tera
 Subjugation
-Subjugation
+Unterjochung
 Unique Horn
 Einhorn
 Sphere
-Sphere
+Kugel
 Strong Legs
 Läufer
 Malevolent
 Bosheits
 Ghost Flame
-Ghost Flame
+Geisterflamme
 Poison Fish
-Poison Fish
+Giftfisch
 Hexpert
 Hexenmeister
 Spinning
-Spinning
+Drehung
 Mellow
-Mellow
+Gelassenheit
 Spiteful Fox
-Spiteful Fox
+Tückfuchs
 Baneful Fox
-Baneful Fox
+Fluchfuchs
 Battle Cry
-Battle Cry
+Schlachtruf
 Shell Bunker
-Shell Bunker
+Schalenbunker
 High King
 Kaiser
 Hero
-Hero
+Held
 Coin Hunter
-Coin Hunter
+Münzjäger

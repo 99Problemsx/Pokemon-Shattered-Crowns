@@ -39,7 +39,7 @@ Tauboga
 Pidgeot
 Tauboss
 Rattata
-Rattata
+Rattfratz
 Raticate
 Rattikarl
 Spearow
@@ -117,7 +117,7 @@ Menki
 Primeape
 Rasaff
 Growlithe
-Fuakno
+Fukano
 Arcanine
 Arkani
 Poliwag
@@ -155,7 +155,7 @@ Georok
 Golem
 Geowaz
 Ponyta
-Ponyta
+Ponita
 Rapidash
 Gallopa
 Slowpoke
@@ -187,7 +187,7 @@ Austos
 Gastly
 Nebulak
 Haunter
-Apollo
+Alpollo
 Gengar
 Gengar
 Onix
@@ -215,7 +215,7 @@ Knogga
 Hitmonlee
 Kicklee
 Hitmonchan
-Nokchan
+Nockchan
 Lickitung
 Schlurp
 Koffing
@@ -259,7 +259,7 @@ Pinsir
 Tauros
 Tauros
 Magikarp
-Magikarp
+Karpador
 Gyarados
 Garados
 Lapras
@@ -311,7 +311,7 @@ Lorblatt
 Meganium
 Meganie
 Cyndaquil
-Feuriegel
+Feurigel
 Quilava
 Igelavar
 Typhlosion
@@ -349,7 +349,7 @@ Pichu
 Cleffa
 Pii
 Igglybuff
-Fluffefeluff
+Fluffeluff
 Togepi
 Togepi
 Togetic
@@ -363,7 +363,7 @@ Voltilamm
 Flaaffy
 Waaty
 Ampharos
-mpharos
+Ampharos
 Bellossom
 Blubella
 Marill
@@ -385,7 +385,7 @@ Griffel
 Sunkern
 Sonnkern
 Sunflora
-Sonflora
+Sonnflora
 Yanma
 Yanma
 Wooper
@@ -409,7 +409,7 @@ Woingenau
 Girafarig
 Girafarig
 Pineco
-Tanza
+Tannza
 Forretress
 Forstellka
 Dunsparce
@@ -429,7 +429,7 @@ Scherox
 Shuckle
 Pottrott
 Heracross
-Skarabon
+Skaraborn
 Sneasel
 Sniebel
 Teddiursa
@@ -453,11 +453,11 @@ Octillery
 Delibird
 Botogel
 Mantine
-mantax
+Mantax
 Skarmory
 Panzaeron
 Houndour
-Houndour
+Hunduster
 Houndoom
 Hundemon
 Kingdra
@@ -505,7 +505,7 @@ Ho-Oh
 Celebi
 Celebi
 Treecko
-Geckabor
+Geckarbor
 Grovyle
 Reptain
 Sceptile
@@ -519,7 +519,7 @@ Lohgock
 Mudkip
 Hydropi
 Marshtomp
-Moorabble
+Moorabbel
 Swampert
 Sumpex
 Poochyena
@@ -635,9 +635,9 @@ Roselia
 Gulpin
 Schluppuck
 Swalot
-Schluckwech
+Schlukwech
 Carvanha
-kanivanha
+Kanivanha
 Sharpedo
 Tohaido
 Wailmer
@@ -659,7 +659,7 @@ Pandir
 Trapinch
 Knacklion
 Vibrava
-Vibrara
+Vibrava
 Flygon
 Libelldra
 Cacnea
@@ -711,7 +711,7 @@ Shuppet
 Banette
 Banette
 Duskull
-Zwirllicht
+Zwirrlicht
 Dusclops
 Zwirrklop
 Tropius
@@ -725,7 +725,7 @@ Isso
 Snorunt
 Schneppke
 Glalie
-Fimontor
+Firnontor
 Spheal
 Seemops
 Sealeo
@@ -737,11 +737,11 @@ Perlu
 Huntail
 Aalabyss
 Gorebyss
-Saganbyss
+Saganabyss
 Relicanth
 Relicanth
 Luvdisc
-Liebiskuss
+Liebiskus
 Bagon
 Kindwurm
 Shelgon
@@ -1057,7 +1057,7 @@ Brockoloss
 Woobat
 Fleknoil
 Swoobat
-Fletiano
+Fletiamo
 Drilbur
 Rotomurf
 Excadrill
@@ -1091,7 +1091,7 @@ Toxiped
 Whirlipede
 Rollum
 Scolipede
-Scolipede
+Cerapendra
 Cottonee
 Waumboll
 Whimsicott
@@ -1183,7 +1183,7 @@ Cavalanzas
 Foongus
 Tarnpignon
 Amoonguss
-Amoonguss
+Hutsassa
 Frillish
 Quabbel
 Jellicent
@@ -1245,7 +1245,7 @@ Wie-Shu
 Druddigon
 Shardrago
 Golett
-Golett
+Golbit
 Golurk
 Golgantes
 Pawniard
@@ -1279,9 +1279,9 @@ Ramoth
 Cobalion
 Kobalium
 Terrakion
+Terrakium
 Virizion
-Virizion
-Virizion
+Viridium
 Tornadus
 Boreos
 Thundurus
@@ -1471,7 +1471,7 @@ Tukanon
 Yungoos
 Mangunior
 Gumshoos
-Gumshoos
+Manguspektor
 Grubbin
 Mabula
 Charjabug
@@ -1489,7 +1489,7 @@ Wommel
 Ribombee
 Bandelby
 Rockruff
-Wufffels
+Wuffels
 Lycanroc
 Wolwerock
 Wishiwashi
@@ -1517,11 +1517,11 @@ Lamellux
 Salandit
 Molunk
 Salazzle
-Salazzle
-Stufful
 Amfira
-Bewear
+Stufful
 Velursi
+Bewear
+Kosturso
 Bounsweet
 Frubberl
 Steenee
@@ -1623,7 +1623,7 @@ Melmetal
 Grookey
 Chimpep
 Thwackey
-Thwackey
+Chimstix
 Rillaboom
 Gortrom
 Scorbunny
@@ -1639,7 +1639,7 @@ Phlegleon
 Inteleon
 Intelleon
 Skwovet
-Skwovet
+Raffel
 Greedent
 Schlaraffel
 Rookidee
@@ -1675,7 +1675,7 @@ Voldi
 Boltund
 Bellektro
 Rolycoly
-Klonkette
+Klonkett
 Carkol
 Wagong
 Coalossal
@@ -1743,7 +1743,7 @@ Pokusan
 Falinks
 Legios
 Pincurchin
-Pincurchin
+Britzigel
 Snom
 Snomnom
 Frosmoth
@@ -1799,256 +1799,256 @@ Phantoross
 Calyrex
 Coronospa
 Wyrdeer
-Wyrdeer
+Damythir
 Kleavor
-Kleavor
+Axantor
 Ursaluna
 Ursaluna
 Basculegion
-Basculegion
+Salmagnis
 Sneasler
-Sneasler
+Snieboss
 Overqwil
-Overqwil
+Myriador
 Enamorus
-Enamorus
+Cupidos
 Sprigatito
-Sprigatito
+Felori
 Floragato
-Floragato
+Feliospa
 Meowscarada
-Meowscarada
+Maskagato
 Fuecoco
-Fuecoco
+Krokel
 Crocalor
-Crocalor
+Lokroko
 Skeledirge
-Skeledirge
+Skelokrok
 Quaxly
-Quaxly
+Kwaks
 Quaxwell
-Quaxwell
+Fuentente
 Quaquaval
-Quaquaval
+Bailonda
 Lechonk
-Lechonk
+Ferkuli
 Oinkologne
-Oinkologne
+Fragrunz
 Tarountula
-Tarountula
+Tarundel
 Spidops
-Spidops
+Spinsidias
 Nymble
-Nymble
+Micrick
 Lokix
-Lokix
+Lextremo
 Pawmi
-Pawmi
+Pamo
 Pawmo
-Pawmo
+Pamamo
 Pawmot
-Pawmot
+Pamomamo
 Tandemaus
-Tandemaus
+Zwieps
 Maushold
-Maushold
+Famieps
 Fidough
-Fidough
+Hefel
 Dachsbun
-Dachsbun
+Backel
 Smoliv
-Smoliv
+Olini
 Dolliv
-Dolliv
+Olivinio
 Arboliva
-Arboliva
+Olithena
 Squawkabilly
-Squawkabilly
+Krawalloro
 Nacli
-Nacli
+Geosali
 Naclstack
-Naclstack
+Sedisal
 Garganacl
-Garganacl
+Saltigant
 Charcadet
-Charcadet
+Knarbon
 Armarouge
-Armarouge
+Crimanzo
 Ceruledge
-Ceruledge
+Azugladis
 Tadbulb
-Tadbulb
+Blipp
 Bellibolt
-Bellibolt
+Wampitz
 Wattrel
-Wattrel
+Voltrel
 Kilowattrel
-Kilowattrel
+Voltrean
 Maschiff
-Maschiff
+Mobtiff
 Mabosstiff
-Mabosstiff
+Mastifioso
 Shroodle
-Shroodle
+Sproxi
 Grafaiai
-Grafaiai
+Affiti
 Bramblin
-Bramblin
+Weherba
 Brambleghast
-Brambleghast
+Horrerba
 Toedscool
-Toedscool
+Tentagra
 Toedscruel
-Toedscruel
+Tenterra
 Klawf
-Klawf
+Klibbe
 Capsakid
-Capsakid
+Chilingel
 Scovillain
-Scovillain
+Halupenjo
 Rellor
-Rellor
+Relluk
 Rabsca
-Rabsca
+Skarabaks
 Flittle
-Flittle
+Flattutu
 Espathra
-Espathra
+Psiopatra
 Tinkatink
-Tinkatink
+Forgita
 Tinkatuff
-Tinkatuff
+Tafforgita
 Tinkaton
-Tinkaton
+Granforgita
 Wiglett
-Wiglett
+Schligda
 Wugtrio
-Wugtrio
+Schligdri
 Bombirdier
-Bombirdier
+Adebom
 Finizen
-Finizen
+Normifin
 Palafin
-Palafin
+Delfinator
 Varoom
-Varoom
+Knattox
 Revavroom
-Revavroom
+Knattatox
 Cyclizar
-Cyclizar
+Mopex
 Orthworm
-Orthworm
+Schlurm
 Glimmet
-Glimmet
+Lumispross
 Glimmora
-Glimmora
+Lumiflora
 Greavard
-Greavard
+Gruff
 Houndstone
-Houndstone
+Friedwuff
 Flamigo
-Flamigo
+Flaminkno
 Cetoddle
-Cetoddle
+Flaniwal
 Cetitan
-Cetitan
+Kolowal
 Veluza
-Veluza
+Agiluza
 Dondozo
-Dondozo
+Heerashai
 Tatsugiri
-Tatsugiri
+Nigiragi
 Annihilape
-Annihilape
+Epitaff
 Clodsire
-Clodsire
+Suelord
 Farigiraf
 Farigiraf
 Dudunsparce
-Dudunsparce
+Dummimisel
 Kingambit
-Kingambit
+Gladimperio
 Great Tusk
-Great Tusk
+Riesenzahn
 Scream Tail
-Scream Tail
+Brüllschweif
 Brute Bonnet
-Brute Bonnet
+Wutpilz
 Flutter Mane
-Flutter Mane
+Flatterhaar
 Slither Wing
-Slither Wing
+Kriechflügel
 Sandy Shocks
-Sandy Shocks
+Sandfell
 Iron Treads
-Iron Treads
+Eisenrad
 Iron Bundle
-Iron Bundle
+Eisenbündel
 Iron Hands
-Iron Hands
+Eisenhand
 Iron Jugulis
-Iron Jugulis
+Eisenhals
 Iron Moth
-Iron Moth
+Eisenfalter
 Iron Thorns
-Iron Thorns
+Eisendorn
 Frigibax
-Frigibax
+Frospino
 Arctibax
-Arctibax
+Cryospino
 Baxcalibur
-Baxcalibur
+Espinodon
 Gimmighoul
-Gimmighoul
+Gierspenst
 Gholdengo
-Gholdengo
+Monetigo
 Wo-Chien
-Wo-Chien
+Chongjian
 Chien-Pao
-Chien-Pao
+Baojian
 Ting-Lu
-Ting-Lu
+Dinglu
 Chi-Yu
-Chi-Yu
+Yuyu
 Roaring Moon
-Roaring Moon
+Donnersichel
 Iron Valiant
-Iron Valiant
+Eisenkrieger
 Koraidon
 Koraidon
 Miraidon
 Miraidon
 Walking Wake
-Walking Wake
+Windewoge
 Iron Leaves
-Iron Leaves
+Eisenblatt
 Dipplin
-Dipplin
+Sirapfel
 Poltchageist
-Poltchageist
+Mortcha
 Sinistcha
-Sinistcha
+Fatalitcha
 Okidogi
-Okidogi
+Boninu
 Munkidori
-Munkidori
+Benesaru
 Fezandipiti
-Fezandipiti
+Beatori
 Ogerpon
 Ogerpon
 Archaludon
-Archaludon
+Briduradon
 Hydrapple
-Hydrapple
+Hydrapfel
 Gouging Fire
-Gouging Fire
+Keilflamme
 Raging Bolt
-Raging Bolt
+Furienblitz
 Iron Boulder
-Iron Boulder
+Eisenfels
 Iron Crown
-Iron Crown
+Eisenhaupt
 Terapagos
 Terapagos
 Pecharunt
-Pecharunt
+Infamomo

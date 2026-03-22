@@ -3,158 +3,158 @@
 #-------------------------------
 [RIBBON_DESCRIPTIONS]
 Hoenn Cool Contest Normal Rank winner!
-Hoenn Cool Contest Normal Rank winner!
+Hoenn Cool-Wettbewerb Normalrang-Gewinner!
 Hoenn Cool Contest Super Rank winner!
-Hoenn Cool Contest Super Rank winner!
+Hoenn Cool-Wettbewerb Superrang-Gewinner!
 Hoenn Cool Contest Hyper Rank winner!
-Hoenn Cool Contest Hyper Rank winner!
+Hoenn Cool-Wettbewerb Hyperrang-Gewinner!
 Hoenn Cool Contest Master Rank winner!
-Hoenn Cool Contest Master Rank winner!
+Hoenn Cool-Wettbewerb Meisterrang-Gewinner!
 Hoenn Beauty Contest Normal Rank winner!
-Hoenn Beauty Contest Normal Rank winner!
+Hoenn Schönheits-Wettbewerb Normalrang-Gewinner!
 Hoenn Beauty Contest Super Rank winner!
-Hoenn Beauty Contest Super Rank winner!
+Hoenn Schönheits-Wettbewerb Superrang-Gewinner!
 Hoenn Beauty Contest Hyper Rank winner!
-Hoenn Beauty Contest Hyper Rank winner!
+Hoenn Schönheits-Wettbewerb Hyperrang-Gewinner!
 Hoenn Beauty Contest Master Rank winner!
-Hoenn Beauty Contest Master Rank winner!
+Hoenn Schönheits-Wettbewerb Meisterrang-Gewinner!
 Hoenn Cute Contest Normal Rank winner!
-Hoenn Cute Contest Normal Rank winner!
+Hoenn Niedlichkeits-Wettbewerb Normalrang-Gewinner!
 Hoenn Cute Contest Super Rank winner!
-Hoenn Cute Contest Super Rank winner!
+Hoenn Niedlichkeits-Wettbewerb Superrang-Gewinner!
 Hoenn Cute Contest Hyper Rank winner!
-Hoenn Cute Contest Hyper Rank winner!
+Hoenn Niedlichkeits-Wettbewerb Hyperrang-Gewinner!
 Hoenn Cute Contest Master Rank winner!
-Hoenn Cute Contest Master Rank winner!
+Hoenn Niedlichkeits-Wettbewerb Meisterrang-Gewinner!
 Hoenn Smart Contest Normal Rank winner!
-Hoenn Smart Contest Normal Rank winner!
+Hoenn Klugheits-Wettbewerb Normalrang-Gewinner!
 Hoenn Smart Contest Super Rank winner!
-Hoenn Smart Contest Super Rank winner!
+Hoenn Klugheits-Wettbewerb Superrang-Gewinner!
 Hoenn Smart Contest Hyper Rank winner!
-Hoenn Smart Contest Hyper Rank winner!
+Hoenn Klugheits-Wettbewerb Hyperrang-Gewinner!
 Hoenn Smart Contest Master Rank winner!
-Hoenn Smart Contest Master Rank winner!
+Hoenn Klugheits-Wettbewerb Meisterrang-Gewinner!
 Hoenn Tough Contest Normal Rank winner!
-Hoenn Tough Contest Normal Rank winner!
+Hoenn Stärke-Wettbewerb Normalrang-Gewinner!
 Hoenn Tough Contest Super Rank winner!
-Hoenn Tough Contest Super Rank winner!
+Hoenn Stärke-Wettbewerb Superrang-Gewinner!
 Hoenn Tough Contest Hyper Rank winner!
-Hoenn Tough Contest Hyper Rank winner!
+Hoenn Stärke-Wettbewerb Hyperrang-Gewinner!
 Hoenn Tough Contest Master Rank winner!
-Hoenn Tough Contest Master Rank winner!
+Hoenn Stärke-Wettbewerb Meisterrang-Gewinner!
 Super Contest Cool Category Normal Rank winner!
-Super Contest Cool Category Normal Rank winner!
+Sinnoh Super-Wettbewerb Cool-Kategorie Normalrang-Gewinner!
 Super Contest Cool Category Great Rank winner!
-Super Contest Cool Category Great Rank winner!
+Sinnoh Super-Wettbewerb Cool-Kategorie Superrang-Gewinner!
 Super Contest Cool Category Ultra Rank winner!
-Super Contest Cool Category Ultra Rank winner!
+Sinnoh Super-Wettbewerb Cool-Kategorie Hyperrang-Gewinner!
 Super Contest Cool Category Master Rank winner!
-Super Contest Cool Category Master Rank winner!
+Sinnoh Super-Wettbewerb Cool-Kategorie Meisterrang-Gewinner!
 Super Contest Beauty Category Normal Rank winner!
-Super Contest Beauty Category Normal Rank winner!
+Sinnoh Super-Wettbewerb Schönheits-Kategorie Normalrang-Gewinner!
 Super Contest Beauty Category Great Rank winner!
-Super Contest Beauty Category Great Rank winner!
+Sinnoh Super-Wettbewerb Schönheits-Kategorie Superrang-Gewinner!
 Super Contest Beauty Category Ultra Rank winner!
-Super Contest Beauty Category Ultra Rank winner!
+Sinnoh Super-Wettbewerb Schönheits-Kategorie Hyperrang-Gewinner!
 Super Contest Beauty Category Master Rank winner!
-Super Contest Beauty Category Master Rank winner!
+Sinnoh Super-Wettbewerb Schönheits-Kategorie Meisterrang-Gewinner!
 Super Contest Cute Category Normal Rank winner!
-Super Contest Cute Category Normal Rank winner!
+Sinnoh Super-Wettbewerb Niedlichkeits-Kategorie Normalrang-Gewinner!
 Super Contest Cute Category Great Rank winner!
-Super Contest Cute Category Great Rank winner!
+Sinnoh Super-Wettbewerb Niedlichkeits-Kategorie Superrang-Gewinner!
 Super Contest Cute Category Ultra Rank winner!
-Super Contest Cute Category Ultra Rank winner!
+Sinnoh Super-Wettbewerb Niedlichkeits-Kategorie Hyperrang-Gewinner!
 Super Contest Cute Category Master Rank winner!
-Super Contest Cute Category Master Rank winner!
+Sinnoh Super-Wettbewerb Niedlichkeits-Kategorie Meisterrang-Gewinner!
 Super Contest Smart Category Normal Rank winner!
-Super Contest Smart Category Normal Rank winner!
+Sinnoh Super-Wettbewerb Klugheits-Kategorie Normalrang-Gewinner!
 Super Contest Smart Category Great Rank winner!
-Super Contest Smart Category Great Rank winner!
+Sinnoh Super-Wettbewerb Klugheits-Kategorie Superrang-Gewinner!
 Super Contest Smart Category Ultra Rank winner!
-Super Contest Smart Category Ultra Rank winner!
+Sinnoh Super-Wettbewerb Klugheits-Kategorie Hyperrang-Gewinner!
 Super Contest Smart Category Master Rank winner!
-Super Contest Smart Category Master Rank winner!
+Sinnoh Super-Wettbewerb Klugheits-Kategorie Meisterrang-Gewinner!
 Super Contest Tough Category Normal Rank winner!
-Super Contest Tough Category Normal Rank winner!
+Sinnoh Super-Wettbewerb Stärke-Kategorie Normalrang-Gewinner!
 Super Contest Tough Category Great Rank winner!
-Super Contest Tough Category Great Rank winner!
+Sinnoh Super-Wettbewerb Stärke-Kategorie Superrang-Gewinner!
 Super Contest Tough Category Ultra Rank winner!
-Super Contest Tough Category Ultra Rank winner!
+Sinnoh Super-Wettbewerb Stärke-Kategorie Hyperrang-Gewinner!
 Super Contest Tough Category Master Rank winner!
-Super Contest Tough Category Master Rank winner!
+Sinnoh Super-Wettbewerb Stärke-Kategorie Meisterrang-Gewinner!
 Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 50 challenge.
-Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 50 challenge.
+Band für das Bestehen der Hoenn-Kampfturm Lv. 50 Herausforderung.
 Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 100 challenge.
-Ribbon awarded for clearing Hoenn's Battle Tower's Lv. 100 challenge.
+Band für das Bestehen der Hoenn-Kampfturm Lv. 100 Herausforderung.
 A Ribbon awarded for defeating the Tower Tycoon at the Battle Tower.
-A Ribbon awarded for defeating the Tower Tycoon at the Battle Tower.
+Ein Band für den Sieg über den Turm-Oligarch im Kampfturm.
 A Ribbon awarded for completing the Battle Tower Double challenge.
-A Ribbon awarded for completing the Battle Tower Double challenge.
+Ein Band für das Abschließen der Kampfturm-Doppel-Herausforderung.
 A Ribbon awarded for completing the Battle Tower Multi challenge.
-A Ribbon awarded for completing the Battle Tower Multi challenge.
+Ein Band für das Abschließen der Kampfturm-Multi-Herausforderung.
 A Ribbon awarded for completing the Battle Tower Link Multi challenge.
-A Ribbon awarded for completing the Battle Tower Link Multi challenge.
+Ein Band für das Abschließen der Kampfturm-Link-Multi-Herausforderung.
 A Ribbon awarded for completing the Wi-Fi Battle Tower challenge.
-A Ribbon awarded for completing the Wi-Fi Battle Tower challenge.
+Ein Band für das Abschließen der Wi-Fi-Kampfturm-Herausforderung.
 Ribbon for clearing the Pokémon League and entering the Hall of Fame in another region.
-Ribbon for clearing the Pokémon League and entering the Hall of Fame in another region.
+Band für das Besiegen der Pokémon-Liga und den Einzug in die Ruhmeshalle einer anderen Region.
 Ribbon awarded for beating the Sinnoh Champion and entering the Hall of Fame.
-Ribbon awarded for beating the Sinnoh Champion and entering the Hall of Fame.
+Band für den Sieg über den Sinnoh-Champion und den Einzug in die Ruhmeshalle.
 A Ribbon awarded for setting an incredible record.
-A Ribbon awarded for setting an incredible record.
+Ein Band für das Aufstellen eines unglaublichen Rekords.
 Pokémon Event Participation Ribbon.
-Pokémon Event Participation Ribbon.
+Pokémon-Event-Teilnahmeband.
 A Ribbon awarded for setting a legendary record.
-A Ribbon awarded for setting a legendary record.
+Ein Band für das Aufstellen eines legendären Rekords.
 An extraordinarily gorgeous and extravagant Ribbon.
-An extraordinarily gorgeous and extravagant Ribbon.
+Ein außergewöhnlich prächtiges und extravagantes Band.
 An incredibly regal Ribbon with an air of nobility.
-An incredibly regal Ribbon with an air of nobility.
+Ein unglaublich royales Band mit einem Hauch von Adel.
 A gorgeous and regal Ribbon that is the peak of fabulous.
-A gorgeous and regal Ribbon that is the peak of fabulous.
+Ein prächtiges und royales Band am Gipfel der Pracht.
 A Ribbon for recalling an invigorating event that created life energy.
-A Ribbon for recalling an invigorating event that created life energy.
+Ein Band zur Erinnerung an ein belebendes Ereignis, das Lebensenergie erzeugte.
 A Ribbon for recalling a thrilling event that made life more exciting.
-A Ribbon for recalling a thrilling event that made life more exciting.
+Ein Band zur Erinnerung an ein aufregendes Ereignis, das das Leben aufregender machte.
 A Ribbon for recalling feelings of sadness that added spice to life.
-A Ribbon for recalling feelings of sadness that added spice to life.
+Ein Band zur Erinnerung an Gefühle der Traurigkeit, die dem Leben Würze verliehen.
 A Ribbon for recalling a careless error that helped steer life decisions.
-A Ribbon for recalling a careless error that helped steer life decisions.
+Ein Band zur Erinnerung an einen unachtsamen Fehler, der bei Lebensentscheidungen half.
 A Ribbon for recalling a refreshing event that added sparkle to life.
-A Ribbon for recalling a refreshing event that added sparkle to life.
+Ein Band zur Erinnerung an ein erfrischendes Ereignis, das dem Leben Glanz verlieh.
 A Ribbon for recalling a deep slumber that made life soothing.
-A Ribbon for recalling a deep slumber that made life soothing.
+Ein Band zur Erinnerung an einen tiefen Schlummer, der das Leben beruhigend machte.
 A Ribbon for recalling that smiles enrich the quality of life.
-A Ribbon for recalling that smiles enrich the quality of life.
+Ein Band zur Erinnerung daran, dass Lächeln die Lebensqualität bereichert.
 A Ribbon awarded to a Pokémon deemed to have a top-quality footprint.
-A Ribbon awarded to a Pokémon deemed to have a top-quality footprint.
+Ein Band, das einem Pokémon verliehen wird, das einen erstklassigen Fußabdruck besitzt.
 Ribbon awarded for being chosen as a super sketch model in Hoenn.
-Ribbon awarded for being chosen as a super sketch model in Hoenn.
+Band für die Wahl zum Super-Skizzenmodell in Hoenn.
 Ribbon awarded for being an exceptionally hard worker.
-Ribbon awarded for being an exceptionally hard worker.
+Band für außergewöhnlich fleißige Arbeit.
 A Ribbon to celebrate a birthday.
-A Ribbon to celebrate a birthday.
+Ein Band zur Feier eines Geburtstags.
 A special Ribbon for a special day.
-A special Ribbon for a special day.
+Ein besonderes Band für einen besonderen Tag.
 A Ribbon that proclaims love for Pokémon.
-A Ribbon that proclaims love for Pokémon.
+Ein Band, das die Liebe zu Pokémon verkündet.
 Special Holiday Ribbon.
-Special Holiday Ribbon.
+Besonderes Feiertagsband.
 A Ribbon to cherish a special memory.
-A Ribbon to cherish a special memory.
+Ein Band zur Bewahrung einer besonderen Erinnerung.
 A Ribbon said to make your wish come true.
-A Ribbon said to make your wish come true.
+Ein Band, das angeblich einen Wunsch wahr werden lässt.
 A Ribbon awarded for overcoming all difficult challenges.
-A Ribbon awarded for overcoming all difficult challenges.
+Ein Band für das Überwinden aller schwierigen Herausforderungen.
 Pokémon League Champion Ribbon.
-Pokémon League Champion Ribbon.
+Pokémon-Liga-Championband.
 Battle Competition Champion Ribbon.
-Battle Competition Champion Ribbon.
+Kampfwettbewerbs-Championband.
 Pokémon World Championships Regional Champion Ribbon.
-Pokémon World Championships Regional Champion Ribbon.
+Pokémon-Weltmeisterschaft Regionalchampionband.
 A Ribbon awarded for winning 100 matches in a row.
-A Ribbon awarded for winning 100 matches in a row.
+Ein Band für 100 aufeinanderfolgende Siege.
 Pokémon World Championships National Champion Ribbon.
-Pokémon World Championships National Champion Ribbon.
+Pokémon-Weltmeisterschaft Nationalchampionband.
 Pokémon World Championships World Champion Ribbon.
-Pokémon World Championships World Champion Ribbon.
+Pokémon-Weltmeisterschaft Weltchampionband.

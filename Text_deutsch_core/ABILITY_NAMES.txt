@@ -31,7 +31,7 @@ Wolke Sieben
 Compound Eyes
 Facettenauge
 Insomnia
-Insomnia
+Schlaflosigkeit
 Color Change
 Farbwechsel
 Immunity
@@ -41,7 +41,7 @@ Feuerfänger
 Shield Dust
 Puderabwehr
 Own Tempo
-Tempomacher
+Gleichmut
 Suction Cups
 Saugnapf
 Intimidate
@@ -73,7 +73,7 @@ Chlorophyll
 Illuminate
 Erleuchtung
 Trace
-Fährte
+Erfassen
 Huge Power
 Kraftkoloss
 Poison Point
@@ -121,7 +121,7 @@ Minus
 Forecast
 Prognose
 Sticky Hold
-Wertehalter
+Klebekörper
 Shed Skin
 Expidermis
 Guts
@@ -155,7 +155,7 @@ Panzerhaut
 Air Lock
 Klimaschutz
 Tangled Feet
-Fußangel
+Taumelschritt
 Motor Drive
 Starthilfe
 Rivalry
@@ -181,7 +181,7 @@ Download
 Iron Fist
 Eisenfaust
 Poison Heal
-Aufheber
+Giftheilung
 Adaptability
 Anpassung
 Skill Link
@@ -221,7 +221,7 @@ Vorwarnung
 Unaware
 Unkenntnis
 Tinted Lens
-Tinted Lens
+Aufwertung
 Filter
 Filter
 Slow Start
@@ -235,13 +235,13 @@ Eishaut
 Solid Rock
 Felskern
 Snow Warning
-Hagelalarm
+Schneeschauer
 Honey Gather
 Honigmaul
 Frisk
 Schnüffler
 Reckless
-Atchlos
+Achtlos
 Multitype
 Variabilität
 Flower Gift
@@ -257,7 +257,7 @@ Umkehrung
 Unnerve
 Anspannung
 Defiant
-Seigeswille
+Siegeswille
 Defeatist
 Schwächling
 Cursed Body
@@ -285,7 +285,7 @@ Telepathie
 Moody
 Gefühlswippe
 Overcoat
-Wetterfest
+Partikelschutz
 Poison Touch
 Giftgriff
 Regenerator
@@ -361,7 +361,7 @@ Megawumme
 Grass Pelt
 Pflanzenpelz
 Symbiosis
-Nutznießer
+Symbiose
 Tough Claws
 Krallenwucht
 Pixilate
@@ -373,7 +373,7 @@ Zenithaut
 Parental Bond
 Familienbande
 Dark Aura
-Dankelaura
+Dunkelaura
 Fairy Aura
 Feenaura
 Aura Break
@@ -445,7 +445,7 @@ Seelenherz
 Tangling Hair
 Lockenkopf
 Receiver
-Receiver
+Empfänger
 Power of Alchemy
 Chemiekraft
 Beast Boost
@@ -517,7 +517,7 @@ Reaktionsgas
 Pastel Veil
 Pastellhülle
 Hunger Switch
-Hunger Switch
+Heißhunger
 Quick Draw
 Schnellschuss
 Unseen Fist
@@ -535,82 +535,82 @@ Dunkles Wiehern
 As One
 Reitgespann
 Lingering Aroma
-Lingering Aroma
+Duftschwade
 Seed Sower
-Seed Sower
+Streusaat
 Thermal Exchange
-Thermal Exchange
+Thermowandel
 Anger Shell
-Anger Shell
+Wutpanzer
 Purifying Salt
-Purifying Salt
+Läutersalz
 Well-Baked Body
-Well-Baked Body
+Knusperkruste
 Wind Rider
-Wind Rider
+Windreiter
 Guard Dog
-Guard Dog
+Wachhund
 Rocky Payload
-Rocky Payload
+Steinträger
 Wind Power
-Wind Power
+Windkraft
 Zero to Hero
-Zero to Hero
+Superwechsel
 Commander
-Commander
+Kommandant
 Electromorphosis
-Electromorphosis
+Dynamo
 Protosynthesis
-Protosynthesis
+Paläosynthese
 Quark Drive
-Quark Drive
+Quantenantrieb
 Good as Gold
-Good as Gold
+Goldkörper
 Vessel of Ruin
-Vessel of Ruin
+Unheilsgefäß
 Sword of Ruin
-Sword of Ruin
+Unheilsschwert
 Tablets of Ruin
-Tablets of Ruin
+Unheilstafeln
 Beads of Ruin
-Beads of Ruin
+Unheilsjuwelen
 Orichalcum Pulse
-Orichalcum Pulse
+Orichalkum-Puls
 Hadron Engine
-Hadron Engine
+Hadronen-Motor
 Opportunist
-Opportunist
+Profiteur
 Cud Chew
-Cud Chew
+Wiederkäuer
 Sharpness
-Sharpness
+Scharfkantig
 Supreme Overlord
-Supreme Overlord
+Feldherr
 Costar
-Costar
+Synchronauftritt
 Toxic Debris
-Toxic Debris
+Giftbelag
 Armor Tail
-Armor Tail
+Schweifrüstung
 Earth Eater
-Earth Eater
+Bodenschmaus
 Mycelium Might
-Mycelium Might
+Myzelienkraft
 Hospitality
-Hospitality
+Gastlichkeit
 Mind's Eye
-Mind's Eye
+Geistiges Auge
 Embody Aspect
-Embody Aspect
+Erinnerungskraft
 Toxic Chain
-Toxic Chain
+Giftkette
 Supersweet Syrup
-Supersweet Syrup
+Süßer Nektar
 Tera Shift
-Tera Shift
+Tera-Wandel
 Tera Shell
-Tera Shell
+Tera-Panzer
 Teraform Zero
-Teraform Zero
+Teraforming Null
 Poison Puppeteer
-Poison Puppeteer
+Giftpuppenspiel

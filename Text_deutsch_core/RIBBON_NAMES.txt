@@ -3,142 +3,142 @@
 #-------------------------------
 [RIBBON_NAMES]
 Cool Ribbon
-Cool Ribbon
+Coolnessband
 Cool Ribbon Super
-Cool Ribbon Super
+Coolness Superband
 Cool Ribbon Hyper
-Cool Ribbon Hyper
+Coolness Hyperband
 Cool Ribbon Master
-Cool Ribbon Master
+Coolness Masterband
 Beauty Ribbon
-Beauty Ribbon
+Schönheitband
 Beauty Ribbon Super
-Beauty Ribbon Super
+Schönheit Superband
 Beauty Ribbon Hyper
-Beauty Ribbon Hyper
+Schönheit Hyperband
 Beauty Ribbon Master
-Beauty Ribbon Master
+Schönheit Masterband
 Cute Ribbon
-Cute Ribbon
+Anmutband
 Cute Ribbon Super
-Cute Ribbon Super
+Anmut Superband
 Cute Ribbon Hyper
-Cute Ribbon Hyper
+Anmut Hyperband
 Cute Ribbon Master
-Cute Ribbon Master
+Anmut Masterband
 Smart Ribbon
-Smart Ribbon
+Klugheitband
 Smart Ribbon Super
-Smart Ribbon Super
+Klugheit Superband
 Smart Ribbon Hyper
-Smart Ribbon Hyper
+Klugheit Hyperband
 Smart Ribbon Master
-Smart Ribbon Master
+Klugheit Masterband
 Tough Ribbon
-Tough Ribbon
+Stärkeband
 Tough Ribbon Super
-Tough Ribbon Super
+Stärke Superband
 Tough Ribbon Hyper
-Tough Ribbon Hyper
+Stärke Hyperband
 Tough Ribbon Master
-Tough Ribbon Master
+Stärke Masterband
 Cool Ribbon Great
-Cool Ribbon Great
+Coolness Megaband
 Cool Ribbon Ultra
-Cool Ribbon Ultra
+Coolness Ultraband
 Beauty Ribbon Great
-Beauty Ribbon Great
+Schönheit Megaband
 Beauty Ribbon Ultra
-Beauty Ribbon Ultra
+Schönheit Ultraband
 Cute Ribbon Great
-Cute Ribbon Great
+Anmut Megaband
 Cute Ribbon Ultra
-Cute Ribbon Ultra
+Anmut Ultraband
 Smart Ribbon Great
-Smart Ribbon Great
+Klugheit Megaband
 Smart Ribbon Ultra
-Smart Ribbon Ultra
+Klugheit Ultraband
 Tough Ribbon Great
-Tough Ribbon Great
+Stärke Megaband
 Tough Ribbon Ultra
-Tough Ribbon Ultra
+Stärke Ultraband
 Winning Ribbon
-Winning Ribbon
+Gewinnerband
 Victory Ribbon
-Victory Ribbon
+Siegerband
 Ability Ribbon
-Ability Ribbon
+Fähigkeitband
 Great Ability Ribbon
-Great Ability Ribbon
+Fähigkeit Großband
 Double Ability Ribbon
-Double Ability Ribbon
+Fähigkeit Doppelband
 Multi Ability Ribbon
-Multi Ability Ribbon
+Fähigkeit Multiband
 Pair Ability Ribbon
-Pair Ability Ribbon
+Fähigkeit Paarband
 World Ability Ribbon
-World Ability Ribbon
+Fähigkeit Weltband
 Champion Ribbon
-Champion Ribbon
+Championband
 Sinnoh Champ Ribbon
-Sinnoh Champ Ribbon
+Sinnoh-Championband
 Record Ribbon
-Record Ribbon
+Rekordband
 Event Ribbon
-Event Ribbon
+Geschichteband
 Legend Ribbon
-Legend Ribbon
+Legendeband
 Gorgeous Ribbon
-Gorgeous Ribbon
+Hinreißendband
 Royal Ribbon
-Royal Ribbon
+Königlichband
 Gorgeous Royal Ribbon
-Gorgeous Royal Ribbon
+Hinreißend Königl.band
 Alert Ribbon
-Alert Ribbon
+Wachsamkeitband
 Shock Ribbon
-Shock Ribbon
+Schockband
 Downcast Ribbon
-Downcast Ribbon
+Niederschlagband
 Careless Ribbon
-Careless Ribbon
+Sorglosigkeitband
 Relax Ribbon
-Relax Ribbon
+Entspannungband
 Snooze Ribbon
-Snooze Ribbon
+Schlafenband
 Smile Ribbon
-Smile Ribbon
+Lächelnband
 Footprint Ribbon
-Footprint Ribbon
+Fußabdruckband
 Artist Ribbon
-Artist Ribbon
+Künstlerband
 Effort Ribbon
-Effort Ribbon
+Fleißband
 Birthday Ribbon
-Birthday Ribbon
+Geburtstagband
 Special Ribbon
-Special Ribbon
+Spezialband
 Classic Ribbon
-Classic Ribbon
+Klassischband
 Premier Ribbon
-Premier Ribbon
+Premierband
 Souvenir Ribbon
-Souvenir Ribbon
+Gedenkband
 Wishing Ribbon
-Wishing Ribbon
+Wunschband
 National Ribbon
-National Ribbon
+Nationband
 Country Ribbon
-Country Ribbon
+Landband
 Battle Champion Ribbon
-Battle Champion Ribbon
+Kampfchampionband
 Regional Champion Ribbon
-Regional Champion Ribbon
+Regionaler Championband
 Earth Ribbon
-Earth Ribbon
+Erdeband
 World Ribbon
-World Ribbon
+Weltband
 National Champion Ribbon
-National Champion Ribbon
+Nationaler Championband
 World Champion Ribbon
-World Champion Ribbon
+Weltchampionband

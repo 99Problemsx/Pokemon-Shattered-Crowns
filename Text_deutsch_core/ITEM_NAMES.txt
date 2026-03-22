@@ -11,7 +11,7 @@ Top-Schutz
 Black Flute
 Schwarze Flöte
 White Flute
-Weisse Flöte
+Weiße Flöte
 Honey
 Honig
 Red Shard
@@ -39,7 +39,7 @@ Finsterstein
 Dawn Stone
 Funkelstein
 Shiny Stone
-Leuchstein
+Leuchtstein
 Ice Stone
 Eisstein
 Sweet Apple
@@ -55,21 +55,21 @@ Galarnuss-Reif
 Galarica Wreath
 Galarnuss-Kranz
 Black Augurite
-Black Augurite
+Schwarzaugit
 Peat Block
-Peat Block
+Torfblock
 Syrupy Apple
-Syrupy Apple
+Feendaune
 Unremarkable Teacup
-Unremarkable Teacup
+Saftiger Apfel
 Masterpiece Teacup
-Masterpiece Teacup
+Simple Teeschale
 Metal Alloy
-Metal Alloy
+Glitzerpin
 Malicious Armor
-Malicious Armor
+Fluchrüstung
 Auspicious Armor
-Auspicious Armor
+Blauball-Pikser
 Red Apricorn
 Aprikoko Rot
 Yellow Apricorn
@@ -115,53 +115,53 @@ Drachenfossil
 Fossilized Dino
 Paddelfossil
 Pretty Feather
-Pretty Feather
+Prachtfeder
 Tiny Mushroom
 Minipilz
 Big Mushroom
 Riesenpilz
 Balm Mushroom
-Balm Mushroom
+Duftpilz
 Pearl
 Perle
 Big Pearl
 Riesenperle
 Pearl String
-Pearl String
+Triperle
 Stardust
 Sternenstaub
 Star Piece
 Sternenstück
 Comet Shard
-Comet Shard
+Kometstück
 Nugget
 Nugget
 Big Nugget
-Big Nugget
+Riesennugget
 Heart Scale
 Herzschuppe
 Slowpoke Tail
-Slowpoke Tail
+Flegmon-Rute
 Rare Bone
-Rare Bone
+Steinknochen
 Relic Copper
-Relic Copper
+Alter Heller
 Relic Silver
-Relic Silver
+Alter Taler
 Relic Gold
-Relic Gold
+Alter Dukat
 Relic Vase
-Relic Vase
+Alte Vase
 Relic Band
-Relic Band
+Alter Reif
 Relic Statue
-Relic Statue
+Alte Statue
 Relic Crown
-Relic Crown
+Alte Krone
 Tiny Bamboo Shoot
-Tiny Bamboo Shoot
+Minibambusspross
 Big Bamboo Shoot
-Big Bamboo Shoot
+Riesenbambusspross
 Growth Mulch
 Wachsmulch
 Damp Mulch
@@ -185,29 +185,29 @@ Rosa Nektar
 Purple Nectar
 Purpurner Nektar
 Grass Mail
-Grass Mail
+Wiesenbrief
 Flame Mail
-Flame Mail
+Feuerbrief
 Bubble Mail
-Bubble Mail
+Wasserbrief
 Bloom Mail
-Bloom Mail
+Blütenbrief
 Tunnel Mail
-Tunnel Mail
+Minenbrief
 Steel Mail
-Steel Mail
+Stahlbrief
 Heart Mail
-Heart Mail
+Rosabrief
 Snow Mail
-Snow Mail
+Schneebrief
 Space Mail
-Space Mail
+Sternbrief
 Air Mail
-Air Mail
+Luftbrief
 Mosaic Mail
-Mosaic Mail
+Mosaikbrief
 Brick Mail
-Brick Mail
+Ziegelbrief
 Potion
 Trank
 Super Potion
@@ -273,15 +273,15 @@ Heilpuder
 Revival Herb
 Vitalkraut
 Max Honey
-Max Honey
+Dyna-Honig
 Ether
 Äther
 Max Ether
-Top-Äther
+Ätherpillen
 Elixir
 Elixier
 Max Elixir
-Top-Elixier
+Elixierpillen
 PP Up
 AP-Plus
 PP Max
@@ -311,65 +311,65 @@ Espritfeder
 Swift Feather
 Flinkfeder
 Health Mochi
-Health Mochi
+Kristallfragment
 Muscle Mochi
-Muscle Mochi
+Heil-Mochi
 Resist Mochi
-Resist Mochi
+Kraft-Mochi
 Genius Mochi
-Genius Mochi
+Abwehr-Mochi
 Clever Mochi
-Clever Mochi
+Genie-Mochi
 Swift Mochi
-Swift Mochi
+Esprit-Mochi
 Fresh-Start Mochi
-Fresh-Start Mochi
+Mortcha-Puder
 Lonely Mint
-Lonely Mint
+Solo-Minze
 Adamant Mint
 Hart-Minze
 Naughty Mint
-Naughty Mint
+Frech-Minze
 Brave Mint
-Brave Mint
+Mutig-Minze
 Bold Mint
-Still-Minze
+Kühn-Minze
 Impish Mint
-Hitzig-Minze
-Lax Mint
-Scheu-Minze
-Relaxed Mint
-Relaxed Mint
-Modest Mint
-Modest Mint
-Mild Mint
-Mild Mint
-Rash Mint
-Rash Mint
-Quiet Mint
-Quiet Mint
-Calm Mint
-Calm Mint
-Gentle Mint
-Gentle-Minze
-Careful Mint
 Pfiffig-Minze
-Sassy Mint
-Sassy Mint
-Timid Mint
-Timid Mint
-Hasty Mint
+Lax Mint
+Lasch-Minze
+Relaxed Mint
+Locker-Minze
+Modest Mint
+Mäßig-Minze
+Mild Mint
+Mild-Minze
+Rash Mint
+Hitzig-Minze
+Quiet Mint
 Ruhig-Minze
-Jolly Mint
+Calm Mint
+Still-Minze
+Gentle Mint
+Zart-Minze
+Careful Mint
+Sacht-Minze
+Sassy Mint
 Forsch-Minze
+Timid Mint
+Scheu-Minze
+Hasty Mint
+Hastig-Minze
+Jolly Mint
+Froh-Minze
 Naive Mint
-Naive Mint
+Naiv-Minze
 Serious Mint
-Serious Mint
+Ernst-Minze
 Ability Capsule
-Fähigk.-Kapsel
+Fähigkeiten-Kapsel
 Ability Patch
-Fähigk.-Pflaster
+Fähigkeiten-Pflaster
 Exp. Candy XS
 EP-Bonbon XS
 Exp. Candy S
@@ -413,7 +413,7 @@ Finsterball
 Heal Ball
 Heilball
 Quick Ball
-Flottbal
+Flottball
 Cherish Ball
 Jubelball
 Fast Ball
@@ -461,7 +461,7 @@ Wikibeere
 Mago Berry
 Magobeere
 Aguav Berry
-Guavebeere
+Gauvebeere
 Iapapa Berry
 Yapabeere
 Razz Berry
@@ -541,15 +541,15 @@ Hibisbeere
 Chilan Berry
 Latchibeere
 Liechi Berry
-Liechi Berry
+Lydzibeere
 Ganlon Berry
-Ganlon Berry
+Linganbeere
 Salac Berry
 Salkabeere
 Petaya Berry
 Tahaybeere
 Apicot Berry
-Apicot Berry
+Apikobeere
 Lansat Berry
 Lansatbeere
 Starf Berry
@@ -569,7 +569,7 @@ Akibeere
 Maranga Berry
 Tarabeere
 Air Balloon
-Luftballoon
+Luftballon
 Bright Powder
 Blendpuder
 Eviolite
@@ -591,11 +591,11 @@ Plateauschuhe
 Utility Umbrella
 Allzweckschirm
 Ability Shield
-Ability Shield
+Fähigkeitenschild
 Clear Amulet
-Clear Amulet
+Neutralschmuck
 Covert Cloak
-Covert Cloak
+Tarnumhang
 Eject Button
 Fluchtknopf
 Eject Pack
@@ -615,11 +615,11 @@ Münzamulett
 Soothe Bell
 Sanftglocke
 Cleanse Tag
-Schutzband
+Schutzsticker
 Choice Band
 Wahlband
 Choice Specs
-Wahlglas
+Wahlbrille
 Choice Scarf
 Wahlschal
 Heat Rock
@@ -637,7 +637,7 @@ Lichtlehm
 Grip Claw
 Griffklaue
 Loaded Dice
-Loaded Dice
+Gezinkter Würfel
 Binding Band
 Klammerband
 Big Root
@@ -647,7 +647,7 @@ Giftschleim
 Leftovers
 Überreste
 Shell Bell
-Seegesang
+Muschelglocke
 Mental Herb
 Mentalkraut
 White Herb
@@ -655,7 +655,7 @@ Schlohkraut
 Power Herb
 Energiekraut
 Mirror Herb
-Mirror Herb
+Kopierkraut
 Absorb Bulb
 Knolle
 Cell Battery
@@ -671,9 +671,9 @@ Fehlschlagschutz
 Throat Spray
 Halsspray
 Adrenaline Orb
-Zitterorb
+Zitter-Orb
 Booster Energy
-Booster Energy
+Energiekapsel
 Room Service
 Bizarroservice
 Electric Seed
@@ -691,11 +691,11 @@ Expertengurt
 Metronome
 Metronom
 Punching Glove
-Punching Glove
+Boxhandschuh
 Muscle Band
 Muskelband
 Wise Glasses
-Schlauglas
+Schlaubrille
 Razor Claw
 Scharfklaue
 Scope Lens
@@ -713,7 +713,7 @@ Schwerschweif
 Quick Claw
 Flinkklaue
 Focus Band
-Fokus-Band
+Fokusband
 Focus Sash
 Fokusgurt
 Flame Orb
@@ -727,7 +727,7 @@ Eisenkugel
 Ring Target
 Zielscheibe
 Macho Brace
-Machoband
+Machoschiene
 Power Weight
 Machtgewicht
 Power Bracer
@@ -773,11 +773,11 @@ Schwarzgurt
 Poison Barb
 Giftstich
 Soft Sand
-Pundersand
+Pudersand
 Sharp Beak
-Hackattack
+Spitzer Schnabel
 Twisted Spoon
-Krümmlöffel
+Krummlöffel
 Silver Powder
 Silberstaub
 Hard Stone
@@ -787,11 +787,11 @@ Bannsticker
 Dragon Fang
 Drachenzahn
 Black Glasses
-Schattenglas
+Schattenbrille
 Metal Coat
 Metallmantel
 Fairy Feather
-Fairy Feather
+Gelber Teller
 Silk Scarf
 Seidenschal
 Flame Plate
@@ -801,7 +801,7 @@ Wassertafel
 Zap Plate
 Blitztafel
 Meadow Plate
-Weisentafel
+Wiesentafel
 Icicle Plate
 Frosttafel
 Fist Plate
@@ -835,7 +835,7 @@ Wasserjuwel
 Electric Gem
 Elektrojuwel
 Grass Gem
-Pflanzejuwel
+Pflanzenjuwel
 Ice Gem
 Eisjuwel
 Fighting Gem
@@ -847,21 +847,21 @@ Bodenjuwel
 Flying Gem
 Flugjuwel
 Psychic Gem
-Psyschojuwel
+Psychojuwel
 Bug Gem
 Käferjuwel
 Rock Gem
-Gesteinjuwel
+Gesteinsjuwel
 Ghost Gem
-Geistjuwel
+Geisterjuwel
 Dragon Gem
-Drachejuwel
+Drakojuwel
 Dark Gem
 Unlichtjuwel
 Steel Gem
 Stahljuwel
 Fairy Gem
-Feejuwel
+Feenjuwel
 Normal Gem
 Normaljuwel
 Light Ball
@@ -881,7 +881,7 @@ Seelentau
 Deep Sea Tooth
 Abysszahn
 Deep Sea Scale
-Abyssplatte
+Abyssschuppe
 Adamant Orb
 Adamant-Orb
 Lustrous Orb
@@ -889,21 +889,21 @@ Weiß-Orb
 Griseous Orb
 Platinum-Orb
 Adamant Crystal
-Adamant Crystal
+Adamantkristall
 Lustrous Globe
-Lustrous Globe
+Weißkristall
 Griseous Core
-Griseous Core
+Platinumkristall
 Rusted Sword
 Rostiges Schwert
 Rusted Shield
-Rostiges Schild
+Rostiger Schild
 Wellspring Mask
-Wellspring Mask
+Fundamentmaske
 Hearthflame Mask
-Hearthflame Mask
+Brunnenmaske
 Cornerstone Mask
-Cornerstone Mask
+Türkisgrüne Maske
 Douse Drive
 Aquamodul
 Shock Drive
@@ -919,7 +919,7 @@ Wasser-Disc
 Electric Memory
 Elektro-Disc
 Grass Memory
-Pflanze-Disc
+Pflanzen-Disc
 Ice Memory
 Eis-Disc
 Fighting Memory
@@ -931,27 +931,27 @@ Boden-Disc
 Flying Memory
 Flug-Disc
 Psychic Memory
-Psyscho-Disc
+Psycho-Disc
 Bug Memory
 Käfer-Disc
 Rock Memory
-Gestein-Disc
+Gesteins-Disc
 Ghost Memory
-Geist-Disc
+Geister-Disc
 Dragon Memory
-Drache-Disc
+Drachen-Disc
 Dark Memory
 Unlicht-Disc
 Steel Memory
 Stahl-Disc
 Fairy Memory
-Fee-Disc
+Feen-Disc
 Everstone
 Ewigstein
 Dragon Scale
-Drachenhaut
+Drachenschuppe
 Upgrade
-Up-Grade
+Upgrade
 Dubious Disc
 Dubiosdisc
 Protector
@@ -1005,9 +1005,9 @@ Gengarnit
 Kangaskhanite
 Kangamanit
 Pinsirite
-Pinsirite
+Pinsirnit
 Gyaradosite
-Gyaradosite
+Garadosnit
 Aerodactylite
 Aerodactylonit
 Mewtwonite X
@@ -1021,7 +1021,7 @@ Stahlosnit
 Scizorite
 Scheroxnit
 Heracronite
-Heracronite
+Skarabornit
 Houndoominite
 Hundemonit
 Tyranitarite
@@ -1031,7 +1031,7 @@ Gewaldronit
 Blazikenite
 Lohgocknit
 Swampertite
-Swampertite
+Sumpexnit
 Gardevoirite
 Guardevoirnit
 Sablenite
@@ -1065,7 +1065,7 @@ Latiasnit
 Latiosite
 Latiosnit
 Lopunnite
-Lopunnite
+Schlapornit
 Garchompite
 Knakracknit
 Lucarionite
@@ -1085,69 +1085,69 @@ Blauer Edelstein
 X Attack
 X-Angriff
 X Attack 2
-X Attack 2
+X-Angriff 2
 X Attack 3
-X Attack 3
+X-Angriff 3
 X Attack 6
-X Attack 6
+X-Angriff 6
 X Defense
-X Defense
+X-Verteidigung
 X Defense 2
-X Defense 2
+X-Verteidigung 2
 X Defense 3
-X Defense 3
+X-Verteidigung 3
 X Defense 6
-X Defense 6
+X-Verteidigung 6
 X Sp. Atk
 X-Sp.-Ang.
 X Sp. Atk 2
-X Sp. Atk 2
+X-Sp.-Ang. 2
 X Sp. Atk 3
-X Sp. Atk 3
+X-Sp.-Ang. 3
 X Sp. Atk 6
-X Sp. Atk 6
+X-Sp.-Ang. 6
 X Sp. Def
 X-Sp.-Vert.
 X Sp. Def 2
-X Sp. Def 2
+X-Sp.-Vert. 2
 X Sp. Def 3
-X Sp. Def 3
+X-Sp.-Vert. 3
 X Sp. Def 6
-X Sp. Def 6
+X-Sp.-Vert. 6
 X Speed
 X-Initiative
 X Speed 2
-X Speed 2
+X-Initiative 2
 X Speed 3
-X Speed 3
+X-Initiative 3
 X Speed 6
-X Speed 6
+X-Initiative 6
 X Accuracy
 X-Genauigkeit
 X Accuracy 2
-X Accuracy 2
+X-Genauigkeit 2
 X Accuracy 3
-X Accuracy 3
+X-Genauigkeit 3
 X Accuracy 6
-X Accuracy 6
+X-Genauigkeit 6
 Max Mushrooms
-Max Mushrooms
+Dyna-Pilz
 Dire Hit
-Angriffplus
+Treffervitamine
 Dire Hit 2
-Dire Hit 2
+X-Volltreffer 2
 Dire Hit 3
-Dire Hit 3
+X-Volltreffer 3
 Guard Spec.
 Megablock
 Reset Urge
-Reset Urge
+Umkehrappell
 Ability Urge
-Ability Urge
+Fähigkeiten-Appell
 Item Urge
-Item Urge
+Itemappell
 Item Drop
-Item Drop
+Itemabwurf
 Blue Flute
 Blaue Flöte
 Yellow Flute
@@ -1361,21 +1361,21 @@ TM99
 TM100
 TM100
 HM01
-HM01
+VM01
 HM02
-HM02
+VM02
 HM03
-HM03
+VM03
 HM04
-HM04
+VM04
 HM05
-HM05
+VM05
 HM06
-HM06
+VM06
 Bicycle
 Fahrrad
 Bike
-Bike
+Fahrrad
 Old Rod
 Angel
 Good Rod
@@ -1383,33 +1383,33 @@ Profiangel
 Super Rod
 Superangel
 Itemfinder
-Itemfinder
+Itemsucher
 Dowsing Machine
 Itemradar
 Poké Radar
-Poké Radar
+Pokéradar
 Town Map
 Karte
 Escape Rope
 Fluchtseil
 Coin Case
-Coin Case
+Münzkorb
 Poké Flute
-Poké Flute
+Pokéflöte
 Soot Sack
-Soot Sack
+Aschetasche
 Silph Scope
 Silph Scope
 Devon Scope
-Devon Scope
+Devon-Scope
 Squirt Bottle
 Schiggykanne
 Sprayduck
-Sprayduck
+Enton-Kanne
 Wailmer Pail
-Wailmer Pail
+Wailmerkanne
 Sprinklotad
-Sprinklotad
+Loturzelkanne
 Gracidea
 Gracidea
 Reveal Glass
@@ -1429,11 +1429,11 @@ Necrolun
 Reins of Unity
 Zügel des Bundes
 Meteorite
-Meteorite
+Synchromaschine
 Scroll of Darkness
-Scroll of Darkness
+Unlicht-Schriftrolle
 Scroll of Waters
-Scroll of Waters
+Wasser-Schriftrolle
 Oval Charm
 Ovalpin
 Shiny Charm
@@ -1443,90 +1443,90 @@ Superfangpin
 Exp. Charm
 EP-Pin
 Mega Ring
-Mega Ring
+Mega-Ring
 Pokémon Box Link
-Pokémon Box Link
+Pokémon-Box
 Aurora Ticket
-Aurora Ticket
+Auroraticket
 Old Sea Map
-Old Sea Map
+Alte Karte
 Thunderstone
 Donnerstein
 Ylw Apricorn
-Ylw Apricorn
+Aprikoko Gelb
 Blu Apricorn
-Blu Apricorn
+Aprikoko Blau
 Grn Apricorn
-Grn Apricorn
+Aprikoko Grün
 Pnk Apricorn
-Pnk Apricorn
+Aprikoko Pink
 Wht Apricorn
-Wht Apricorn
+Aprikoko Weiß
 Blk Apricorn
-Blk Apricorn
+Aprikoko Schwarz
 Pretty Wing
-Pretty Wing
+Prachtfeder
 TinyMushroom
-TinyMushroom
+Minipilz
 BalmMushroom
-BalmMushroom
+Duftpilz
 SlowpokeTail
-SlowpokeTail
+Flegmon-Rute
 BrightPowder
-BrightPowder
+Blendpuder
 NeverMeltIce
-NeverMeltIce
+Ewiges Eis
 TwistedSpoon
-TwistedSpoon
+Krummlöffel
 SilverPowder
-SilverPowder
+Silberstaub
 BlackGlasses
-BlackGlasses
+Schattenbrille
 Stick
-Stick
+Lauchstange
 DeepSeaTooth
-DeepSeaTooth
+Abysszahn
 DeepSeaScale
-DeepSeaScale
+Abyssschuppe
 Up-Grade
-Up-Grade
+Upgrade
 Parlyz Heal
-Parlyz Heal
+Paralyheiler
 RageCandyBar
-RageCandyBar
+Wutkeks
 EnergyPowder
-EnergyPowder
+Energiestaub
 Health Wing
-Health Wing
+Heilfeder
 Muscle Wing
-Muscle Wing
+Kraftfeder
 Resist Wing
-Resist Wing
+Abwehrfeder
 Genius Wing
-Genius Wing
+Geniefeder
 Clever Wing
-Clever Wing
+Espritfeder
 Swift Wing
-Swift Wing
+Flinkfeder
 X Defend
-X Defend
+X-Verteidigung
 X Defend 2
-X Defend 2
+X-Verteidigung 2
 X Defend 3
-X Defend 3
+X-Verteidigung 3
 X Defend 6
-X Defend 6
+X-Verteidigung 6
 X Special
-X Special
+X-Sp.-Ang.
 X Special 2
-X Special 2
+X-Sp.-Ang. 2
 X Special 3
-X Special 3
+X-Sp.-Ang. 3
 X Special 6
-X Special 6
+X-Sp.-Ang. 6
 Dowsing MCHN
-Dowsing MCHN
+Itemradar
 SquirtBottle
-SquirtBottle
+Schiggykanne
 Pokémon Box
 Pokémon Box

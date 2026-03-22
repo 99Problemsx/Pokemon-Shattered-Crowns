@@ -1,0 +1,76 @@
+#===============================================================================
+# Boss Battles — Global Midbattle Handler
+# Controls the boss battle lifecycle through midbattle triggers.
+#===============================================================================
+MidbattleHandlers.add(:midbattle_global, :wild_boss_battle,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    next if !battle.wildBattle?
+    next if battle.wildBattleMode != :boss
+    foe = battle.battlers[1]
+    next if !foe || !foe.wild?
+    logname = _INTL("{1} ({2})", foe.pbThis, foe.index)
+
+    case trigger
+    #---------------------------------------------------------------------------
+    # Initialize boss properties on the first round.
+    #---------------------------------------------------------------------------
+    when "RoundStartCommand_1_foe"
+      if foe.isBoss?
+        PBDebug.log("[Boss Battle] #{logname} boss properties initiated")
+        rules = battle.bossRules || {}
+        # Set shield effects
+        shields = rules[:shields] || foe.pokemon.boss_shield_count
+        foe.effects[PBEffects::BossShieldMax]     = shields
+        foe.effects[PBEffects::BossShieldCurrent] = shields
+        foe.effects[PBEffects::BossShieldsLost]   = 0
+        # Set passive ability
+        pa = rules[:passive_ability] || foe.pokemon.passive_ability
+        if pa && GameData::Ability.exists?(pa)
+          foe.effects[PBEffects::BossPassiveAbility] = pa
+          ability_name = GameData::Ability.get(pa).name
+          battle.pbDisplay(_INTL("{1} radiates the power of {2}!", foe.pbThis, ability_name))
+          # Trigger passive ability switch-in effects
+          Battle::AbilityEffects.triggerOnSwitchIn(pa, foe, battle, true)
+        end
+        # Disable pokeballs during boss fight
+        battle.disablePokeBalls = true
+        battle.sosBattle = false if defined?(battle.sosBattle)
+        battle.totemBattle = nil if defined?(battle.totemBattle)
+        # Display boss announcement
+        battle.pbDisplay(_INTL("{1} is a powerful Boss Pokémon!", foe.pbThis))
+        battle.pbDisplay(_INTL("It has {1} shield segments!", shields))
+        # Refresh databox to show boss UI
+        battle.scene.pbRefreshOne(foe.index)
+      else
+        # Not actually a boss — clear boss mode
+        battle.wildBattleMode = nil
+      end
+
+    #---------------------------------------------------------------------------
+    # Check for shield breaks after dealing damage to the boss.
+    #---------------------------------------------------------------------------
+    when "TargetTookDamage_foe"
+      next if !foe.isBoss?
+      foe.pbCheckBossSegment
+
+    #---------------------------------------------------------------------------
+    # When a shield breaks — handle "all shields broken" state.
+    #---------------------------------------------------------------------------
+    when "BossShieldBroken_foe"
+      next if !foe.isBoss?
+      if foe.bossShieldCurrent <= 0
+        battle.disablePokeBalls = false
+        battle.pbDisplay(_INTL("All of {1}'s shields have been shattered!", foe.pbThis(true)))
+        battle.pbDisplay(_INTL("{1} can now be captured!", foe.pbThis))
+      end
+
+    #---------------------------------------------------------------------------
+    # Boss battle won — track stats.
+    #---------------------------------------------------------------------------
+    when "BattleEndWin"
+      if battle.wildBattleMode == :boss
+        PBDebug.log("[Boss Battle] Boss battle won")
+      end
+    end
+  }
+)

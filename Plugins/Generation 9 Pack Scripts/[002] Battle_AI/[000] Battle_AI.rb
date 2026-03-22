@@ -569,7 +569,7 @@ class Battle::AI::AIMove
     #---------------------------------------------------------------------------
     # Added for Frostbite
     #---------------------------------------------------------------------------
-    if @ai.trainer.high_skill? && move.specialMove?(type) && user.status == :FROSTBITE
+    if @ai.trainer.high_skill? && specialMove?(calc_type) && user.status == :FROSTBITE
       multipliers[:final_damage_multiplier] /= 2
     end
     # Aurora Veil, Reflect, Light Screen

@@ -162,29 +162,21 @@ def pbInitializeWeather
   end
 end
 
-def pbUpdateWeather
-  for i in 0...$WeatherSystem.actualWeather.length
-    startTime = pbGetStartTime
-    if startTime.to_i >= $WeatherSystem.actualWeather[i].endTime.to_i
-      $WeatherSystem.actualWeather[i].startTime = startTime
-      endTime = pbGetEndTime(startTime)
-      $WeatherSystem.actualWeather[i].endTime = endTime
-      $WeatherSystem.actualWeather[i].mainWeather = $WeatherSystem.nextWeather[i].mainWeather
-      $WeatherSystem.actualWeather[i].secondWeather = $WeatherSystem.nextWeather[i].secondWeather
-      pbSetNewWeather(i)
+def pbUpdateWeather(zone = nil)
+  if zone.nil?
+    for i in 0...$WeatherSystem.actualWeather.length
+      pbUpdateWeather(i)
     end
-  end
-end
-
-def pbUpdateWeather(zone)
-  startTime = pbGetStartTime
-  if startTime.to_i >= $WeatherSystem.actualWeather[zone].endTime.to_i
-    $WeatherSystem.actualWeather[zone].startTime = startTime
-    endTime = pbGetEndTime(startTime)
-    $WeatherSystem.actualWeather[zone].endTime = endTime
-    $WeatherSystem.actualWeather[zone].mainWeather = $WeatherSystem.nextWeather[zone].mainWeather
-    $WeatherSystem.actualWeather[zone].secondWeather = $WeatherSystem.nextWeather[zone].secondWeather
-    pbSetNewWeather(zone)
+  else
+    startTime = pbGetStartTime
+    if startTime.to_i >= $WeatherSystem.actualWeather[zone].endTime.to_i
+      $WeatherSystem.actualWeather[zone].startTime = startTime
+      endTime = pbGetEndTime(startTime)
+      $WeatherSystem.actualWeather[zone].endTime = endTime
+      $WeatherSystem.actualWeather[zone].mainWeather = $WeatherSystem.nextWeather[zone].mainWeather
+      $WeatherSystem.actualWeather[zone].secondWeather = $WeatherSystem.nextWeather[zone].secondWeather
+      pbSetNewWeather(zone)
+    end
   end
 end
 

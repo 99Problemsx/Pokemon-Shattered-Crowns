@@ -3,218 +3,218 @@
 #-------------------------------
 [ITEM_PORTION_NAMES]
 jar of Honey
-jar of Honey
+Glas Honig
 piece of Black Augurite
-piece of Black Augurite
+Stück Schwarzaugit
 hunk of Metal Alloy
-hunk of Metal Alloy
+Klumpen Legierungsmetall
 set of Malicious Armor
-set of Malicious Armor
+Set Fluchrüstung
 set of Auspicious Armor
-set of Auspicious Armor
+Set Glorienrüstung
 bag of Stardust
-bag of Stardust
+Beutel Sternstaub
 Relic Copper coin
-Relic Copper coin
+Relikmünze Kupfer
 Relic Silver coin
-Relic Silver coin
+Relikmünze Silber
 Relic Gold coin
-Relic Gold coin
+Relikmünze Gold
 bag of Growth Mulch
-bag of Growth Mulch
+Beutel Wuchererde
 bag of Damp Mulch
-bag of Damp Mulch
+Beutel Nasserde
 bag of Stable Mulch
-bag of Stable Mulch
+Beutel Stabilerde
 bag of Gooey Mulch
-bag of Gooey Mulch
+Beutel Klebererde
 pile of Shoal Salt
-pile of Shoal Salt
+Haufen Flachwassersalz
 jar of Red Nectar
-jar of Red Nectar
+Glas Roter Nektar
 jar of Yellow Nectar
-jar of Yellow Nectar
+Glas Gelber Nektar
 jar of Pink Nectar
-jar of Pink Nectar
+Glas Pinker Nektar
 jar of Purple Nectar
-jar of Purple Nectar
+Glas Lila Nektar
 piece of Grass Mail
-piece of Grass Mail
+Stück Graspost
 piece of Flame Mail
-piece of Flame Mail
+Stück Flammenpost
 piece of Bubble Mail
-piece of Bubble Mail
+Stück Blasenpost
 piece of Bloom Mail
-piece of Bloom Mail
+Stück Blütenpost
 piece of Tunnel Mail
-piece of Tunnel Mail
+Stück Tunnelpost
 piece of Steel Mail
-piece of Steel Mail
+Stück Stahlpost
 piece of Heart Mail
-piece of Heart Mail
+Stück Herzpost
 piece of Snow Mail
-piece of Snow Mail
+Stück Schneepost
 piece of Space Mail
-piece of Space Mail
+Stück Raumpost
 piece of Air Mail
-piece of Air Mail
+Stück Luftpost
 piece of Mosaic Mail
-piece of Mosaic Mail
+Stück Mosaikpost
 piece of Brick Mail
-piece of Brick Mail
+Stück Steinpost
 bag of Sacred Ash
-bag of Sacred Ash
+Beutel Heilige Asche
 bag of Pewter Crunchies
-bag of Pewter Crunchies
+Beutel Graustein-Knusperwürfel
 cup of Berry Juice
-cup of Berry Juice
+Tasse Beerensaft
 bottle of Fresh Water
-bottle of Fresh Water
+Flasche Frisches Wasser
 bottle of Soda Pop
-bottle of Soda Pop
+Flasche Limonade
 can of Lemonade
-can of Lemonade
+Dose Zitronade
 bottle of Moomoo Milk
-bottle of Moomoo Milk
+Flasche Moomoo-Milch
 dose of Energy Powder
-dose of Energy Powder
+Dosis Energiepulver
 dose of Heal Powder
-dose of Heal Powder
+Dosis Heilpulver
 comb of Max Honey
-comb of Max Honey
+Wabe Max-Honig
 bottle of PP Up
-bottle of PP Up
+Flasche AP-Plus
 bottle of PP Max
-bottle of PP Max
+Flasche AP-Max
 bottle of HP Up
-bottle of HP Up
+Flasche EP-Bonus
 bottle of Protein
-bottle of Protein
+Flasche Protein
 bottle of Iron
-bottle of Iron
+Flasche Eisen
 bottle of Calcium
-bottle of Calcium
+Flasche Calcium
 bottle of Zinc
-bottle of Zinc
+Flasche Zink
 bottle of Carbos
-bottle of Carbos
+Flasche Carbos
 sprig of Lonely Mint
-sprig of Lonely Mint
+Zweig Eigenbrötler-Minze
 sprig of Adamant Mint
-sprig of Adamant Mint
+Zweig Harte Minze
 sprig of Naughty Mint
-sprig of Naughty Mint
+Zweig Freche Minze
 sprig of Brave Mint
-sprig of Brave Mint
+Zweig Mutige Minze
 sprig of Bold Mint
-sprig of Bold Mint
+Zweig Kühne Minze
 sprig of Impish Mint
-sprig of Impish Mint
+Zweig Schelmische Minze
 sprig of Lax Mint
-sprig of Lax Mint
+Zweig Lockere Minze
 sprig of Relaxed Mint
-sprig of Relaxed Mint
+Zweig Relaxte Minze
 sprig of Modest Mint
-sprig of Modest Mint
+Zweig Mäßige Minze
 sprig of Mild Mint
-sprig of Mild Mint
+Zweig Milde Minze
 sprig of Rash Mint
-sprig of Rash Mint
+Zweig Hitzige Minze
 sprig of Quiet Mint
-sprig of Quiet Mint
+Zweig Ruhige Minze
 sprig of Calm Mint
-sprig of Calm Mint
+Zweig Sanfte Minze
 sprig of Gentle Mint
-sprig of Gentle Mint
+Zweig Zarte Minze
 sprig of Careful Mint
-sprig of Careful Mint
+Zweig Sorgfältige Minze
 sprig of Sassy Mint
-sprig of Sassy Mint
+Zweig Forsche Minze
 sprig of Timid Mint
-sprig of Timid Mint
+Zweig Scheue Minze
 sprig of Hasty Mint
-sprig of Hasty Mint
+Zweig Hastige Minze
 sprig of Jolly Mint
-sprig of Jolly Mint
+Zweig Frohe Minze
 sprig of Naive Mint
-sprig of Naive Mint
+Zweig Naive Minze
 sprig of Serious Mint
-sprig of Serious Mint
+Zweig Ernste Minze
 bag of Bright Powder
-bag of Bright Powder
+Beutel Glanzpuder
 pair of Safety Goggles
-pair of Safety Goggles
+Paar Schutzbrille
 set of Protective Pads
-set of Protective Pads
+Set Schutzpolster
 pair of Heavy-Duty Boots
-pair of Heavy-Duty Boots
+Paar Schwerstiefel
 pair of Choice Specs
-pair of Choice Specs
+Paar Wahl-Brille
 lump of Light Clay
-lump of Light Clay
+Klumpen Leichtton
 set of Loaded Dice
-set of Loaded Dice
+Set Gezinkte Würfel
 blob of Black Sludge
-blob of Black Sludge
+Klecks Schwarzer Schleim
 serving of Leftovers
-serving of Leftovers
+Portion Reste
 clump of Luminous Moss
-clump of Luminous Moss
+Büschel Leuchtendes Moos
 bottle of Throat Spray
-bottle of Throat Spray
+Flasche Kehlkopfspray
 capsule of Booster Energy
-capsule of Booster Energy
+Kapsel Booster-Energie
 voucher for Room Service
-voucher for Room Service
+Gutschein Zimmerservice
 pair of Wise Glasses
-pair of Wise Glasses
+Paar Kluge Brille
 jar of Lax Incense
-jar of Lax Incense
+Glas Lockerer Weihrauch
 jar of Full Incense
-jar of Full Incense
+Glas Voller Weihrauch
 jar of Luck Incense
-jar of Luck Incense
+Glas Glücks-Weihrauch
 jar of Pure Incense
-jar of Pure Incense
+Glas Reiner Weihrauch
 jar of Sea Incense
-jar of Sea Incense
+Glas See-Weihrauch
 jar of Wave Incense
-jar of Wave Incense
+Glas Wellen-Weihrauch
 jar of Rose Incense
-jar of Rose Incense
+Glas Rosen-Weihrauch
 jar of Odd Incense
-jar of Odd Incense
+Glas Seltsamer Weihrauch
 jar of Rock Incense
-jar of Rock Incense
+Glas Fels-Weihrauch
 piece of Charcoal
-piece of Charcoal
+Stück Holzkohle
 piece of Never-Melt Ice
-piece of Never-Melt Ice
+Stück Ewiges Eis
 bag of Soft Sand
-bag of Soft Sand
+Beutel Feiner Sand
 pile of Silver Powder
-pile of Silver Powder
+Haufen Silberpuder
 pair of Black Glasses
-pair of Black Glasses
+Paar Schwarze Brille
 bag of Metal Powder
-bag of Metal Powder
+Beutel Metallpuder
 bag of Quick Powder
-bag of Quick Powder
+Beutel Schnellpuder
 scrap of Reaper Cloth
-scrap of Reaper Cloth
+Fetzen Sensentuch
 dollop of Whipped Dream
-dollop of Whipped Dream
+Klecks Sahnetraum
 cluster of Max Mushrooms
-cluster of Max Mushrooms
+Büschel Max-Pilze
 set of Reins of Unity
-set of Reins of Unity
+Set Zügel der Einheit
 bag of BrightPowder
-bag of BrightPowder
+Beutel Glanzpuder
 piece of NeverMeltIce
-piece of NeverMeltIce
+Stück Ewiges Eis
 pile of SilverPowder
-pile of SilverPowder
+Haufen Silberpuder
 pair of BlackGlasses
-pair of BlackGlasses
+Paar Schwarze Brille
 dose of EnergyPowder
-dose of EnergyPowder
+Dosis Energiepulver

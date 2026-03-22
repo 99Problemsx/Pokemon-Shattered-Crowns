@@ -33,7 +33,7 @@ Silberhauch
 Fell Stinger
 Stachelfinale
 Pounce
-Pounce
+Anspringen
 Struggle Bug
 Käfertrutz
 Fury Cutter
@@ -53,9 +53,9 @@ Pulverschleuder
 Quiver Dance
 Falterreigen
 Rage Powder
-Wulpulver
+Wutpulver
 Silk Trap
-Silk Trap
+Fadenfalle
 Spider Web
 Spinnennetz
 Sticky Web
@@ -73,7 +73,7 @@ Brennender Zorn
 Darkest Lariat
 Dark Lariat
 Kowtow Cleave
-Kowtow Cleave
+Kniefallspalter
 Night Daze
 Nachtflut
 Crunch
@@ -95,7 +95,7 @@ Nachthieb
 Sucker Punch
 Tiefschlag
 Ceaseless Edge
-Ceaseless Edge
+Klingenschwall
 Knock Off
 Abschlag
 Assurance
@@ -117,7 +117,7 @@ Verfolgung
 Beat Up
 Prügler
 Comeuppance
-Comeuppance
+Vendetta
 Fling
 Schleuder
 Power Trip
@@ -125,7 +125,7 @@ Power Trip
 Punishment
 Strafattacke
 Ruination
-Ruination
+Verderben
 Dark Void
 Schlummerort
 Embargo
@@ -163,9 +163,9 @@ Drachenkräfte
 Roar of Time
 Zeitenlärm
 Draco Meteor
-Draco Meteor
+Drachenmeteor
 Glaive Rush
-Glaive Rush
+Großklingenstoß
 Outrage
 Wutanfall
 Clanging Scales
@@ -185,9 +185,9 @@ Drachenpuls
 Dragon Claw
 Drachenklaue
 Order Up
-Order Up
+Auftischen
 Fickle Beam
-Fickle Beam
+Launenlaser
 Breaking Swipe
 Breitseite
 Dragon Breath
@@ -207,15 +207,15 @@ Drachenwut
 Clangorous Soul
 Seelentanz
 Dragon Cheer
-Dragon Cheer
+Drachenschrei
 Dragon Dance
 Drachentanz
 Bolt Strike
 Blitzschlag
 Electro Shot
-Electro Shot
+Stromstrahl
 Double Shock
-Double Shock
+Zweifachladung
 Volt Tackle
 Volttackle
 Zap Cannon
@@ -225,15 +225,15 @@ Aura-Rad
 Thunder
 Donner
 Electro Drift
-Electro Drift
+Blitztour
 Fusion Bolt
 Kreuzdonner
 Plasma Fists
 Plasmafäuste
 Supercell Slam
-Supercell Slam
+Donnerstoß
 Wildbolt Storm
-Wildbolt Storm
+Donnerorkan
 Thunderbolt
 Donnerblitz
 Wild Charge
@@ -253,7 +253,7 @@ Donnerschlag
 Rising Voltage
 Hochspannung
 Thunderclap
-Thunderclap
+Sturmblitz
 Volt Switch
 Voltwechsel
 Parabolic Charge
@@ -297,7 +297,7 @@ Kanonenbouquet
 Misty Explosion
 Nebelexplosion
 Springtide Storm
-Springtide Storm
+Frühlingsorkan
 Moonblast
 Mondgewalt
 Play Rough
@@ -305,7 +305,7 @@ Knuddler
 Strange Steam
 Wunderdampf
 Alluring Voice
-Alluring Voice
+Lockstimme
 Dazzling Gleam
 Zauberschein
 Spirit Break
@@ -341,7 +341,7 @@ Nebelfeld
 Moonlight
 Mondschein
 Sweet Kiss
-Bitterkaus
+Bitterkuss
 Focus Punch
 Power-Punch
 Meteor Assault
@@ -349,7 +349,7 @@ Sternensturm
 High Jump Kick
 Turmkick
 Axe Kick
-Axe Kick
+Fersenkick
 Close Combat
 Nahkampf
 Focus Blast
@@ -357,13 +357,13 @@ Fokusstoß
 Superpower
 Kraftkoloss
 Collision Course
-Collision Course
+Kollisionskurs
 Cross Chop
 Kreuzhieb
 Dynamic Punch
 Wuchtschlag
 Flying Press
-Flying Press
+Druckflug
 Hammer Arm
 Hammerarm
 Jump Kick
@@ -373,7 +373,7 @@ Sanctoklinge
 Thunderous Kick
 Donnernder Tritt
 Triple Arrows
-Triple Arrows
+Drillingspfeile
 Secret Sword
 Mystoschwert
 Sky Uppercut
@@ -381,7 +381,7 @@ Himmelhieb
 Aura Sphere
 Aurasphäre
 Body Press
-Body Press
+Körperdruck
 Submission
 Überroller
 Brick Break
@@ -395,7 +395,7 @@ Weckruf
 Low Sweep
 Fußtritt
 Upper Hand
-Upper Hand
+Schnellkonter
 Circle Throw
 Überkopfwurf
 Force Palm
@@ -435,7 +435,7 @@ Geowurf
 Bulk Up
 Protzer
 Coaching
-Coaching
+Training
 Detect
 Scanner
 Mat Block
@@ -447,7 +447,7 @@ Octoklammer
 Quick Guard
 Rapidschutz
 Victory Dance
-Victory Dance
+Siegestanz
 V-create
 V-Generator
 Blast Burn
@@ -465,13 +465,13 @@ Ausbrennen
 Overheat
 Hitzekoller
 Armor Cannon
-Armor Cannon
+Rüstungskanone
 Flare Blitz
 Flammenblitz
 Pyro Ball
 Feuerball
 Raging Fury
-Raging Fury
+Flammenwut
 Fire Blast
 Feuersturm
 Fusion Flare
@@ -487,7 +487,7 @@ Flammenball
 Heat Wave
 Hitzewelle
 Bitter Blade
-Bitter Blade
+Reueschwert
 Flamethrower
 Flammenwurf
 Blaze Kick
@@ -501,13 +501,13 @@ Feuersäulen
 Lava Plume
 Flammensturm
 Torch Song
-Torch Song
+Loderlied
 Fire Punch
 Feuerschlag
 Mystical Fire
 Magieflamme
 Temper Flare
-Temper Flare
+Frustflamme
 Burning Jealousy
 Neidflammen
 Flame Burst
@@ -527,7 +527,7 @@ Feuerwirbel
 Heat Crash
 Brandstempel
 Burning Bulwark
-Burning Bulwark
+Flammenschild
 Sunny Day
 Sonnentag
 Will-O-Wisp
@@ -545,7 +545,7 @@ Luftstoß
 Beak Blast
 Schnabelkanone
 Bleakwind Storm
-Bleakwind Storm
+Polarorkan
 Fly
 Fliegen
 Bounce
@@ -569,7 +569,7 @@ Freier Fall
 Wing Attack
 Flügelschlag
 Acrobatics
-Acrobatik
+Akrobatik
 Dual Wingbeat
 Doppelflügel
 Gust
@@ -605,21 +605,21 @@ Spukball
 Spirit Shackle
 Schattenfessel
 Bitter Malice
-Bitter Malice
+Niedertracht
 Shadow Claw
 Dunkelklaue
 Hex
 Bürde
 Infernal Parade
-Infernal Parade
+Phantomparade
 Ominous Wind
 Unheilböen
 Shadow Punch
 Finsterfaust
 Last Respects
-Last Respects
+Letzte Ehre
 Rage Fist
-Rage Fist
+Zornesfaust
 Shadow Sneak
 Schattenstoß
 Astonish
@@ -643,7 +643,7 @@ Groll
 Trick-or-Treat
 Halloween
 Chloroblast
-Chloroblast
+Chlorostrahl
 Frenzy Plant
 Flora-Statue
 Leaf Storm
@@ -661,7 +661,7 @@ Solarstrahl
 Wood Hammer
 Holzhammer
 Ivy Cudgel
-Ivy Cudgel
+Rankenkeule
 Energy Ball
 Energieball
 Leaf Blade
@@ -677,7 +677,7 @@ Pflanzensäulen
 Grav Apple
 Gravitation
 Matcha Gotcha
-Matcha Gotcha
+Quirlschuss
 Seed Bomb
 Samenbomben
 Giga Drain
@@ -685,9 +685,9 @@ Gigasauger
 Horn Leech
 Holzgeweih
 Flower Trick
-Flower Trick
+Blumentrick
 Grassy Glide
-Grasrutche
+Grasrutsche
 Trop Kick
 Tropenkick
 Leaf Tornado
@@ -697,11 +697,11 @@ Zauberblatt
 Needle Arm
 Nietenranke
 Syrup Bomb
-Syrup Bomb
+Sirupbombe
 Razor Leaf
 Rasierblatt
 Trailblaze
-Trailblaze
+Wegbereiter
 Vine Whip
 Rankenhieb
 Branch Poke
@@ -739,7 +739,7 @@ Egelsamen
 Sleep Powder
 Schlafpuder
 Spicy Extract
-Spicy Extract
+Chili-Essenz
 Spiky Shield
 Schutzstacheln
 Spore
@@ -753,13 +753,13 @@ Synthese
 Worry Seed
 Sorgensamen
 Headlong Rush
-Headlong Rush
+Schmetterramme
 Precipice Blades
 Abgrundsklinge
 Earthquake
 Erdbeben
 Sandsear Storm
-Sandsear Storm
+Wüstenorkan
 High Horsepower
 Pferdestärke
 Earth Power
@@ -787,7 +787,7 @@ Dampfwalze
 Mud Shot
 Lehmschuss
 Bonemerang
-Bonemerang
+Knochmerang
 Sand Tomb
 Sandgrab
 Bone Rush
@@ -819,13 +819,13 @@ Blizzard
 Ice Hammer
 Eishammer
 Mountain Gale
-Mountain Gale
+Frostfallwind
 Ice Beam
 Eisstrahl
 Icicle Crash
 Eiszapfhagel
 Ice Spinner
-Ice Spinner
+Eiskreisel
 Ice Punch
 Eishieb
 Freeze-Dry
@@ -857,7 +857,7 @@ Eiseskälte
 Aurora Veil
 Auroraschleier
 Chilly Reception
-Chilly Reception
+Eisige Stimmung
 Hail
 Hagelsturm
 Haze
@@ -865,7 +865,7 @@ Dunkelnebel
 Mist
 Weißnebel
 Snowscape
-Snowscape
+Schneelandschaft
 Explosion
 Explosion
 Self-Destruct
@@ -875,7 +875,7 @@ Gigastoß
 Hyper Beam
 Hyperstrahl
 Blood Moon
-Blood Moon
+Blutmond
 Boomburst
 Überschallknall
 Last Resort
@@ -893,19 +893,19 @@ Multi-Angriff
 Techno Blast
 Techblaster
 Tera Starstorm
-Tera Starstorm
+Tera-Sternhagel
 Thrash
 Fuchtler
 Egg Bomb
 Eierbombe
 Hyper Drill
-Hyper Drill
+Hyperbohrer
 Judgment
 Urteilskraft
 Hyper Voice
 Schallwelle
 Raging Bull
-Raging Bull
+Rasender Stier
 Revelation Dance
 Wecktanz
 Rock Climb
@@ -929,7 +929,7 @@ Slam
 Strength
 Stärke
 Tera Blast
-Tera Blast
+Tera-Ausbruch
 Tri Attack
 Triplette
 Crush Claw
@@ -977,7 +977,7 @@ Feldimpuls
 Weather Ball
 Meteorologe
 Echoed Voice
-Widerfall
+Widerhall
 Fake Out
 Mogelhieb
 False Swipe
@@ -1001,7 +1001,7 @@ Offenlegung
 Tail Slap
 Kehrschelle
 Population Bomb
-Population Bomb
+Mäuseplage
 Rage
 Raserei
 Spike Cannon
@@ -1079,7 +1079,7 @@ Vertrauenssache
 Conversion
 Umwandlung
 Conversion 2
-Umwandlung2
+Umwandlung 2
 Copycat
 Imitator
 Court Change
@@ -1089,7 +1089,7 @@ Einigler
 Disable
 Aussetzer
 Doodle
-Doodle
+Abpausen
 Double Team
 Doppelteam
 Encore
@@ -1099,7 +1099,7 @@ Ausdauer
 Entrainment
 Zwango
 Fillet Away
-Fillet Away
+Abspaltung
 Flash
 Blitz
 Focus Energy
@@ -1165,7 +1165,7 @@ Abgesang
 Play Nice
 Kameradschaft
 Power Shift
-Power Shift
+Kraftwechsel
 Protect
 Schutzschild
 Psych Up
@@ -1179,7 +1179,7 @@ Typenspiegel
 Refresh
 Heilung
 Revival Blessing
-Revival Blessing
+Vitalsegen
 Roar
 Brüller
 Safeguard
@@ -1191,7 +1191,7 @@ Kreideschrei
 Sharpen
 Schärfer
 Shed Tail
-Shed Tail
+Schwanzabwurf
 Shell Smash
 Hausbruch
 Simple Beam
@@ -1233,13 +1233,13 @@ Rutenschlag
 Tearful Look
 Tränendrüse
 Teatime
-Teatime
+Teestunde
 Teeter Dance
 Taumeltanz
 Tickle
 Spaßkanone
 Tidy Up
-Tidy Up
+Aufräumen
 Transform
 Wandler
 Whirlwind
@@ -1255,7 +1255,7 @@ Rülpser
 Gunk Shot
 Mülltreffer
 Malignant Chain
-Malignant Chain
+Giftkettung
 Sludge Wave
 Schlammwoge
 Shell Side Arm
@@ -1263,7 +1263,7 @@ Muschelwaffe
 Sludge Bomb
 Matschbombe
 Dire Claw
-Dire Claw
+Unheilsklauen
 Poison Jab
 Gifthieb
 Cross Poison
@@ -1273,7 +1273,7 @@ Schlammbad
 Venoshock
 Giftschock
 Barb Barrage
-Barb Barrage
+Giftstachelregen
 Clear Smog
 Klärsmog
 Poison Fang
@@ -1285,7 +1285,7 @@ Säure
 Acid Spray
 Säurespeier
 Mortal Spin
-Mortal Spin
+Letalwirbler
 Smog
 Smog
 Poison Sting
@@ -1337,7 +1337,7 @@ Psychobeißer
 Eerie Spell
 Schauderspruch
 Esper Wing
-Esper Wing
+Auraschwingen
 Expanding Force
 Flächenmacht
 Extrasensory
@@ -1345,25 +1345,25 @@ Sondersensor
 Hyperspace Hole
 Dimensionsloch
 Lumina Crash
-Lumina Crash
+Lichteinschlag
 Psyblade
-Psyblade
+Psychoschneide
 Psyshock
-Psychoshock
+Psychoschock
 Zen Headbutt
 Zen-Kopfstoß
 Psychic Noise
-Psychic Noise
+Psycholärm
 Luster Purge
 Scheinwerfer
 Mist Ball
 Nebelball
 Mystical Power
-Mystical Power
+Mythenkraft
 Psycho Cut
 Psychoklinge
 Psyshield Bash
-Psyshield Bash
+Barrierenstoß
 Psybeam
 Psystrahl
 Heart Stamp
@@ -1371,7 +1371,7 @@ Herzstempel
 Confusion
 Konfusion
 Twin Beam
-Twin Beam
+Doppelstrahl
 Stored Power
 Kraftvorrat
 Mirror Coat
@@ -1415,7 +1415,7 @@ Psykraft
 Light Screen
 Lichtschild
 Lunar Blessing
-Lunar Blessing
+Lunargebet
 Lunar Dance
 Lunartanz
 Magic Coat
@@ -1439,7 +1439,7 @@ Psychofeld
 Psycho Shift
 Psybann
 Reflect
-Reflecktor
+Reflektor
 Rest
 Erholung
 Role Play
@@ -1449,7 +1449,7 @@ Fähigkeitstausch
 Speed Swap
 Initiativetausch
 Take Heart
-Take Heart
+Mutschub
 Telekinesis
 Telekinese
 Teleport
@@ -1471,13 +1471,13 @@ Diamantsturm
 Stone Edge
 Steinkante
 Mighty Cleave
-Mighty Cleave
+Wuchtklinge
 Power Gem
 Juwelenkraft
 Rock Slide
 Steinhagel
 Stone Axe
-Stone Axe
+Felsaxt
 Ancient Power
 Antik-Kraft
 Rock Tomb
@@ -1489,7 +1489,7 @@ Katapult
 Accelerock
 Turbofelsen
 Salt Cure
-Salt Cure
+Pökelsalz
 Rollout
 Walzer
 Rock Blast
@@ -1499,13 +1499,13 @@ Steinpolitur
 Sandstorm
 Sandsturm
 Stealth Rock
-Tarnstein
+Tarnsteine
 Tar Shot
 Teerschuss
 Wide Guard
 Rundumschutz
 Gigaton Hammer
-Gigaton Hammer
+Riesenhammer
 Doom Desire
 Kismetwunsch
 Steel Beam
@@ -1513,7 +1513,7 @@ Stahlstrahl
 Steel Roller
 Eisenwalze
 Make It Rain
-Make It Rain
+Goldrausch
 Behemoth Bash
 Gigantenstoß
 Behemoth Blade
@@ -1521,7 +1521,7 @@ Gigantenhieb
 Iron Tail
 Eisenschweif
 Spin Out
-Spin Out
+Reifendrehung
 Sunsteel Strike
 Stahlgestirn
 Meteor Mash
@@ -1547,13 +1547,13 @@ Klikkdiskus
 Metal Claw
 Metallklaue
 Tachyon Cutter
-Tachyon Cutter
+Tachyon-Schnitt
 Bullet Punch
 Patronenhieb
 Gyro Ball
 Gyroball
 Hard Press
-Hard Press
+Stahlpresse
 Heavy Slam
 Rammboss
 Metal Burst
@@ -1567,9 +1567,9 @@ Eisenabwehr
 King's Shield
 Königsschild
 Metal Sound
-Metalsound
+Metallsound
 Shelter
-Shelter
+Refugium
 Shift Gear
 Gangwechsel
 Hydro Cannon
@@ -1577,7 +1577,7 @@ Aquahaubitze
 Water Spout
 Fontränen
 Wave Crash
-Wave Crash
+Wellentackle
 Hydro Pump
 Hydropumpe
 Origin Pulse
@@ -1599,15 +1599,15 @@ Kiemenbiss
 Liquidation
 Aquadurchstoß
 Aqua Step
-Aqua Step
+Wogentanz
 Dive
 Taucher
 Hydro Steam
-Hydro Steam
+Hydrodampf
 Scald
 Siedewasser
 Snipe Shot
-Präisionsschuss
+Präzisionsschuss
 Water Pledge
 Wassersäulen
 Waterfall
@@ -1615,7 +1615,7 @@ Kaskade
 Razor Shell
 Kalkklinge
 Aqua Cutter
-Aqua Cutter
+Aquaschnitt
 Brine
 Lake
 Bubble Beam
@@ -1625,23 +1625,23 @@ Octazooka
 Flip Turn
 Rollwende
 Jet Punch
-Jet Punch
+Düsenhieb
 Water Pulse
 Aquawelle
 Chilling Water
-Chilling Water
+Kalte Dusche
 Aqua Jet
 Wasserdüse
 Bubble
-Bubbler
+Blubber
 Water Gun
 Aquaknarre
 Clamp
 Schnapper
 Whirlpool
-Whirlpool
+Wasserstrudel
 Triple Dive
-Triple Dive
+Tauchtriade
 Surging Strikes
 Trefferschwall
 Water Shuriken
@@ -1661,42 +1661,42 @@ Panzerschutz
 Faint Attack
 Finte
 DragonBreath
-Drachenpuls
+Feuerodem
 ThunderPunch
-ThunderPunch
+Donnerschlag
 ThunderShock
-ThunderShock
+Donnerschock
 Hi Jump Kick
-Hi Jump Kick
+Hochsprungkick
 DynamicPunch
-DynamicPunch
+Wuchtschlag
 FeatherDance
-FeatherDance
+Daunenreigen
 GrassWhistle
-GrassWhistle
+Grasflöte
 Sand-Attack
-Sand-Attack
+Sandwirbel
 Selfdestruct
-Selfdestruct
+Finale
 ExtremeSpeed
-ExtremeSpeed
+Turbotempo
 SmellingSalt
-SmellingSalt
+Riechsalz
 Vice Grip
-Vice Grip
+Klammer
 ViceGrip
-ViceGrip
+Klammer
 DoubleSlap
-DoubleSlap
+Duplexhieb
 SonicBoom
-SonicBoom
+Ultraschall
 SmokeScreen
-SmokeScreen
+Rauchwolke
 Softboiled
-Softboiled
+Weichei
 PoisonPowder
-PoisonPowder
+Giftpuder
 AncientPower
-AncientPower
+Antik-Kraft
 BubbleBeam
-BubbleBeam
+Blubbstrahl
