@@ -1,7 +1,6 @@
 #===============================================================================
-# [SC] Companion Pokemon - Core Logic
+# [SC] Companion Pokemon - Reaction Core Logic
 # Ambient reactions for the follower Pokemon based on context and affection.
-# Standalone plugin — uses overworld sprites from Graphics/Characters/Followers/.
 # Requires: [SC] Pokemon Affection
 #===============================================================================
 

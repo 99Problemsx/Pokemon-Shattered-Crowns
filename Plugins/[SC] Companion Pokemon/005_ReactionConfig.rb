@@ -1,8 +1,7 @@
 #===============================================================================
-# [SC] Companion Pokemon - Configuration
-# Version: 3.1.0
+# [SC] Companion Pokemon - Reaction Configuration
+# Version: 4.0.0
 # Ambient reactions for the follower Pokemon based on affection and context.
-# Standalone plugin — uses overworld sprites from Graphics/Characters/Followers/.
 # Requires: [SC] Pokemon Affection
 #===============================================================================
 

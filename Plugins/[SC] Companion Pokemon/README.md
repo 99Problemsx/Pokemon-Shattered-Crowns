@@ -1,15 +1,53 @@
 # Companion Pokemon
 
-**Version:** 3.1.0  
+**Version:** 4.0.0  
 **Essentials:** v21.1  
 **Author:** Nononever  
 **Requires:** [SC] Pokemon Affection
 
-Comprehensive companion reaction system for the follower Pokemon. Fully standalone — uses overworld sprites from Graphics/Characters/Followers/ and Essentials' native follower system. Reacts to environment, weather, battles, leveling, evolution, fainting, catching, healing, map transfers, toggles, bridges, ice sliding, status conditions, shiny Pokemon, friendship, and more — all scaled by affection level.
+Complete follower system with overworld sprites and ambient reactions. **Replaces Following Pokemon EX** entirely with a modern, self-contained implementation. Shows the first party Pokemon walking behind the player on the map with full sprite support, animations, toggle, talk, water/airborne handling, and all hooks.
 
 ---
 
-## Features
+## Follower System (NEW in v4.0)
+
+The plugin now includes a complete overworld follower system:
+
+- **Overworld Sprites** -- Uses 1300+ sprites from `Graphics/Characters/Followers/` with shiny, gender, form, swimming, and levitating variants
+- **Toggle Key** -- Press A to toggle follower on/off, S/W to cycle party
+- **Smart Following** -- Follower walks behind the player, handles ledges, stairs, cross-map movement
+- **Water/Airborne** -- Flying and levitating Pokemon hover; water Pokemon swim during surf
+- **Battle Slide-In** -- Follower slides into battle instead of Pokeball throw
+- **Talk Interaction** -- Face the follower to talk; gets greeting jump + cry
+- **Field Move Animation** -- Follower steps forward for HM moves
+- **Map Transfer** -- Follower hides during transfer and reappears after
+- **Impassable** -- NPCs can't walk through the follower
+- **Options Menu** -- Toggle in Options > Plugins
+- **Auto-Spawn** -- Follower appears automatically on game load
+- **Item Find** -- Follower finds items after walking long enough
+- **Friendship Timer** -- Gains happiness from walking
+- **Height Rules** -- Large Pokemon hidden in small indoor areas
+- **PokéCenter Animation** -- Follower returns to ball during healing
+
+### Follower Configuration (`CompanionFollower`)
+
+| Constant | Default | Description |
+|---|---|---|
+| `TOGGLE_KEY` | `Input::JUMPUP` | Key to toggle follower |
+| `CYCLE_PARTY_FORWARD_KEY` | `Input::JUMPDOWN` | Cycle party forward |
+| `CYCLE_PARTY_BACKWARD_KEY` | `Input::AUX2` | Cycle party backward |
+| `ALWAYS_ANIMATE` | `true` | Constant walking animation |
+| `ALWAYS_FACE_PLAYER` | `false` | Face player when idle |
+| `IMPASSABLE_FOLLOWER` | `true` | Block NPC movement |
+| `SLIDE_INTO_BATTLE` | `true` | Slide-in battle animation |
+| `APPLY_STATUS_TONES` | `true` | Color tint for status |
+| `FOLLOWER_DISTANCE_OFFSET` | `8` | Pixel offset from player |
+
+---
+
+## Reaction System
+
+### Features
 
 - **26 Reaction Contexts** -- Sun, rain, snow, cave, water, trainer, gym, outdoor, sandstorm, storm, forest, beach, Pokemon Center, home, night, lab, indoors, bridge, ice sliding, fog, mountain, lake, morning, surfing, diving, bicycle
 - **Shiny Pokemon Reactions** -- Special sparkle reactions when the follower is shiny

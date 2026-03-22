@@ -1,0 +1,471 @@
+#===============================================================================
+# [SC] Companion Pokemon - Follower Hooks
+# Aliases and event handlers to keep the follower in sync with game state:
+# Bike, PC, Party Screen, Evolution, Trade, Hatch, Debug, Day Care,
+# Map Transfer, Scene_Map update, Battle slide-in, Options menu, etc.
+#===============================================================================
+
+#===============================================================================
+# Game_FollowerFactory overrides — create the correct class, skip inactive
+# followers as leaders
+#===============================================================================
+class Game_FollowerFactory
+  alias __sc_follower__create_follower_object create_follower_object unless private_method_defined?(:__sc_follower__create_follower_object)
+  private def create_follower_object(*args)
+    return Game_FollowingPkmn.new(args[0]) if args[0].following_pkmn?
+    return __sc_follower__create_follower_object(*args)
+  end
+
+  def move_followers
+    leader = $game_player
+    $PokemonGlobal.followers.each_with_index do |follower, i|
+      event = @events[i]
+      event.follow_leader(leader, false, (i == 0))
+      follower.x              = event.x
+      follower.y              = event.y
+      follower.current_map_id = event.map.map_id
+      follower.direction      = event.direction
+      leader = event if !event.is_a?(Game_FollowingPkmn) || CompanionFollower.active?
+    end
+  end
+
+  def turn_followers
+    leader = $game_player
+    $PokemonGlobal.followers.each_with_index do |follower, i|
+      event = @events[i]
+      event.turn_towards_leader(leader)
+      follower.direction = event.direction
+      leader = event if !event.is_a?(Game_FollowingPkmn) || CompanionFollower.active?
+    end
+  end
+
+  def remove_all_except_following_pkmn
+    followers = $PokemonGlobal.followers
+    followers.each_with_index do |follower, i|
+      next if follower.following_pkmn?
+      followers[i] = nil
+      @events[i] = nil
+      @last_update += 1
+    end
+    followers.compact!
+    @events.compact!
+  end
+end
+
+#===============================================================================
+# Game_Player overrides — allow map transfer with Following Pokemon
+#===============================================================================
+class Game_Player
+  alias __sc_follower__can_map_transfer_with_follower? can_map_transfer_with_follower? unless method_defined?(:__sc_follower__can_map_transfer_with_follower?)
+  def can_map_transfer_with_follower?(*args)
+    return true if CompanionFollower.get && $PokemonGlobal.followers.length == 1
+    return __sc_follower__can_map_transfer_with_follower?(*args)
+  end
+
+  alias __sc_follower__can_ride_vehicle_with_follower? can_ride_vehicle_with_follower? unless method_defined?(:__sc_follower__can_ride_vehicle_with_follower?)
+  def can_ride_vehicle_with_follower?(*args)
+    return true if CompanionFollower.get && $PokemonGlobal.followers.length == 1
+    return __sc_follower__can_ride_vehicle_with_follower?(*args)
+  end
+end
+
+#===============================================================================
+# Followers module — protect Following Pokemon during clear
+#===============================================================================
+module Followers
+  class << self
+    alias __sc_follower__remove remove unless method_defined?(:__sc_follower__remove)
+    alias __sc_follower__remove_event remove_event unless method_defined?(:__sc_follower__remove_event)
+    alias __sc_follower__clear clear unless method_defined?(:__sc_follower__clear)
+  end
+  module_function
+
+  def remove(*args)
+    __sc_follower__remove(*args)
+    CompanionFollower.refresh(false)
+  end
+
+  def remove_event(*args)
+    __sc_follower__remove_event(*args)
+    CompanionFollower.refresh(false)
+  end
+
+  def clear(*args)
+    if $game_temp&.starting_over
+      $game_temp.followers.remove_all_except_following_pkmn
+    else
+      __sc_follower__clear(*args)
+    end
+    CompanionFollower.refresh(false)
+  end
+end
+
+#===============================================================================
+# Refresh after Bike mount/dismount
+#===============================================================================
+alias __sc_follower__pbMountBike pbMountBike unless defined?(__sc_follower__pbMountBike)
+def pbMountBike(*args)
+  ret = __sc_follower__pbMountBike(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+alias __sc_follower__pbDismountBike pbDismountBike unless defined?(__sc_follower__pbDismountBike)
+def pbDismountBike(*args)
+  ret = __sc_follower__pbDismountBike(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after PC usage
+#===============================================================================
+alias __sc_follower__pbTrainerPC pbTrainerPC unless defined?(__sc_follower__pbTrainerPC)
+def pbTrainerPC(*args)
+  ret = __sc_follower__pbTrainerPC(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+alias __sc_follower__pbPokeCenterPC pbPokeCenterPC unless defined?(__sc_follower__pbPokeCenterPC)
+def pbPokeCenterPC(*args)
+  $game_temp.pokecenter_following_pkmn = 0
+  if CompanionFollower.active?
+    $game_temp.pokecenter_following_pkmn = 1
+    $game_temp.pokecenter_following_pkmn = 2 if CompanionFollower::SHOW_POKECENTER_ANIMATION
+  end
+  ret = __sc_follower__pbPokeCenterPC(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after Party Screen closes
+#===============================================================================
+class PokemonPartyScreen
+  alias __sc_follower__pbPokemonScreen pbPokemonScreen unless method_defined?(:__sc_follower__pbPokemonScreen)
+  def pbPokemonScreen
+    ret = __sc_follower__pbPokemonScreen
+    CompanionFollower.refresh(false)
+    return ret
+  end
+end
+
+#===============================================================================
+# Refresh after Evolution
+#===============================================================================
+class PokemonEvolutionScene
+  alias __sc_follower__pbEndScreen pbEndScreen unless method_defined?(:__sc_follower__pbEndScreen)
+  def pbEndScreen(*args)
+    ret = __sc_follower__pbEndScreen(*args)
+    CompanionFollower.refresh(false)
+    return ret
+  end
+end
+
+#===============================================================================
+# Refresh after Trade
+#===============================================================================
+alias __sc_follower__pbStartTrade pbStartTrade unless defined?(__sc_follower__pbStartTrade)
+def pbStartTrade(*args)
+  ret = __sc_follower__pbStartTrade(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after Hatching
+#===============================================================================
+alias __sc_follower__pbHatch pbHatch unless defined?(__sc_follower__pbHatch)
+def pbHatch(*args)
+  ret = __sc_follower__pbHatch(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after Bag / Item Choice
+#===============================================================================
+alias __sc_follower__pbChooseItem pbChooseItem unless defined?(__sc_follower__pbChooseItem)
+def pbChooseItem(*args)
+  ret = __sc_follower__pbChooseItem(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after Debug menu
+#===============================================================================
+alias __sc_follower__pbDebugMenu pbDebugMenu unless defined?(__sc_follower__pbDebugMenu)
+def pbDebugMenu(*args)
+  ret = __sc_follower__pbDebugMenu(*args)
+  CompanionFollower.refresh(false)
+  return ret
+end
+
+#===============================================================================
+# Refresh after Day Care interaction
+#===============================================================================
+class DayCare
+  class << self
+    alias __sc_follower__deposit deposit unless method_defined?(:__sc_follower__deposit)
+    def deposit(*args)
+      ret = __sc_follower__deposit(*args)
+      CompanionFollower.refresh(false)
+      return ret
+    end
+
+    alias __sc_follower__withdraw withdraw unless method_defined?(:__sc_follower__withdraw)
+    def withdraw(*args)
+      ret = __sc_follower__withdraw(*args)
+      CompanionFollower.refresh(false)
+      return ret
+    end
+  end
+end
+
+#===============================================================================
+# Scene_Map update — toggle key, party cycling, queued refresh, time tracking
+#===============================================================================
+class Scene_Map
+  alias __sc_follower__update update unless method_defined?(:__sc_follower__update)
+  def update(*args)
+    __sc_follower__update(*args)
+
+    # Toggle key
+    t_key = CompanionFollower::TOGGLE_KEY
+    if t_key && CompanionFollower.can_check? && Input.trigger?(t_key)
+      CompanionFollower.toggle
+    end
+
+    # Quick party cycling
+    if CompanionFollower.can_check? && $player && $player.party.length >= 2
+      if !$game_temp.in_battle && !$game_temp.in_menu && !$game_player.moving?
+        fwd_key = CompanionFollower::CYCLE_PARTY_FORWARD_KEY
+        if fwd_key && Input.trigger?(fwd_key)
+          first_pkmn = $player.party.shift
+          $player.party.push(first_pkmn)
+          pbSEPlay("GUI party switch") rescue pbSEPlay("Choose")
+          CompanionFollower.refresh(true)
+        end
+
+        bwd_key = CompanionFollower::CYCLE_PARTY_BACKWARD_KEY
+        if bwd_key && Input.trigger?(bwd_key)
+          last_pkmn = $player.party.pop
+          $player.party.unshift(last_pkmn)
+          pbSEPlay("GUI party switch") rescue pbSEPlay("Choose")
+          CompanionFollower.refresh(true)
+        end
+      end
+    end
+
+    # Queued refresh
+    if $PokemonGlobal.call_refresh[0]
+      CompanionFollower.refresh($PokemonGlobal.call_refresh[1])
+      $PokemonGlobal.call_refresh = false
+    end
+
+    # Increase timers while active
+    CompanionFollower.increase_time if CompanionFollower.active?
+  end
+end
+
+#===============================================================================
+# Step-taken hook — queued refresh
+#===============================================================================
+EventHandlers.add(:on_player_step_taken, :sc_forced_follower_refresh, proc {
+  if $PokemonGlobal.call_refresh[0]
+    CompanionFollower.refresh($PokemonGlobal.call_refresh[1])
+    $PokemonGlobal.call_refresh = false
+  end
+})
+
+#===============================================================================
+# Map Transfer — hide follower during transfer, unhide after movement
+#===============================================================================
+class Game_Player
+  alias __sc_follower__update_move update_move unless method_defined?(:__sc_follower__update_move)
+  def update_move
+    __sc_follower__update_move
+    CompanionFollower.unhide_follower(false) if !moving?
+  end
+end
+
+class Interpreter
+  alias __sc_follower__command_201 command_201 unless method_defined?(:__sc_follower__command_201)
+  def command_201
+    # Hide follower before the transfer begins
+    CompanionFollower.hide_follower if CompanionFollower.can_check?
+    return __sc_follower__command_201
+  end
+end
+
+#===============================================================================
+# Field move animation — follower steps forward for HM moves
+#===============================================================================
+alias __sc_follower__pbHiddenMoveAnimation pbHiddenMoveAnimation unless defined?(__sc_follower__pbHiddenMoveAnimation)
+def pbHiddenMoveAnimation(pokemon, field_move = true)
+  no_field_move = !field_move || ($game_temp.no_follower_field_move rescue false)
+  CompanionFollower.move_route([PBMoveRoute::WAIT, 1]) if pokemon && CompanionFollower.active?
+  ret = __sc_follower__pbHiddenMoveAnimation(pokemon)
+  return ret if !ret || no_field_move || !CompanionFollower.active? || pokemon != CompanionFollower.get_pokemon
+  initial_dir = $game_player.direction
+  pbTurnTowardEvent(CompanionFollower.get_event, $game_player)
+  pbWait(0.2)
+  moved_dir = 0
+  possible_dir = [$game_player.direction, 10 - $game_player.direction]
+  [2, 8, 4, 6].each { |d| possible_dir.push(d) if !possible_dir.include?(d) }
+  possible_dir.each do |d|
+    next if !$game_player.passable?($game_player.x, $game_player.y, 10 - d)
+    moved_dir = 10 - d
+    break
+  end
+  if moved_dir > 0
+    CompanionFollower.get_event.move_toward_player
+    pbMoveRoute($game_player, [(moved_dir) / 2], true)
+    pbWait(0.2)
+    pbTurnTowardEvent($game_player, CompanionFollower.get_event)
+    pbWait(0.2)
+    CompanionFollower.move_route([15 + (initial_dir / 2)])
+    pbWait(0.2)
+  end
+  pbSEPlay("Player jump")
+  CompanionFollower.move_route([PBMoveRoute::JUMP, 0, 0])
+  pbWait(0.2)
+  return ret
+end
+
+#===============================================================================
+# Battle slide-in animation — follower slides in instead of Pokeball throw
+#===============================================================================
+class Battle::Scene::Animation::PokeballPlayerSendOut < Battle::Scene::Animation
+  alias __sc_follower__initialize initialize unless method_defined?(:__sc_follower__initialize)
+  def initialize(sprites, viewport, idxTrainer, battler, startBattle, idxOrder = 0)
+    @idxTrainer     = idxTrainer
+    @battler        = battler
+    @showingTrainer = startBattle
+    @idxOrder       = idxOrder
+    @trainer        = @battler.battle.pbGetOwnerFromBattlerIndex(@battler.index)
+    @shadowVisible  = sprites["shadow_#{battler.index}"].visible
+    @sprites        = sprites
+    @viewport       = viewport
+    @pictureEx      = []
+    @pictureSprites = []
+    @tempSprites    = []
+    @animDone       = false
+    if CompanionFollower.active? && startBattle &&
+       battler.index == 0 && CompanionFollower::SLIDE_INTO_BATTLE
+      createFollowerProcesses
+    else
+      createProcesses
+    end
+  end
+
+  def createFollowerProcesses
+    delay = @showingTrainer ? 5 : 0
+    batSprite = @sprites["pokemon_#{@battler.index}"]
+    shaSprite = @sprites["shadow_#{@battler.index}"]
+    battler = addSprite(batSprite, PictureOrigin::BOTTOM)
+    battler.setVisible(delay, true)
+    battler.setZoomXY(delay, 100, 100)
+    battler.setColor(delay, Color.new(0, 0, 0, 0))
+    battler.setDelta(0, -240, 0)
+    battler.moveDelta(delay, 12, 240, 0)
+    battler.setCallback(delay + 12, [batSprite, :pbPlayIntroAnimation])
+    if @shadowVisible
+      shadow = addSprite(shaSprite, PictureOrigin::CENTER)
+      shadow.setVisible(delay, @shadowVisible)
+      shadow.setDelta(0, -Graphics.width / 2, 0)
+      shadow.setDelta(delay, 12, Graphics.width / 2, 0)
+    end
+  end
+end
+
+#===============================================================================
+# Fix for emote animation duration check
+#===============================================================================
+class SpriteAnimation
+  def effect?
+    return @_animation_duration > 0 if @_animation_duration
+  end
+end
+
+#===============================================================================
+# Options menu — toggle Following Pokemon
+#===============================================================================
+module OptionsCategories
+  BATTLE   = :battle
+  AUDIO    = :audio
+  GRAPHICS = :graphics
+  GAMEPLAY = :gameplay
+  PLUGINS  = :plugins
+  SYSTEM   = :system
+end unless defined?(OptionsCategories)
+
+MenuHandlers.add(:options_menu, :follower_toggle, {
+  "name"        => _INTL("Following Pokemon"),
+  "order"       => 10,
+  "type"        => EnumOption,
+  "parameters"  => [_INTL("On"), _INTL("Off")],
+  "description" => _INTL("Let the first Pokemon in your party follow you in the overworld."),
+  "category"    => OptionsCategories::PLUGINS,
+  "condition"   => proc { CompanionFollower.can_check? && CompanionFollower.get_event && CompanionFollower::SHOW_TOGGLE_IN_OPTIONS },
+  "get_proc"    => proc { next ($PokemonGlobal&.follower_toggled ? 0 : 1) },
+  "set_proc"    => proc { |value, _scene|
+    next if !CompanionFollower.can_check?
+    next if $PokemonGlobal.follower_toggled == (value == 0)
+    $PokemonGlobal.follower_toggled = (value == 0)
+    CompanionFollower.refresh(false)
+  }
+})
+
+#===============================================================================
+# EBDX compatibility (if installed)
+#===============================================================================
+if PluginManager.installed?("Elite Battle: DX")
+  module EliteBattle
+    def self.follower(battle)
+      return nil if !EliteBattle::USE_FOLLOWER_EXCEPTION
+      return (CompanionFollower.active? && battle.scene.firstsendout) ? 0 : nil
+    end
+  end
+end
+
+#===============================================================================
+# Auto-spawn follower on game load / new game
+# On save reload: follower data persists in $PokemonGlobal.followers,
+# the factory's initialize recreates the Game_FollowingPkmn from it.
+# On first run (no follower yet): create FollowerData manually.
+#===============================================================================
+EventHandlers.add(:on_game_load, :sc_follower_init, proc {
+  next if !CompanionFollower.can_check?
+  next if !CompanionFollower.get_pokemon
+  # Default to toggled on for new games
+  $PokemonGlobal.follower_toggled = true if $PokemonGlobal.follower_toggled.nil?
+  if !CompanionFollower.get
+    # No follower data yet — create it so the factory can build the event
+    if $PokemonGlobal.follower_toggled
+      behind_dir = 10 - $game_player.direction
+      target = $map_factory.getFacingTile(behind_dir, $game_player) rescue nil
+      target = [$game_map.map_id, $game_player.x, $game_player.y] if !target
+      follower_data = FollowerData.new(
+        $game_map.map_id, 0, "FollowingPkmn",
+        $game_map.map_id, target[1], target[2],
+        $game_player.direction, "", 0
+      )
+      follower_data.name = "FollowingPkmn"
+      follower_data.common_event_id = CompanionFollower::FOLLOWER_COMMON_EVENT
+      $PokemonGlobal.followers.push(follower_data)
+      $game_temp.followers = nil  # Force factory rebuild
+      $game_temp.followers        # Trigger re-init
+      CompanionFollower.refresh(false)
+    end
+  else
+    CompanionFollower.refresh(false)
+  end
+})
+
+EventHandlers.add(:on_enter_map, :sc_follower_map_refresh, proc {
+  next if !CompanionFollower.can_check?
+  CompanionFollower.refresh(false) if CompanionFollower.get
+})
