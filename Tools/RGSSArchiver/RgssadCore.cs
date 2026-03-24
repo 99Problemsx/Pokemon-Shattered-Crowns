@@ -22,6 +22,7 @@ namespace RGSSArchiver;
 public static class RgssadCrypto
 {
     public const uint INITIAL_KEY = 0xDEADCAFE;
+    public static readonly byte[] STANDARD_MAGIC = "RGSSAD\0"u8.ToArray();
 
     public static uint Advance(uint key) => unchecked(key * 7 + 3);
 }
@@ -37,12 +38,24 @@ public sealed class RgssadWriter : IDisposable
     public int EntryCount { get; private set; }
     public long TotalBytes { get; private set; }
 
+    private readonly byte[] _magic;
+
+    /// <summary>
+    /// Creates a standard RGSSAD v1 writer.
+    /// </summary>
     public RgssadWriter(Stream output)
+        : this(output, RgssadCrypto.INITIAL_KEY, RgssadCrypto.STANDARD_MAGIC) { }
+
+    /// <summary>
+    /// Creates a writer with custom encryption key and magic header.
+    /// Used for protected builds that resist decrypter tools.
+    /// </summary>
+    public RgssadWriter(Stream output, uint initialKey, byte[] magic)
     {
         _bw = new BinaryWriter(output, Encoding.UTF8, leaveOpen: true);
-        _key = RgssadCrypto.INITIAL_KEY;
-        // Header: "RGSSAD\0" + version 1
-        _bw.Write("RGSSAD\0"u8);
+        _key = initialKey;
+        _magic = magic;
+        _bw.Write(magic);
         _bw.Write((byte)1);
     }
 
@@ -112,22 +125,30 @@ public static class RgssadReader
     /// <summary>
     /// Reads all entries from an RGSSAD v1 archive.
     /// </summary>
+    /// <summary>
+    /// Reads all entries using standard RGSSAD v1 constants.
+    /// </summary>
     public static List<ArchiveEntry> ReadAll(Stream input)
+        => ReadAll(input, RgssadCrypto.INITIAL_KEY, RgssadCrypto.STANDARD_MAGIC);
+
+    /// <summary>
+    /// Reads all entries with custom key and magic (for protected archives).
+    /// </summary>
+    public static List<ArchiveEntry> ReadAll(Stream input, uint initialKey, byte[] expectedMagic)
     {
         using var br = new BinaryReader(input, Encoding.UTF8, leaveOpen: true);
 
         // Validate header
-        byte[] magic = br.ReadBytes(7);
-        string magicStr = Encoding.ASCII.GetString(magic);
-        if (magicStr != "RGSSAD\0")
-            throw new InvalidDataException($"Invalid RGSSAD header: '{magicStr}'");
+        byte[] magic = br.ReadBytes(expectedMagic.Length);
+        if (!magic.AsSpan().SequenceEqual(expectedMagic))
+            throw new InvalidDataException("Invalid archive header.");
 
         byte version = br.ReadByte();
         if (version != 1)
-            throw new InvalidDataException($"Unsupported RGSSAD version: {version}");
+            throw new InvalidDataException($"Unsupported archive version: {version}");
 
         var entries = new List<ArchiveEntry>();
-        uint key = RgssadCrypto.INITIAL_KEY;
+        uint key = initialKey;
 
         while (input.Position < input.Length)
         {

@@ -13,7 +13,7 @@ public static class FileCollector
     // Folders that belong inside the encrypted archive
     public static readonly string[] ARCHIVE_FOLDERS =
     {
-        "Data", "Graphics", "Audio", "Plugins", "PBS"
+        "Data", "Graphics", "Audio", "Plugins", "PBS", "Fonts"
     };
 
     // Extensions to skip (backups, temp files, OS junk)

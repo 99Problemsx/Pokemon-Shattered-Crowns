@@ -547,9 +547,9 @@ public class FileCollectorTests
     {
         var tempDir = Path.Combine(Path.GetTempPath(), $"rgsstest_{Guid.NewGuid():N}");
         Directory.CreateDirectory(Path.Combine(tempDir, "Tools"));
-        Directory.CreateDirectory(Path.Combine(tempDir, "Fonts"));
+        Directory.CreateDirectory(Path.Combine(tempDir, "Saves"));
         File.WriteAllText(Path.Combine(tempDir, "Tools", "build.ps1"), "script");
-        File.WriteAllText(Path.Combine(tempDir, "Fonts", "arial.ttf"), "font");
+        File.WriteAllText(Path.Combine(tempDir, "Saves", "save01.rxdata"), "data");
 
         try
         {
@@ -797,6 +797,191 @@ public class RgssadIntegrationTests
         {
             if (File.Exists(tempFile))
                 File.Delete(tempFile);
+        }
+    }
+
+    // =========================================================================
+    // ArchiveProtector Tests
+    // =========================================================================
+
+    [Fact]
+    public void Protect_RoundTrip_PreservesData()
+    {
+        var original = new byte[1024];
+        Random.Shared.NextBytes(original);
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+        var outputFile = Path.ChangeExtension(inputFile, ".out");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, original);
+            ArchiveProtector.Encrypt(inputFile, scdFile);
+            ArchiveProtector.Decrypt(scdFile, outputFile);
+            Assert.Equal(original, File.ReadAllBytes(outputFile));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            File.Delete(scdFile);
+            File.Delete(outputFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_LargeFile_RoundTrip()
+    {
+        // Test with a file larger than the 4 MB buffer
+        var original = new byte[5 * 1024 * 1024];
+        Random.Shared.NextBytes(original);
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+        var outputFile = Path.ChangeExtension(inputFile, ".out");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, original);
+            ArchiveProtector.Encrypt(inputFile, scdFile);
+            ArchiveProtector.Decrypt(scdFile, outputFile);
+            Assert.Equal(original, File.ReadAllBytes(outputFile));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            File.Delete(scdFile);
+            File.Delete(outputFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_ScdFile_HasCorrectSignature()
+    {
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[256]);
+            ArchiveProtector.Encrypt(inputFile, scdFile);
+
+            var header = new byte[7];
+            using (var fs = File.OpenRead(scdFile))
+                fs.Read(header, 0, 7);
+
+            // "SCDPKG" + version 1
+            Assert.Equal((byte)'S', header[0]);
+            Assert.Equal((byte)'C', header[1]);
+            Assert.Equal((byte)'D', header[2]);
+            Assert.Equal((byte)'P', header[3]);
+            Assert.Equal((byte)'K', header[4]);
+            Assert.Equal((byte)'G', header[5]);
+            Assert.Equal(1, header[6]);
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            File.Delete(scdFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_ScdFile_NotRecognizedAsRgssad()
+    {
+        var original = new byte[512];
+        // Write RGSSAD magic header in original
+        original[0] = (byte)'R'; original[1] = (byte)'G'; original[2] = (byte)'S';
+        original[3] = (byte)'S'; original[4] = (byte)'A'; original[5] = (byte)'D';
+        original[6] = 0; original[7] = 1;
+
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, original);
+            ArchiveProtector.Encrypt(inputFile, scdFile);
+
+            // SCD file must NOT start with "RGSSAD" — decrypter tools can't recognize it
+            var header = new byte[8];
+            using (var fs = File.OpenRead(scdFile))
+                fs.Read(header, 0, 8);
+
+            var rgssadMagic = "RGSSAD\0"u8;
+            bool looksLikeRgssad = header.AsSpan(0, 7).SequenceEqual(rgssadMagic);
+            Assert.False(looksLikeRgssad, "Encrypted file must NOT look like an RGSSAD archive");
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            File.Delete(scdFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_WrongPassphrase_FailsDecrypt()
+    {
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+        var outputFile = Path.ChangeExtension(inputFile, ".out");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[256]);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "correct_password");
+            Assert.ThrowsAny<Exception>(() =>
+                ArchiveProtector.Decrypt(scdFile, outputFile, "wrong_password"));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(scdFile)) File.Delete(scdFile);
+            if (File.Exists(outputFile)) File.Delete(outputFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_IsScdFile_DetectsFormat()
+    {
+        var inputFile = Path.GetTempFileName();
+        var scdFile = Path.ChangeExtension(inputFile, ".scd");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[256]);
+            Assert.False(ArchiveProtector.IsScdFile(inputFile));
+            ArchiveProtector.Encrypt(inputFile, scdFile);
+            Assert.True(ArchiveProtector.IsScdFile(scdFile));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            File.Delete(scdFile);
+        }
+    }
+
+    [Fact]
+    public void Protect_DifferentEncryptions_ProduceDifferentIVs()
+    {
+        var inputFile = Path.GetTempFileName();
+        var scd1 = Path.ChangeExtension(inputFile, ".scd1");
+        var scd2 = Path.ChangeExtension(inputFile, ".scd2");
+
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[64]);
+            ArchiveProtector.Encrypt(inputFile, scd1);
+            ArchiveProtector.Encrypt(inputFile, scd2);
+
+            // IVs are random, so encrypted outputs should differ
+            var data1 = File.ReadAllBytes(scd1);
+            var data2 = File.ReadAllBytes(scd2);
+            Assert.NotEqual(data1, data2);
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(scd1)) File.Delete(scd1);
+            if (File.Exists(scd2)) File.Delete(scd2);
         }
     }
 }

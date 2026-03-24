@@ -27,8 +27,11 @@ Thumbs.db
 # Build output & backups
 Release/
 Release_Raw/
+Release_Test/
+Release_Protected/
 Backup/
 
 # .NET build artifacts
 **/bin/
 **/obj/
+**/publish/
