@@ -70,10 +70,10 @@ module ArenaManager
 
   def self.start_run
     data.total_runs += 1
-    pbBGMPlay(BattleArena::BGM_ARENA) if BattleArena::BGM_ARENA
+    pbBGMPlay(SCBattleArena::BGM_ARENA) if SCBattleArena::BGM_ARENA
 
-    BattleArena::FLOORS.keys.sort.each do |floor_num|
-      floor = BattleArena::FLOORS[floor_num]
+    SCBattleArena::FLOORS.keys.sort.each do |floor_num|
+      floor = SCBattleArena::FLOORS[floor_num]
       pbMessage(_INTL("=== {1} (Floor {2}) ===", floor[:name], floor_num))
       pbMessage(_INTL("Trainers: {1} | Level: {2}", floor[:trainers], floor[:level]))
 
@@ -87,13 +87,13 @@ module ArenaManager
       end
 
       # Offer to continue or quit between floors
-      if floor_num < BattleArena::FLOORS.keys.max
+      if floor_num < SCBattleArena::FLOORS.keys.max
         unless pbConfirmMessage(_INTL("Continue to the next floor?"))
           pbMessage(_INTL("You left the Arena after Floor {1}.", floor_num))
           break
         end
         # Heal between floors if enabled
-        if BattleArena::HEAL_BETWEEN_TRAINERS
+        if SCBattleArena::HEAL_BETWEEN_TRAINERS
           $player.party.each { |pkmn| pkmn.heal }
         end
       end
@@ -113,14 +113,14 @@ module ArenaManager
 
       # Generate battle with arena trainer
       result = pbTrainerBattle(
-        BattleArena::ARENA_TRAINER_TYPE,
+        SCBattleArena::ARENA_TRAINER_TYPE,
         trainer_name, nil, nil, false
       )
 
       return false unless result == 1  # Must win
 
       # Heal between trainers on same floor if enabled
-      if BattleArena::HEAL_BETWEEN_TRAINERS && i < floor[:trainers] - 1
+      if SCBattleArena::HEAL_BETWEEN_TRAINERS && i < floor[:trainers] - 1
         $player.party.each { |pkmn| pkmn.heal }
       end
     end
@@ -134,12 +134,12 @@ module ArenaManager
   def self.record_floor_clear(floor_num)
     first_clear = !data.floor_cleared?(floor_num)
     data.record_clear(floor_num)
-    pbSEPlay(BattleArena::SE_FLOOR_CLEAR)
+    pbSEPlay(SCBattleArena::SE_FLOOR_CLEAR)
     pbMessage(_INTL("Floor {1} cleared! Streak: {2}", floor_num, data.current_streak))
 
     # First-time milestone rewards
     if first_clear
-      rewards = BattleArena::MILESTONE_REWARDS[floor_num]
+      rewards = SCBattleArena::MILESTONE_REWARDS[floor_num]
       if rewards
         pbMessage(_INTL("Milestone reward!"))
         rewards.each do |item, qty|
@@ -151,9 +151,9 @@ module ArenaManager
     end
 
     # Streak milestones
-    streak_reward = BattleArena::STREAK_MILESTONES[data.current_streak]
+    streak_reward = SCBattleArena::STREAK_MILESTONES[data.current_streak]
     if streak_reward
-      pbSEPlay(BattleArena::SE_STREAK)
+      pbSEPlay(SCBattleArena::SE_STREAK)
       pbMessage(_INTL("Streak milestone: {1} wins!", data.current_streak))
       streak_reward.each do |item, qty|
         $bag.add(item, qty)
@@ -174,7 +174,7 @@ module ArenaManager
 
   def self.show_status
     msg  = _INTL("=== Battle Arena ===\n")
-    msg += _INTL("Highest Floor: {1}/{2}\n", data.highest_floor, BattleArena::FLOORS.length)
+    msg += _INTL("Highest Floor: {1}/{2}\n", data.highest_floor, SCBattleArena::FLOORS.length)
     msg += _INTL("Current Streak: {1}\n", data.current_streak)
     msg += _INTL("Best Streak: {1}\n", data.best_streak)
     msg += _INTL("Total Runs: {1}", data.total_runs)
@@ -187,7 +187,7 @@ end
 #===============================================================================
 
 def pbStartArena
-  return unless BattleArena::ENABLED
+  return unless SCBattleArena::ENABLED
   ArenaManager.start_run
 end
 

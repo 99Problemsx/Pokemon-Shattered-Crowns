@@ -2,5 +2,5 @@ Name       = Mega Stone Consume
 Version    = 1.0.0
 Essentials = 21.1
 Requires   = Deluxe Battle Kit,1.0
-Website    = no
+Website      = https://github.com/99Problemsx/Pokemon-Shattered-Crowns
 Credits    = Shattered Crowns Team

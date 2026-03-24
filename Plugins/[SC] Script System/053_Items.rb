@@ -109,10 +109,14 @@ module GameData
       !ScriptRegistry.get_item(DSL.to_id(id)).nil?
     end
     
+    def self.keys
+      ScriptRegistry.items.keys
+    end
+
     def self.each
       ScriptRegistry.items.each { |id, data| yield(self.new(data)) }
     end
-    
+
     def self.count
       ScriptRegistry.items.count
     end

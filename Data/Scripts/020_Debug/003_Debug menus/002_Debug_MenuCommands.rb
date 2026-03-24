@@ -1449,6 +1449,9 @@ MenuHandlers.add(:debug_menu, :extract_text, {
                             [_INTL("One big file"), _INTL("One file per map"), _INTL("Cancel")], 3)
       next if map_files == 2
     end
+    # Refresh script/event texts so plugin changes are included
+    Translator.gather_script_and_event_texts
+    MessageTypes.save_default_messages
     # Extract the chosen set of text for the chosen language
     Translator.extract_text(language_name, text_type == 1, map_files == 1)
   }

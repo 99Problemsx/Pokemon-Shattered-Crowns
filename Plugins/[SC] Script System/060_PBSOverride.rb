@@ -1645,3 +1645,19 @@ def pbAllRegionalSpecies(region_dex)
   dex_list = pbLoadRegionalDexes[region_dex]
   return (!dex_list || dex_list.length == 0) ? [] : dex_list.clone
 end
+
+#===============================================================================
+# Eager initialisation for NON-DEBUG (release) mode
+#===============================================================================
+# In debug mode Compiler.main → compile_all fires the CompilerHook which loads
+# script data and installs the PBS override hooks (including the safe
+# GameData.load_all wrapper).
+#
+# In release mode ($DEBUG is false) Compiler.main returns immediately, so
+# compile_all is never called and the hooks are never installed.  We must do it
+# ourselves BEFORE Game.initialize calls GameData.load_all.
+#===============================================================================
+unless $DEBUG
+  SCScripts::Loader.load_all_data
+  SCScripts::PBSOverride.install_hooks
+end

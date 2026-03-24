@@ -7,7 +7,7 @@
 
 module CompanionPokemon
   ENABLED    = true
-  DEBUG_MODE = false
+  DEBUG_MODE = true
 
   #=============================================================================
   # REACTION CHECK — how often to evaluate environmental reactions
@@ -100,6 +100,63 @@ module CompanionPokemon
       PBMoveRoute::WAIT, 16,
       PBMoveRoute::STEP_ANIME_OFF,
     ],
+    :LOOK_AROUND => [
+      PBMoveRoute::TURN_LEFT,
+      PBMoveRoute::WAIT, 10,
+      PBMoveRoute::TURN_UP,
+      PBMoveRoute::WAIT, 10,
+      PBMoveRoute::TURN_RIGHT,
+      PBMoveRoute::WAIT, 10,
+      PBMoveRoute::TURN_DOWN,
+      PBMoveRoute::WAIT, 8,
+      PBMoveRoute::TURN_TOWARD_PLAYER,
+    ],
+    :SNIFF => [
+      PBMoveRoute::STEP_ANIME_ON,
+      PBMoveRoute::FORWARD,
+      PBMoveRoute::WAIT, 16,
+      PBMoveRoute::BACKWARD,
+      PBMoveRoute::STEP_ANIME_OFF,
+      PBMoveRoute::TURN_TOWARD_PLAYER,
+    ],
+    :WIGGLE => [
+      PBMoveRoute::TURN_LEFT,
+      PBMoveRoute::WAIT, 3,
+      PBMoveRoute::TURN_RIGHT,
+      PBMoveRoute::WAIT, 3,
+      PBMoveRoute::TURN_LEFT,
+      PBMoveRoute::WAIT, 3,
+      PBMoveRoute::TURN_TOWARD_PLAYER,
+    ],
+    :APPROACH => [
+      PBMoveRoute::TOWARD_PLAYER,
+      PBMoveRoute::WAIT, 12,
+      PBMoveRoute::STEP_ANIME_ON,
+      PBMoveRoute::WAIT, 16,
+      PBMoveRoute::STEP_ANIME_OFF,
+    ],
+    :SHY_BACK => [
+      PBMoveRoute::AWAY_FROM_PLAYER,
+      PBMoveRoute::WAIT, 8,
+      PBMoveRoute::TURN_TOWARD_PLAYER,
+      PBMoveRoute::WAIT, 12,
+    ],
+    :ALERT => [
+      PBMoveRoute::JUMP, 0, 0,
+      PBMoveRoute::WAIT, 4,
+      PBMoveRoute::TURN_LEFT,
+      PBMoveRoute::WAIT, 4,
+      PBMoveRoute::TURN_RIGHT,
+      PBMoveRoute::WAIT, 4,
+      PBMoveRoute::TURN_TOWARD_PLAYER,
+    ],
+    :SETTLE => [
+      PBMoveRoute::STEP_ANIME_ON,
+      PBMoveRoute::WAIT, 8,
+      PBMoveRoute::TURN_RIGHT90,
+      PBMoveRoute::WAIT, 8,
+      PBMoveRoute::STEP_ANIME_OFF,
+    ],
   }
 
   #=============================================================================
@@ -119,7 +176,7 @@ module CompanionPokemon
         next true
       },
       :emote => { :LOW => :HAPPY, :MEDIUM => :HAPPY, :HIGH => :MUSIC, :MAX => :HEART },
-      :move  => { :HIGH => :SPIN, :MAX => :SPIN_JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :LOOK_AROUND, :HIGH => :SPIN, :MAX => :SPIN_JUMP },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} is squinting in the bright sun."],
@@ -139,7 +196,7 @@ module CompanionPokemon
         next [:Rain, :HeavyRain].include?($game_screen.weather_type)
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :HAPPY, :HIGH => :MUSIC, :MAX => :MUSIC },
-      :move  => { :MEDIUM => :JUMP, :HIGH => :DOUBLE_JUMP, :MAX => :DANCE },
+      :move  => { :LOW => :WIGGLE, :MEDIUM => :WIGGLE, :HIGH => :DOUBLE_JUMP, :MAX => :DANCE },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} shakes the rain off its body."],
@@ -159,7 +216,7 @@ module CompanionPokemon
         next [:Snow, :Blizzard, :Hail].include?($game_screen.weather_type)
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :DOTS, :HIGH => :HAPPY, :MAX => :HEART },
-      :move  => { :HIGH => :DOUBLE_JUMP, :MAX => :JUMP },
+      :move  => { :LOW => :WIGGLE, :MEDIUM => :WIGGLE, :HIGH => :DOUBLE_JUMP, :MAX => :APPROACH },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} shivers a little in the cold."],
@@ -181,7 +238,7 @@ module CompanionPokemon
         next metadata.dark_map || metadata.snap_edges
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :DOTS, :HIGH => :HAPPY, :MAX => :ANGRY },
-      :move  => { :LOW => :STEP_BACK, :MEDIUM => :JUMP, :MAX => :JUMP },
+      :move  => { :LOW => :SHY_BACK, :MEDIUM => :LOOK_AROUND, :HIGH => :LOOK_AROUND, :MAX => :ALERT },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} looks uneasy in the dark...",
@@ -211,7 +268,7 @@ module CompanionPokemon
         next has_water
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :HAPPY, :HIGH => :MUSIC, :MAX => :HEART },
-      :move  => { :HIGH => :JUMP, :MAX => :DOUBLE_JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :SNIFF, :HIGH => :JUMP, :MAX => :DOUBLE_JUMP },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} gazes at the water."],
@@ -238,7 +295,7 @@ module CompanionPokemon
         next alert
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :ANGRY, :HIGH => :ANGRY, :MAX => :ANGRY },
-      :move  => { :HIGH => :JUMP, :MAX => :DOUBLE_JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :ALERT, :HIGH => :ALERT, :MAX => :DOUBLE_JUMP },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} tenses up, sensing someone nearby."],
@@ -261,7 +318,7 @@ module CompanionPokemon
              map_name.downcase.include?("arena")
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :HAPPY, :HIGH => :ANGRY, :MAX => :ANGRY },
-      :move  => { :HIGH => :JUMP, :MAX => :SPIN_JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :LOOK_AROUND, :HIGH => :JUMP, :MAX => :SPIN_JUMP },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} seems nervous about what's ahead."],
@@ -280,7 +337,7 @@ module CompanionPokemon
         next $game_map.metadata&.outdoor_map rescue true
       },
       :emote => { :LOW => nil, :MEDIUM => :HAPPY, :HIGH => :MUSIC, :MAX => :HEART },
-      :move  => { :HIGH => :JUMP, :MAX => :SPIN_JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :SNIFF, :HIGH => :JUMP, :MAX => :SPIN_JUMP },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} follows along quietly."],
@@ -302,7 +359,7 @@ module CompanionPokemon
         next $game_screen.weather_type == :Sandstorm
       },
       :emote => { :LOW => :ANGRY, :MEDIUM => :DOTS, :HIGH => :DOTS, :MAX => :HAPPY },
-      :move  => { :LOW => :STEP_BACK },
+      :move  => { :LOW => :SHY_BACK, :MEDIUM => :WIGGLE, :HIGH => :LOOK_AROUND },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} is covered in sand...",
@@ -323,7 +380,7 @@ module CompanionPokemon
         next $game_screen.weather_type == :Storm
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :DOTS, :HIGH => :HAPPY, :MAX => :ANGRY },
-      :move  => { :LOW => :STEP_BACK, :HIGH => :JUMP, :MAX => :DOUBLE_JUMP },
+      :move  => { :LOW => :SHY_BACK, :MEDIUM => :WIGGLE, :HIGH => :LOOK_AROUND, :MAX => :ALERT },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} flinched at a flash of lightning!",
@@ -399,7 +456,7 @@ module CompanionPokemon
         next metadata.has_flag?("PokeCenter") rescue false
       },
       :emote => { :LOW => :HAPPY, :MEDIUM => :HAPPY, :HIGH => :HEART, :MAX => :HEART },
-      :move  => { :MAX => :JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :SNIFF, :HIGH => :SETTLE, :MAX => :APPROACH },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} looks relieved to be in a safe place."],
@@ -422,7 +479,7 @@ module CompanionPokemon
         next map_name.include?($player.name)
       },
       :emote => { :LOW => :HAPPY, :MEDIUM => :HAPPY, :HIGH => :HEART, :MAX => :HEART },
-      :move  => { :HIGH => :SPIN, :MAX => :SPIN_JUMP },
+      :move  => { :LOW => :SNIFF, :MEDIUM => :LOOK_AROUND, :HIGH => :SPIN, :MAX => :APPROACH },
       :cry   => true,
       :messages => {
         :LOW    => ["{1} is sniffing around the room curiously."],
@@ -446,7 +503,7 @@ module CompanionPokemon
         next hour >= 20 || hour < 5
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :DOTS, :HIGH => :HAPPY, :MAX => :HEART },
-      :move  => { :MAX => :STEP_BACK },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :LOOK_AROUND, :HIGH => :SETTLE, :MAX => :APPROACH },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} looks a little sleepy...",
@@ -471,7 +528,7 @@ module CompanionPokemon
         next metadata.has_flag?("PokemonLab") rescue false
       },
       :emote => { :LOW => :DOTS, :MEDIUM => :DOTS, :HIGH => :HAPPY, :MAX => :HAPPY },
-      :move  => { :MEDIUM => :SPIN },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :SNIFF, :HIGH => :LOOK_AROUND, :MAX => :SNIFF },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} is touching some kind of switch...",
@@ -713,7 +770,7 @@ module CompanionPokemon
         next !outdoor
       },
       :emote => { :LOW => nil, :MEDIUM => :HAPPY, :HIGH => :HAPPY, :MAX => :HEART },
-      :move  => { :MAX => :JUMP },
+      :move  => { :LOW => :LOOK_AROUND, :MEDIUM => :SNIFF, :HIGH => :SETTLE, :MAX => :APPROACH },
       :cry   => false,
       :messages => {
         :LOW    => ["{1} is looking around the room."],
@@ -1077,17 +1134,38 @@ module CompanionPokemon
     :NONE => [
       "{1} looks at you cautiously.",
       "{1} doesn't seem to know what to do.",
+      "{1} avoids your gaze.",
+      "{1} stares blankly ahead.",
+      "{1} sniffs the air curiously.",
+      "{1} shifts nervously on its feet.",
+      "{1} glances around, unsure of its surroundings.",
+      "{1} lets out a quiet sound.",
+      "{1} seems to be thinking about something.",
+      "{1} watches you from a distance.",
     ],
     :LOW => [
       "{1} looks at you with a slight wag of its tail.",
       "{1} tilts its head, watching you.",
       "{1} is slowly getting used to you.",
+      "{1} perks up a little when you look at it.",
+      "{1} cautiously comes a step closer.",
+      "{1} sniffs your hand gently.",
+      "{1} seems to enjoy walking with you.",
+      "{1} blinks at you with mild curiosity.",
+      "{1} yawns and stretches.",
+      "{1} quietly follows your lead.",
     ],
     :MEDIUM => [
       "{1} bumps its head against your hand!",
       "{1} seems happy you stopped to say hello!",
       "{1} chirps at you cheerfully.",
       "{1} does a little spin when you look at it!",
+      "{1} hops in place with excitement!",
+      "{1} rubs against your leg.",
+      "{1} looks at you with bright, eager eyes.",
+      "{1} lets out a happy cry!",
+      "{1} playfully nudges your bag.",
+      "{1} seems thrilled to have your attention!",
     ],
     :HIGH => [
       "{1} nuzzles against you affectionately!",
@@ -1095,6 +1173,11 @@ module CompanionPokemon
       "{1} looks at you with total adoration!",
       "{1} is so excited to see you it can barely contain itself!",
       "{1} trots around you in a happy circle!",
+      "{1} presses close to your side.",
+      "{1} practically vibrates with joy!",
+      "{1} lets out a delighted squeal!",
+      "{1} can't stop wagging its tail around you!",
+      "{1} looks up at you like you're its whole world.",
     ],
     :MAX => [
       "{1} gazes at you with pure love in its eyes.",
@@ -1103,12 +1186,16 @@ module CompanionPokemon
       "{1} closes its eyes contentedly as you pet it.",
       "{1} makes a sound of absolute bliss.",
       "{1} looks at you as if you're the center of its world.",
+      "{1} nuzzles into your palm with a soft purr.",
+      "{1} radiates happiness just being near you.",
+      "{1} seems completely at peace by your side.",
+      "{1} gently tugs at your sleeve, wanting more attention.",
     ],
   }
 
   # Emote to play when talking, per affection level
   TALK_EMOTES = {
-    :NONE   => nil,
+    :NONE   => :DOTS,
     :LOW    => :DOTS,
     :MEDIUM => :HAPPY,
     :HIGH   => :MUSIC,
@@ -1144,7 +1231,8 @@ module CompanionPokemon
   #=============================================================================
   # AFFECTION BONUS — extra affection per step while following
   #=============================================================================
-  FOLLOW_AFFECTION_STEPS  = 200  # Steps per +1 affection while following
+  FOLLOW_AFFECTION_STEPS  = 50   # Steps per +1 affection while following
+  TALK_AFFECTION_GAIN     = 5    # Affection gained per talk interaction
 
   #=============================================================================
   # MAP ENTER REACTIONS

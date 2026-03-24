@@ -45,6 +45,9 @@ module CompanionFollower
   CYCLE_PARTY_FORWARD_KEY  = Input::JUMPDOWN  # S key
   CYCLE_PARTY_BACKWARD_KEY = Input::AUX2      # W key
 
+  # Key to swap control between player and Pokemon. Set to nil to disable.
+  SWAP_CONTROL_KEY         = Input::AUX1      # D key
+
   # Show follower toggle option in the Options screen
   SHOW_TOGGLE_IN_OPTIONS  = true
 

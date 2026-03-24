@@ -27,6 +27,12 @@ def mainFunctionDebug
     MessageTypes.load_default_messages if FileTest.exist?("Data/messages_core.dat")
     PluginManager.runPlugins
     Compiler.main
+    # In release mode ($DEBUG=false) Compiler.main returns immediately so the
+    # SC Script System CompilerHook never fires.  Initialise it here instead.
+    if !$DEBUG && defined?(SCScripts::Loader) && defined?(SCScripts::PBSOverride)
+      SCScripts::Loader.load_all_data
+      SCScripts::PBSOverride.install_hooks
+    end
     Game.initialize
     Game.set_up_system
     Graphics.update

@@ -41,6 +41,26 @@ class FollowerData
   def following_pkmn?
     return @event_name == "FollowingPkmn"
   end
+
+  # PE sets event.transparent = !follower.visible? every frame.
+  # Tie visibility to CompanionFollower.active? so PE handles show/hide.
+  alias __sc_follower__visible? visible? unless method_defined?(:__sc_follower__visible?)
+  def visible?
+    return CompanionFollower.active? if following_pkmn?
+    return __sc_follower__visible?
+  end
+
+  # Override interact to call CompanionFollower.talk when it's the follower
+  alias __sc_follower__interact interact unless method_defined?(:__sc_follower__interact)
+  def interact(event)
+    if following_pkmn?
+      return if !CompanionFollower.active?
+      echoln "[SC] FollowerData#interact: calling CompanionFollower.talk" if CompanionPokemon::DEBUG_MODE
+      CompanionFollower.talk
+      return
+    end
+    __sc_follower__interact(event)
+  end
 end
 
 #===============================================================================
@@ -51,6 +71,7 @@ end
 class Game_FollowingPkmn < Game_Follower
   def initialize(*args)
     super(*args)
+    @step_anime = true if CompanionFollower::ALWAYS_ANIMATE
     @last_leader_x = nil
     @last_leader_y = nil
   end
@@ -82,13 +103,21 @@ class Game_FollowingPkmn < Game_Follower
   alias __sc_follower__walk_anime walk_anime= unless method_defined?(:__sc_follower__walk_anime)
   def walk_anime=(value)
     return if $PokemonGlobal.ice_sliding && CompanionFollower.airborne?
+    # Keep walk + stop animation on when ALWAYS_ANIMATE is enabled
+    if CompanionFollower::ALWAYS_ANIMATE
+      __sc_follower__walk_anime(true)
+      @step_anime = true
+      return
+    end
     __sc_follower__walk_anime(value)
   end
 
   alias __sc_follower__straighten straighten unless method_defined?(:__sc_follower__straighten)
   def straighten
     return if $PokemonGlobal.ice_sliding && CompanionFollower.airborne?
+    # Preserve stop animation when ALWAYS_ANIMATE is enabled
     __sc_follower__straighten
+    @step_anime = true if CompanionFollower::ALWAYS_ANIMATE
   end
 
   #-----------------------------------------------------------------------------
@@ -163,6 +192,40 @@ class Game_FollowingPkmn < Game_Follower
   #-----------------------------------------------------------------------------
   def follow_leader(leader, instant = false, leaderIsTrueLeader = true)
     return if @move_route_forcing
+    # During ice sliding, positioning is handled by the update override
+    if $PokemonGlobal.ice_sliding
+      @last_leader_x = leader.x
+      @last_leader_y = leader.y
+      return
+    end
+    # During waterfall traversal, positioning is handled by the update override
+    if $PokemonGlobal.descending_waterfall || $PokemonGlobal.ascending_waterfall
+      @last_leader_x = leader.x
+      @last_leader_y = leader.y
+      return
+    end
+    # Keep follower frozen while player transitions between ice patches
+    if @ice_prev_tile
+      leader_tag = $game_player.pbTerrainTag rescue nil
+      if leader_tag&.ice
+        @last_leader_x = leader.x
+        @last_leader_y = leader.y
+        return
+      end
+      @ice_prev_tile = nil
+      @ice_last_leader = nil
+    end
+    # Reset waterfall tracking when waterfall ends
+    if @wf_prev_tile
+      leader_tag = $game_player.pbTerrainTag rescue nil
+      if leader_tag&.waterfall || leader_tag&.waterfall_crest
+        @last_leader_x = leader.x
+        @last_leader_y = leader.y
+        return
+      end
+      @wf_prev_tile = nil
+      @wf_last_leader = nil
+    end
     return if (jumping? || moving?) && !instant &&
               leader.x == @last_leader_x && leader.y == @last_leader_y
     end_movement
@@ -252,6 +315,9 @@ class Game_FollowingPkmn < Game_Follower
 
   def moveto(x, y)
     super(x, y)
+    # Reset cached leader position so follow_leader re-evaluates after map transfer
+    @last_leader_x = nil
+    @last_leader_y = nil
     calculate_bush_depth
   end
 
@@ -276,6 +342,94 @@ class Game_FollowingPkmn < Game_Follower
   def screen_z(height = 0)
     ret = super
     return ret + 1
+  end
+
+  #-----------------------------------------------------------------------------
+  # Forced movement: follower trails the player by 1 tile, pixel-locked.
+  # Handles ice sliding, ascending/descending waterfalls.
+  #-----------------------------------------------------------------------------
+  alias __sc_ice__update update unless method_defined?(:__sc_ice__update)
+  def update
+    __sc_ice__update
+    leader = $game_player
+    return if @move_route_forcing
+    #---------------------------------------------------------------------------
+    # Ice sliding
+    #---------------------------------------------------------------------------
+    if $PokemonGlobal&.ice_sliding
+      if !@ice_prev_tile
+        behind_x = leader.x
+        behind_y = leader.y
+        case leader.direction
+        when 2 then behind_y -= 1
+        when 4 then behind_x += 1
+        when 6 then behind_x -= 1
+        when 8 then behind_y += 1
+        end
+        @ice_prev_tile = [behind_x, behind_y]
+        @ice_last_leader = [leader.x, leader.y]
+        @direction = leader.direction
+        echoln "[SC] ICE-INIT: follower(#{behind_x},#{behind_y}) leader(#{leader.x},#{leader.y}) dir=#{leader.direction}"
+      end
+      cur_leader = [leader.x, leader.y]
+      if cur_leader != @ice_last_leader
+        old_prev = @ice_prev_tile.dup
+        @ice_prev_tile = @ice_last_leader.dup
+        @ice_last_leader = cur_leader.dup
+        echoln "[SC] ICE-STEP: leader moved to (#{leader.x},#{leader.y}) dir=#{leader.direction} " \
+               "follower target: (#{old_prev[0]},#{old_prev[1]}) -> (#{@ice_prev_tile[0]},#{@ice_prev_tile[1]})"
+      end
+      _apply_forced_position(@ice_prev_tile, leader)
+      return
+    end
+    #---------------------------------------------------------------------------
+    # Waterfall (ascending / descending)
+    #---------------------------------------------------------------------------
+    if $PokemonGlobal&.descending_waterfall || $PokemonGlobal&.ascending_waterfall
+      if !@wf_prev_tile
+        behind_x = leader.x
+        behind_y = leader.y
+        # Ascending = dir 8 (up), behind = below; Descending = dir 2 (down), behind = above
+        if $PokemonGlobal.ascending_waterfall
+          behind_y += 1
+        else
+          behind_y -= 1
+        end
+        @wf_prev_tile = [behind_x, behind_y]
+        @wf_last_leader = [leader.x, leader.y]
+        @direction = leader.direction
+      end
+      cur_leader = [leader.x, leader.y]
+      if cur_leader != @wf_last_leader
+        @wf_prev_tile = @wf_last_leader.dup
+        @wf_last_leader = cur_leader.dup
+      end
+      _apply_forced_position(@wf_prev_tile, leader)
+      return
+    end
+  end
+
+  # Shared helper: lock follower tile+pixel position relative to leader
+  def _apply_forced_position(target_tile, leader)
+    @x = target_tile[0]
+    @y = target_tile[1]
+    tile_dx = target_tile[0] - leader.x
+    tile_dy = target_tile[1] - leader.y
+    @real_x = leader.real_x + tile_dx * Game_Map::REAL_RES_X
+    @real_y = leader.real_y + tile_dy * Game_Map::REAL_RES_Y
+    if tile_dx < 0
+      @direction = 6
+    elsif tile_dx > 0
+      @direction = 4
+    elsif tile_dy < 0
+      @direction = 2
+    elsif tile_dy > 0
+      @direction = 8
+    else
+      @direction = leader.direction
+    end
+    @move_timer = nil if @move_timer
+    @jump_timer = nil if @jump_timer
   end
 end
 

@@ -296,6 +296,8 @@ class Interpreter
   def command_201
     # Hide follower before the transfer begins
     CompanionFollower.hide_follower if CompanionFollower.can_check?
+    # Reset ice sliding so follower doesn't slide on the new map
+    $PokemonGlobal.ice_sliding = false if $PokemonGlobal
     return __sc_follower__command_201
   end
 end
@@ -442,9 +444,40 @@ EventHandlers.add(:on_game_load, :sc_follower_init, proc {
   next if !CompanionFollower.get_pokemon
   # Default to toggled on for new games
   $PokemonGlobal.follower_toggled = true if $PokemonGlobal.follower_toggled.nil?
-  if !CompanionFollower.get
-    # No follower data yet — create it so the factory can build the event
-    if $PokemonGlobal.follower_toggled
+  # Remove stale FP-EX follower data
+  $PokemonGlobal.followers.reject! { |f|
+    f.event_name == "FollowerPkmn" || f.name == "FollowerPkmn"
+  }
+  # Ensure our follower data exists
+  has_follower = $PokemonGlobal.followers.any? { |f| f.event_name == "FollowingPkmn" }
+  if !has_follower
+    behind_dir = 10 - $game_player.direction
+    target = $map_factory.getFacingTile(behind_dir, $game_player) rescue nil
+    target = [$game_map.map_id, $game_player.x, $game_player.y] if !target
+    follower_data = FollowerData.new(
+      $game_map.map_id, 0, "FollowingPkmn",
+      $game_map.map_id, target[1], target[2],
+      $game_player.direction, "", 0
+    )
+    follower_data.name = "FollowingPkmn"
+    follower_data.common_event_id = CompanionFollower::FOLLOWER_COMMON_EVENT
+    $PokemonGlobal.followers.push(follower_data)
+  end
+  # Force factory rebuild so events match the follower data
+  $game_temp.followers = nil
+  $game_temp.followers
+  CompanionFollower.refresh(false)
+})
+
+EventHandlers.add(:on_enter_map, :sc_follower_map_refresh, proc {
+  next if !CompanionFollower.can_check?
+  # Reset ice sliding state from previous map
+  $PokemonGlobal.ice_sliding = false if $PokemonGlobal
+  # Auto-create follower data if it's missing (e.g. after receiving starter)
+  if !CompanionFollower.get && CompanionFollower.get_pokemon
+    $PokemonGlobal.follower_toggled = true if $PokemonGlobal.follower_toggled.nil?
+    has_follower = $PokemonGlobal.followers.any? { |f| f.event_name == "FollowingPkmn" }
+    if !has_follower
       behind_dir = 10 - $game_player.direction
       target = $map_factory.getFacingTile(behind_dir, $game_player) rescue nil
       target = [$game_map.map_id, $game_player.x, $game_player.y] if !target
@@ -456,16 +489,41 @@ EventHandlers.add(:on_game_load, :sc_follower_init, proc {
       follower_data.name = "FollowingPkmn"
       follower_data.common_event_id = CompanionFollower::FOLLOWER_COMMON_EVENT
       $PokemonGlobal.followers.push(follower_data)
-      $game_temp.followers = nil  # Force factory rebuild
-      $game_temp.followers        # Trigger re-init
-      CompanionFollower.refresh(false)
+      $game_temp.followers = nil
+      $game_temp.followers
     end
-  else
-    CompanionFollower.refresh(false)
+  end
+  CompanionFollower.refresh(false) if CompanionFollower.get
+})
+
+#===============================================================================
+# Player interaction fallback — talk to follower if facing it
+# (Backup for cases where Game_FollowerFactory#update doesn't handle it)
+#===============================================================================
+EventHandlers.add(:on_player_interact, :sc_follower_talk, proc {
+  if CompanionPokemon::DEBUG_MODE
+    echoln "[SC] on_player_interact fired — can_talk?=#{CompanionFollower.can_talk?}"
+  end
+  if CompanionFollower.can_talk?
+    echoln "[SC] on_player_interact: calling talk" if CompanionPokemon::DEBUG_MODE
+    CompanionFollower.talk
   end
 })
 
-EventHandlers.add(:on_enter_map, :sc_follower_map_refresh, proc {
-  next if !CompanionFollower.can_check?
-  CompanionFollower.refresh(false) if CompanionFollower.get
+#===============================================================================
+# Talk response — connect to reaction engine
+#===============================================================================
+EventHandlers.add(:following_pkmn_talk, :sc_reaction_talk, proc { |pkmn, _random|
+  next false if !pkmn
+  echoln "[SC] :following_pkmn_talk handler called for #{pkmn.name}" if CompanionPokemon::DEBUG_MODE
+  if defined?(CompanionReactionEngine)
+    result = CompanionReactionEngine.on_talk(pkmn)
+    echoln "[SC] CompanionReactionEngine.on_talk returned #{result.inspect}" if CompanionPokemon::DEBUG_MODE
+    next result
+  end
+  # Fallback: basic message if reaction engine not loaded
+  echoln "[SC] ReactionEngine not defined, using fallback message" if CompanionPokemon::DEBUG_MODE
+  pkmn.play_cry rescue nil
+  pbMessage(_INTL("{1} looks at you happily!", pkmn.name))
+  next true
 })

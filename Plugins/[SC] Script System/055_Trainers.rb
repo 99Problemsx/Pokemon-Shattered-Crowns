@@ -30,10 +30,14 @@ module GameData
       !ScriptRegistry.get_trainer_type(DSL.to_id(id)).nil?
     end
     
+    def self.keys
+      ScriptRegistry.trainer_types.keys
+    end
+
     def self.each
       ScriptRegistry.trainer_types.each { |id, data| yield(id, data) }
     end
-    
+
     def self.count
       ScriptRegistry.trainer_types.count
     end

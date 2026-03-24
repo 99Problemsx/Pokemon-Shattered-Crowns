@@ -162,14 +162,18 @@ module GameData
       !ScriptRegistry.get_pokemon(DSL.to_id(id)).nil?
     end
     
+    def self.keys
+      ScriptRegistry.pokemon.keys
+    end
+
     def self.each
       ScriptRegistry.pokemon.each { |id, data| yield(self.new(data)) }
     end
-    
+
     def self.each_species(&block)
       self.each(&block)
     end
-    
+
     def self.count
       ScriptRegistry.pokemon.count
     end

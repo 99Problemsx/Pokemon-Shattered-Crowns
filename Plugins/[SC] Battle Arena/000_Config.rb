@@ -4,7 +4,7 @@
 # Post-game challenge tower with themed floors, streaks, and rewards.
 #===============================================================================
 
-module BattleArena
+module SCBattleArena
   ENABLED    = true
   DEBUG_MODE = false
 

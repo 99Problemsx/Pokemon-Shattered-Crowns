@@ -118,8 +118,8 @@ EventHandlers.add(:on_player_step_taken_can_transfer, :sc_qol_auto_run,
 
 module QoLTextSpeed
   def self.apply
-    if qolEnabled?(:FAST_TEXT)
-      MessageConfig::TEXT_SPEED = -1 if defined?(MessageConfig::TEXT_SPEED)
+    if qolEnabled?(:FAST_TEXT) && defined?(MessageConfig::TEXT_SPEED)
+      MessageConfig.const_set(:TEXT_SPEED, -1)
     end
   end
 end

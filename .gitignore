@@ -23,3 +23,12 @@ luts_log.txt
 # OS-specific
 Thumbs.db
 .DS_Store
+
+# Build output & backups
+Release/
+Release_Raw/
+Backup/
+
+# .NET build artifacts
+**/bin/
+**/obj/

@@ -105,10 +105,14 @@ module GameData
       !ScriptRegistry.get_move(DSL.to_id(id)).nil?
     end
     
+    def self.keys
+      ScriptRegistry.moves.keys
+    end
+
     def self.each
       ScriptRegistry.moves.each { |id, data| yield(self.new(data)) }
     end
-    
+
     def self.count
       ScriptRegistry.moves.count
     end

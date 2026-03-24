@@ -246,24 +246,22 @@ module CompanionFollower
       return @@can_refresh
     end
     @@last_refresh_frame = current_frame
-    event = get_event
-    remove_sprite
-    event&.calculate_bush_depth
     first_pkmn = get_pokemon
     return if !first_pkmn
     refresh_internal
     ret = active?
     event = get_event
-    if anim
+    if anim && event
       anim_name = ret ? :ANIMATION_COME_OUT : :ANIMATION_COME_IN
       anim_id = self.const_defined?(anim_name) ? self.const_get(anim_name) : nil
-      if event && anim_id
-        $scene.spriteset.addUserAnimation(anim_id, event.x, event.y, false, 1)
+      if anim_id
+        $scene.spriteset.addUserAnimation(anim_id, event.x, event.y, false, 1) rescue nil
       end
     end
-    change_sprite(first_pkmn) if ret
-    if ALWAYS_ANIMATE
-      move_route([(ret ? PBMoveRoute::STEP_ANIME_ON : PBMoveRoute::STEP_ANIME_OFF)])
+    # Always set sprite — PE controls visibility via transparent flag
+    change_sprite(first_pkmn)
+    if ALWAYS_ANIMATE && event
+      event.instance_variable_set(:@step_anime, ret ? true : false)
     end
     event&.calculate_bush_depth
     $PokemonGlobal.time_taken = 0 if !ret
@@ -309,11 +307,9 @@ module CompanionFollower
     fname.gsub!("Graphics/Characters/", "")
     get_event&.character_name = fname
     get_data&.character_name  = fname
-    if get_event&.move_route_forcing
-      hue = (pkmn.respond_to?(:superHue) && pkmn.superShiny?) ? pkmn.superHue : 0
-      get_event&.character_hue = hue
-      get_data&.character_hue  = hue
-    end
+    hue = (pkmn.respond_to?(:superHue) && pkmn.superShiny?) ? pkmn.superHue : 0
+    get_event&.character_hue = hue
+    get_data&.character_hue  = hue
   end
 
   #=============================================================================
@@ -322,7 +318,7 @@ module CompanionFollower
 
   def self.hide_follower
     @@hidden = true
-    remove_sprite
+    # PE handles transparency via visible? -> active? -> @@hidden
   end
 
   def self.unhide_follower(anim = true)
@@ -338,14 +334,15 @@ module CompanionFollower
   #=============================================================================
 
   def self.animation(id = nil)
-    return if !can_check? || !active?
+    return if !can_check?
+    event = get_event
+    return if !event
     if id.nil?
       pbMapInterpreter&.follower_animation("FollowingPkmn")
       return
     end
-    sprites = $scene.spritesetGlobal.follower_sprites rescue nil
-    return if !sprites
-    sprites.set_animation(id)
+    # Sprite_Character#update picks this up and auto-disposes any previous animation
+    event.animation_id = id
   end
 
   def self.move_route(commands = nil, wait_complete = false)
@@ -364,40 +361,84 @@ module CompanionFollower
   #=============================================================================
 
   def self.talk
-    return false if !can_talk?(true)
+    echoln "[SC] CompanionFollower.talk called" if CompanionPokemon::DEBUG_MODE
+    return false if !can_check?
     return false if !$game_temp || $game_temp.in_battle || $game_temp.in_menu
     event = get_event
-    pbTurnTowardEvent(event, $game_player)
+    return false if !event
+    # Safety: clear any stuck move routes on the follower before talking
+    if event.move_route_forcing
+      echoln "[SC] talk: clearing stuck move_route on follower" if CompanionPokemon::DEBUG_MODE
+      event.instance_variable_set(:@move_route_forcing, false)
+    end
+    return false if $game_player.move_route_forcing
     first_pkmn = get_pokemon
-    first_pkmn&.play_cry
-    if event && !airborne?
+    return false if !first_pkmn
+    echoln "[SC] talk: interacting with #{first_pkmn.name}" if CompanionPokemon::DEBUG_MODE
+    pbTurnTowardEvent(event, $game_player)
+    first_pkmn.play_cry rescue nil
+    if !airborne?
       move_route([PBMoveRoute::JUMP, 0, 0])
       pbMoveRoute($game_player, [PBMoveRoute::WAIT, 8])
     end
     random_val = rand(6)
+    handled = false
     if $PokemonGlobal&.follower_hold_item
-      EventHandlers.trigger_2(:following_pkmn_item, first_pkmn, random_val)
-    else
-      EventHandlers.trigger_2(:following_pkmn_talk, first_pkmn, random_val)
+      ret = EventHandlers.trigger_2(:following_pkmn_item, first_pkmn, random_val)
+      handled = (ret != -1 && !ret.nil?)
+    end
+    # Direct call to reaction engine — bypasses EventHandlers dispatch which
+    # can silently fail if the handler wasn't registered during plugin load.
+    if !handled && defined?(CompanionReactionEngine)
+      echoln "[SC] talk: calling CompanionReactionEngine.on_talk directly" if CompanionPokemon::DEBUG_MODE
+      handled = CompanionReactionEngine.on_talk(first_pkmn)
+      echoln "[SC] talk: on_talk returned #{handled.inspect}" if CompanionPokemon::DEBUG_MODE
+    end
+    # Last resort fallback
+    if !handled
+      echoln "[SC] talk: using last-resort fallback message" if CompanionPokemon::DEBUG_MODE
+      emote_id = CompanionPokemon::EMOTE_MAP[:HAPPY] rescue nil
+      animation(emote_id) if emote_id
+      pbMessage(_INTL("{1} looks at you.", first_pkmn.name))
     end
     pbTurnTowardEvent(event, $game_player)
     return true
   end
 
-  def self.can_talk?(interact = false)
-    return false if !can_check?
-    return false if !$game_temp || $game_temp.in_battle || $game_temp.in_menu
-    return false if get_event&.move_route_forcing
-    return false if $game_player.move_route_forcing
-    facing = pbFacingTile
-    if !active? || !$game_map.passable?(facing[1], facing[2], $game_player.direction, $game_player)
-      if interact
-        $game_player.straighten
-        EventHandlers.trigger(:on_player_interact)
-      end
-      return false
+  def self.can_talk?
+    if CompanionPokemon::DEBUG_MODE
+      echoln "[SC] can_talk? checks: can_check=#{can_check?} active=#{active?} " \
+             "in_battle=#{$game_temp&.in_battle} in_menu=#{$game_temp&.in_menu} " \
+             "event_forcing=#{get_event&.move_route_forcing} " \
+             "player_forcing=#{$game_player&.move_route_forcing} " \
+             "facing=#{facing_follower?} adjacent=#{adjacent_to_follower?}"
     end
-    return true
+    return false if !can_check?
+    return false if !active?
+    return false if !$game_temp || $game_temp.in_battle || $game_temp.in_menu
+    # Don't block on stuck follower move routes — talk will clear them
+    return false if $game_player.move_route_forcing
+    return facing_follower?
+  end
+
+  # Check if the player is facing the follower event
+  def self.facing_follower?
+    event = get_event
+    return false if !event
+    facing = $map_factory.getFacingTile rescue nil
+    return false if !facing
+    return event.map.map_id == facing[0] && event.x == facing[1] && event.y == facing[2]
+  end
+
+  # Check if the follower is within 1 tile of the player (any cardinal direction)
+  # Also allows overlap (same tile) which happens after map transfers
+  def self.adjacent_to_follower?
+    event = get_event
+    return false if !event
+    return false if event.map.map_id != $game_player.map.map_id
+    dx = (event.x - $game_player.x).abs
+    dy = (event.y - $game_player.y).abs
+    return (dx + dy) <= 1
   end
 
   #=============================================================================

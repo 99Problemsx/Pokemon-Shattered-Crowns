@@ -52,10 +52,14 @@ module GameData
       !ScriptRegistry.get_ability(DSL.to_id(id)).nil?
     end
     
+    def self.keys
+      ScriptRegistry.abilities.keys
+    end
+
     def self.each
       ScriptRegistry.abilities.each { |id, data| yield(self.new(data)) }
     end
-    
+
     def self.count
       ScriptRegistry.abilities.count
     end

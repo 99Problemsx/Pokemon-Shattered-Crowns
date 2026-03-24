@@ -21,16 +21,21 @@ module CompanionReactionEngine
 
   def self.on_step
     return unless CompanionPokemon::ENABLED
-    return unless CompanionFollower.active?
 
     pkmn = CompanionFollower.get_pokemon
     return unless pkmn && !pkmn.egg?
 
+    # Affection gain from following — always active, even if follower hidden
+    track_follow_affection(pkmn)
+
+    # Everything below requires follower to be visible
+    return unless CompanionFollower.active?
+
+    # No ambient reactions during ice sliding (follower is frozen in place)
+    return if $PokemonGlobal.ice_sliding
+
     # Track cooldown
     @cooldown_counter -= 1 if @cooldown_counter > 0
-
-    # Affection gain from following
-    track_follow_affection(pkmn)
 
     # Milestone check
     check_milestone(pkmn)
@@ -67,13 +72,10 @@ module CompanionReactionEngine
   #=============================================================================
 
   def self.track_follow_affection(pkmn)
-    @affection_steps += 1
+    @affection_steps = (@affection_steps || 0) + 1
     if @affection_steps >= CompanionPokemon::FOLLOW_AFFECTION_STEPS
       @affection_steps = 0
       pkmn.add_affection(1)
-      if CompanionPokemon::DEBUG_MODE
-        echoln "[SC] Companion: +1 affection for #{pkmn.name} from walking"
-      end
     end
   end
 
@@ -97,12 +99,8 @@ module CompanionReactionEngine
       @last_milestones[pid] = level
       msg = CompanionPokemon::MILESTONE_MESSAGES[level]
       if msg
-        # Play heart emote on milestone
+        # Play heart emote on milestone (non-blocking, no text during walking)
         play_emote(:HEART)
-        pkmn.play_cry rescue nil
-        pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20]) rescue nil
-        CompanionFollower.move_route(CompanionPokemon::MOVE_ROUTES[:SPIN_JUMP])
-        pbMessage(_INTL(msg, pkmn.name))
       end
     end
   end
@@ -217,7 +215,7 @@ module CompanionReactionEngine
   #=============================================================================
 
   def self.pick_message_for_level(messages, level)
-    order = [:MAX, :HIGH, :MEDIUM, :LOW]
+    order = [:MAX, :HIGH, :MEDIUM, :LOW, :NONE]
     reached = false
     order.each do |lvl|
       reached = true if lvl == level
@@ -225,6 +223,25 @@ module CompanionReactionEngine
       if messages[lvl] && !messages[lvl].empty?
         return messages[lvl].sample
       end
+    end
+    nil
+  end
+
+  # Returns the full message array for the highest applicable tier
+  def self.pick_message_list_for_level(messages, level)
+    return nil unless messages
+    order = [:MAX, :HIGH, :MEDIUM, :LOW, :NONE]
+    # Try current level and below first
+    reached = false
+    order.each do |lvl|
+      reached = true if lvl == level
+      next unless reached
+      return messages[lvl] if messages[lvl] && !messages[lvl].empty?
+    end
+    # Fallback: check levels above (closest first)
+    idx = order.index(level) || order.length
+    (idx - 1).downto(0) do |i|
+      return messages[order[i]] if messages[order[i]] && !messages[order[i]].empty?
     end
     nil
   end
@@ -243,28 +260,8 @@ module CompanionReactionEngine
     end
     emote_key ||= :HAPPY  # Default fallback
 
-    # Play emote bubble on the follower sprite
+    # Play emote bubble on the follower sprite (non-blocking)
     play_emote(emote_key)
-    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20]) rescue nil
-
-    # Play move route pattern if defined for this affection tier
-    if context && context[:move] && level
-      move_key = pick_for_level(context[:move], level)
-      if move_key && CompanionPokemon::MOVE_ROUTES[move_key]
-        CompanionFollower.move_route(CompanionPokemon::MOVE_ROUTES[move_key])
-        pbMoveRoute($game_player, [PBMoveRoute::WAIT, 40]) rescue nil
-      end
-    end
-
-    # Play Pokemon cry on MAX affection for contexts that allow it
-    if context && context[:cry] && level == :MAX
-      pkmn.play_cry rescue nil
-    end
-
-    pbMessage(_INTL(message, pkmn.name))
-
-    # Face the player again after any move route
-    CompanionFollower.turn_to_player
 
     if CompanionPokemon::DEBUG_MODE
       echoln "[SC] Companion reaction (#{emote_key}): #{_INTL(message, pkmn.name)}"
@@ -288,19 +285,8 @@ module CompanionReactionEngine
 
     @cooldown_counter = CompanionPokemon::REACTION_COOLDOWN
 
-    # Emote
+    # Emote (non-blocking)
     play_emote(status_data[:emote]) if status_data[:emote]
-    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20]) rescue nil
-
-    # Move route
-    if status_data[:move] && CompanionPokemon::MOVE_ROUTES[status_data[:move]]
-      CompanionFollower.move_route(CompanionPokemon::MOVE_ROUTES[status_data[:move]])
-      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 40]) rescue nil
-    end
-
-    pbMessage(_INTL(msg, pkmn.name))
-
-    CompanionFollower.turn_to_player
 
     if CompanionPokemon::DEBUG_MODE
       echoln "[SC] Companion status reaction (#{status}): #{_INTL(msg, pkmn.name)}"
@@ -376,13 +362,49 @@ module CompanionReactionEngine
 
     level = pkmn.affection_level
 
-    # Play emote
-    emote = CompanionPokemon::TALK_EMOTES[level]
+    # Gather messages — base (affection) pool and context pool with emotes
+    base_msgs = (CompanionPokemon::TALK_REACTIONS[level] || []).dup
+    ctx_entries = []   # [{msg: String, emote: Symbol, move: Symbol}]
+    CompanionPokemon::REACTIONS.each_value do |data|
+      next unless data[:condition]&.call(pkmn)
+      found = pick_message_list_for_level(data[:messages], level)
+      next if !found || found.empty?
+      ctx_emote = pick_for_level(data[:emote], level) if data[:emote]
+      ctx_move  = pick_for_level(data[:move], level) if data[:move]
+      found.each { |m| ctx_entries << { msg: m, emote: ctx_emote, move: ctx_move } }
+    end
+
+    # Pick message: 60% base, 40% context — unless one pool is empty
+    msg = nil
+    emote = CompanionPokemon::TALK_EMOTES[level]  # default emote
+    ctx_move = nil  # context-specific move route
+    if !base_msgs.empty? && !ctx_entries.empty?
+      if rand(100) < 60
+        msg = base_msgs.sample
+      else
+        entry = ctx_entries.sample
+        msg = entry[:msg]
+        emote = entry[:emote] if entry[:emote]
+        ctx_move = entry[:move]
+      end
+    elsif !base_msgs.empty?
+      msg = base_msgs.sample
+    elsif !ctx_entries.empty?
+      entry = ctx_entries.sample
+      msg = entry[:msg]
+      emote = entry[:emote] if entry[:emote]
+      ctx_move = entry[:move]
+    end
+
+    return false unless msg
+
+    # Play emote (context-aware or affection-based)
     play_emote(emote) if emote
     pbMoveRoute($game_player, [PBMoveRoute::WAIT, 15]) rescue nil
 
-    # Play move route
-    move_key = CompanionPokemon::TALK_MOVES[level]
+    # Play move route — use context move when a context message was picked,
+    # otherwise fall back to generic TALK_MOVES per affection level
+    move_key = ctx_move || CompanionPokemon::TALK_MOVES[level]
     if move_key && CompanionPokemon::MOVE_ROUTES[move_key]
       CompanionFollower.move_route(CompanionPokemon::MOVE_ROUTES[move_key])
       pbMoveRoute($game_player, [PBMoveRoute::WAIT, 30]) rescue nil
@@ -391,13 +413,11 @@ module CompanionReactionEngine
     # Play cry at high affection
     pkmn.play_cry rescue nil if level == :MAX || level == :HIGH
 
-    # Show message
-    msgs = CompanionPokemon::TALK_REACTIONS[level]
-    if msgs && !msgs.empty?
-      pbMessage(_INTL(msgs.sample, pkmn.name))
-      return true
-    end
-    false
+    # Grant affection for interacting
+    pkmn.add_affection(CompanionPokemon::TALK_AFFECTION_GAIN)
+
+    pbMessage(_INTL(msg, pkmn.name))
+    true
   end
 
   #=============================================================================
@@ -422,15 +442,8 @@ module CompanionReactionEngine
 
     @cooldown_counter = CompanionPokemon::REACTION_COOLDOWN
 
+    # Emote (non-blocking)
     play_emote(data[:emote]) if data[:emote]
-    pbMoveRoute($game_player, [PBMoveRoute::WAIT, 20]) rescue nil
-
-    if data[:move] && CompanionPokemon::MOVE_ROUTES[data[:move]]
-      CompanionFollower.move_route(CompanionPokemon::MOVE_ROUTES[data[:move]])
-      pbMoveRoute($game_player, [PBMoveRoute::WAIT, 30]) rescue nil
-    end
-
-    pbMessage(_INTL(msg, pkmn.name))
 
     if CompanionPokemon::DEBUG_MODE
       echoln "[SC] Companion low HP (#{(ratio * 100).to_i}%): #{_INTL(msg, pkmn.name)}"
@@ -754,12 +767,19 @@ module CompanionReactionEngine
   #=============================================================================
 
   def self.pick_for_level(hash, level)
-    order = [:MAX, :HIGH, :MEDIUM, :LOW]
+    return nil unless hash
+    order = [:MAX, :HIGH, :MEDIUM, :LOW, :NONE]
+    # Try current level and below first
     reached = false
     order.each do |lvl|
       reached = true if lvl == level
       next unless reached
       return hash[lvl] if hash[lvl]
+    end
+    # Fallback: check levels above (closest first)
+    idx = order.index(level) || order.length
+    (idx - 1).downto(0) do |i|
+      return hash[order[i]] if hash[order[i]]
     end
     nil
   end
@@ -903,7 +923,7 @@ EventHandlers.add(:on_pokemon_center_heal, :sc_companion_heal,
 EventHandlers.add(:on_player_step_taken, :sc_companion_memory_lane,
   proc {
     next unless CompanionPokemon::ENABLED
-    next unless defined?(MemoryLane)
+    next unless defined?(MemoryLane) && MemoryLane.respond_to?(:record)
     next unless CompanionFollower.active?
     pkmn = CompanionFollower.get_pokemon
     next unless pkmn

@@ -9981,7 +9981,6 @@ Z-Power: Sharply raises the user's {1}.
 Z-Kraft: Erhöht {1} des Anwenders stark.
 Z-Power: Raises the user's {1}.
 Z-Kraft: Erhöht {1} des Anwenders.
-Z-Kraft: Erhöht {1} des Anwenders.
 # === PLUGIN LOCALIZATION STRINGS ===
 # From various plugins - extracted and localized
 Is there anything catching your eye?
