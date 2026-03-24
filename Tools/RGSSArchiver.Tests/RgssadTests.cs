@@ -816,8 +816,8 @@ public class RgssadIntegrationTests
         try
         {
             File.WriteAllBytes(inputFile, original);
-            ArchiveProtector.Encrypt(inputFile, scdFile);
-            ArchiveProtector.Decrypt(scdFile, outputFile);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "test_passphrase");
+            ArchiveProtector.Decrypt(scdFile, outputFile, "test_passphrase");
             Assert.Equal(original, File.ReadAllBytes(outputFile));
         }
         finally
@@ -841,8 +841,8 @@ public class RgssadIntegrationTests
         try
         {
             File.WriteAllBytes(inputFile, original);
-            ArchiveProtector.Encrypt(inputFile, scdFile);
-            ArchiveProtector.Decrypt(scdFile, outputFile);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "test_passphrase");
+            ArchiveProtector.Decrypt(scdFile, outputFile, "test_passphrase");
             Assert.Equal(original, File.ReadAllBytes(outputFile));
         }
         finally
@@ -862,7 +862,7 @@ public class RgssadIntegrationTests
         try
         {
             File.WriteAllBytes(inputFile, new byte[256]);
-            ArchiveProtector.Encrypt(inputFile, scdFile);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "test_passphrase");
 
             var header = new byte[7];
             using (var fs = File.OpenRead(scdFile))
@@ -899,9 +899,9 @@ public class RgssadIntegrationTests
         try
         {
             File.WriteAllBytes(inputFile, original);
-            ArchiveProtector.Encrypt(inputFile, scdFile);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "test_passphrase");
 
-            // SCD file must NOT start with "RGSSAD" — decrypter tools can't recognize it
+            // SCD file must NOT start with "RGSSAD"
             var header = new byte[8];
             using (var fs = File.OpenRead(scdFile))
                 fs.Read(header, 0, 8);
@@ -949,7 +949,7 @@ public class RgssadIntegrationTests
         {
             File.WriteAllBytes(inputFile, new byte[256]);
             Assert.False(ArchiveProtector.IsScdFile(inputFile));
-            ArchiveProtector.Encrypt(inputFile, scdFile);
+            ArchiveProtector.Encrypt(inputFile, scdFile, "test_passphrase");
             Assert.True(ArchiveProtector.IsScdFile(scdFile));
         }
         finally
@@ -969,8 +969,8 @@ public class RgssadIntegrationTests
         try
         {
             File.WriteAllBytes(inputFile, new byte[64]);
-            ArchiveProtector.Encrypt(inputFile, scd1);
-            ArchiveProtector.Encrypt(inputFile, scd2);
+            ArchiveProtector.Encrypt(inputFile, scd1, "test_passphrase");
+            ArchiveProtector.Encrypt(inputFile, scd2, "test_passphrase");
 
             // IVs are random, so encrypted outputs should differ
             var data1 = File.ReadAllBytes(scd1);

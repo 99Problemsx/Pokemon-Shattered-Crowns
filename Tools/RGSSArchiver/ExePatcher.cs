@@ -1,17 +1,14 @@
 // =============================================================================
-// ExePatcher — Patches mkxp-z Game.exe to use custom RGSSAD encryption
+// ExePatcher — Patches mkxp-z Game.exe to use a custom RGSSAD encryption key
 // =============================================================================
 // Replaces the well-known RGSSAD initial key in the binary so that standard
 // decrypter tools (RPG Maker Decrypter, etc.) cannot read the archive.
 //
-// Patched values:
-//   Initial key:   0xDEADCAFE  → 0xB7A3C1D9  (XOR encryption start key)
+// The key advancement formula (key * 7 + 3) is NOT changed — only the seed.
 //
 // NOT patched (PhysFS needs these for archive format detection):
-//   Magic header:  "RGSSAD"    — stays unchanged (PhysFS archiver matching)
-//   File extension: ".rgssad"  — stays unchanged (PhysFS file detection)
-//
-// The key advancement formula (key * 7 + 3) is NOT changed — only the seed.
+//   Magic header:  "RGSSAD"    — stays unchanged
+//   File extension: ".rgssad"  — stays unchanged
 // =============================================================================
 using System;
 using System.IO;
@@ -20,53 +17,47 @@ namespace RGSSArchiver;
 
 public static class ExePatcher
 {
-    // -------------------------------------------------------------------------
-    // Original mkxp-z encryption key (well-known, all decrypter tools use this)
-    // -------------------------------------------------------------------------
+    /// <summary>
+    /// The original mkxp-z / RPG Maker XP encryption key (all decrypter tools use this).
+    /// </summary>
     public const uint ORIGINAL_KEY = 0xDEADCAFE;
 
-    // -------------------------------------------------------------------------
-    // Custom constants (Shattered Crowns — no tool knows these)
-    // -------------------------------------------------------------------------
-    public const uint CUSTOM_KEY = 0xB7A3C1D9;
-
-    // -------------------------------------------------------------------------
-    // Patch Game.exe: replace only the encryption key.
-    // Magic header and extension stay unchanged — PhysFS needs them for
-    // archive format detection and mounting. Protection comes solely from
-    // the changed key: decrypter tools hardcode 0xDEADCAFE and get garbage.
-    // -------------------------------------------------------------------------
-    public static PatchResult Patch(string inputPath, string outputPath)
+    /// <summary>
+    /// Patches the encryption key in a mkxp-z Game.exe binary.
+    /// </summary>
+    /// <param name="inputPath">Path to the Game.exe to patch.</param>
+    /// <param name="outputPath">Output path (can be the same as input for in-place patching).</param>
+    /// <param name="customKey">The new encryption key to write.</param>
+    /// <param name="originalKey">The key to search for in the binary (default: 0xDEADCAFE).</param>
+    public static PatchResult Patch(string inputPath, string outputPath, uint customKey, uint originalKey = ORIGINAL_KEY)
     {
         var data = File.ReadAllBytes(inputPath);
         var result = new PatchResult();
 
-        // Patch initial key (0xDEADCAFE → custom, little-endian)
-        byte[] origKeyBytes = BitConverter.GetBytes(ORIGINAL_KEY);   // FE CA AD DE
-        byte[] newKeyBytes  = BitConverter.GetBytes(CUSTOM_KEY);     // D9 C1 A3 B7
+        byte[] origKeyBytes = BitConverter.GetBytes(originalKey);
+        byte[] newKeyBytes  = BitConverter.GetBytes(customKey);
         result.KeyOffset = FindAndReplace(data, origKeyBytes, newKeyBytes);
 
         if (result.KeyOffset < 0)
             throw new InvalidOperationException(
-                "Could not find DEADCAFE key in Game.exe — is this a supported mkxp-z binary?");
+                $"Could not find key 0x{originalKey:X8} in Game.exe — is this a supported mkxp-z binary?");
 
         File.WriteAllBytes(outputPath, data);
+        result.OriginalKey = originalKey;
+        result.CustomKey = customKey;
         return result;
     }
 
-    // -------------------------------------------------------------------------
-    // Verify a binary has already been patched
-    // -------------------------------------------------------------------------
-    public static bool IsPatched(string exePath)
+    /// <summary>
+    /// Checks if the binary already contains the given custom key.
+    /// </summary>
+    public static bool IsPatched(string exePath, uint customKey)
     {
         var data = File.ReadAllBytes(exePath);
-        byte[] customKeyBytes = BitConverter.GetBytes(CUSTOM_KEY);
+        byte[] customKeyBytes = BitConverter.GetBytes(customKey);
         return FindPattern(data, customKeyBytes) >= 0;
     }
 
-    // -------------------------------------------------------------------------
-    // Find a byte pattern and replace it. Returns the offset or -1.
-    // -------------------------------------------------------------------------
     private static int FindAndReplace(byte[] data, byte[] pattern, byte[] replacement)
     {
         if (pattern.Length != replacement.Length)
@@ -75,7 +66,6 @@ public static class ExePatcher
         int offset = FindPattern(data, pattern);
         if (offset < 0) return -1;
 
-        // Verify there's only ONE occurrence (safety check)
         int second = FindPattern(data, pattern, offset + 1);
         if (second >= 0)
             throw new InvalidOperationException(
@@ -107,5 +97,7 @@ public static class ExePatcher
     public record PatchResult
     {
         public int KeyOffset { get; set; } = -1;
+        public uint OriginalKey { get; set; }
+        public uint CustomKey { get; set; }
     }
 }

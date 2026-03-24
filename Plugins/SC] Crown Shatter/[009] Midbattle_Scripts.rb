@@ -82,6 +82,67 @@ if defined?(MidbattleScripts)
         "speech" => "The crown... its power wasn't enough?"
       }
     }
+
+    #===========================================================================
+    # Example 6: Boss Trainer — Foe's Pokemon becomes a boss on Turn 1
+    # The "makeBoss" command grants shields, HP boost, and immunities.
+    # Shield mechanics (segments, breaks) are handled automatically.
+    #
+    # Usage:
+    #   setBattleRule("midbattleScript", :BOSS_TRAINER_DEMO)
+    #   setBattleRule("databoxStyle", :Boss)  # Optional: boss databox
+    #===========================================================================
+    BOSS_TRAINER_DEMO = {
+      "RoundStartCommand_1_foe" => {
+        "makeBoss" => { shields: 3, passive: :INTIMIDATE, hp_boost: 5 }
+      },
+      "BossShieldBroken_foe" => {
+        "speech" => "You broke through one of my shields!"
+      }
+    }
+
+    #===========================================================================
+    # Example 7: Boss Trainer — Only a specific species becomes a boss
+    # Uses AfterSwitchIn to boss-ify the Pokemon when it enters battle.
+    # The first send-out also triggers AfterSendOut.
+    #
+    # Usage:
+    #   setBattleRule("midbattleScript", :BOSS_ACE_POKEMON)
+    #   setBattleRule("databoxStyle", :Boss)
+    #===========================================================================
+    BOSS_ACE_POKEMON = {
+      # When a Meowth is sent out at battle start
+      "AfterSendOut_MEOWTH_foe" => {
+        "makeBoss" => { shields: 2, passive: :TECHNICIAN, hp_boost: 3 }
+      },
+      # When a Meowth switches in mid-battle
+      "AfterSwitchIn_MEOWTH_foe" => {
+        "makeBoss" => { shields: 2, passive: :TECHNICIAN, hp_boost: 3 }
+      },
+      # Trainer reacts to shields breaking
+      "BossShieldBroken_MEOWTH_foe" => {
+        "speech" => "Meowth's shield shattered! But we won't go down easy!"
+      }
+    }
+
+    #===========================================================================
+    # Example 8: Boss with Phase Transitions — shields restore + new passive
+    # The boss gains a new passive ability each time shields are restored.
+    #
+    # Usage:
+    #   setBattleRule("midbattleScript", :BOSS_PHASE_TRANSITION)
+    #   setBattleRule("databoxStyle", :Boss)
+    #===========================================================================
+    BOSS_PHASE_TRANSITION = {
+      "RoundStartCommand_1_foe" => {
+        "makeBoss" => { shields: 2, passive: :DROUGHT, hp_boost: 5 }
+      },
+      "TargetHPHalf_foe" => {
+        "speech"       => "Phase 2! The weather shifts!",
+        "bossPassive"  => :DRIZZLE,
+        "bossShields"  => 2
+      }
+    }
   end
 end
 

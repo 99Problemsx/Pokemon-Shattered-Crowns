@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
     <RootNamespace>RGSSArchiver</RootNamespace>
     <AssemblyName>RGSSArchiver</AssemblyName>
     <PublishSingleFile>true</PublishSingleFile>
@@ -9,8 +10,12 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="RGSSArchiver.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gui.html" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,11 @@
 #===============================================================================
-# Boss Battles — Global Midbattle Handler
+# Boss Battles — Global Midbattle Handlers
 # Controls the boss battle lifecycle through midbattle triggers.
+#===============================================================================
+
+#===============================================================================
+# Wild Boss Battle Setup — handles wild-battle-specific boss initialization.
+# For trainer boss battles, use the "makeBoss" midbattle trigger command instead.
 #===============================================================================
 MidbattleHandlers.add(:midbattle_global, :wild_boss_battle,
   proc { |battle, idxBattler, idxTarget, trigger|
@@ -47,29 +52,47 @@ MidbattleHandlers.add(:midbattle_global, :wild_boss_battle,
       end
 
     #---------------------------------------------------------------------------
-    # Check for shield breaks after dealing damage to the boss.
-    #---------------------------------------------------------------------------
-    when "TargetTookDamage_foe"
-      next if !foe.isBoss?
-      foe.pbCheckBossSegment
-
-    #---------------------------------------------------------------------------
-    # When a shield breaks — handle "all shields broken" state.
-    #---------------------------------------------------------------------------
-    when "BossShieldBroken_foe"
-      next if !foe.isBoss?
-      if foe.bossShieldCurrent <= 0
-        battle.disablePokeBalls = false
-        battle.pbDisplay(_INTL("All of {1}'s shields have been shattered!", foe.pbThis(true)))
-        battle.pbDisplay(_INTL("{1} can now be captured!", foe.pbThis))
-      end
-
-    #---------------------------------------------------------------------------
     # Boss battle won — track stats.
     #---------------------------------------------------------------------------
     when "BattleEndWin"
       if battle.wildBattleMode == :boss
         PBDebug.log("[Boss Battle] Boss battle won")
+      end
+    end
+  }
+)
+
+#===============================================================================
+# Universal Boss Battle Core — handles shield/segment mechanics for ANY boss
+# battler in any battle type (wild or trainer).
+# This fires for every battler via the midbattle_global system.
+#===============================================================================
+MidbattleHandlers.add(:midbattle_global, :boss_battle_core,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    next if idxBattler.nil?
+    battler = battle.battlers[idxBattler]
+    next if !battler || !battler.isBoss?
+
+    case trigger
+    #---------------------------------------------------------------------------
+    # Check for shield breaks after dealing damage to any boss.
+    #---------------------------------------------------------------------------
+    when /\ATargetTookDamage/
+      battler.pbCheckBossSegment
+
+    #---------------------------------------------------------------------------
+    # When all shields are broken — universal handling.
+    #---------------------------------------------------------------------------
+    when /\ABossShieldBroken/
+      if battler.bossShieldCurrent <= 0
+        # Re-enable pokeballs for wild boss battles
+        if battle.wildBattle? && battle.wildBattleMode == :boss
+          battle.disablePokeBalls = false
+        end
+        battle.pbDisplay(_INTL("All of {1}'s shields have been shattered!", battler.pbThis(true)))
+        if battle.wildBattle? && battle.wildBattleMode == :boss
+          battle.pbDisplay(_INTL("{1} can now be captured!", battler.pbThis))
+        end
       end
     end
   }

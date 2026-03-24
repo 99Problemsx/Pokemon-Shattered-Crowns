@@ -25,41 +25,26 @@ public static class ArchiveProtector
     private const int PBKDF2_ITERATIONS = 100_000;
     private const int BUFFER_SIZE = 4 * 1024 * 1024; // 4 MB stream buffer
 
-    // Fixed salt — unique per game, not secret (just prevents rainbow tables)
-    private static readonly byte[] SALT =
+    // Default salt — unique per project, not secret (prevents rainbow tables)
+    private static readonly byte[] DEFAULT_SALT =
     {
-        0x53, 0x68, 0x61, 0x74, 0x74, 0x65, 0x72, 0x65,
-        0x64, 0x43, 0x72, 0x6F, 0x77, 0x6E, 0x73, 0x21  // "ShatteredCrowns!"
+        0x52, 0x47, 0x53, 0x53, 0x41, 0x72, 0x63, 0x68,
+        0x69, 0x76, 0x65, 0x72, 0x53, 0x61, 0x6C, 0x74  // "RGSSArchiverSalt"
     };
 
-    // -------------------------------------------------------------------------
-    // Default passphrase — assembled at runtime to resist casual string search
-    // -------------------------------------------------------------------------
-    public static string DefaultPassphrase()
+    internal static byte[] DeriveKey(string passphrase, byte[]? salt = null)
     {
-        var p = new[] { "Cr0wns", "_Sh4tt3r3d_", "2024!", "PKG_" };
-        return string.Concat(p[3], p[1], p[0], "_", p[2]);
-    }
-
-    // -------------------------------------------------------------------------
-    // Key derivation
-    // -------------------------------------------------------------------------
-    internal static byte[] DeriveKey(string passphrase)
-    {
+        salt ??= DEFAULT_SALT;
         using var kdf = new Rfc2898DeriveBytes(
             Encoding.UTF8.GetBytes(passphrase),
-            SALT,
+            salt,
             PBKDF2_ITERATIONS,
             HashAlgorithmName.SHA256);
         return kdf.GetBytes(KEY_BYTES);
     }
 
-    // -------------------------------------------------------------------------
-    // Encrypt: RGSSAD → .scd
-    // -------------------------------------------------------------------------
-    public static void Encrypt(string inputPath, string outputPath, string? passphrase = null)
+    public static void Encrypt(string inputPath, string outputPath, string passphrase)
     {
-        passphrase ??= DefaultPassphrase();
         var key = DeriveKey(passphrase);
         var iv = RandomNumberGenerator.GetBytes(IV_BYTES);
 
@@ -72,27 +57,19 @@ public static class ArchiveProtector
         using var inputFs = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER_SIZE);
         using var outputFs = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None, BUFFER_SIZE);
 
-        // Write header
         outputFs.Write(SIGNATURE);
         outputFs.WriteByte(FORMAT_VERSION);
         outputFs.Write(iv);
 
-        // Write encrypted payload
         using var encryptor = aes.CreateEncryptor();
         using var cryptoStream = new CryptoStream(outputFs, encryptor, CryptoStreamMode.Write);
         inputFs.CopyTo(cryptoStream, BUFFER_SIZE);
     }
 
-    // -------------------------------------------------------------------------
-    // Decrypt: .scd → RGSSAD
-    // -------------------------------------------------------------------------
-    public static void Decrypt(string inputPath, string outputPath, string? passphrase = null)
+    public static void Decrypt(string inputPath, string outputPath, string passphrase)
     {
-        passphrase ??= DefaultPassphrase();
-
         using var inputFs = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER_SIZE);
 
-        // Verify signature
         Span<byte> sig = stackalloc byte[SIGNATURE.Length];
         inputFs.ReadExactly(sig);
         if (!sig.SequenceEqual(SIGNATURE))
@@ -102,11 +79,9 @@ public static class ArchiveProtector
         if (version != FORMAT_VERSION)
             throw new InvalidDataException($"Unsupported SCD version: {version}");
 
-        // Read IV
         var iv = new byte[IV_BYTES];
         inputFs.ReadExactly(iv);
 
-        // Derive key and decrypt
         var key = DeriveKey(passphrase);
 
         using var aes = Aes.Create();
@@ -121,9 +96,6 @@ public static class ArchiveProtector
         cryptoStream.CopyTo(outputFs, BUFFER_SIZE);
     }
 
-    // -------------------------------------------------------------------------
-    // Quick check if file has SCD signature
-    // -------------------------------------------------------------------------
     public static bool IsScdFile(string path)
     {
         if (!File.Exists(path)) return false;

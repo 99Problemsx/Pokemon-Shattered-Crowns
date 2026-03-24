@@ -76,8 +76,8 @@ class Battle::Battler
     end
     # Refresh the databox to update shield display
     @battle.scene.pbRefreshOne(@index)
-    # Fire midbattle trigger
-    @battle.pbDeluxeTriggers(@index, nil, "BossShieldBroken")
+    # Fire midbattle trigger (include species & types for species-dependent scripts)
+    @battle.pbDeluxeTriggers(@index, nil, "BossShieldBroken", self.species, *@pokemon.types)
   end
 
   #-----------------------------------------------------------------------------

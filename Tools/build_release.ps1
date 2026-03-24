@@ -161,8 +161,8 @@ if (!$SkipArchive) {
     $stepLabel = if ($Protected) { "Creating protected archive (custom key)..." } else { "Creating encrypted archive..." }
     Write-Host "  [4/$totalSteps] $stepLabel" -ForegroundColor Yellow
     $archivePath = Join-Path $OutputDir "Game.rgssad"
-    $archiverArgs = @("-d", $GameDir, "-o", $archivePath)
-    if ($Protected) { $archiverArgs += "--protected" }
+    $archiverArgs = @("create", "-d", $GameDir, "-o", $archivePath)
+    if ($Protected) { $archiverArgs += @("-k", "0xB7A3C1D9") }
     if ($Verbose) { $archiverArgs += "-v" }
 
     & $Archiver @archiverArgs
@@ -197,7 +197,7 @@ if (!$SkipArchive) {
 if ($Protected) {
     Write-Host "  [5/$totalSteps] Patching Game.exe encryption key..." -ForegroundColor Yellow
     $gameExe = Join-Path $OutputDir "Game.exe"
-    & $Archiver patch-exe -i $gameExe
+    & $Archiver patch-exe -i $gameExe -k 0xB7A3C1D9
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to patch Game.exe!"
         exit 1
