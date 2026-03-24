@@ -24,6 +24,8 @@ class Program
             return RunProtectCommand(args);
         if (args.Length > 0 && args[0] == "patch-exe")
             return RunPatchExeCommand(args);
+        if (args.Length > 0 && args[0] == "verify")
+            return RunVerifyCommand(args);
 
         string gameDir = ".";
         string outputFile = null!;
@@ -309,6 +311,65 @@ class Program
         Console.WriteLine("  Standard RPG Maker Decrypter tools will NOT work.");
         Console.WriteLine();
         Console.WriteLine("Done!");
+        return 0;
+    }
+
+    // =========================================================================
+    // verify subcommand — read archive and list entries to verify integrity
+    // =========================================================================
+    static int RunVerifyCommand(string[] args)
+    {
+        string? inputFile = null;
+        bool useCustomKey = false;
+
+        for (int i = 1; i < args.Length; i++)
+        {
+            switch (args[i])
+            {
+                case "-i" or "--input":
+                    if (i + 1 < args.Length) inputFile = args[++i];
+                    break;
+                case "--protected":
+                    useCustomKey = true;
+                    break;
+            }
+        }
+
+        if (inputFile == null)
+        {
+            Console.Error.WriteLine("Error: -i <archive> is required for 'verify'.");
+            return 1;
+        }
+        inputFile = Path.GetFullPath(inputFile);
+        if (!File.Exists(inputFile))
+        {
+            Console.Error.WriteLine($"Error: File not found: {inputFile}");
+            return 1;
+        }
+
+        uint key = useCustomKey ? ExePatcher.CUSTOM_KEY : RgssadCrypto.INITIAL_KEY;
+        Console.WriteLine($"Verifying: {inputFile}");
+        Console.WriteLine($"Key: 0x{key:X8} ({(useCustomKey ? "custom" : "standard")})");
+        Console.WriteLine();
+
+        using var fs = new FileStream(inputFile, FileMode.Open, FileAccess.Read);
+        var entries = RgssadReader.ReadAll(fs, key, RgssadCrypto.STANDARD_MAGIC);
+
+        Console.WriteLine($"Entries: {entries.Count}");
+        for (int i = 0; i < Math.Min(5, entries.Count); i++)
+            Console.WriteLine($"  [{i}] {entries[i].Name} ({entries[i].Data.Length:N0} bytes)");
+        if (entries.Count > 10)
+        {
+            Console.WriteLine("  ...");
+            for (int i = entries.Count - 3; i < entries.Count; i++)
+                Console.WriteLine($"  [{i}] {entries[i].Name} ({entries[i].Data.Length:N0} bytes)");
+        }
+
+        var scripts = entries.Find(e => e.Name.Contains("Scripts.rxdata"));
+        if (scripts != null)
+            Console.WriteLine($"\n  ✓ {scripts.Name} ({scripts.Data.Length:N0} bytes)");
+
+        Console.WriteLine("\nDone!");
         return 0;
     }
 }

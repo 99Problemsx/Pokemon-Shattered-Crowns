@@ -44,21 +44,17 @@ Write-Host ""
 $totalSteps = if ($Protected) { 5 } else { 4 }
 
 # ==============================================================================
-# Step 1: Build the archiver tool (if needed)
+# Step 1: Build the archiver tool
 # ==============================================================================
 if (!$SkipArchive) {
-    if (!(Test-Path $Archiver)) {
-        Write-Host "  [1/$totalSteps] Building RGSSArchiver..." -ForegroundColor Yellow
-        $csproj = Join-Path $ToolsDir "RGSSArchiver\RGSSArchiver.csproj"
-        dotnet publish $csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -verbosity:quiet
-        if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to build RGSSArchiver. Is .NET SDK installed?"
-            exit 1
-        }
-        Write-Host "  [1/$totalSteps] RGSSArchiver built successfully." -ForegroundColor Green
-    } else {
-        Write-Host "  [1/$totalSteps] RGSSArchiver already built." -ForegroundColor DarkGray
+    Write-Host "  [1/$totalSteps] Building RGSSArchiver..." -ForegroundColor Yellow
+    $csproj = Join-Path $ToolsDir "RGSSArchiver\RGSSArchiver.csproj"
+    dotnet publish $csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -verbosity:quiet
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Failed to build RGSSArchiver. Is .NET SDK installed?"
+        exit 1
     }
+    Write-Host "  [1/$totalSteps] RGSSArchiver built successfully." -ForegroundColor Green
 } else {
     Write-Host "  [1/$totalSteps] Skipping archiver (--SkipArchive)." -ForegroundColor DarkGray
 }
@@ -130,14 +126,24 @@ if (Test-Path $fontsDir) {
 Write-Host "  [3/$totalSteps] Copied $copied items." -ForegroundColor Green
 
 # ==============================================================================
-# Step 3b (Protected): Copy loose folders that MUST exist on disk.
+# Step 3b (Protected): Generate SC data bundle & copy loose Audio/ folder.
 #   - Audio/  : mkxp-z audio subsystem reads directly from disk, not PhysFS
-#   - Data/   : PluginScripts.rxdata, Scripts.rxdata, map data etc.
+#   - All other data (Data/, Plugins/, Graphics/) stays inside the archive.
+#   - A data bundle (Data/sc_data.rxdata) is generated via Ruby so the SC
+#     Script System can load .rb data files from the archive via load_data.
 # ==============================================================================
 if ($Protected) {
-    Write-Host "  [3/$totalSteps] Copying loose runtime folders..." -ForegroundColor Yellow
+    # --- Generate SC Script System data bundle ---
+    Write-Host "  [3/$totalSteps] Generating SC data bundle..." -ForegroundColor Yellow
+    $generatorScript = Join-Path $PSScriptRoot "generate_sc_data.rb"
+    & ruby $generatorScript $GameDir
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Failed to generate SC data bundle!"
+        exit 1
+    }
 
-    # Audio — mkxp-z reads audio from filesystem, not the RGSSAD archive
+    # --- Copy Audio/ (only folder that MUST be loose) ---
+    Write-Host "  [3/$totalSteps] Copying loose runtime folders..." -ForegroundColor Yellow
     $audioSrc = Join-Path $GameDir "Audio"
     if (Test-Path $audioSrc) {
         Copy-Item $audioSrc (Join-Path $OutputDir "Audio") -Recurse
@@ -145,16 +151,6 @@ if ($Protected) {
         Write-Host "    ✓ Audio/ ($audioCount files)" -ForegroundColor DarkGray
     } else {
         Write-Host "    ⚠ Audio/ not found!" -ForegroundColor DarkYellow
-    }
-
-    # Data — PluginScripts.rxdata, Scripts.rxdata and map data must be on disk
-    $dataSrc = Join-Path $GameDir "Data"
-    if (Test-Path $dataSrc) {
-        Copy-Item $dataSrc (Join-Path $OutputDir "Data") -Recurse
-        $dataCount = (Get-ChildItem (Join-Path $OutputDir "Data") -File -Recurse).Count
-        Write-Host "    ✓ Data/ ($dataCount files)" -ForegroundColor DarkGray
-    } else {
-        Write-Host "    ⚠ Data/ not found!" -ForegroundColor DarkYellow
     }
 }
 
@@ -175,6 +171,11 @@ if (!$SkipArchive) {
         exit 1
     }
     Write-Host "  [4/$totalSteps] Archive created." -ForegroundColor Green
+    # Clean up temporary data bundle from game directory
+    if ($Protected) {
+        $bundleCleanup = Join-Path $GameDir "Data\sc_data.rxdata"
+        if (Test-Path $bundleCleanup) { Remove-Item $bundleCleanup }
+    }
 } else {
     Write-Host "  [4/$totalSteps] Copying raw folders (no encryption)..." -ForegroundColor Yellow
     $folders = @("Data", "Graphics", "Audio", "Plugins", "PBS")

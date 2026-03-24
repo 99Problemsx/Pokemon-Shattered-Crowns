@@ -13,6 +13,9 @@ pbeffects_all.txt
 sc_function_codes.txt
 temp_r24.txt
 unique_fc.txt
+Data/sc_manifest.txt
+Data/sc_data.rxdata
+sc_debug.log
 
 # Log files
 traceback.log

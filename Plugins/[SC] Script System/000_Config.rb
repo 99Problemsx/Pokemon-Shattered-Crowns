@@ -162,6 +162,7 @@ module SCScripts
   end
   
   def self.ensure_all_directories
+    return unless $DEBUG  # Don't create directories in release installs
     all_data_paths.each do |path|
       unless Dir.exist?(path)
         begin

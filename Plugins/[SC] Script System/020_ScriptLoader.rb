@@ -7,6 +7,8 @@
 
 module SCScripts
   module Loader
+    @data_loaded = false
+
     #---------------------------------------------------------------------------
     # Load all scripts and data
     #---------------------------------------------------------------------------
@@ -14,11 +16,13 @@ module SCScripts
       load_all_data
       SCScripts.log("All scripts loaded successfully!")
     end
-    
+
     #---------------------------------------------------------------------------
     # Load all data scripts (replaces PBS loading)
     #---------------------------------------------------------------------------
     def self.load_all_data
+      return if @data_loaded
+      @data_loaded = true
       SCScripts.log("Loading script-based game data...")
       
       # Load in dependency order
@@ -56,20 +60,19 @@ module SCScripts
     def self.load_plugin_scripts
       return unless defined?(SCScripts::PLUGIN_SCRIPTS_PATH)
       plugin_path = SCScripts::PLUGIN_SCRIPTS_PATH
-      return unless Dir.exist?(plugin_path)
-      
+      # Check if directory exists on disk OR data bundle is available
+      return unless Dir.exist?(plugin_path) || sc_data_bundle
+
       SCScripts.log("Loading plugin scripts...")
       total_count = 0
-      
-      # Load from each plugin folder
+
+      # Load from each plugin folder (load_scripts_from handles bundle fallback)
       SCScripts::PBS_PLUGIN_FOLDERS.each do |folder_name|
         plugin_folder = "#{plugin_path}/#{folder_name}"
-        next unless Dir.exist?(plugin_folder)
-        
         count = load_scripts_from(plugin_folder, "#{folder_name} scripts")
         total_count += count
       end
-      
+
       SCScripts.log("Loaded #{total_count} total plugin scripts") if total_count > 0
     end
     
@@ -87,24 +90,69 @@ module SCScripts
     # Load scripts from a specific path
     #---------------------------------------------------------------------------
     def self.load_scripts_from(path, description = "scripts")
-      return 0 unless Dir.exist?(path)
-      
-      count = 0
-      Dir.glob("#{path}/**/*.rb").sort.each do |file|
+      # Try filesystem first (development mode with loose files)
+      if Dir.exist?(path)
+        count = 0
+        Dir.glob("#{path}/**/*.rb").sort.each do |file|
+          begin
+            load file
+            count += 1
+          rescue => e
+            SCScripts.error("ERROR loading #{file}: #{e.message}")
+          end
+        end
+        SCScripts.log("Loaded #{count} #{description}") if count > 0
+        return count
+      end
+      # Fallback: load from RGSSAD archive via data bundle (load_data → PhysFS)
+      load_from_bundle(path, description)
+    end
+
+    #---------------------------------------------------------------------------
+    # Data bundle for RGSSAD archive loading
+    # Ruby's File.read does NOT go through PhysFS, so it cannot read files
+    # from the RGSSAD archive.  Instead, all .rb data files are bundled into
+    # Data/sc_data.rxdata (a Marshal'd hash) which load_data CAN read from
+    # the archive.
+    #
+    # Format: { "dir/path" => [ ["relative/file.rb", "content"], ... ], ... }
+    #---------------------------------------------------------------------------
+    @sc_data = nil
+    @sc_data_loaded = false
+
+    def self.sc_data_bundle
+      unless @sc_data_loaded
+        @sc_data_loaded = true
         begin
-          load file
-          count += 1
-          SCScripts.debug("Loaded: #{file}")
-        rescue => e
-          SCScripts.error("ERROR loading #{file}: #{e.message}")
-          echoln e.backtrace.first(5).join("\n") if SCScripts::DEBUG
+          @sc_data = load_data("Data/sc_data.rxdata")
+          total = @sc_data.values.sum { |v| v.size }
+          SCScripts.log("SC data bundle loaded (#{@sc_data.size} directories, #{total} files)")
+        rescue
+          @sc_data = nil
         end
       end
-      
-      SCScripts.log("Loaded #{count} #{description}") if count > 0
+      @sc_data
+    end
+
+    def self.load_from_bundle(path, description)
+      bundle = sc_data_bundle
+      return 0 unless bundle
+      normalized = path.gsub("\\", "/")
+      entries = bundle[normalized]
+      return 0 unless entries && !entries.empty?
+      count = 0
+      entries.each do |file_path, content|
+        begin
+          eval(content, TOPLEVEL_BINDING, file_path, 1)
+          count += 1
+        rescue => e
+          SCScripts.error("ERROR loading #{file_path} from bundle: #{e.message}")
+        end
+      end
+      SCScripts.log("Loaded #{count} #{description} (from bundle)") if count > 0
       count
     end
-    
+
     #---------------------------------------------------------------------------
     # Individual loaders for each data type
     #---------------------------------------------------------------------------
@@ -142,30 +190,52 @@ module SCScripts
     
     def self.load_map_scripts
       path = SCScripts::MAP_SCRIPTS_PATH
-      return 0 unless Dir.exist?(path)
-      
-      count = 0
-      Dir.glob("#{path}/**/*.rb").sort.each do |file|
-        begin
-          filename = File.basename(file, '.rb')
-          map_id = extract_map_id(filename)
-          
-          if map_id
-            GameData::ScriptBase.for_map(map_id) do
-              load file
-            end
-          else
-            load file
+      # Collect file list from filesystem or data bundle
+      entries = nil    # array of [file_path, content_or_nil]
+      use_eval = false
+      if Dir.exist?(path)
+        entries = Dir.glob("#{path}/**/*.rb").sort.map { |f| [f, nil] }
+      else
+        bundle = sc_data_bundle
+        if bundle
+          normalized = path.gsub("\\", "/")
+          bundle_entries = bundle[normalized]
+          if bundle_entries && !bundle_entries.empty?
+            entries = bundle_entries  # already [file_path, content]
+            use_eval = true
           end
-          
-          count += 1
-          SCScripts.debug("Loaded: #{file}")
-        rescue => e
-          SCScripts.error("ERROR loading #{file}: #{e.message}")
-          echoln e.backtrace.first(5).join("\n") if SCScripts::DEBUG
         end
       end
-      
+      return 0 unless entries && !entries.empty?
+
+      count = 0
+      entries.each do |file_path, content|
+        begin
+          filename = File.basename(file_path, '.rb')
+          map_id = extract_map_id(filename)
+
+          if map_id
+            GameData::ScriptBase.for_map(map_id) do
+              if use_eval
+                eval(content, TOPLEVEL_BINDING, file_path, 1)
+              else
+                load file_path
+              end
+            end
+          else
+            if use_eval
+              eval(content, TOPLEVEL_BINDING, file_path, 1)
+            else
+              load file_path
+            end
+          end
+
+          count += 1
+        rescue => e
+          SCScripts.error("ERROR loading #{file_path}: #{e.message}")
+        end
+      end
+
       SCScripts.log("Loaded #{count} map scripts") if count > 0
       count
     end
