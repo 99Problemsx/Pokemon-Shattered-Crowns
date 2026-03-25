@@ -765,11 +765,19 @@ class Battle::AI
     if reserved_idx >= 0
       ace_entry = available_switches.find { |item| item[2] == reserved_idx }
       non_ace   = available_switches.reject { |item| item[2] == reserved_idx }
-      
+
       if ace_entry && non_ace.length > 0
-        # Strictly reserve the Ace — save it for when all others are down
-        available_switches = non_ace
-        echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from switch options"
+        # Smart reserve: allow the Ace if it has a dramatically better matchup
+        ace_score = ace_entry[1]
+        best_non_ace_score = non_ace.max_by { |item| item[1] }[1]
+        if ace_score > best_non_ace_score + 50
+          # Ace is the clear best counter — override reserve
+          echoln "  [AAI] ReserveLastPokemon: Ace has dominant matchup (#{ace_score} vs best alt #{best_non_ace_score}), overriding reserve"
+        else
+          # Reserve the Ace — alternatives are good enough
+          available_switches = non_ace
+          echoln "  [AAI] Reserved Pokemon at index #{reserved_idx} excluded from switch options"
+        end
       elsif ace_entry && non_ace.empty?
         # Ace is the only option
         if is_voluntary_switch

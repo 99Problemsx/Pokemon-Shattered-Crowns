@@ -266,6 +266,81 @@ class Battle::AI
           return -1000  # Electric Terrain prevents sleep for grounded
         end
       end
+
+      # Ability immunities for sleep (Insomnia, Vital Spirit, Comatose, Sweet Veil)
+      if status_moves[move.id] == :SLEEP && !AdvancedAI::Utilities.ignores_ability?(user)
+        sleep_immune = [:INSOMNIA, :VITALSPIRIT, :COMATOSE]
+        if sleep_immune.any? { |a| target.hasActiveAbility?(a) }
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has #{target.ability_id} (sleep immune)", "StatusSpam")
+          return -1000  # Sleep move will fail — ability prevents sleep
+        end
+        if @battle.allSameSideBattlers(target.index).any? { |b|
+             b && !b.fainted? && b.hasActiveAbility?(:SWEETVEIL) }
+          AdvancedAI.log("#{move.name} blocked: Sweet Veil protects #{target.name}'s side", "StatusSpam")
+          return -1000  # Sweet Veil prevents sleep on the entire side
+        end
+      end
+
+      # Ability immunities for paralysis (Limber, Electric type)
+      if status_moves[move.id] == :PARALYSIS
+        if target.hasActiveAbility?(:LIMBER) && !AdvancedAI::Utilities.ignores_ability?(user)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has Limber", "StatusSpam")
+          return -1000
+        end
+        if target.pbHasType?(:ELECTRIC)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} is Electric type (para immune)", "StatusSpam")
+          return -1000
+        end
+      end
+
+      # Ability immunities for burn (Water Bubble, Water Veil, Thermal Exchange, Fire type)
+      if status_moves[move.id] == :BURN
+        if target.pbHasType?(:FIRE)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} is Fire type (burn immune)", "StatusSpam")
+          return -1000
+        end
+        burn_immune = [:WATERBUBBLE, :WATERVEIL, :THERMALEXCHANGE]
+        if burn_immune.any? { |a| target.hasActiveAbility?(a) } && !AdvancedAI::Utilities.ignores_ability?(user)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has #{target.ability_id} (burn immune)", "StatusSpam")
+          return -1000
+        end
+      end
+
+      # Ability immunities for poison (Immunity, Poison/Steel type)
+      if status_moves[move.id] == :POISON
+        if (target.pbHasType?(:POISON) || target.pbHasType?(:STEEL)) && !user.hasActiveAbility?(:CORROSION)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} is Poison/Steel type (poison immune)", "StatusSpam")
+          return -1000
+        end
+        if target.hasActiveAbility?(:IMMUNITY) && !AdvancedAI::Utilities.ignores_ability?(user)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has Immunity", "StatusSpam")
+          return -1000
+        end
+      end
+
+      # Leaf Guard in Sun blocks all status
+      if target.hasActiveAbility?(:LEAFGUARD) && !AdvancedAI::Utilities.ignores_ability?(user) &&
+         @battle && [:Sun, :HarshSun].include?(@battle.pbWeather)
+        AdvancedAI.log("#{move.name} blocked: #{target.name} has Leaf Guard in Sun", "StatusSpam")
+        return -1000
+      end
+
+      # Powder moves blocked by Grass type, Overcoat, Safety Goggles
+      powder_moves = [:SLEEPPOWDER, :SPORE, :STUNSPORE, :POISONPOWDER]
+      if powder_moves.include?(move.id)
+        if target.pbHasType?(:GRASS)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} is Grass type (powder immune)", "StatusSpam")
+          return -1000
+        end
+        if target.hasActiveAbility?(:OVERCOAT) && !AdvancedAI::Utilities.ignores_ability?(user)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has Overcoat (powder immune)", "StatusSpam")
+          return -1000
+        end
+        if target.hasActiveItem?(:SAFETYGOGGLES)
+          AdvancedAI.log("#{move.name} blocked: #{target.name} has Safety Goggles (powder immune)", "StatusSpam")
+          return -1000
+        end
+      end
     end
     
     # Leech Seed: Can't use on already seeded targets or Grass types

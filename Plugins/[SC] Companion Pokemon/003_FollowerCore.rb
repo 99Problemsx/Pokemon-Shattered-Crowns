@@ -260,6 +260,12 @@ module CompanionFollower
     end
     # Always set sprite — PE controls visibility via transparent flag
     change_sprite(first_pkmn)
+    # Force visibility when active — safety against timing/sync issues
+    # where Game_FollowerFactory#update hasn't run yet after a rebuild
+    if ret && event
+      event.transparent = false
+      event.opacity = 255 if event.opacity <= 0
+    end
     if ALWAYS_ANIMATE && event
       event.instance_variable_set(:@step_anime, ret ? true : false)
     end

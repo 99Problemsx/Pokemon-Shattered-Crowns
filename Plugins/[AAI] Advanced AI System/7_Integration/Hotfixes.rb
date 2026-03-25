@@ -309,26 +309,15 @@ class NilClass
 end
 
 #===============================================================================
-# ReserveLastPokemon: Opt-In Only
+# ReserveLastPokemon: Smart Reserve (no longer strips the flag)
 #===============================================================================
-# Problem: Essentials v21.1 auto-adds "ReserveLastPokemon" to every trainer
-#          with skill >= 100. This causes the AI to hard-block the last party
-#          slot from being switched in — even when it's the perfect counter
-#          (e.g. refusing to send Mega Houndoom against Psychic/Ice).
-# Fix:     Strip the auto-added flag. Only keep it if the trainer's PBS data
-#          explicitly includes "ReserveLastPokemon" in their Flags field.
+# PE v21.1 auto-adds "ReserveLastPokemon" to every trainer with skill >= 100.
+# The AAI's find_best_switch_advanced now handles this intelligently:
+# - Ace is reserved by default (PE intended behavior)
+# - Ace is allowed when it has a dramatically better matchup than all
+#   alternatives (prevents refusing to send the perfect counter)
+# - Ace is always allowed for forced switches when it's the only option
 #===============================================================================
-class Battle::AI::AITrainer
-  alias aai_set_up_skill_flags set_up_skill_flags
-  def set_up_skill_flags
-    aai_set_up_skill_flags
-    # Remove auto-added ReserveLastPokemon UNLESS explicitly set in PBS trainer flags
-    explicitly_set = @trainer && @trainer.flags.include?("ReserveLastPokemon")
-    if !explicitly_set && @skill_flags.include?("ReserveLastPokemon")
-      @skill_flags.delete("ReserveLastPokemon")
-    end
-  end
-end
 
 # Boot banner (debug only)
 if AdvancedAI::DEBUG_MODE

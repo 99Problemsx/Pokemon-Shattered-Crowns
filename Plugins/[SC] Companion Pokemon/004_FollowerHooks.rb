@@ -265,6 +265,15 @@ class Scene_Map
       $PokemonGlobal.call_refresh = false
     end
 
+    # Follower visibility safety — catch any frame where the event is
+    # transparent despite the follower being logically active.
+    if CompanionFollower.can_check? && CompanionFollower.active?
+      ev = CompanionFollower.get_event
+      if ev && (ev.transparent || ev.character_name == "")
+        CompanionFollower.refresh(false)
+      end
+    end
+
     # Increase timers while active
     CompanionFollower.increase_time if CompanionFollower.active?
   end
@@ -441,7 +450,8 @@ end
 #===============================================================================
 EventHandlers.add(:on_game_load, :sc_follower_init, proc {
   next if !CompanionFollower.can_check?
-  next if !CompanionFollower.get_pokemon
+  pkmn = CompanionFollower.get_pokemon
+  next if !pkmn
   # Default to toggled on for new games
   $PokemonGlobal.follower_toggled = true if $PokemonGlobal.follower_toggled.nil?
   # Remove stale FP-EX follower data
@@ -454,10 +464,16 @@ EventHandlers.add(:on_game_load, :sc_follower_init, proc {
     behind_dir = 10 - $game_player.direction
     target = $map_factory.getFacingTile(behind_dir, $game_player) rescue nil
     target = [$game_map.map_id, $game_player.x, $game_player.y] if !target
+    # Pre-resolve sprite so follower isn't created with empty character_name
+    shiny = pkmn.shiny?
+    shiny = pkmn.superVariant if pkmn.respond_to?(:superVariant) && !pkmn.superVariant.nil? && pkmn.superShiny?
+    fname = GameData::Species.ow_sprite_filename(pkmn.species, pkmn.form,
+              pkmn.gender, shiny, pkmn.shadow, false)
+    fname.gsub!("Graphics/Characters/", "")
     follower_data = FollowerData.new(
       $game_map.map_id, 0, "FollowingPkmn",
       $game_map.map_id, target[1], target[2],
-      $game_player.direction, "", 0
+      $game_player.direction, fname, 0
     )
     follower_data.name = "FollowingPkmn"
     follower_data.common_event_id = CompanionFollower::FOLLOWER_COMMON_EVENT
@@ -474,17 +490,24 @@ EventHandlers.add(:on_enter_map, :sc_follower_map_refresh, proc {
   # Reset ice sliding state from previous map
   $PokemonGlobal.ice_sliding = false if $PokemonGlobal
   # Auto-create follower data if it's missing (e.g. after receiving starter)
-  if !CompanionFollower.get && CompanionFollower.get_pokemon
+  pkmn = CompanionFollower.get_pokemon
+  if !CompanionFollower.get && pkmn
     $PokemonGlobal.follower_toggled = true if $PokemonGlobal.follower_toggled.nil?
     has_follower = $PokemonGlobal.followers.any? { |f| f.event_name == "FollowingPkmn" }
     if !has_follower
       behind_dir = 10 - $game_player.direction
       target = $map_factory.getFacingTile(behind_dir, $game_player) rescue nil
       target = [$game_map.map_id, $game_player.x, $game_player.y] if !target
+      # Pre-resolve sprite so follower isn't created with empty character_name
+      shiny = pkmn.shiny?
+      shiny = pkmn.superVariant if pkmn.respond_to?(:superVariant) && !pkmn.superVariant.nil? && pkmn.superShiny?
+      fname = GameData::Species.ow_sprite_filename(pkmn.species, pkmn.form,
+                pkmn.gender, shiny, pkmn.shadow, false)
+      fname.gsub!("Graphics/Characters/", "")
       follower_data = FollowerData.new(
         $game_map.map_id, 0, "FollowingPkmn",
         $game_map.map_id, target[1], target[2],
-        $game_player.direction, "", 0
+        $game_player.direction, fname, 0
       )
       follower_data.name = "FollowingPkmn"
       follower_data.common_event_id = CompanionFollower::FOLLOWER_COMMON_EVENT

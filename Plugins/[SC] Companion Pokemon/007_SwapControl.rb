@@ -50,6 +50,9 @@ module CompanionFollower
     return if !event
     pkmn = get_pokemon
     return if !pkmn
+    # Ensure follower event is visible before swapping sprites
+    event.transparent = false
+    event.opacity = 255
     # Save player charset
     @@stored_player_charset = $game_player.character_name
     # Pokemon sprite → player
