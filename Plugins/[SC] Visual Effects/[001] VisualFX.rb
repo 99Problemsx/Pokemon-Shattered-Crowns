@@ -1,3 +1,33 @@
+#===============================================================================
+#  [SC] Visual Effects — Post-processing effects for viewports & sprites
+#===============================================================================
+#  mkxp-z 2.4.2 does NOT expose a Ruby-level Shader class.
+#  The internal engine shaders are accessed through:
+#    - Viewport#tone  (Tone.new(r, g, b, gray))
+#    - Viewport#color (Color.new(r, g, b, a))
+#    - Sprite#pattern= / pattern_blend_type= / pattern_opacity= / invert=
+#
+#  === EVENT SCRIPT COMMANDS ===
+#
+#    pbApplyEffect(:sepia)                             # apply sepia tone
+#    pbApplyEffect(:grayscale)                         # full desaturation
+#    pbApplyEffect(:night)                             # cold blue night
+#    pbApplyEffect(:sunset)                            # warm orange sunset
+#    pbApplyEffect(:horror)                            # desaturated red horror
+#    pbApplyEffect(:underwater)                        # deep blue-green underwater
+#    pbApplyEffect(:dream)                             # soft pastel dreamlike
+#    pbApplyEffect(:toxic)                             # sickly green poison
+#    pbApplyEffect(:frozen)                            # icy blue frozen
+#    pbApplyEffect(:rage)                              # intense red rage
+#    pbApplyEffect(:sepia, duration: 40)               # fade in over 40 frames
+#    pbApplyEffect(:custom, tone: [30, -10, -40, 80])  # custom tone [r,g,b,gray]
+#    pbApplyEffect(:custom, color: [0, 0, 0, 80])      # custom color overlay
+#    pbRemoveEffect                                    # remove all effects
+#    pbRemoveEffect(duration: 40)                      # fade out over 40 frames
+#    pbInvertPlayer(true)                              # invert player sprite
+#    pbInvertPlayer(false)                             # restore player sprite
+#
+#===============================================================================
 module SCVisualFX
   EFFECTS = {
     sepia:      { tone: [25, 10, -30, 120] },
