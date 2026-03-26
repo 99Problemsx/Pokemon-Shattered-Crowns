@@ -142,7 +142,7 @@ module SCVisualFX
     :underwater, :dream, :toxic, :frozen, :rage,
     :fireflies, :cave, :volcano, :forest, :rain,
     :storm, :haunted, :fog, :distortion, :bloom,
-    :windrain
+    :windrain, :water, :lava
   ]
 
   def self.apply_shader(effect, **properties)
