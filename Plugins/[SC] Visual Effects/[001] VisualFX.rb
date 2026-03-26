@@ -140,7 +140,8 @@ module SCVisualFX
   PRESETS = [
     :sepia, :grayscale, :night, :sunset, :horror,
     :underwater, :dream, :toxic, :frozen, :rage,
-    :fireflies, :cave
+    :fireflies, :cave, :volcano, :forest, :rain,
+    :storm, :haunted, :fog, :distortion, :bloom
   ]
 
   def self.apply_shader(effect, **properties)
