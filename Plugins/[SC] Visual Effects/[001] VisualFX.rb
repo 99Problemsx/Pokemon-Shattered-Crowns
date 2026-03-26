@@ -4,87 +4,182 @@
 #  Requires: luka-sj/mkxp-z-ext build (Shader class)
 #  GLSL shaders live in the Shaders/ folder.
 #
+#  Based on Luka's Scripting Utilities (Shader.rb + Shaderable.rb)
+#
 #  === EVENT SCRIPT COMMANDS ===
 #
-#    pbApplyShader(:sepia)                    # apply preset shader
-#    pbApplyShader('Shaders/custom.glsl')     # apply shader by path
-#    pbRemoveShader                           # remove active shader
-#    pbSetShaderFloat('time', 1.5)            # set float uniform
-#    pbSetShaderVec4('tint', 1, 0, 0, 1)     # set vec4 uniform
-#    pbInvertPlayer(true)                     # invert player sprite
-#    pbInvertPlayer(false)                    # restore player sprite
+#    pbApplyShader(:sepia)                         # apply preset shader
+#    pbApplyShader(:underwater, time: 1.5)         # with uniforms
+#    pbApplyShader('Shaders/custom.glsl')          # by path
+#    pbRemoveShader(:sepia)                        # remove specific shader
+#    pbRemoveShader                                # remove all shaders
+#    pbInvertPlayer(true)                          # invert player sprite
+#    pbInvertPlayer(false)                         # restore player sprite
+#
+#  === ADVANCED (SCRIPT) ===
+#
+#    vp = Spriteset_Map.viewport
+#    vp.add_shader(:night)                         # stack multiple shaders
+#    vp.add_shader(:sepia, time: 0.5)              # with uniforms
+#    vp.get_shader(:night)                         # retrieve by key
+#    vp.remove_shader(:night)                      # remove by key
+#    vp.dispose_shaders                            # remove all
 #
 #===============================================================================
+
+#---------------------------------------
+# Shader class extensions
+#---------------------------------------
+class Shader
+  class ShaderError < StandardError; end
+
+  alias initialize_core initialize
+  alias dispose_core dispose
+
+  attr_reader :key
+
+  def initialize(key, properties = {})
+    if key.is_a?(Symbol)
+      @key        = key
+      @properties = properties
+      @disposed   = false
+      validate
+      initialize_core(path)
+      set_properties
+    else
+      @key       = nil
+      @disposed  = false
+      initialize_core(key)
+    end
+  end
+
+  def dispose
+    return if disposed?
+    dispose_core
+    @disposed = true
+  end
+
+  def disposed?
+    @disposed
+  end
+
+  private
+
+  attr_reader :properties
+
+  def path
+    @path ||= "Shaders/#{key}.glsl"
+  end
+
+  def validate
+    return if FileTest.exist?(path)
+    raise ShaderError, "Shader file not found: `#{path}`"
+  end
+
+  def set_properties
+    return unless properties
+    properties.each do |name, value|
+      values = Array(value)
+      case values.count
+      when 1
+        if values.first.is_a?(Bitmap)
+          set_bitmap(name.to_s, values.first)
+        elsif values.first.is_a?(String)
+          set_bitmap(name.to_s, Bitmap.new(values.first))
+        else
+          set_float(name.to_s, values.first.to_f)
+        end
+      when 2 then set_vec2(name.to_s, *values)
+      when 3 then set_vec3(name.to_s, *values)
+      when 4 then set_vec4(name.to_s, *values)
+      end
+    end
+  end
+end
+
+#---------------------------------------
+# Shaderable concern for Sprite/Viewport
+#---------------------------------------
+module Shaderable
+  def add_shader(key, properties = {})
+    shader = key.is_a?(Shader) ? key : Shader.new(key, properties)
+    self.shaders = shaders + [shader]
+  end
+
+  def remove_shader(key)
+    self.shaders = shaders.reject.with_index do |shader, i|
+      (key.is_a?(Integer) && i.eql?(key)) ||
+        (key.is_a?(Symbol) && shader.key.eql?(key)) ||
+        (key.is_a?(Shader) && shader.eql?(key))
+    end
+  end
+
+  def get_shader(key)
+    return shaders[key] if key.is_a?(Integer)
+    shaders.find { |shader| shader.key.eql?(key) }
+  end
+
+  def dispose_shaders
+    shaders.each(&:dispose)
+    self.shaders = []
+  end
+end
+
+class Sprite
+  include Shaderable
+end
+
+class Viewport
+  include Shaderable
+end
+
+#---------------------------------------
+# SCVisualFX module
+#---------------------------------------
 module SCVisualFX
-  SHADERS = {
-    sepia:      'Shaders/sepia.glsl',
-    grayscale:  'Shaders/grayscale.glsl',
-    night:      'Shaders/night.glsl',
-    sunset:     'Shaders/sunset.glsl',
-    horror:     'Shaders/horror.glsl',
-    underwater: 'Shaders/underwater.glsl',
-    dream:      'Shaders/dream.glsl',
-    toxic:      'Shaders/toxic.glsl',
-    frozen:     'Shaders/frozen.glsl',
-    rage:       'Shaders/rage.glsl'
-  }
+  PRESETS = [
+    :sepia, :grayscale, :night, :sunset, :horror,
+    :underwater, :dream, :toxic, :frozen, :rage
+  ]
 
-  @active_shader = nil
-
-  def self.apply_shader(effect)
-    path = effect.is_a?(Symbol) ? SHADERS[effect] : effect
-    return false unless path
+  def self.apply_shader(effect, **properties)
     vp = Spriteset_Map.viewport
     return false unless vp
-    @active_shader&.dispose if @active_shader.respond_to?(:dispose)
-    @active_shader = Shader.new(path)
-    vp.shader = @active_shader
+    if effect.is_a?(Symbol)
+      vp.add_shader(effect, properties)
+    else
+      shader = Shader.new(effect)
+      vp.add_shader(shader)
+    end
     true
   end
 
-  def self.remove_shader
+  def self.remove_shader(key = nil)
     vp = Spriteset_Map.viewport
     return unless vp
-    vp.shader = nil
-    @active_shader&.dispose if @active_shader.respond_to?(:dispose)
-    @active_shader = nil
+    if key
+      vp.remove_shader(key)
+    else
+      vp.dispose_shaders
+    end
   end
 
-  def self.set_float(name, value)
-    @active_shader&.set_float(name, value)
-  end
-
-  def self.set_int(name, value)
-    @active_shader&.set_int(name, value)
-  end
-
-  def self.set_vec2(name, x, y)
-    @active_shader&.set_vec2(name, x, y)
-  end
-
-  def self.set_vec4(name, x, y, z, w)
-    @active_shader&.set_vec4(name, x, y, z, w)
-  end
-
-  def self.active_shader
-    @active_shader
+  def self.get_shader(key)
+    vp = Spriteset_Map.viewport
+    return unless vp
+    vp.get_shader(key)
   end
 end
 
-def pbApplyShader(effect)
-  SCVisualFX.apply_shader(effect)
+#---------------------------------------
+# Event script commands
+#---------------------------------------
+def pbApplyShader(effect, **properties)
+  SCVisualFX.apply_shader(effect, **properties)
 end
 
-def pbRemoveShader
-  SCVisualFX.remove_shader
-end
-
-def pbSetShaderFloat(name, value)
-  SCVisualFX.set_float(name, value)
-end
-
-def pbSetShaderVec4(name, x, y, z, w)
-  SCVisualFX.set_vec4(name, x, y, z, w)
+def pbRemoveShader(key = nil)
+  SCVisualFX.remove_shader(key)
 end
 
 def pbInvertPlayer(enabled)
