@@ -1,0 +1,36 @@
+=== mkxp-z Shader API Probe ===
+Time: 2026-03-26 01:27:24 +0100
+
+Shader class DOES NOT EXIST
+
+=== Viewport shader support ===
+Viewport instance methods (filtered):
+
+Viewport responds to shader=? false
+Viewport responds to shader? false
+Viewport responds to set_shader? false
+
+=== Sprite shader support ===
+Sprite responds to shader=? false
+Sprite responds to shader? false
+
+=== All top-level constants (potential shader classes) ===
+
+=== System/Graphics shader-related ===
+  System.define_singleton_method
+  System.singleton_class
+  System.singleton_class?
+  System.singleton_method
+  System.singleton_methods
+  Graphics.define_singleton_method
+  Graphics.singleton_class
+  Graphics.singleton_class?
+  Graphics.singleton_method
+  Graphics.singleton_methods
+  Input.define_singleton_method
+  Input.singleton_class
+  Input.singleton_class?
+  Input.singleton_method
+  Input.singleton_methods
+
+=== DONE ===
