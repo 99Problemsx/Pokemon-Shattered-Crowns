@@ -141,7 +141,8 @@ module SCVisualFX
     :sepia, :grayscale, :night, :sunset, :horror,
     :underwater, :dream, :toxic, :frozen, :rage,
     :fireflies, :cave, :volcano, :forest, :rain,
-    :storm, :haunted, :fog, :distortion, :bloom
+    :storm, :haunted, :fog, :distortion, :bloom,
+    :windrain
   ]
 
   def self.apply_shader(effect, **properties)
