@@ -30,7 +30,7 @@ void main() {
 
         // Grid cells for rain drops
         vec2 cell = uv * vec2(scale, scale * 0.4);
-        cell.y += time * speed;
+        cell.y -= time * speed;
         vec2 id = floor(cell);
         vec2 local = fract(cell);
 

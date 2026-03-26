@@ -153,6 +153,7 @@ module SCVisualFX
       shader = Shader.new(effect)
       vp.add_shader(shader)
     end
+    disable_sun
     true
   end
 
@@ -164,6 +165,21 @@ module SCVisualFX
     else
       vp.dispose_shaders
     end
+    # Re-enable sun only when no shaders remain
+    restore_sun if vp.shaders.empty?
+  end
+
+  def self.disable_sun
+    $sun_switch = false
+    if defined?(SunSettings) && SunSettings.sun_sprite &&
+       !SunSettings.sun_sprite.disposed?
+      SunSettings.sun_sprite.dispose
+      SunSettings.sun_sprite = nil
+    end
+  end
+
+  def self.restore_sun
+    $sun_switch = true
   end
 
   def self.get_shader(key)
