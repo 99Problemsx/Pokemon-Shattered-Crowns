@@ -24,6 +24,7 @@ end
 
 def mainFunctionDebug
   begin
+    Graphics.frame_rate = 60
     MessageTypes.load_default_messages if FileTest.exist?("Data/messages_core.dat")
     PluginManager.runPlugins
     Compiler.main
