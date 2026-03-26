@@ -196,7 +196,7 @@
     // Enforce a static frame rate
     // (0 = disabled)
     //
-    // "fixedFramerate": 0,
+    "fixedFramerate": 60,
 
 
     // Skip (don't draw) frames when behind.
