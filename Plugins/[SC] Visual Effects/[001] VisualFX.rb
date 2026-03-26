@@ -139,7 +139,8 @@ end
 module SCVisualFX
   PRESETS = [
     :sepia, :grayscale, :night, :sunset, :horror,
-    :underwater, :dream, :toxic, :frozen, :rage
+    :underwater, :dream, :toxic, :frozen, :rage,
+    :fireflies
   ]
 
   def self.apply_shader(effect, **properties)
@@ -169,6 +170,16 @@ module SCVisualFX
     return unless vp
     vp.get_shader(key)
   end
+
+  def self.update_shaders
+    vp = Spriteset_Map.viewport
+    return unless vp
+    t = Graphics.frame_count / 60.0
+    vp.shaders.each do |shader|
+      next if shader.disposed?
+      shader.set_float('time', t) rescue nil
+    end
+  end
 end
 
 #---------------------------------------
@@ -187,4 +198,15 @@ def pbInvertPlayer(enabled)
   sprite = $game_player.sprite
   return unless sprite.respond_to?(:invert=)
   sprite.invert = enabled
+end
+
+#---------------------------------------
+# Frame update hook for animated shaders
+#---------------------------------------
+class Spriteset_Map
+  alias update_sc_visualfx update
+  def update
+    update_sc_visualfx
+    SCVisualFX.update_shaders
+  end
 end
