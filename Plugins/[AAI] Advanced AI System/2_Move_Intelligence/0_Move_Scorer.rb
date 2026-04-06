@@ -1506,7 +1506,15 @@ class Battle::AI
         total_boosts = 1
       end
       
-      score += (total_boosts * 40 * status_multiplier * simple_mult).to_i
+      # === MAXED STAT CHECK ===
+      # If all stats this move boosts are already at +6, it is completely useless.
+      # If only some stats are maxed, scale the boost proportionally.
+      room = setup_room_remaining(move, user)
+      if room == 0.0
+        return -200  # All relevant stats capped — never use this move
+      end
+
+      score += (total_boosts * 40 * status_multiplier * simple_mult * room).to_i
       
       # Sweep Potential
       if user.hp > user.totalhp * 0.7
@@ -2905,7 +2913,51 @@ class Battle::AI
     
     return [damage.to_i, 1].max
   end
-  
+
+  # Returns the stage symbols relevant to a setup move's :stat key.
+  # Used to check whether the user's stats are already maxed before scoring setup.
+  def stats_for_setup(stat_key)
+    case stat_key
+    when :attack                   then [:ATTACK]
+    when :spatk                    then [:SPECIAL_ATTACK]
+    when :speed                    then [:SPEED]
+    when :defense                  then [:DEFENSE]
+    when :spdef                    then [:SPECIAL_DEFENSE]
+    when :evasion                  then [:EVASION]
+    when :attack_speed             then [:ATTACK, :SPEED]
+    when :attack_defense           then [:ATTACK, :DEFENSE]
+    when :attack_spatk             then [:ATTACK, :SPECIAL_ATTACK]
+    when :attack_spatk_speed       then [:ATTACK, :SPECIAL_ATTACK, :SPEED]
+    when :attack_defense_speed     then [:ATTACK, :DEFENSE, :SPEED]
+    when :spatk_spdef              then [:SPECIAL_ATTACK, :SPECIAL_DEFENSE]
+    when :spatk_spdef_speed        then [:SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    when :defense_spdef            then [:DEFENSE, :SPECIAL_DEFENSE]
+    when :attack_defense_accuracy  then [:ATTACK, :DEFENSE, :ACCURACY]
+    when :attack_accuracy          then [:ATTACK, :ACCURACY]
+    when :all                      then [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    else []
+    end
+  end
+
+  # Returns a multiplier in 0.0..1.0 representing how much room the user still
+  # has to grow for the stats boosted by a setup move.
+  # Returns 0.0 if ALL relevant stats are already at +6 (completely useless).
+  # Returns 1.0 if no relevant stats are tracked (random/unknown).
+  def setup_room_remaining(move, user)
+    setup_data = AdvancedAI.get_setup_data(move.id)
+    stat_key   = setup_data && setup_data[:stat]
+    stats      = stats_for_setup(stat_key)
+    return 1.0 if stats.empty?  # Can't check (random / unknown) — assume useful
+
+    boosted_stats = stats.reject { |s| s == :ACCURACY }  # Accuracy cap is separate
+    return 1.0 if boosted_stats.empty?
+
+    maxed = boosted_stats.count { |s| (user.stages[s] rescue 0) >= 6 }
+    total = boosted_stats.size
+    return 0.0 if maxed == total   # All relevant stats are at +6
+    ((total - maxed).to_f / total)
+  end
+
   def is_safe_to_setup?(user, target)
     # HP Check
     return false if user.hp < user.totalhp * 0.5
@@ -3484,7 +3536,14 @@ class Battle::AI
       # Also allow spamming moves that CHANGE effect on repeat (Rollout, Fury Cutter)
       escalating_moves = [:ROLLOUT, :ICEBALL, :FURYCUTTER, :ECHOEDVOICE]
       
-      return 0 if spam_allowed.include?(move.id)
+      # Setup moves may only skip the spam penalty when stats still have room to grow
+      if spam_allowed.include?(move.id)
+        if AdvancedAI.setup_move?(move.id) && setup_room_remaining(move, user) == 0.0
+          # Stats are fully maxed — fall through to apply the status-move spam penalty
+        else
+          return 0
+        end
+      end
       return 0 if escalating_moves.include?(move.id)
       
       # Attacking moves: Small penalty (variety is good, but not critical)
@@ -3632,6 +3691,9 @@ class Battle::AI
     # 4. SETUP MOVES (when safe)
     if AdvancedAI.setup_move?(move.id) || move.function_code.start_with?("RaiseUser")
       if is_safe_to_setup?(user, target)
+        # Don't boost priority when all relevant stats are already at +6
+        return PriorityMoveResult.new if setup_room_remaining(move, user) == 0.0
+
         # Determine setup value based on move
         setup_value = 200  # Base high priority
         

@@ -108,6 +108,7 @@ class Battle::AI
     score = pbRegisterMove(@user, @move)
     @_resolved_target = nil
     @_resolved_skill  = nil
+    advanced_base = score
     
     # Apply Advanced AI enhancements (Layers on top of base advanced score)
     score = apply_advanced_modifiers(score, @move, @user, target, skill)
@@ -118,7 +119,7 @@ class Battle::AI
       target_name = target.name rescue "???"
       user_name = @user.name rescue "???"
       echoln "  ┌─ MOVE SCORE: #{move_name} (#{user_name} vs #{target_name}) ─┐"
-      echoln "    Base Score:                  100"
+      echoln "    Base Score:                  #{advanced_base}"
       @_score_factors.each do |name, value|
         next if value == 0
         sign = value >= 0 ? "+" : "-"
