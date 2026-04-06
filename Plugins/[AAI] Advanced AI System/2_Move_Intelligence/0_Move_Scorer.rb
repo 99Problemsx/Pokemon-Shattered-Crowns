@@ -2955,7 +2955,7 @@ class Battle::AI
     maxed = boosted_stats.count { |s| (user.stages[s] rescue 0) >= 6 }
     total = boosted_stats.size
     return 0.0 if maxed == total   # All relevant stats are at +6
-    ((total - maxed).to_f / total)
+    return ((total - maxed).to_f / total)
   end
 
   def is_safe_to_setup?(user, target)
