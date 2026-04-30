@@ -194,10 +194,14 @@ module SCScripts
           
           # Create a struct-like object that mimics GameData::Species
           species_data = OpenStruct.new(data)
-          
+
           # --- Critical identity attributes that Essentials expects ---
           # The engine uses .species (not .id) for the species symbol
           species_data.id = id
+          # Force-define .id so it always returns the Symbol, even if
+          # Object#id prevents method_missing dispatch (same fix as items/moves).
+          id_sym = id
+          species_data.define_singleton_method(:id) { id_sym }
           species_data.species = data[:species] || id
           species_data.id_number = data[:dex_number] || data[:id_number] || 0
           species_data.form = data[:form] || 0
@@ -455,6 +459,18 @@ module SCScripts
         
         define_method(:get) do |id|
           id = id.to_sym if id.is_a?(String)
+          # Handle Integer IDs (possible Object#id corruption from OpenStruct)
+          if id.is_a?(Integer)
+            if respond_to?(:original_get)
+              begin
+                result = original_get(id)
+                return result if result
+              rescue StandardError
+              end
+            end
+            # Can't resolve a bare integer to a move; return stub
+            return wrap_script_move(:"UNKNOWN_#{id}", { name: "???" })
+          end
           # Try original first (051_Moves.rb returns proper instances)
           if respond_to?(:original_get)
             begin
@@ -472,6 +488,17 @@ module SCScripts
         
         define_method(:try_get) do |id|
           id = id.to_sym if id.is_a?(String)
+          # Handle Integer IDs (possible Object#id corruption from OpenStruct)
+          if id.is_a?(Integer)
+            if respond_to?(:original_try_get)
+              begin
+                result = original_try_get(id)
+                return result if result
+              rescue StandardError
+              end
+            end
+            return nil
+          end
           if respond_to?(:original_try_get)
             begin
               result = original_try_get(id)
@@ -486,6 +513,16 @@ module SCScripts
         
         define_method(:exists?) do |id|
           id = id.to_sym if id.is_a?(String)
+          # Handle Integer IDs (possible Object#id corruption from OpenStruct)
+          if id.is_a?(Integer)
+            if respond_to?(:original_exists?)
+              begin
+                return true if original_exists?(id)
+              rescue StandardError
+              end
+            end
+            return false
+          end
           if respond_to?(:original_exists?)
             begin
               return true if original_exists?(id)
@@ -500,6 +537,10 @@ module SCScripts
           return nil unless data
           move_data = OpenStruct.new(data)
           move_data.id               = id
+          # Force-define .id so it always returns the Symbol, even if
+          # Object#id prevents method_missing dispatch (same fix as items).
+          id_sym = id
+          move_data.define_singleton_method(:id) { id_sym }
           move_data.real_name        = data[:real_name] || data[:name] || id.to_s
           move_data.real_description = data[:real_description] || data[:description] || ""
           move_data.type             = data[:type] || :NORMAL
@@ -718,6 +759,10 @@ module SCScripts
           return nil unless data
           item_data = OpenStruct.new(data)
           item_data.id = id
+          # Force-define .id so it always returns the Symbol, even if
+          # Object#id or respond_to?(:id) prevents method_missing dispatch.
+          id_sym = id
+          item_data.define_singleton_method(:id) { id_sym }
           item_data.real_name = data[:name] || data[:real_name]
           item_data.real_name_plural = data[:name_plural] || data[:real_name_plural]
           item_data.real_description = data[:description] || data[:real_description]

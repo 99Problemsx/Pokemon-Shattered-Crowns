@@ -92,9 +92,21 @@ class Battle::AI
     # === CRITICAL SELF-AWARENESS CHECKS ===
     # These return -1000 for moves that WILL FAIL due to our own status
     
+    # Assault Vest: Can't use status moves when holding AV
+    if move.statusMove? && (user.item_id == :ASSAULTVEST rescue false)
+      return -1000  # Assault Vest blocks all status moves
+    end
+    
     # Choice Lock: If we're locked, only the locked move can be used
     if user.effects[PBEffects::ChoiceBand] && user.effects[PBEffects::ChoiceBand] != move.id
       return -1000  # Can't use any other move when Choice-locked
+    end
+    
+    # Gorilla Tactics: locks into first move used (like Choice Band via ability)
+    if user.respond_to?(:hasActiveAbility?) && user.hasActiveAbility?(:GORILLATACTICS)
+      if user.effects[PBEffects::ChoiceBand] && user.effects[PBEffects::ChoiceBand] != move.id
+        return -1000  # Gorilla Tactics move lock
+      end
     end
     
     # Encore: Must use the encored move
@@ -112,11 +124,35 @@ class Battle::AI
       return -1000
     end
     
-    # Heal Block: Can't use healing moves
+    # Self-KO moves: penalize unless in a desperate situation
+    fc = move.function_code.to_s rescue ""
+    if fc.include?("UserFaints") || [:EXPLOSION, :SELFDESTRUCT, :MISTYEXPLOSION, :FINALGAMBIT].include?(move.id)
+      remaining = @battle.pbAbleCount(user.index & 1) rescue 1
+      hp_pct = user.hp.to_f / [user.totalhp, 1].max
+      selfko_penalty = 0
+      if remaining > 1
+        # Heavy penalty when we have reserves — don't throw away a Pokemon
+        selfko_penalty -= 150
+        # Reduce penalty if we're about to faint anyway
+        selfko_penalty += 60 if hp_pct < 0.2
+        selfko_penalty += 30 if hp_pct < 0.35
+      elsif hp_pct > 0.5
+        # Last mon but healthy — still not ideal
+        selfko_penalty -= 80
+      end
+      # Final Gambit is weaker at low HP (damage = user's remaining HP)
+      selfko_penalty -= 60 if move.id == :FINALGAMBIT && hp_pct < 0.3
+      return selfko_penalty
+    end
+    
+    # Heal Block: Can't use healing moves (includes drain moves in Gen 5+)
     if user.effects[PBEffects::HealBlock] > 0
       healing_moves = [:RECOVER, :SOFTBOILED, :ROOST, :SLACKOFF, :MOONLIGHT, :MORNINGSUN, 
                        :SYNTHESIS, :WISH, :SHOREUP, :LIFEDEW, :JUNGLEHEALING, :LUNARBLESSING,
-                       :PURIFY, :MILKDRINK, :HEALORDER, :REST, :STRENGTHSAP, :FLORALHEALING]
+                       :PURIFY, :MILKDRINK, :HEALORDER, :REST, :STRENGTHSAP, :FLORALHEALING,
+                       :LEECHLIFE, :GIGADRAIN, :DRAININGKISS, :DRAINPUNCH, :HORNLEECH,
+                       :OBLIVIONWING, :PARABOLICCHARGE, :ABSORB, :MEGADRAIN,
+                       :BITTERBLADE, :STRENGTHSAP]
       return -1000 if healing_moves.include?(move.id)
     end
     
@@ -158,15 +194,18 @@ class Battle::AI
     end
     
     # === PHAZING MOVE FAILURE CHECK ===
-    # Roar/Whirlwind/Dragon Tail/Circle Throw fail when the opponent has no
-    # other Pokemon to switch to (single-mon remaining)
-    phazing_moves = [:ROAR, :WHIRLWIND, :DRAGONTAIL, :CIRCLETHROW]
-    if phazing_moves.include?(move.id) && target
+    # Roar/Whirlwind fail when opponent has no reserve — they're pure status phazing.
+    # Dragon Tail/Circle Throw are DAMAGING moves — still deal damage even without phazing.
+    phazing_status = [:ROAR, :WHIRLWIND]
+    phazing_damaging = [:DRAGONTAIL, :CIRCLETHROW]
+    if phazing_status.include?(move.id) && target
       target_reserve = @battle.pbAbleNonActiveCount(target.index & 1)
       if target_reserve == 0
-        return -1000  # Phazing fails — no reserve Pokemon on target's side
+        return -1000  # Pure phazing fails — no reserve Pokemon on target's side
       end
     end
+    # Damaging phazers: just remove the phazing bonus, don't kill the score
+    # (The phazing bonus is handled in score_status_utility; base damage still applies)
     
     # === ALLY-ONLY SUPPORT MOVES TARGETING CHECK ===
     # Moves like Heal Pulse, After You, Pollen Puff (heal), Life Dew should
@@ -515,6 +554,7 @@ class Battle::AI
     # === DEBUG FACTOR TRACKING ===
     # Track individual factor contributions for debug output
     @_score_factors = nil
+    @_actual_base_score = 100  # Track the real base for debug display
     factors = $DEBUG ? {} : nil
 
     # === STATUS VALUE SCALING ===
@@ -525,10 +565,14 @@ class Battle::AI
       status_multiplier = AdvancedAI.tier_feature(skill, :status_value) || 1.0
       # Boost base score for status moves to make them competitive with damage
       base_score = 120 * status_multiplier
+      @_actual_base_score = base_score
     end
     
     # Apply priority boost from tactical role system (Tier 2)
     base_score += priority_boost
+    if factors && priority_boost != 0
+      factors["Priority Tier"] = priority_boost
+    end
     
     # === TYPE-ABSORBING ABILITY CHECK ===
     # Don't attack into Water Absorb, Volt Absorb, Flash Fire, Sap Sipper, etc.
@@ -579,6 +623,19 @@ class Battle::AI
     
     # === STATUS ANALYSIS ===
     if move.statusMove?
+      # Penalty for status moves when we have a KO-able target
+      # (Don't waste a turn setting up or statusing when you can win right now)
+      if target && skill >= 70
+        has_ko_move = user.battler.moves.any? do |m|
+          next false unless m && m.damagingMove? && m.pp > 0
+          rough = (calculate_rough_damage(m, user, target) rescue 0)
+          rough >= target.hp
+        end
+        if has_ko_move
+          base_score -= 120  # Strong penalty: finishing the target is usually better
+          factors["KO Available"] = -120 if factors
+        end
+      end
       v = score_status_utility(move, user, target, skill, status_multiplier)
       base_score += v; factors["Status Utility"] = v if factors && v != 0
     end
@@ -604,6 +661,9 @@ class Battle::AI
     
     v = score_secondary_effects(move, user, target)
     base_score += v; factors["Secondary Effects"] = v if factors && v != 0
+    
+    v = score_gen9_extras(move, user, target)
+    base_score += v; factors["Gen 9 Extras"] = v if factors && v != 0
     
     v = score_moody_pressure(move, user, target)
     base_score += v; factors["Moody Pressure"] = v if factors && v != 0
@@ -909,8 +969,20 @@ class Battle::AI
       return 20 if user.pbHasType?(effective_type)
     end
     
-    # Protean / Libero: every move gets STAB
-    return 15 if user.hasActiveAbility?(:PROTEAN) || user.hasActiveAbility?(:LIBERO)
+    # Protean / Libero: gives STAB on one move per switch-in (Gen 9 nerf).
+    # In Gen 8 and earlier this worked every turn; in Gen 9 it's once per switch-in.
+    # The battler's type changes to the move type before attacking, so we get STAB.
+    # We check if the ability has already been used this switch-in.
+    if user.hasActiveAbility?(:PROTEAN) || user.hasActiveAbility?(:LIBERO)
+      # If Protean/Libero has already activated, user's type IS already the first move's type.
+      # Subsequent moves don't get re-typed. Use pbHasType? to check current STAB.
+      # If first turn out (turnCount == 0), they haven't activated yet — first move will get STAB.
+      if user.turnCount == 0
+        return 15  # First move out: will become this type → STAB
+      end
+      # Otherwise, check if user already has this type (from previous Protean activation)
+      return 15 if user.pbHasType?(effective_type)
+    end
     return 0
   end
   
@@ -1389,6 +1461,30 @@ class Battle::AI
         end
       end
     end
+    
+    # Salt Cure: 1/8 HP damage per turn, 1/4 vs Water/Steel
+    if move.function_code == "StartSaltCureTarget"
+      salt_cured = (defined?(PBEffects::SaltCure) && target.effects[PBEffects::SaltCure] rescue false)
+      if salt_cured
+        score -= 200  # Already Salt Cured — will fail
+      else
+        score += 40  # Good passive damage (damaging move, so base damage adds too)
+        # Huge bonus vs Water and Steel types — deals 1/4 per turn
+        if target.pbHasType?(:WATER) || target.pbHasType?(:STEEL)
+          score += 50  # Double damage per turn!
+        end
+        # Bonus vs stall/bulky targets
+        if target.defense + target.spdef > 200
+          score += 25
+        end
+        # Synergy with Protect stalling
+        protect_moves = [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER,
+                        :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK]
+        if user.battler.moves.any? { |m| protect_moves.include?(m.id) }
+          score += 30
+        end
+      end
+    end
 
     return score
   end
@@ -1397,6 +1493,68 @@ class Battle::AI
   def score_setup_value(move, user, target, skill, status_multiplier = 1.0)
     return 0 unless skill >= 55
     score = 0
+    
+    # === STAT-MAX CHECK ===
+    # If all stats this move would boost are already at +6, don't use it
+    setup_data = AdvancedAI.get_setup_data(move.id)
+    if setup_data
+      stat_key = setup_data[:stat]
+      boosted_stats = case stat_key
+        when :attack                then [:ATTACK]
+        when :spatk                 then [:SPECIAL_ATTACK]
+        when :defense               then [:DEFENSE]
+        when :spdef                 then [:SPECIAL_DEFENSE]
+        when :speed                 then [:SPEED]
+        when :evasion               then [:EVASION]
+        when :accuracy              then [:ACCURACY]
+        when :attack_defense        then [:ATTACK, :DEFENSE]
+        when :attack_speed          then [:ATTACK, :SPEED]
+        when :attack_spatk          then [:ATTACK, :SPECIAL_ATTACK]
+        when :attack_accuracy       then [:ATTACK, :ACCURACY]
+        when :attack_defense_accuracy then [:ATTACK, :DEFENSE, :ACCURACY]
+        when :spatk_spdef           then [:SPECIAL_ATTACK, :SPECIAL_DEFENSE]
+        when :spatk_spdef_speed     then [:SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+        when :spatk_speed           then [:SPECIAL_ATTACK, :SPEED]
+        when :defense_spdef         then [:DEFENSE, :SPECIAL_DEFENSE]
+        when :attack_defense_speed  then [:ATTACK, :DEFENSE, :SPEED]
+        when :attack_spatk_speed    then [:ATTACK, :SPECIAL_ATTACK, :SPEED]
+        when :all                   then [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+        else nil
+        end
+      if boosted_stats && !boosted_stats.empty?
+        maxed_count = boosted_stats.count { |s| (user.stages[s] rescue 0) >= 6 }
+        if maxed_count >= boosted_stats.length
+          # ALL stats already maxed — move is completely useless
+          AdvancedAI.log("#{move.name}: all target stats already at +6, skipping setup", "SetupMax")
+          return -200
+        elsif maxed_count > 0
+          # Some stats maxed — reduced value proportional to wasted boosts
+          waste_ratio = maxed_count.to_f / boosted_stats.length
+          penalty = -(waste_ratio * 80).to_i
+          score += penalty
+          AdvancedAI.log("#{move.name}: #{maxed_count}/#{boosted_stats.length} stats maxed (#{penalty})", "SetupMax")
+        end
+      end
+    elsif move.function_code.start_with?("RaiseUser")
+      # For function-code based detection, check common patterns
+      fc = move.function_code
+      check_stats = []
+      check_stats << :ATTACK if fc.include?("Attack") || fc.include?("Atk")
+      check_stats << :DEFENSE if fc.include?("Defense") || fc.include?("Def")
+      check_stats << :SPECIAL_ATTACK if fc.include?("SpAtk")
+      check_stats << :SPECIAL_DEFENSE if fc.include?("SpDef")
+      check_stats << :SPEED if fc.include?("Speed") || fc.include?("Spd")
+      if !check_stats.empty?
+        maxed_count = check_stats.count { |s| (user.stages[s] rescue 0) >= 6 }
+        if maxed_count >= check_stats.length
+          AdvancedAI.log("#{move.name}: all target stats already at +6 (function code), skipping", "SetupMax")
+          return -200
+        elsif maxed_count > 0
+          waste_ratio = maxed_count.to_f / check_stats.length
+          score += -(waste_ratio * 80).to_i
+        end
+      end
+    end
     
     # === HARD COUNTERS: Abilities that negate stat boosts entirely ===
     # Unaware: Target ignores ALL of our stat changes when taking/dealing damage
@@ -1461,6 +1619,25 @@ class Battle::AI
     if user.hasActiveAbility?(:SIMPLE)
       simple_mult = 2.0
     end
+    
+    # Contrary: stat boosts become drops and vice versa
+    # Shell Smash with Contrary: -2 Atk/SpA/Spe becomes +2, +1 Def/SpD becomes -1
+    # → actually beneficial! Other setup moves become self-debuffs.
+    if user.hasActiveAbility?(:CONTRARY)
+      setup_data = AdvancedAI.get_setup_data(move.id)
+      if setup_data
+        has_negative = setup_data[:defense_spdef] && setup_data[:defense_spdef] < 0
+        if has_negative
+          # Shell Smash-like: the "downside" of lowered def/spdef becomes an upside,
+          # and the boosts become drops, but Contrary flips ALL of them.
+          # Net: +2 Def/SpD, +2 Atk/SpA/Spe → very good
+          # Continue scoring normally (Contrary makes this beneficial)
+        else
+          # Normal setup move: Contrary makes boosts into drops → avoid
+          return -200
+        end
+      end
+    end
 
     # Safe to setup?
     safe_to_setup = is_safe_to_setup?(user, target)
@@ -1473,12 +1650,26 @@ class Battle::AI
       # Try to get data from MoveCategories
       setup_data = AdvancedAI.get_setup_data(move.id)
       if setup_data
-        total_boosts = setup_data[:stages] || 1
+        stages_per = setup_data[:stages] || 1
         # Weather-conditional boosts (e.g., Growth raises +2 in Sun instead of +1)
         if setup_data[:sun_stages] && @battle &&
            [:Sun, :HarshSun].include?(@battle.pbWeather)
-          total_boosts = setup_data[:sun_stages]
+          stages_per = setup_data[:sun_stages]
         end
+        # Count number of stats boosted to get true total stages
+        stat_key = setup_data[:stat]
+        stat_count = case stat_key
+          when :attack, :spatk, :defense, :spdef, :speed, :evasion, :accuracy, :random then 1
+          when :attack_defense, :attack_speed, :attack_spatk, :attack_accuracy,
+               :spatk_spdef, :spatk_speed, :defense_spdef then 2
+          when :attack_defense_accuracy, :spatk_spdef_speed, :attack_defense_speed,
+               :attack_spatk_speed then 3
+          when :all then 5
+          else 1
+          end
+        total_boosts = stages_per * stat_count
+        # Speed extra (e.g., Shift Gear: +1 Attack, +2 Speed → speed_extra: 1)
+        total_boosts += (setup_data[:speed_extra] || 0)
         # Belly Drum special handling: costs 50% HP — only use when safe
         if setup_data[:hp_cost]
           hp_threshold = setup_data[:hp_cost]  # e.g., 0.5 for Belly Drum
@@ -1663,6 +1854,55 @@ class Battle::AI
       end
     end
     
+    # Toxic Chain (Gen 9: Pecharunt, Okidogi, Munkidori, Fezandipiti):
+    # 30% chance to BAD-poison target on damaging moves
+    if user.hasActiveAbility?(:TOXICCHAIN) && move.damagingMove?
+      target_types = target.pbTypes(true)
+      unless target_types.include?(:POISON) || target_types.include?(:STEEL)
+        unless target.hasActiveAbility?(:IMMUNITY) || target.hasActiveAbility?(:PASTELVEIL) ||
+               target.hasActiveAbility?(:PURIFYINGSALT) || target.hasActiveAbility?(:COMATOSE) ||
+               target.status != :NONE
+          # Toxic is much more valuable than regular poison (escalating damage)
+          score += 18
+          score += 9 if user.hasActiveAbility?(:SERENEGRACE)  # 60% with Serene Grace
+          # Bonus if target is bulky (Toxic shines vs walls)
+          if target.totalhp > 0
+            bulk = (target.totalhp + (target.defense rescue 0) + (target.spdef rescue 0))
+            score += 12 if bulk > 600
+          end
+        end
+      end
+    end
+    
+    # Seed Sower (Arboliva): if we hit a target with Seed Sower with a damaging
+    # move, it sets Grassy Terrain. Penalize if WE don't benefit from that.
+    if move.damagingMove? && target.hasActiveAbility?(:SEEDSOWER) && @battle
+      cur_terrain = (@battle.field.terrain rescue :None)
+      if cur_terrain != :Grassy
+        # Will it actually trigger? (no Shield Dust, target survives)
+        unless target.hasActiveAbility?(:SHIELDDUST)
+          # Bad for us: opponent heals 1/16 per turn, our Ground moves get -50% damage
+          our_grass_types = user.pbTypes(true).include?(:GRASS)
+          our_grounded = !user.airborne?
+          if our_grass_types && our_grounded
+            score += 10  # We benefit too (Grass STAB boost + heal)
+          elsif our_grounded
+            score += 5   # Heal but no STAB boost
+          else
+            score -= 10  # We're airborne — only opponent benefits
+          end
+          # Penalty if we rely on Earthquake / Bulldoze
+          user.moves.each do |m|
+            next unless m && m.damagingMove?
+            if [:EARTHQUAKE, :BULLDOZE, :MAGNITUDE].include?(m.id)
+              score -= 8
+              break
+            end
+          end
+        end
+      end
+    end
+    
     # Flinch
     has_innate_flinch = move.flinchingMove?
     # Stench: 10% flinch on all damaging moves that don't already flinch
@@ -1727,6 +1967,519 @@ class Battle::AI
     return score
   end
   
+  # Gen 9 Move-Specific Bonuses & Constraints
+  # Handles secondary effects/constraints not covered by generic scoring.
+  def score_gen9_extras(move, user, target)
+    score = 0
+    return score unless move && target
+    
+    covert = AdvancedAI::Utilities.has_covert_cloak?(target) rescue false
+    shield_dust = target.hasActiveAbility?(:SHIELDDUST) rescue false
+    secondary_blocked = covert || shield_dust
+    
+    case move.id
+    # === Once-per-switch constraint moves ===
+    when :BLOODMOON, :GIGATONHAMMER
+      # Cannot be used twice in a row. Penalize if used last turn (and we'd be locked).
+      last = (user.lastMoveUsed rescue nil)
+      score -= 200 if last == move.id  # Will fail if same move used last turn
+    
+    # === Trailblaze: 50 BP + always +1 Speed to user (no chance) ===
+    when :TRAILBLAZE
+      cur = (user.stages[:SPEED] rescue 0)
+      if cur < 6
+        score += 25  # Free speed boost — very strong on offensive Pokemon
+        score += 10 if cur <= 0  # Especially valuable when not yet boosted
+      end
+    
+    # === Ice Spinner: removes terrain on hit ===
+    when :ICESPINNER
+      terrain = (@battle && @battle.field.terrain) rescue nil
+      if terrain && terrain != :None
+        # Removing opponent-favorable terrain is great
+        if [:Electric, :Grassy, :Psychic, :Misty].include?(terrain)
+          # Check if any active opponent benefits from this terrain
+          opp_benefits = false
+          begin
+            opps = @battle.allOtherSideBattlers(user.index).select { |b| b && !b.fainted? }
+            opp_benefits = opps.any? do |o|
+              case terrain
+              when :Electric then o.hasActiveAbility?(:SURGESURFER) || o.hasActiveAbility?(:QUARKDRIVE) || o.hasActiveAbility?(:HADRONENGINE)
+              when :Grassy   then true  # heals + boosts Grass
+              when :Psychic  then true  # blocks our priority
+              when :Misty    then true  # blocks our status
+              end
+            end
+          rescue
+          end
+          score += opp_benefits ? 35 : 10
+        end
+      end
+    
+    # === Lumina Crash: 100% -2 SpDef on hit (huge secondary) ===
+    when :LUMINACRASH
+      unless secondary_blocked
+        if AdvancedAI::Utilities.has_clear_amulet?(target) ||
+           (!AdvancedAI::Utilities.ignores_ability?(user) &&
+            (target.hasActiveAbility?(:CLEARBODY) || target.hasActiveAbility?(:WHITESMOKE) ||
+             target.hasActiveAbility?(:FULLMETALBODY) || target.hasActiveAbility?(:MIRRORARMOR)))
+          score -= 10
+        else
+          cur = (target.stages[:SPECIAL_DEFENSE] rescue 0)
+          if cur > -6
+            score += 30  # -2 SpDef is massive (snowballs damage on follow-ups)
+            score += 15 if cur >= 0
+          end
+        end
+      end
+    
+    # === Syrup Bomb: -1 Speed for 3 turns (residual stat drop) ===
+    when :SYRUPBOMB
+      unless secondary_blocked
+        cur = (target.stages[:SPEED] rescue 0)
+        if cur > -6 && !AdvancedAI::Utilities.has_clear_amulet?(target)
+          score += 25  # 3-turn speed shred
+        end
+      end
+    
+    # === Temper Flare (Gen 9): 75 BP, doubles to 150 if previous move missed/failed ===
+    when :TEMPERFLARE
+      last_failed = false
+      begin
+        # If user's last action failed (missed or got protected), we get the boost
+        last_failed = user.lastMoveFailed if user.respond_to?(:lastMoveFailed)
+      rescue
+      end
+      score += 25 if last_failed
+    
+    # === Supercell Slam (Gen 9): 100 BP, user takes crash damage if it misses ===
+    when :SUPERCELLSLAM
+      acc = (move.accuracy rescue 95)
+      if acc > 0 && acc < 100
+        miss_chance = (100 - acc) / 100.0
+        crash_dmg = user.totalhp / 2  # Half max HP on miss
+        risk = (miss_chance * crash_dmg * 100.0 / [user.totalhp, 1].max)
+        score -= risk.to_i
+        score -= 30 if user.hp < user.totalhp / 2  # Don't risk it at low HP
+      end
+    
+    # === Psychic Noise (Gen 9): 75 BP + Heal Block target for 2 turns ===
+    when :PSYCHICNOISE
+      unless secondary_blocked
+        # Soundproof immune
+        unless target.hasActiveAbility?(:SOUNDPROOF)
+          # Big payoff vs healing targets
+          target_has_recovery = false
+          begin
+            recovery_moves = [:RECOVER, :ROOST, :SOFTBOILED, :MILKDRINK, :SLACKOFF,
+                              :MOONLIGHT, :MORNINGSUN, :SYNTHESIS, :SHOREUP, :STRENGTHSAP,
+                              :REST, :WISH, :PAIN_SPLIT, :PAINSPLIT, :HEALORDER, :LIFEDEW,
+                              :JUNGLEHEALING, :LUNARDANCE, :HEALPULSE, :FLORALHEALING]
+            target_has_recovery = target.moves.any? { |m| m && recovery_moves.include?(m.id) } rescue false
+          rescue
+          end
+          score += target_has_recovery ? 50 : 15
+          # Bonus vs Leftovers / Black Sludge users
+          score += 15 if target.item_id == :LEFTOVERS || target.item_id == :BLACKSLUDGE
+        end
+      end
+    
+    # === Malignant Chain (Gen 9): 100 BP + 50% Bad Poison ===
+    when :MALIGNANTCHAIN
+      unless secondary_blocked
+        target_types = target.pbTypes(true)
+        unless target_types.include?(:POISON) || target_types.include?(:STEEL) ||
+               target.hasActiveAbility?(:IMMUNITY) || target.hasActiveAbility?(:PASTELVEIL) ||
+               target.hasActiveAbility?(:PURIFYINGSALT) || target.hasActiveAbility?(:COMATOSE) ||
+               target.status != :NONE
+          score += 30  # 50% Toxic chance vs unstatused non-immune target
+          # Higher value vs bulky/passive targets
+          if target.totalhp >= 300 || target.defense + target.spdef > 200
+            score += 15
+          end
+        end
+      end
+    
+    # === Dragon Cheer (Gen 9): +1 (or +2 if ally is Dragon) crit stage to ally — Doubles only ===
+    when :DRAGONCHEER
+      if @battle && @battle.pbSideSize(user.index & 1) > 1
+        # The "target" of Dragon Cheer is the user's ally
+        ally = nil
+        begin
+          ally = @battle.allSameSideBattlers(user.index).find { |b| b && b != user && !b.fainted? }
+        rescue
+          ally = nil
+        end
+        if ally
+          ally_crit = (ally.effects[PBEffects::FocusEnergy] rescue 0) rescue 0
+          if ally_crit < 2
+            score += 25
+            score += 15 if ally.pbHasType?(:DRAGON)  # +2 crit stages instead of +1
+            # Bonus if ally has high BP physical move queued (no real way to know, just ally damage potential)
+            score += 10 if (ally.attack >= 120 || ally.spatk >= 120)
+          else
+            score -= 50  # Already at max crit
+          end
+        else
+          score -= 50  # No ally — wasted move
+        end
+      else
+        score -= 100  # Singles — useless
+      end
+    
+    # === Ivy Cudgel (Gen 9): type changes per Ogerpon mask. Power 100 always crits on STAB? No, just power. ===
+    # Form-driven; trust generic damage calc but boost slightly because high BP + always-effective via Ogerpon
+    when :IVYCUDGEL
+      # Sharpness (Ogerpon-Hearthflame is Fire and Sharpness): handled elsewhere
+      # No extra scoring needed — handled by type & power
+      
+    # === Tera Starstorm (Gen 9): hits all opponents in Stellar Tera form ===
+    when :TERASTARSTORM
+      # In Stellar form, becomes spread move. Hard to detect form here; rely on Tera scoring.
+    
+    # === Spicy Extract: -1 Atk AND +2 Speed on target (inverted — buffs sweepers!) ===
+    when :SPICYEXTRACT
+      unless secondary_blocked
+        # Bad against high-Speed/special attackers — we buff their Speed for free
+        cur_atk   = (target.stages[:ATTACK] rescue 0)
+        cur_speed = (target.stages[:SPEED] rescue 0)
+        atk_stat  = (target.attack rescue 100)
+        spa_stat  = (target.spatk  rescue 100)
+        
+        # If target is a special attacker, the Atk drop is meaningless and we BOOST their Speed
+        if spa_stat > atk_stat + 30
+          score -= 60  # Bad — handing them +2 Speed
+        elsif cur_atk <= -6
+          score -= 50  # Atk already minimized
+        elsif AdvancedAI::Utilities.has_clear_amulet?(target) ||
+              (!AdvancedAI::Utilities.ignores_ability?(user) &&
+               (target.hasActiveAbility?(:CLEARBODY) || target.hasActiveAbility?(:WHITESMOKE) ||
+                target.hasActiveAbility?(:FULLMETALBODY) || target.hasActiveAbility?(:CONTRARY)))
+          # Contrary inverts: target gets +1 Atk and -2 Speed... actually a hard win
+          if !AdvancedAI::Utilities.ignores_ability?(user) && target.hasActiveAbility?(:CONTRARY)
+            score += 40  # Speed shred + Atk boost is fine vs them only if they're physical
+          else
+            score -= 40
+          end
+        else
+          # Physical attacker target: -1 Atk is good; but +2 Speed is risky
+          if cur_speed >= 4
+            score -= 30  # Already fast, don't boost further
+          else
+            score += 10
+          end
+        end
+      end
+    
+    # === Pounce (Gen 9): Bug, 50 BP, -1 Speed on target — pure speed shred ===
+    when :POUNCE
+      unless secondary_blocked
+        cur = (target.stages[:SPEED] rescue 0)
+        if cur > -6 && !AdvancedAI::Utilities.has_clear_amulet?(target)
+          # Bonus when we currently lose the speed race
+          our_spe   = (user.speed rescue 100)
+          their_spe = (target.speed rescue 100)
+          score += (their_spe > our_spe) ? 25 : 10
+        end
+      end
+    
+    # === Future Sight / Doom Desire: 2-turn delayed damage ===
+    when :FUTURESIGHT, :DOOMDESIRE
+      # Already a Future Sight queued on this position — wasted
+      pos = (@battle && @battle.positions[target.index] rescue nil)
+      already = false
+      already = true if pos && defined?(PBEffects::FutureSightCounter) &&
+                        (pos.effects[PBEffects::FutureSightCounter].to_i > 0 rescue false)
+      if already
+        score -= 200
+      else
+        # Strong if we can pivot/setup behind it; weak vs Pokemon that switch easily out
+        score += 15
+        # Bonus when target is bulky (we'd otherwise struggle to dent them)
+        score += 15 if target.totalhp >= 320
+        # Penalty if target has reliable recovery (can heal off the hit)
+        recovery_moves = [:RECOVER, :ROOST, :SOFTBOILED, :MILKDRINK, :SLACKOFF,
+                          :MOONLIGHT, :MORNINGSUN, :SYNTHESIS, :SHOREUP, :STRENGTHSAP, :REST]
+        has_recovery = (target.moves.any? { |m| m && recovery_moves.include?(m.id) } rescue false)
+        score -= 20 if has_recovery
+      end
+    
+    # === Magic Room: All held items disabled for 5 turns ===
+    when :MAGICROOM
+      # Good when opponents rely heavily on items (Choice/Leftovers/Life Orb/Boots/Sash)
+      threat_items = [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF, :LEFTOVERS, :BLACKSLUDGE,
+                      :LIFEORB, :HEAVYDUTYBOOTS, :FOCUSSASH, :ASSAULTVEST, :EVIOLITE,
+                      :PUNCHINGGLOVE, :LOADEDDICE, :BOOSTERENERGY, :CLEARAMULET, :MIRRORHERB,
+                      :COVERTCLOAK]
+      opp_item_value = 0
+      begin
+        @battle.allOtherSideBattlers(user.index).each do |o|
+          next unless o && !o.fainted?
+          opp_item_value += 15 if threat_items.include?(o.item_id)
+        end
+      rescue
+      end
+      our_item_value = 0
+      begin
+        @battle.allSameSideBattlers(user.index).each do |a|
+          next unless a && !a.fainted?
+          our_item_value += 15 if threat_items.include?(a.item_id)
+        end
+      rescue
+      end
+      # Score: how much THEY lose minus how much WE lose
+      score += (opp_item_value - our_item_value)
+      # Already up — don't refresh
+      already_up = false
+      already_up = true if @battle && defined?(PBEffects::MagicRoom) &&
+                           (@battle.field.effects[PBEffects::MagicRoom].to_i > 0 rescue false)
+      score -= 200 if already_up
+    
+    # === Wonder Room: Def/SpDef swapped for 5 turns ===
+    when :WONDERROOM
+      # Useful when target's high-defense stat protects key threats; also breaks Eviolite walls indirectly via reroute
+      our_phys = (user.attack rescue 100)
+      our_spec = (user.spatk  rescue 100)
+      bonus = 0
+      begin
+        @battle.allOtherSideBattlers(user.index).each do |o|
+          next unless o && !o.fainted?
+          # If our physical attack would benefit from swapped (their def > spdef → swap helps)
+          if our_phys > our_spec && o.defense > o.spdef
+            bonus += 15
+          elsif our_spec > our_phys && o.spdef > o.defense
+            bonus += 15
+          end
+        end
+      rescue
+      end
+      score += bonus
+      already_up = false
+      already_up = true if @battle && defined?(PBEffects::WonderRoom) &&
+                           (@battle.field.effects[PBEffects::WonderRoom].to_i > 0 rescue false)
+      score -= 200 if already_up
+    
+    # === Tidy Up: clears hazards (both sides) + boosts user Atk & Speed +1 ===
+    when :TIDYUP
+      bonus = 30  # Base value for stat boost (Atk +1, Speed +1)
+      begin
+        our_side = user.pbOwnSide
+        opp_side = user.pbOpposingSide
+        # Removing hazards from OUR side is huge value
+        bonus += 25 if our_side.effects[PBEffects::StealthRock]
+        bonus += 20 * (our_side.effects[PBEffects::Spikes].to_i)
+        bonus += 15 * (our_side.effects[PBEffects::ToxicSpikes].to_i)
+        bonus += 20 if our_side.effects[PBEffects::StickyWeb]
+        # Removing hazards from OPPONENT side is bad (we lose offense)
+        bonus -= 15 if opp_side.effects[PBEffects::StealthRock]
+        bonus -= 10 * (opp_side.effects[PBEffects::Spikes].to_i)
+        bonus -= 10 * (opp_side.effects[PBEffects::ToxicSpikes].to_i)
+        bonus -= 10 if opp_side.effects[PBEffects::StickyWeb]
+        # Also clears Substitutes — minor
+      rescue
+      end
+      score += bonus
+      # Penalize if we don't benefit from speed boost (Trick Room) and no hazards
+      if @battle && (@battle.field.effects[PBEffects::TrickRoom] > 0 rescue false)
+        score -= 15
+      end
+    
+    # === Mortal Spin: damages + clears OUR hazards + poisons target ===
+    when :MORTALSPIN
+      bonus = 0
+      begin
+        our_side = user.pbOwnSide
+        bonus += 25 if our_side.effects[PBEffects::StealthRock]
+        bonus += 20 * (our_side.effects[PBEffects::Spikes].to_i)
+        bonus += 15 * (our_side.effects[PBEffects::ToxicSpikes].to_i)
+        bonus += 20 if our_side.effects[PBEffects::StickyWeb]
+        # Poison chance bonus (handled separately by status code, but minor extra)
+        target_types = (target.pbTypes(true) rescue [])
+        unless target_types.include?(:POISON) || target_types.include?(:STEEL) || target.status != :NONE
+          bonus += 10
+        end
+      rescue
+      end
+      score += bonus
+    
+    # === Rapid Spin: clears OUR hazards + +1 Speed ===
+    when :RAPIDSPIN
+      bonus = 15  # Base for +1 Speed
+      begin
+        our_side = user.pbOwnSide
+        bonus += 25 if our_side.effects[PBEffects::StealthRock]
+        bonus += 20 * (our_side.effects[PBEffects::Spikes].to_i)
+        bonus += 15 * (our_side.effects[PBEffects::ToxicSpikes].to_i)
+        bonus += 20 if our_side.effects[PBEffects::StickyWeb]
+      rescue
+      end
+      score += bonus
+      # Speed boost wasted in Trick Room
+      if @battle && (@battle.field.effects[PBEffects::TrickRoom] > 0 rescue false)
+        score -= 10
+      end
+    
+    # === Revival Blessing: revive a fainted teammate at 50% HP ===
+    when :REVIVALBLESSING
+      begin
+        # Count fainted party members (excluding the user themselves)
+        party = (@battle.pbParty(user.index) rescue [])
+        fainted_count = party.count { |pkmn| pkmn && pkmn.fainted? }
+        if fainted_count == 0
+          score -= 200  # Move will fail
+        else
+          # Massive value — bringing back a teammate
+          score += 80
+          # Even more if we're a sweeper that's already done its job
+          hp_percent = user.hp.to_f / [user.totalhp, 1].max
+          score += 20 if hp_percent < 0.30  # We're about to die anyway
+        end
+      rescue
+      end
+    
+    end
+    
+    # === Anger Shell awareness (target has it) ===
+    # If target has Anger Shell + we'd drop them BELOW 50%, they get +1 Atk/SpAtk/Speed.
+    # Penalize moves that activate it without KOing.
+    if target && target.hasActiveAbility?(:ANGERSHELL) && !AdvancedAI::Utilities.ignores_ability?(user) &&
+       move.damagingMove?
+      threshold = target.totalhp / 2
+      if target.hp > threshold
+        rough = (calculate_rough_damage(move, user, target) rescue 0)
+        post_hp = target.hp - rough
+        if post_hp > 0 && post_hp <= threshold
+          score -= 40  # Activates Anger Shell without KO
+        end
+      end
+    end
+    
+    # === Toxic Debris awareness (target has it, our move is contact physical) ===
+    # On taking a physical hit, target sets Toxic Spikes on OUR side. Penalize repeated contact moves.
+    if target && target.hasActiveAbility?(:TOXICDEBRIS) && !AdvancedAI::Utilities.ignores_ability?(user) &&
+       move.physicalMove?
+      our_side = (user.pbOwnSide rescue nil)
+      tspikes = (our_side && our_side.effects[PBEffects::ToxicSpikes].to_i rescue 0)
+      score -= (tspikes < 2 ? 15 : 0)
+    end
+    
+    # === Lingering Aroma awareness (target has it, our move makes contact) ===
+    # On contact, our ability becomes Lingering Aroma. Heavy penalty when our ability is critical.
+    if target && target.hasActiveAbility?(:LINGERINGAROMA) && move.contactMove? &&
+       !AdvancedAI::Utilities.ignores_ability?(user)
+      critical_abilities = [:HUGEPOWER, :PUREPOWER, :PROTOSYNTHESIS, :QUARKDRIVE, :ORICHALCUMPULSE,
+                            :HADRONENGINE, :SHARPNESS, :TECHNICIAN, :TOUGHCLAWS, :STRONGJAW,
+                            :IRONFIST, :PUNKROCK, :GUTS, :ADAPTABILITY, :CONTRARY,
+                            :MAGICGUARD, :MULTISCALE, :REGENERATOR, :NATURALCURE,
+                            :GORILLATACTICS, :SUPREMEOVERLORD]
+      our_ab = (user.ability_id rescue nil)
+      score -= (critical_abilities.include?(our_ab) ? 30 : 10)
+    end
+    
+    # === Wind Rider awareness ===
+    # Wind Rider absorbs Wind moves and gains +1 Atk; Tailwind gives +1 Atk on switch-in too.
+    # Treat as our move being absorbed if target has Wind Rider and our move is wind-tagged.
+    if target && target.hasActiveAbility?(:WINDRIDER) && !AdvancedAI::Utilities.ignores_ability?(user)
+      wind_moves = [:HURRICANE, :GUST, :AIRCUTTER, :TAILWIND, :BLIZZARD, :ICYWIND, :TWISTER,
+                    :HEATWAVE, :RAZORWIND, :WHIRLWIND, :PETALBLIZZARD, :FAIRYWIND, :SANDSTORM,
+                    :BLEAKWINDSTORM, :SANDSEARSTORM, :WILDBOLTSTORM, :SPRINGTIDESTORM]
+      if wind_moves.include?(move.id)
+        score -= 80  # Move absorbed AND gives them +1 Atk
+      end
+    end
+    
+    # === Mycelium Might awareness (target has it) ===
+    # Status moves get +1 priority bracket but always move LAST. Only matters for our own move scoring
+    # — if WE have Mycelium Might using a status move, it bypasses Prankster blockers but is slow.
+    # Minor: rely on existing priority/status scoring.
+    
+    # === Terrain Seeds: setting matching terrain triggers opponent's Seed item ===
+    # Electric Seed → +1 Def, Grassy Seed → +1 Def, Misty Seed → +1 SpDef, Psychic Seed → +1 SpDef
+    terrain_seed_map = {
+      :ELECTRICTERRAIN => :ELECTRICSEED,
+      :GRASSYTERRAIN   => :GRASSYSEED,
+      :MISTYTERRAIN    => :MISTYSEED,
+      :PSYCHICTERRAIN  => :PSYCHICSEED
+    }
+    if terrain_seed_map.key?(move.id) && @battle
+      seed = terrain_seed_map[move.id]
+      begin
+        @battle.allOtherSideBattlers(user.index).each do |o|
+          next unless o && !o.fainted?
+          if o.item_id == seed
+            score -= 25  # Hand them a free +1 defensive boost
+          end
+        end
+        @battle.allSameSideBattlers(user.index).each do |a|
+          next unless a && !a.fainted?
+          if a.item_id == seed
+            score += 15  # Allies benefit
+          end
+        end
+      rescue
+      end
+    end
+    
+    # === Wind Power / Electromorphosis target awareness ===
+    # On taking a Wind move (Wind Power) or Electric move (Electromorphosis),
+    # target gets a Charge effect (next Electric move 2x BP).
+    if move.damagingMove? && target && !AdvancedAI::Utilities.ignores_ability?(user)
+      move_type = (move.pbCalcType(user) rescue move.type)
+      wind_moves = [:HURRICANE, :GUST, :AIRCUTTER, :TAILWIND, :BLIZZARD, :ICYWIND,
+                    :HEATWAVE, :PETALBLIZZARD, :FAIRYWIND, :SANDSTORM,
+                    :BLEAKWINDSTORM, :SANDSEARSTORM, :WILDBOLTSTORM, :SPRINGTIDESTORM]
+      if target.hasActiveAbility?(:WINDPOWER) && wind_moves.include?(move.id)
+        # Check if target has a strong Electric move to follow up
+        has_electric = target.moves.any? { |m| m && m.damagingMove? && m.type == :ELECTRIC } rescue false
+        score -= (has_electric ? 25 : 8)
+      end
+      if target.hasActiveAbility?(:ELECTROMORPHOSIS) && move_type == :ELECTRIC
+        # Wait — Electric on Electromorphosis still hits (no immunity), but also charges them.
+        # Less bad if we have super-effective coverage anyway.
+        has_electric = target.moves.any? { |m| m && m.damagingMove? && m.type == :ELECTRIC } rescue false
+        score -= (has_electric ? 20 : 5)
+      end
+    end
+    
+    # === Ripen target awareness ===
+    # Ripen doubles berry effect. If our move would trigger their berry (via threshold),
+    # they get DOUBLE the benefit (e.g. Sitrus heals 50% instead of 25%, Liechi gives +2 Atk).
+    if move.damagingMove? && target && target.hasActiveAbility?(:RIPEN) &&
+       !AdvancedAI::Utilities.ignores_ability?(user)
+      # Pinch berries (1/4 HP) and standard healing/stat berries
+      power_berries = [:LIECHIBERRY, :PETAYABERRY, :GANLONBERRY, :APICOTBERRY, :SALACBERRY,
+                       :STARFBERRY, :MICLEBERRY, :CUSTAPBERRY,
+                       :SITRUSBERRY, :ENIGMABERRY, :ORANBERRY, :BERRYJUICE,
+                       :LANSATBERRY, :MARANGABERRY, :KEEBERRY]
+      if power_berries.include?(target.item_id)
+        rough = (calculate_rough_damage(move, user, target) rescue 0)
+        post_hp = target.hp - rough
+        # Pinch berry threshold (25% HP)
+        pinch_threshold = target.totalhp / 4
+        if post_hp > 0 && post_hp <= pinch_threshold && target.hp > pinch_threshold
+          score -= 25  # Triggers pinch berry → DOUBLE effect
+        elsif post_hp > 0 && post_hp <= (target.totalhp / 2) && target.hp > (target.totalhp / 2) &&
+              [:SITRUSBERRY, :ORANBERRY, :ENIGMABERRY, :BERRYJUICE].include?(target.item_id)
+          score -= 20  # Sitrus heal threshold doubled
+        end
+      end
+    end
+    
+    # === Cud Chew target awareness ===
+    # If target ate a berry last turn AND has Cud Chew, they'll re-eat it next turn.
+    # We should pressure NOW before re-trigger.
+    if target && target.hasActiveAbility?(:CUDCHEW) &&
+       defined?(PBEffects::CudChew) && (target.effects[PBEffects::CudChew].to_i > 0 rescue false)
+      score += 8  # Slight urgency bonus on damaging moves
+    end
+    
+    # === Guard Dog awareness ===
+    # Intimidate is REVERSED on Guard Dog (they get +1 Atk instead of -1).
+    # Only relevant if we have Intimidate switch-out logic; minor for moves.
+    
+    return score
+  end
+
   # Contact Move Punishment
   # Accounts for Rough Skin, Iron Barbs, Rocky Helmet, etc.
   def score_contact_punishment(move, user, target)
@@ -1738,6 +2491,10 @@ class Battle::AI
     
     # Protective Pads prevents contact damage
     return 0 if user.hasActiveItem?(:PROTECTIVEPADS)
+    
+    # Punching Glove removes contact from punching moves
+    is_punching = (move.respond_to?(:punchingMove?) && move.punchingMove?) rescue false
+    return 0 if is_punching && user.hasActiveItem?(:PUNCHINGGLOVE)
     
     score_penalty = 0
     mold_breaker = AdvancedAI::Utilities.ignores_ability?(user)
@@ -2008,6 +2765,69 @@ class Battle::AI
       resolved_cc_type = AdvancedAI::CombatUtilities.resolve_move_type(user, move)
       type_check = Effectiveness.calculate(resolved_cc_type, *target.pbTypes(true))
       bp = (bp * 1.33).to_i if Effectiveness.super_effective?(type_check)
+    end
+    
+    # Hard Press (Gen 9) - up to 100 BP scaling with target's remaining HP
+    # Formula: floor(100 * targetHP / targetMaxHP), min 1
+    if move.id == :HARDPRESS && target.totalhp > 0
+      bp = [(100 * target.hp / target.totalhp.to_f).floor, 1].max
+    end
+    
+    # Fickle Beam (Gen 9) - 80 BP, 30% chance to double to 160. Expected ~104.
+    if move.id == :FICKLEBEAM
+      bp = 104
+    end
+    
+    # Comeuppance (Gen 9) - 1.5x last damage taken from target this turn
+    if move.id == :COMEUPPANCE
+      last_dmg = (user.lastHPLost rescue 0)
+      if last_dmg > 0
+        # Returns 1.5x as fixed damage — bypass normal calc
+        return (last_dmg * 1.5).to_i
+      else
+        return 0  # Will fail
+      end
+    end
+    
+    # Population Bomb (Gen 9) - 10 hits at 20 BP, 90% acc per hit
+    # Without Loaded Dice: expected ~3.3 hits. With Loaded Dice: 4-10 hits, avg ~7.
+    # Skill Link guarantees 10 hits.
+    if move.id == :POPULATIONBOMB
+      avg_hits = if user.hasActiveAbility?(:SKILLLINK)
+        10
+      elsif user.hasActiveItem?(:LOADEDDICE)
+        7
+      else
+        # Geometric expected value with 90% per-hit acc until first miss
+        4
+      end
+      bp = 20 * avg_hits
+    end
+    
+    # Triple Axel / Triple Kick - escalating damage 20/40/60. With Loaded Dice / Skill Link, all hits land.
+    if [:TRIPLEAXEL, :TRIPLEKICK].include?(move.id)
+      if user.hasActiveAbility?(:SKILLLINK) || user.hasActiveItem?(:LOADEDDICE)
+        bp = 120  # 20+40+60
+      else
+        # Without help, accuracy degrades — expected ~70 BP
+        bp = 70
+      end
+    end
+    
+    # Bullet Seed / Pin Missile / Rock Blast / Icicle Spear / Tail Slap / Scale Shot / Arm Thrust
+    # Multi-hit moves: 2-5 hits, avg ~3.2; Skill Link = 5; Loaded Dice = 4-5 (avg 4.5)
+    multi_hit_moves = [:BULLETSEED, :PINMISSILE, :ROCKBLAST, :ICICLESPEAR, :TAILSLAP,
+                       :SCALESHOT, :ARMTHRUST, :BARRAGE, :FURYSWIPES, :FURYATTACK,
+                       :COMETPUNCH, :SPIKECANNON, :WATERSHURIKEN]
+    if multi_hit_moves.include?(move.id) && bp > 0 && bp <= 30
+      avg_hits = if user.hasActiveAbility?(:SKILLLINK)
+        5.0
+      elsif user.hasActiveItem?(:LOADEDDICE)
+        4.5
+      else
+        3.2
+      end
+      bp = (bp * avg_hits).to_i
     end
     
     # === FUSION MOVES (Gen 5 - Reshiram/Zekrom) ===
@@ -2681,6 +3501,36 @@ class Battle::AI
       ability_mod *= 0.67  # Effective 1/1.5 damage reduction
     end
     
+    # === GEN 9 RUIN ABILITIES (Treasures of Ruin) ===
+    # Each Ruin ability lowers a stat for ALL Pokemon EXCEPT the holder, by 25% (×0.75).
+    # Sword of Ruin   → enemy Defense ×0.75 (boosts physical damage vs them)
+    # Beads of Ruin   → enemy Sp.Def ×0.75 (boosts special damage vs them)
+    # Vessel of Ruin  → enemy Sp.Atk ×0.75 (reduces special damage from them)
+    # Tablets of Ruin → enemy Atk    ×0.75 (reduces physical damage from them)
+    # Modeled here as a damage modifier (the underlying stat changes are equivalent).
+    if @battle
+      battlers = (@battle.battlers rescue []) || []
+      ignore_user_ab = AdvancedAI::Utilities.ignores_ability?(user)
+      battlers.each do |b|
+        next unless b && !b.fainted?
+        # Offensive Ruins (lower target's defenses) — boost OUR damage
+        if move.physicalMove? && b != target && b.hasActiveAbility?(:SWORDOFRUIN)
+          ability_mod *= (1.0 / 0.75)  # target Def ×0.75 → damage ×1.333
+        end
+        if move.specialMove? && b != target && b.hasActiveAbility?(:BEADSOFRUIN)
+          ability_mod *= (1.0 / 0.75)  # target SpDef ×0.75
+        end
+        # Defensive Ruins on opponent's side (lower OUR offense)
+        next if ignore_user_ab
+        if move.physicalMove? && b != user && b.hasActiveAbility?(:TABLETSOFRUIN)
+          ability_mod *= 0.75  # user Atk ×0.75
+        end
+        if move.specialMove? && b != user && b.hasActiveAbility?(:VESSELOFRUIN)
+          ability_mod *= 0.75  # user SpAtk ×0.75
+        end
+      end
+    end
+    
     # === WEATHER DAMAGE MODIFIERS ===
     weather_mod = 1.0
     if @battle
@@ -3149,53 +3999,9 @@ class Battle::AI
   def score_item_disruption(move, user, target)
     score = 0
     
-    # Trick / Switcheroo - swap items
-    if [:TRICK, :SWITCHEROO].include?(move.id)
-      # Can't swap if target has Sticky Hold
-      return -50 if target.hasActiveAbility?(:STICKYHOLD)
-      
-      # Can't swap if we have no item to give
-      return -30 if !user.item || user.item == :NONE
-      
-      # Swapping Choice items to non-Choice mons is great
-      if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(user.item_id)
-        score += 50  # Cripple their moveset
-        # Even better if they rely on status moves
-        status_count = target.moves.count { |m| m && m.statusMove? }
-        score += status_count * 15
-      end
-      
-      # Swapping Flame Orb / Toxic Orb
-      if [:FLAMEORB, :TOXICORB].include?(user.item_id)
-        return -50 if target.status != :NONE  # Already statused
-        score += 40  # Inflict status
-      end
-      
-      # Swapping Lagging Tail / Iron Ball to fast mons
-      if [:LAGGINGTAIL, :IRONBALL].include?(user.item_id) && target.pbSpeed > 100
-        score += 30  # Slow them down
-      end
-      
-      # Getting a good item from target
-      good_items = [:LEFTOVERS, :LIFEORB, :FOCUSSASH, :CHOICEBAND, :CHOICESPECS,
-                    :CHOICESCARF, :ASSAULTVEST, :ROCKYHELMET, :EVIOLITE]
-      if good_items.include?(target.item_id)
-        score += 25  # We get a good item
-      end
-    end
-    
-    # Knock Off bonus (already handled in damage calc, but add strategic value)
-    if move.id == :KNOCKOFF && target.item && target.item != :NONE
-      # Removing key items is valuable
-      valuable_items = [:LEFTOVERS, :EVIOLITE, :FOCUSSASH, :ASSAULTVEST,
-                        :LIFEORB, :CHOICEBAND, :CHOICESPECS, :CHOICESCARF,
-                        :ROCKYHELMET, :HEAVYDUTYBOOTS]
-      if valuable_items.include?(target.item_id)
-        score += 25
-      else
-        score += 10
-      end
-    end
+    # NOTE: Trick/Switcheroo and Knock Off detailed scoring is handled by
+    # Disruption_Moves.rb (evaluate_trick_value / evaluate_knockoff_value).
+    # We skip them here to avoid double-counting.
     
     # Thief / Covet - steal item
     if [:THIEF, :COVET].include?(move.id)
@@ -3356,9 +4162,25 @@ class Battle::AI
   def score_protect_utility(move, user, target)
     return 0 unless AdvancedAI.protect_move?(move.id)
     protect_rate = user.effects[PBEffects::ProtectRate] rescue 0
-    return -100 if (protect_rate || 0) > 1  # Don't spam Protect
+    protect_rate = protect_rate || 1
     
-    score = 0
+    # === CONSECUTIVE PROTECT PENALTY ===
+    # ProtectRate starts at 1, triples each success (Gen 6+): 1 → 3 → 9 → 27...
+    # At rate 3: 1/3 chance of success (33%) — penalize moderately
+    # At rate 9: 1/9 chance of success (11%) — penalize heavily
+    # At rate 27+: almost guaranteed failure — reject
+    if protect_rate >= 9
+      AdvancedAI.log("Protect rejected: success chance #{(100.0 / protect_rate).round}%", "ProtectSpam")
+      return -300  # Almost certainly fails
+    elsif protect_rate >= 3
+      # Scale penalty: -120 at rate 3, -200 at rate 9
+      penalty = -(40 * protect_rate).to_i
+      penalty = [penalty, -200].max  # Cap at -200
+      AdvancedAI.log("Protect penalized: rate=#{protect_rate}, penalty=#{penalty}", "ProtectSpam")
+      score = penalty
+    else
+      score = 0
+    end
     
     # 1. Self-Recovery / Stat Boost Stall
     # Leftovers / Black Sludge / Ingrain / Aqua Ring / Poison Heal
@@ -3474,10 +4296,9 @@ class Battle::AI
     
     # Penalize using the same move consecutively
     if move.id == last_move
-      # Moves that SHOULD be spammed (setup sweepers, Protect stalling)
-      spam_allowed = [:PROTECT, :DETECT, :KINGSSHIELD, :SPIKYSHIELD, :BANEFULBUNKER,
-                      :OBSTRUCT, :SILKTRAP, :BURNINGBULWARK,  # Protect variants
-                      :SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :QUIVERDANCE,  # Setup
+      # Moves that SHOULD be spammed (setup sweepers only — NOT Protect)
+      # Protect repetition penalty is handled by score_protect_utility via ProtectRate
+      spam_allowed = [:SWORDSDANCE, :NASTYPLOT, :DRAGONDANCE, :QUIVERDANCE,  # Setup
                       :CALMMIND, :IRONDEFENSE, :AMNESIA, :AGILITY,  # More setup
                       :SHELLSMASH, :GEOMANCY, :VICTORYDANCE]  # Ultra setup
       

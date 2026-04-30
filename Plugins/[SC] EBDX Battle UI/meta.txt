@@ -1,0 +1,8 @@
+Name       = EBDX Battle UI
+Version    = 2.0.0
+Essentials = 21.1
+Requires   = Deluxe Battle Kit,1.0
+Requires   = [DBK] Enhanced Battle UI,1.0
+Requires   = Shattered Crowns Script System,2.0
+Website    = https://github.com/99Problemsx/Pokemon-Shattered-Crowns
+Credits    = Luka S.J.,Golisopod User,Maruno,99Problemsx

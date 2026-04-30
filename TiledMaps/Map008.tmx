@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="7">
+  <properties>
+    <property name="tileset_id" value="3" />
+    <property name="source" value="Map008.rxdata" />
+    <property name="tileset_name" value="Inside" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_3.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Interior general" tilewidth="32" tileheight="32" tilecount="1710" columns="8">
+    <image source="../Graphics/Tilesets/Interior general.png" width="256" height="6848" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+416,416,416,416,416,416,416,416,416,416,416,416,416,542,542,542,542,542,542,542,
+424,424,424,424,424,424,424,424,424,424,424,424,424,542,542,542,542,542,542,542,
+769,769,769,769,769,769,769,769,769,769,769,769,769,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+769,760,760,760,760,760,760,760,760,760,760,760,760,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,1530,1531,0,1712,1491,1492,0,1440,0,1504,1505,0,0,0,0,0,0,0,
+1569,1570,1538,1539,0,1720,1499,1500,0,1448,0,1512,1513,0,0,0,0,0,0,0,
+1577,1578,1546,1547,0,1728,0,0,0,0,0,1520,1521,0,0,0,0,0,0,0,
+0,0,0,0,1168,1169,1169,1169,1169,1170,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1176,1177,1177,1177,1177,1178,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1176,1177,1177,1177,1177,1178,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1184,1185,1185,1185,1185,1186,0,0,0,0,0,0,0,0,0,0,
+1770,0,0,0,0,0,0,0,0,0,0,0,1770,0,0,0,0,0,0,0,
+1778,0,1245,1246,1247,0,0,0,0,0,0,0,1778,0,0,0,0,0,0,0,
+0,0,1253,1254,1255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1674,2083,2085,1675,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1674,2091,2093,1675,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Contest ribbon giver" type="Event" x="96" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"Contest ribbon giver","x":3,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_LADY","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":108,"i":0,"p":["Gives or upgrades a contest ribbon for the lead "]},{"c":408,"i":0,"p":["Pok\u00E9mon."]},{"c":408,"i":0,"p":["The method upgradeRibbon either upgrades an "]},{"c":408,"i":0,"p":["existing ribbon to the next one listed, or gives the "]},{"c":408,"i":0,"p":["first ribbon if the Pok\u00E9mon has none of them."]},{"c":408,"i":0,"p":["Returns nil if couldn\u0027t add/upgrade a ribbon."]},{"c":101,"i":0,"p":["\\rHi! I\u0027m the Contest Lady!"]},{"c":101,"i":0,"p":["\\rI give out contest ribbons. Do you want one?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":355,"i":1,"p":["pkmn = $player.first_pokemon"]},{"c":655,"i":1,"p":["ret = pkmn.upgradeRibbon("]},{"c":655,"i":1,"p":["  :HOENNCOOL,"]},{"c":655,"i":1,"p":["  :HOENNCOOLSUPER,"]},{"c":655,"i":1,"p":["  :HOENNCOOLHYPER,"]},{"c":655,"i":1,"p":["  :HOENNCOOLMASTER"]},{"c":655,"i":1,"p":[")"]},{"c":355,"i":1,"p":["pbSet(1, ret || :NONE)"]},{"c":655,"i":1,"p":["pbSet(2, pkmn.name)"]},{"c":655,"i":1,"p":["if ret"]},{"c":655,"i":1,"p":["  data = GameData::Ribbon.get(ret)"]},{"c":655,"i":1,"p":["  pbSet(3, data.name)"]},{"c":655,"i":1,"p":["end"]},{"c":111,"i":1,"p":[12,"pbGet(1) == :NONE"]},{"c":101,"i":2,"p":["\\rSorry, your \\v[2] already has the highest ranked "]},{"c":401,"i":2,"p":["Cool Ribbon."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\PN received the \\v[3]."]},{"c":401,"i":2,"p":["\\me[Item get]\\wtnp[40]"]},{"c":101,"i":2,"p":["\\PN put the \\v[3] on \\v[2]."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\rThat\u0027s your choice."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Stats judge" type="Event" x="256" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="6" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":6,"name":"Stats judge","x":8,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 10","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bIf you\u0027d like, I could judge the intriguing potential of "]},{"c":401,"i":0,"p":["your Pok\u00E9mon."]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":101,"i":1,"p":["\\bWhich Pok\u00E9mon would you like me to judge?"]},{"c":355,"i":1,"p":["pbChooseNonEggPokemon(1, 2)"]},{"c":111,"i":1,"p":[1,1,0,0,4]},{"c":101,"i":2,"p":["\\b...Oh? You don\u0027t need me to judge. I get it."]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":108,"i":1,"p":["Say something depending on the total number of IVs "]},{"c":408,"i":1,"p":["the Pok\u00E9mon has."]},{"c":355,"i":1,"p":["ivs = pbGetPokemon(1).calcIV"]},{"c":655,"i":1,"p":["total = 0"]},{"c":655,"i":1,"p":["ivs.each_value { |v| total \u002B= v }"]},{"c":655,"i":1,"p":["pbSet(2, total)"]},{"c":101,"i":1,"p":["\\bI see, I see..."]},{"c":111,"i":1,"p":[1,1,0,150,3]},{"c":101,"i":2,"p":["\\bThis Pok\u00E9mon\u0027s potential is outstanding overall."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[1,1,0,120,3]},{"c":101,"i":3,"p":["\\bThis Pok\u00E9mon\u0027s potential is relatively superior "]},{"c":401,"i":3,"p":["overall."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[1,1,0,90,3]},{"c":101,"i":4,"p":["\\bThis Pok\u00E9mon\u0027s potential is above average overall."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\bThis Pok\u00E9mon\u0027s potential is decent overall."]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":101,"i":1,"p":["\\bThat\u0027s my determination, and it\u0027s final."]},{"c":108,"i":1,"p":["Find out which stat(s) have the highest value, and "]},{"c":408,"i":1,"p":["show a message about each of them."]},{"c":355,"i":1,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":1,"p":["ivs  = pkmn.calcIV"]},{"c":655,"i":1,"p":["best = []"]},{"c":655,"i":1,"p":["val  = -1"]},{"c":355,"i":1,"p":["[:HP, :ATTACK, :DEFENSE,"]},{"c":655,"i":1,"p":[" :SPECIAL_ATTACK, :SPECIAL_DEFENSE,"]},{"c":655,"i":1,"p":[" :SPEED].each do |s|"]},{"c":655,"i":1,"p":["  if ivs[s] \u003E val"]},{"c":655,"i":1,"p":["    best = [s]"]},{"c":655,"i":1,"p":["    val  = ivs[s]"]},{"c":655,"i":1,"p":["  elsif ivs[s] == val"]},{"c":655,"i":1,"p":["    best.push(s)"]},{"c":655,"i":1,"p":["  end"]},{"c":655,"i":1,"p":["end"]},{"c":355,"i":1,"p":["pbSet(2, best)"]},{"c":655,"i":1,"p":["pbSet(3, val)"]},{"c":655,"i":1,"p":["data = GameData::Stat.get(best[0])"]},{"c":655,"i":1,"p":["pbSet(4, data.name)"]},{"c":655,"i":1,"p":["pbSet(5, best.length - 1)"]},{"c":101,"i":1,"p":["\\bIncidentally, I would say the best potential lies in its "]},{"c":401,"i":1,"p":["\\v[4] stat."]},{"c":112,"i":1,"p":[]},{"c":111,"i":2,"p":[1,5,0,0,3]},{"c":355,"i":3,"p":["best = pbGet(2)"]},{"c":655,"i":3,"p":["best[0] = nil"]},{"c":655,"i":3,"p":["best.compact!"]},{"c":355,"i":3,"p":["num = {"]},{"c":655,"i":3,"p":["  :HP              =\u003E 0,"]},{"c":655,"i":3,"p":["  :ATTACK          =\u003E 1,"]},{"c":655,"i":3,"p":["  :DEFENSE         =\u003E 2,"]},{"c":655,"i":3,"p":["  :SPEED           =\u003E 3,"]},{"c":655,"i":3,"p":["  :SPECIAL_ATTACK  =\u003E 4,"]},{"c":655,"i":3,"p":["  :SPECIAL_DEFENSE =\u003E 5"]},{"c":655,"i":3,"p":["}[best[0]]"]},{"c":655,"i":3,"p":["pbSet(4, num)"]},{"c":122,"i":3,"p":[5,5,2,0,1]},{"c":111,"i":3,"p":[1,4,0,1,0]},{"c":101,"i":4,"p":["\\bAnd its Attack stat is also good."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":111,"i":4,"p":[1,4,0,2,0]},{"c":101,"i":5,"p":["\\bI see, its Defense stat is also good."]},{"c":0,"i":5,"p":[]},{"c":411,"i":4,"p":[]},{"c":111,"i":5,"p":[1,4,0,3,0]},{"c":101,"i":6,"p":["\\bWell, its Speed stat is also good."]},{"c":0,"i":6,"p":[]},{"c":411,"i":5,"p":[]},{"c":111,"i":6,"p":[1,4,0,4,0]},{"c":101,"i":7,"p":["\\bIts Special Attack stat is equally good."]},{"c":0,"i":7,"p":[]},{"c":411,"i":6,"p":[]},{"c":111,"i":7,"p":[1,4,0,5,0]},{"c":101,"i":8,"p":["\\bIts Special Defense stat is good as well."]},{"c":0,"i":8,"p":[]},{"c":411,"i":7,"p":[]},{"c":0,"i":8,"p":[]},{"c":412,"i":7,"p":[]},{"c":0,"i":7,"p":[]},{"c":412,"i":6,"p":[]},{"c":0,"i":6,"p":[]},{"c":412,"i":5,"p":[]},{"c":0,"i":5,"p":[]},{"c":412,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":113,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":413,"i":1,"p":[]},{"c":108,"i":1,"p":["Show a message depending on the value of the "]},{"c":408,"i":1,"p":["highest stat IV."]},{"c":111,"i":1,"p":[1,3,0,30,3]},{"c":101,"i":2,"p":["\\bIt can\u0027t be better in that regard. That\u0027s how I judged "]},{"c":401,"i":2,"p":["it."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[1,3,0,25,3]},{"c":101,"i":3,"p":["\\bIt\u0027s fantastic in that regard. That\u0027s how I judged it."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[1,3,0,15,3]},{"c":101,"i":4,"p":["\\bIt\u0027s very good in that regard. That\u0027s how I judged it."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\bIt\u0027s rather decent in that regard. That\u0027s how I judged "]},{"c":401,"i":4,"p":["it."]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\b...Oh? You don\u0027t need me to judge. I get it."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Exit" type="Event" x="96" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit","x":3,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,2,17,7,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Daisy" type="Event" x="160" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Daisy","x":5,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 26","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rDaisy: Hi, \\PN!"]},{"c":101,"i":0,"p":["\\rDaisy: Would you like me to groom one of your "]},{"c":401,"i":0,"p":["Pok\u00E9mon?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":101,"i":1,"p":["\\rDaisy: Which Pok\u00E9mon do you want me to groom?"]},{"c":355,"i":1,"p":["pbChooseNonEggPokemon(1, 2)"]},{"c":111,"i":1,"p":[1,1,0,0,4]},{"c":101,"i":2,"p":["\\rDaisy: Oh, okay then."]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":355,"i":1,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":1,"p":["pkmn.changeHappiness(\u0022groom\u0022)"]},{"c":655,"i":1,"p":["pkmn.beauty \u002B= 40"]},{"c":101,"i":1,"p":["\\rDaisy: There! \\v[2] looks a lot happier and prettier "]},{"c":401,"i":1,"p":["now!"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\rDaisy: Oh, okay then."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="Dr Footstep" type="Event" x="32" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Dr Footstep","x":1,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bDr. Footstep: Hi! I rate the footprints of Pok\u00E9mon!"]},{"c":101,"i":0,"p":["\\bDr. Footstep: Can I rate your Pok\u00E9mon for you?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":101,"i":1,"p":["\\bDr. Footstep: Which Pok\u00E9mon do you want me to "]},{"c":401,"i":1,"p":["rate?"]},{"c":355,"i":1,"p":["pbChooseNonEggPokemon(1, 2)"]},{"c":111,"i":1,"p":[1,1,0,0,4]},{"c":101,"i":2,"p":["\\bDr. Footstep: Maybe next time, then."]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":355,"i":1,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":1,"p":["h = pkmn.happiness"]},{"c":655,"i":1,"p":["stage = 0"]},{"c":655,"i":1,"p":["stage = 1 if h \u003E= 1"]},{"c":655,"i":1,"p":["stage = 2 if h \u003E= 50"]},{"c":655,"i":1,"p":["stage = 3 if h \u003E= 100"]},{"c":655,"i":1,"p":["stage = 4 if h \u003E= 150"]},{"c":655,"i":1,"p":["stage = 5 if h \u003E= 200"]},{"c":655,"i":1,"p":["stage = 6 if h \u003E= 255"]},{"c":655,"i":1,"p":["pbSet(3, stage)"]},{"c":111,"i":1,"p":[1,3,0,0,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: By any chance, you... Are you a very "]},{"c":401,"i":2,"p":["strict person? I feel that your \\v[2] really doesn\u0027t like "]},{"c":401,"i":2,"p":["you..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,1,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: Hmmm... Your \\v[2] may not like you "]},{"c":401,"i":2,"p":["very much."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,2,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: The relationship is neither good nor "]},{"c":401,"i":2,"p":["bad... Your \\v[2] looks neutral."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,3,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: Your \\v[2] is a little friendly to you... "]},{"c":401,"i":2,"p":["That\u0027s what I\u0027m getting."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,4,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: Your \\v[2] is friendly to you. It must be "]},{"c":401,"i":2,"p":["happy with you."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,5,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: Your \\v[2] is quite friendly to you! You "]},{"c":401,"i":2,"p":["must be a kind person!"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[1,3,0,6,0]},{"c":101,"i":2,"p":["\\bDr. Footstep: Your \\v[2] is super friendly to you! I\u0027m "]},{"c":401,"i":2,"p":["a bit jealous!"]},{"c":111,"i":2,"p":[12,"!pbGetPokemon(1).hasRibbon?(:FOOTPRINT)"]},{"c":101,"i":3,"p":["\\bDr. Footstep: I shall reward your \\v[2] with a ribbon!"]},{"c":355,"i":3,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":3,"p":["pkmn.giveRibbon(:FOOTPRINT)"]},{"c":101,"i":3,"p":["\\PN received the Footprint Ribbon."]},{"c":401,"i":3,"p":["\\me[Item get]\\wtnp[20]"]},{"c":101,"i":3,"p":["\\PN put the Footprint Ribbon on \\v[2]."]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\bDr. Footstep: Maybe next time, then."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="6" name="Effort ribbon giver" type="Event" x="64" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Effort ribbon giver","x":2,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 04","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":108,"i":0,"p":["Looks at the total EVs of the lead Pok\u00E9mon, and "]},{"c":408,"i":0,"p":["rewards a ribbon to it if the total is maxed (equal to "]},{"c":408,"i":0,"p":["Pokemon::EV_LIMIT, which is 510 by default)."]},{"c":355,"i":0,"p":["pkmn = $player.first_pokemon"]},{"c":655,"i":0,"p":["total = 0"]},{"c":655,"i":0,"p":["pkmn.ev.each_value { |v| total \u002B= v }"]},{"c":655,"i":0,"p":["maxed = 0"]},{"c":655,"i":0,"p":["if total \u003E= Pokemon::EV_LIMIT"]},{"c":655,"i":0,"p":["  maxed = 1"]},{"c":655,"i":0,"p":["end"]},{"c":655,"i":0,"p":["maxed = 2 if pkmn.hasRibbon?(:EFFORT)"]},{"c":655,"i":0,"p":["pbSet(1, pkmn.name)"]},{"c":655,"i":0,"p":["pbSet(2, maxed)"]},{"c":101,"i":0,"p":["\\rOh?\\nYour \\v[1]..."]},{"c":111,"i":0,"p":[1,2,0,2,0]},{"c":108,"i":1,"p":["Pok\u00E9mon already has an Effort Ribbon."]},{"c":101,"i":1,"p":["\\rOh! Your \\v[1], that Effort Ribbon looks good on it!"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":111,"i":1,"p":[1,2,0,1,0]},{"c":108,"i":2,"p":["Pok\u00E9mon has full EVs and does not already have an "]},{"c":408,"i":2,"p":["Effort Ribbon - give it that ribbon."]},{"c":101,"i":2,"p":["\\rWent for it stupendously!"]},{"c":101,"i":2,"p":["\\rAs its reward, please give it this Effort Ribbon."]},{"c":355,"i":2,"p":["pkmn = $player.first_pokemon"]},{"c":655,"i":2,"p":["pkmn.giveRibbon(:EFFORT)"]},{"c":101,"i":2,"p":["\\PN received the Effort Ribbon."]},{"c":401,"i":2,"p":["\\me[Item get]\\wtnp[20]"]},{"c":101,"i":2,"p":["\\PN put the Effort Ribbon on \\v[1]."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":108,"i":2,"p":["Pok\u00E9mon does not have full EVs."]},{"c":101,"i":2,"p":["\\rYou have to go for it a little harder."]},{"c":101,"i":2,"p":["\\rIf you do, I\u0027ll give your Pok\u00E9mon something nice."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

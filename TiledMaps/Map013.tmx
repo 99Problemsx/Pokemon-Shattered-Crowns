@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
+  <properties>
+    <property name="tileset_id" value="12" />
+    <property name="source" value="Map013.rxdata" />
+    <property name="tileset_name" value="Game Corner" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_12.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Game Corner interior" tilewidth="32" tileheight="32" tilecount="240" columns="8">
+    <image source="../Graphics/Tilesets/Game Corner interior.png" width="256" height="960" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="32">
+    <data encoding="csv">
+384,384,384,384,385,386,387,384,384,384,384,384,384,385,386,387,384,384,479,479,
+392,392,392,392,393,394,395,392,392,392,392,392,392,393,394,395,392,392,479,479,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,479,479,
+409,409,409,409,409,409,409,410,409,409,409,410,409,409,409,409,409,410,479,479,
+409,425,417,417,417,417,417,418,425,417,417,418,425,417,417,417,417,418,479,479,
+409,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,479,479,
+409,411,400,400,400,409,409,411,400,400,400,400,400,400,400,400,400,400,479,479,
+409,410,400,400,400,409,409,410,400,400,400,400,400,400,400,400,400,400,479,479,
+409,410,400,400,400,409,409,410,400,400,409,409,409,411,400,400,400,400,479,479,
+409,410,400,400,400,409,409,410,400,400,409,409,409,410,400,400,400,400,479,479,
+409,410,400,400,400,409,409,410,400,400,409,409,409,410,400,400,400,400,479,479,
+409,418,400,400,400,425,417,418,400,400,425,417,417,418,400,400,400,400,479,479,
+409,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,479,479,
+409,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+384,384,384,385,386,387,384,384,384,479,479,479,479,479,479,479,479,479,479,479,
+392,392,392,393,394,395,392,392,392,479,479,479,479,479,479,479,479,479,479,479,
+409,409,409,409,409,409,409,409,409,479,479,479,479,479,479,479,479,479,479,479,
+409,409,409,409,409,409,409,409,409,479,479,479,479,479,479,479,479,479,479,479,
+409,417,417,417,417,417,417,417,417,479,479,479,479,479,479,479,479,479,479,479,
+409,400,400,400,400,400,400,400,400,479,479,479,479,479,479,479,479,479,479,479,
+409,409,411,400,400,400,400,409,409,479,479,479,479,479,479,479,479,479,479,479,
+409,409,410,400,400,400,400,407,409,479,479,479,479,479,479,479,479,479,479,479,
+409,400,400,400,400,400,400,400,400,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,
+479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479,479
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="32">
+    <data encoding="csv">
+0,0,488,489,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+499,604,496,497,0,0,604,0,604,0,604,0,604,0,0,0,604,499,0,0,
+507,597,504,505,571,613,599,0,597,598,599,0,597,614,598,614,599,507,0,0,
+0,605,623,577,579,621,607,0,605,606,607,0,605,622,606,622,607,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+513,0,0,0,0,512,513,0,0,0,0,0,0,0,0,0,0,486,0,0,
+521,532,0,0,524,520,521,532,0,0,0,0,0,0,0,0,0,494,0,0,
+521,532,0,0,524,520,521,532,0,0,525,526,527,0,0,0,0,518,0,0,
+521,532,0,0,524,520,521,532,0,0,533,534,535,0,0,0,0,486,0,0,
+521,532,0,0,524,520,521,532,0,0,544,545,546,0,0,0,0,494,0,0,
+529,532,0,0,524,528,529,532,0,0,552,553,554,0,0,0,0,518,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+499,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,509,0,0,
+507,0,0,0,0,0,0,0,468,469,470,0,0,0,0,0,0,517,0,0,
+0,0,0,0,0,0,0,0,476,477,478,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,488,489,0,0,0,488,489,0,0,0,0,0,0,0,0,0,0,0,0,
+604,496,497,0,0,0,496,497,604,0,0,0,0,0,0,0,0,0,0,0,
+597,504,505,614,598,614,504,505,599,0,0,0,0,0,0,0,0,0,0,0,
+605,622,606,622,606,622,606,622,607,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+480,481,0,0,0,0,0,480,481,0,0,0,0,0,0,0,0,0,0,0,
+496,497,0,0,0,0,0,496,497,0,0,0,0,0,0,0,0,0,0,0,
+504,505,0,0,0,0,0,504,505,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,468,469,470,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,476,477,478,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="32">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,615,569,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,536,537,538,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,614,598,0,0,0,598,614,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Triple Triad duel with prize" type="Event" x="512" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="27" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":27,"name":"Triple Triad duel with prize","x":16,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_COOLTRAINER_F","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rIf you win, I\u0027ll give you an Arceus card!"]},{"c":111,"i":0,"p":[12,"pbCanTriadDuel?"]},{"c":108,"i":1,"p":["This duel has a prize card defined, which the player "]},{"c":408,"i":1,"p":["gets if they win (ignoring any rule which affects "]},{"c":408,"i":1,"p":["prizes).  If the player draws or loses, however, the "]},{"c":408,"i":1,"p":["rules apply normally."]},{"c":355,"i":1,"p":["pbTriadDuel(\u0022Sophie\u0022, 0, 5, nil, nil,"]},{"c":655,"i":1,"p":["  :ARCEUS"]},{"c":655,"i":1,"p":[")"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\rOh, you don\u0027t have enough cards to play. You need "]},{"c":401,"i":1,"p":["at least 5."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Slot Machine 5" type="Event" x="0" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"Slot Machine 5","x":0,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Voltorb Flip" type="Event" x="352" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="16" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":16,"name":"Voltorb Flip","x":11,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":209,"i":0,"p":[18,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":210,"i":0,"p":[]},{"c":101,"i":0,"p":["\\bMr. Game: Show me how you play and make my "]},{"c":401,"i":0,"p":["heart pound with excitement!"]},{"c":355,"i":0,"p":["pbVoltorbFlip"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Triple Triad explainer" type="Event" x="416" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="22" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":22,"name":"Triple Triad explainer","x":13,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 08","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rI\u0027m here to explain the rules of Triple Triad."]},{"c":118,"i":0,"p":["Choices"]},{"c":101,"i":0,"p":["\\rWhich topic do you want to learn about?"]},{"c":102,"i":0,"p":[["Basics","Game rules","Prizes","Exit"],4]},{"c":402,"i":0,"p":[0,"Basics"]},{"c":101,"i":1,"p":["\\rTriple Triad is a game played with special cards "]},{"c":401,"i":1,"p":["placed on a 3x3 board."]},{"c":101,"i":1,"p":["\\rEach card has 4 numbers on it, one per side.  "]},{"c":401,"i":1,"p":["These numbers are so-called stats."]},{"c":101,"i":1,"p":["\\rPlayers take turns placing cards on the board. As "]},{"c":401,"i":1,"p":["they do so, they try to capture and gain control of "]},{"c":401,"i":1,"p":["their opponent\u0027s cards."]},{"c":101,"i":1,"p":["\\rThat\u0027s where the numbers come in. If a player "]},{"c":401,"i":1,"p":["places a card with a higher number next to a card "]},{"c":401,"i":1,"p":["with a lower number, the player captures that card."]},{"c":101,"i":1,"p":["\\rThus, the goal of the game is to gain control of more "]},{"c":401,"i":1,"p":["cards than the other player by the end of the game."]},{"c":119,"i":1,"p":["Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Game rules"]},{"c":101,"i":1,"p":["\\rThere are a number of optional game rules you can "]},{"c":401,"i":1,"p":["apply to individual games."]},{"c":101,"i":1,"p":["\\rThey can affect card stats, how cards capture "]},{"c":401,"i":1,"p":["each other, the scoring and the prizes."]},{"c":119,"i":1,"p":["Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Prizes"]},{"c":101,"i":1,"p":["\\rWhen you win a game, you will recive 1 random "]},{"c":401,"i":1,"p":["card from your opponent from their Deck."]},{"c":101,"i":1,"p":["\\rThis also works the other way around: if you lose, "]},{"c":401,"i":1,"p":["you have to give your opponent one of your cards, "]},{"c":401,"i":1,"p":["chosen at random."]},{"c":101,"i":1,"p":["\\rYou can change what you win or lose from a game "]},{"c":401,"i":1,"p":["by using an optional game rule."]},{"c":119,"i":1,"p":["Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Exit"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="Slot Machine 11" type="Event" x="192" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="11" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":11,"name":"Slot Machine 11","x":6,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="6" name="Slot Machine 6" type="Event" x="160" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="6" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":6,"name":"Slot Machine 6","x":5,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,6]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="7" name="Lottery" type="Event" x="288" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="17" />
+        <property name="pages" value="4" />
+        <property name="event_data" type="string">{"id":17,"name":"Lottery","x":9,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 23","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rThis is the Pok\u00E9mon Lottery Corner. I\u0027m Felicity, your "]},{"c":401,"i":0,"p":["attendant today."]},{"c":101,"i":0,"p":["\\rIf the drawn number matches the ID No. of any of "]},{"c":401,"i":0,"p":["your Pok\u00E9mon, you could win fabulous gifts."]},{"c":101,"i":0,"p":["\\rWould you like to check today\u0027s lucky number?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":101,"i":1,"p":["\\rFirst, I\u0027ll look up today\u0027s Pok\u00E9mon Lottery Corner "]},{"c":401,"i":1,"p":["lucky number."]},{"c":101,"i":1,"p":["..."]},{"c":108,"i":1,"p":["This line of code calculates a winning ID number "]},{"c":408,"i":1,"p":["depending on the date, and puts it in Game Variable "]},{"c":408,"i":1,"p":["1."]},{"c":355,"i":1,"p":["pbSetLotteryNumber(1)"]},{"c":101,"i":1,"p":["\\rYour Loto Ticket number is \\v[1]."]},{"c":101,"i":1,"p":["\\rNow, let\u0027s see if it matches the ID No. of any of your "]},{"c":401,"i":1,"p":["Pok\u00E9mon."]},{"c":108,"i":1,"p":["This line of code checks all Pok\u00E9mon in the player\u0027s "]},{"c":408,"i":1,"p":["party and storage for one that best matches the "]},{"c":408,"i":1,"p":["given ID number. The Pok\u00E9mon\u0027s name is put in Game "]},{"c":408,"i":1,"p":["Variable 2, its location (1=party, 2=storage) is put in "]},{"c":408,"i":1,"p":["Game Variable 3, and the number of digits matched is "]},{"c":408,"i":1,"p":["put in Game Variable 4."]},{"c":355,"i":1,"p":["pbLottery(pbGet(1), 2, 3, 4)"]},{"c":111,"i":1,"p":[1,4,0,0,0]},{"c":108,"i":2,"p":["No digits were matched."]},{"c":101,"i":2,"p":["\\rI\u0027m sorry. You didn\u0027t get a match..."]},{"c":101,"i":2,"p":["\\rPlease do visit again."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":355,"i":2,"p":["$stats.lottery_prize_count \u002B= 1"]},{"c":108,"i":2,"p":["1 or more digits were matched."]},{"c":108,"i":2,"p":["Show a message depending on whether the matching "]},{"c":408,"i":2,"p":["Pok\u00E9mon is in the player\u0027s party or Pok\u00E9mon storage."]},{"c":111,"i":2,"p":[1,3,0,1,0]},{"c":101,"i":3,"p":["\\rCongratulations!"]},{"c":101,"i":3,"p":["\\rThe ID number of your team\u0027s \\v[2] matches your "]},{"c":401,"i":3,"p":["Loto Ticket number!"]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":101,"i":3,"p":["\\rCongratulations!"]},{"c":101,"i":3,"p":["\\rThe ID number of your PC-boxed \\v[2] matches your "]},{"c":401,"i":3,"p":["Loto Ticket number!"]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":108,"i":2,"p":["Award a prize based on how many digits were "]},{"c":408,"i":2,"p":["matched."]},{"c":111,"i":2,"p":[1,4,0,5,0]},{"c":101,"i":3,"p":["\\rOh my goodness, all five digits matched!"]},{"c":101,"i":3,"p":["\\rYou\u0027ve won the jackpot prize!"]},{"c":111,"i":3,"p":[12,"pbReceiveItem(:MASTERBALL)"]},{"c":101,"i":4,"p":["\\rPlease do visit again! Good-bye from Felicity, your "]},{"c":401,"i":4,"p":["attendant!"]},{"c":355,"i":4,"p":["pbSetEventTime"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":4,"p":["me."]},{"c":355,"i":4,"p":["setVariable(:MASTERBALL)"]},{"c":123,"i":4,"p":["B",0]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[1,4,0,4,0]},{"c":101,"i":3,"p":["\\rThe last four digits matched, so you win the first "]},{"c":401,"i":3,"p":["prize!"]},{"c":111,"i":3,"p":[12,"pbReceiveItem(:MAXREVIVE)"]},{"c":101,"i":4,"p":["\\rPlease do visit again! Good-bye from Felicity, your "]},{"c":401,"i":4,"p":["attendant!"]},{"c":355,"i":4,"p":["pbSetEventTime"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":4,"p":["me."]},{"c":355,"i":4,"p":["setVariable(:MAXREVIVE)"]},{"c":123,"i":4,"p":["B",0]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[1,4,0,3,0]},{"c":101,"i":3,"p":["\\rThe last three digits matched, so you win the "]},{"c":401,"i":3,"p":["second prize!"]},{"c":111,"i":3,"p":[12,"pbReceiveItem(:EXPSHARE)"]},{"c":101,"i":4,"p":["\\rPlease do visit again! Good-bye from Felicity, your "]},{"c":401,"i":4,"p":["attendant!"]},{"c":355,"i":4,"p":["pbSetEventTime"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":4,"p":["me."]},{"c":355,"i":4,"p":["setVariable(:EXPSHARE)"]},{"c":123,"i":4,"p":["B",0]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[1,4,0,2,0]},{"c":101,"i":3,"p":["\\rThe last two digits matched, so you win the third "]},{"c":401,"i":3,"p":["prize!"]},{"c":111,"i":3,"p":[12,"pbReceiveItem(:PPUP)"]},{"c":101,"i":4,"p":["\\rPlease do visit again! Good-bye from Felicity, your "]},{"c":401,"i":4,"p":["attendant!"]},{"c":355,"i":4,"p":["pbSetEventTime"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":4,"p":["me."]},{"c":355,"i":4,"p":["setVariable(:PPUP)"]},{"c":123,"i":4,"p":["B",0]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[1,4,0,1,0]},{"c":101,"i":3,"p":["\\rThe last digit matched, so you win the fourth prize!"]},{"c":111,"i":3,"p":[12,"pbReceiveItem(:ULTRABALL)"]},{"c":101,"i":4,"p":["\\rPlease do visit again! Good-bye from Felicity, your "]},{"c":401,"i":4,"p":["attendant!"]},{"c":355,"i":4,"p":["pbSetEventTime"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":4,"p":["me."]},{"c":355,"i":4,"p":["setVariable(:ULTRABALL)"]},{"c":123,"i":4,"p":["B",0]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\rOh, I see.\\nPlease do visit us again."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 23","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rYou\u0027ve already drawn a Loto Ticket today. Please "]},{"c":401,"i":0,"p":["come back tomorrow."]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":24,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 23","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":123,"i":0,"p":["A",1]},{"c":355,"i":0,"p":["setTempSwitchOn(\u0022A\u0022)"]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"B"},"graphic":{"character_name":"NPC 23","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rI\u0027ve been waiting for you. Here\u0027s the item you won."]},{"c":111,"i":0,"p":[12,"pbReceiveItem(getVariable())"]},{"c":123,"i":1,"p":["B",1]},{"c":355,"i":1,"p":["pbSetEventTime"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\rYou have no room left. Make room, then come see "]},{"c":401,"i":1,"p":["me."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="8" name="Prize vendor left" type="Event" x="64" y="736" width="32" height="32">
+      <properties>
+        <property name="event_id" value="28" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":28,"name":"Prize vendor left","x":2,"y":23,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\CN\\bWe exchange your coins for prizes."]},{"c":118,"i":0,"p":["Choice"]},{"c":101,"i":0,"p":["\\CN\\bWhich prize would you like?"]},{"c":102,"i":0,"p":[["Smoke Ball - 800 coins","Miracle Seed - 1000 coins","Charcoal - 1000 coins","Mystic Water - 1000 coins"],0]},{"c":402,"i":0,"p":[0,"Smoke Ball - 800 coins"]},{"c":355,"i":1,"p":["pbSet(1, :SMOKEBALL)"]},{"c":655,"i":1,"p":["pbSet(2, 800)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Miracle Seed - 1000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :MIRACLESEED)"]},{"c":655,"i":1,"p":["pbSet(2, 1000)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Charcoal - 1000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :CHARCOAL)"]},{"c":655,"i":1,"p":["pbSet(2, 1000)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Mystic Water - 1000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :MYSTICWATER)"]},{"c":655,"i":1,"p":["pbSet(2, 1000)"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":102,"i":0,"p":[["Yellow Flute - 1600 coins","No thanks"],2]},{"c":402,"i":0,"p":[0,"Yellow Flute - 1600 coins"]},{"c":355,"i":1,"p":["pbSet(1, :YELLOWFLUTE)"]},{"c":655,"i":1,"p":["pbSet(2, 1600)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No thanks"]},{"c":101,"i":1,"p":["\\CN\\bPlease save your Coins and come again!"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":108,"i":0,"p":["================================"]},{"c":108,"i":0,"p":["Chose an item, try to buy it."]},{"c":108,"i":0,"p":["================================"]},{"c":355,"i":0,"p":["itm = GameData::Item.get(pbGet(1))"]},{"c":655,"i":0,"p":["pbSet(3, itm.name)"]},{"c":101,"i":0,"p":["\\CN\\bSo, you want the \\v[3]?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":111,"i":1,"p":[12,"pbGet(2) \u003E $player.coins"]},{"c":101,"i":2,"p":["\\CN\\bSorry, you\u0027ll need more coins than that."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[12,"$bag.can_add?(pbGet(1))"]},{"c":101,"i":3,"p":["\\CN\\bHere you go!\\1"]},{"c":250,"i":3,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":355,"i":3,"p":["$player.coins -= pbGet(2)"]},{"c":355,"i":3,"p":["pbBuyPrize(pbGet(1))"]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":101,"i":3,"p":["\\CN\\bYou have no room in your Bag."]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":119,"i":0,"p":["Choice"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="9" name="Triple Triad card shop" type="Event" x="448" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="23" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":23,"name":"Triple Triad card shop","x":14,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":118,"i":0,"p":["Shop Start"]},{"c":101,"i":0,"p":["\\bWelcome to the Triad Card Shop."]},{"c":118,"i":0,"p":["Choices"]},{"c":102,"i":0,"p":[["Buy Cards","Sell Cards","Information","Exit"],4]},{"c":402,"i":0,"p":[0,"Buy Cards"]},{"c":355,"i":1,"p":["pbBuyTriads"]},{"c":101,"i":1,"p":["\\bAnything else I can do for you?"]},{"c":119,"i":1,"p":["Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Sell Cards"]},{"c":355,"i":1,"p":["pbSellTriads"]},{"c":101,"i":1,"p":["\\bAnything else I can do for you?"]},{"c":119,"i":1,"p":["Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Information"]},{"c":101,"i":1,"p":["\\bHere is where you can purchase new cards for "]},{"c":401,"i":1,"p":["Triple Triad duels."]},{"c":101,"i":1,"p":["\\bThe selection grows as you catch and find new "]},{"c":401,"i":1,"p":["Pok\u00E9mon, so check often."]},{"c":101,"i":1,"p":["\\bAnd, of course, stronger Pok\u00E9mon cards cost more "]},{"c":401,"i":1,"p":["than weaker cards."]},{"c":101,"i":1,"p":["\\bYou don\u0027t have to use this shop in your game. It\u0027s "]},{"c":401,"i":1,"p":["just an example of how the player could gain Triple "]},{"c":401,"i":1,"p":["Triad cards. You could implement other ways."]},{"c":119,"i":1,"p":["Shop Start"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Exit"]},{"c":101,"i":1,"p":["\\bPlease come again."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="10" name="Slot Machine 1" type="Event" x="0" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Slot Machine 1","x":0,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="11" name="Slot Machine 12" type="Event" x="192" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="12" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":12,"name":"Slot Machine 12","x":6,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="12" name="Prize vendor middle" type="Event" x="128" y="736" width="32" height="32">
+      <properties>
+        <property name="event_id" value="29" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":29,"name":"Prize vendor middle","x":4,"y":23,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\CN\\bWe exchange your coins for prizes."]},{"c":118,"i":0,"p":["Choice"]},{"c":101,"i":0,"p":["\\CN\\bWhich prize would you like?"]},{"c":102,"i":0,"p":[["Abra - 180 coins","Clefairy - 500 coins","Dratini - 2800 coins","Scyther - 5500 coins"],0]},{"c":402,"i":0,"p":[0,"Abra - 180 coins"]},{"c":355,"i":1,"p":["pbSet(1, :ABRA)"]},{"c":655,"i":1,"p":["pbSet(2, 180)"]},{"c":655,"i":1,"p":["pbSet(4, 9)   # Level"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Clefairy - 500 coins"]},{"c":355,"i":1,"p":["pbSet(1, :CLEFAIRY)"]},{"c":655,"i":1,"p":["pbSet(2, 500)"]},{"c":655,"i":1,"p":["pbSet(4, 8)   # Level"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Dratini - 2800 coins"]},{"c":355,"i":1,"p":["pbSet(1, :DRATINI)"]},{"c":655,"i":1,"p":["pbSet(2, 2800)"]},{"c":655,"i":1,"p":["pbSet(4, 18)   # Level"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Scyther - 5500 coins"]},{"c":355,"i":1,"p":["pbSet(1, :SCYTHER)"]},{"c":655,"i":1,"p":["pbSet(2, 5500)"]},{"c":655,"i":1,"p":["pbSet(4, 25)   # Level"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":102,"i":0,"p":[["Porygon - 9999 coins","No thanks"],2]},{"c":402,"i":0,"p":[0,"Porygon - 9999 coins"]},{"c":355,"i":1,"p":["pbSet(1, :PORYGON)"]},{"c":655,"i":1,"p":["pbSet(2, 9999)"]},{"c":655,"i":1,"p":["pbSet(4, 26)   # Level"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No thanks"]},{"c":101,"i":1,"p":["\\CN\\bPlease save your Coins and come again!"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":108,"i":0,"p":["================================"]},{"c":108,"i":0,"p":["Chose a Pok\u00E9mon, try to buy it."]},{"c":108,"i":0,"p":["================================"]},{"c":111,"i":0,"p":[12,"$player.party_full?"]},{"c":101,"i":1,"p":["\\CN\\bYour party\u0027s full!\\nPlease make some room "]},{"c":401,"i":1,"p":["before you come back."]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":355,"i":0,"p":["sp = GameData::Species.get(pbGet(1))"]},{"c":655,"i":0,"p":["pbSet(3, sp.name)"]},{"c":101,"i":0,"p":["\\CN\\bWould you like \\v[3]?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":111,"i":1,"p":[12,"pbGet(2) \u003E $player.coins"]},{"c":101,"i":2,"p":["\\CN\\bSorry, you\u0027ll need more coins than that."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\CN\\bHere you go!\\1"]},{"c":250,"i":2,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":355,"i":2,"p":["$player.coins -= pbGet(2)"]},{"c":355,"i":2,"p":["pbAddPokemonSilent("]},{"c":655,"i":2,"p":["  pbGet(1), pbGet(4)"]},{"c":655,"i":2,"p":[")"]},{"c":101,"i":2,"p":["\\CN\\PN received the \\v[3]!"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":119,"i":0,"p":["Choice"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="13" name="Slot Machine 7" type="Event" x="160" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="7" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":7,"name":"Slot Machine 7","x":5,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,6]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="14" name="Voltorb Flip man" type="Event" x="352" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="18" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":18,"name":"Voltorb Flip man","x":11,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 17","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[2,"A",1]},{"c":101,"i":1,"p":["\\bMy name is Mr. Game!"]},{"c":101,"i":1,"p":["\\bMy heart pounds with excitement when people "]},{"c":401,"i":1,"p":["enjoy my Coin game!"]},{"c":101,"i":1,"p":["\\bIn fact, that\u0027s what I live for!\\nGo ahead and play it!"]},{"c":101,"i":1,"p":["\\bMake my heart pound with excitement!"]},{"c":123,"i":1,"p":["A",0]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bGo ahead and play my Coin game!"]},{"c":101,"i":1,"p":["\\bMake my heart pound with excitement!"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="15" name="Triple Triad duel" type="Event" x="512" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="24" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":24,"name":"Triple Triad duel","x":16,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_YOUNGSTER","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bI\u0027m ready to duel with you."]},{"c":111,"i":0,"p":[12,"pbCanTriadDuel?"]},{"c":108,"i":1,"p":["The two numbers are the min and max level of the "]},{"c":408,"i":1,"p":["opponent respectively. Each number can be between "]},{"c":408,"i":1,"p":["0 and 9 inclusive, and the max level must be higher "]},{"c":408,"i":1,"p":["than or equal to the min level."]},{"c":355,"i":1,"p":["pbTriadDuel(\u0022Jack\u0022, 0, 5)"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bOh, you don\u0027t have enough cards to play. You need "]},{"c":401,"i":1,"p":["at least 5."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="16" name="Slot Machine 2" type="Event" x="0" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Slot Machine 2","x":0,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="17" name="Slot Machine 13" type="Event" x="192" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="13" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":13,"name":"Slot Machine 13","x":6,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="18" name="Prize vendor right" type="Event" x="192" y="736" width="32" height="32">
+      <properties>
+        <property name="event_id" value="30" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":30,"name":"Prize vendor right","x":6,"y":23,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\CN\\bWe exchange your coins for prizes."]},{"c":118,"i":0,"p":["Choice"]},{"c":108,"i":0,"p":["The \u0022Show Choices\u0022 command doesn\u0027t let you type in "]},{"c":408,"i":0,"p":["long choice names, so a choice name as long as"]},{"c":408,"i":0,"p":["\u0022TM24 Thunderbolt - 4000 coins\u0022"]},{"c":408,"i":0,"p":["won\u0027t fit."]},{"c":108,"i":0,"p":["You could use rename_choice here to replace the "]},{"c":408,"i":0,"p":["choice names. rename_choice doesn\u0027t have a limit on "]},{"c":408,"i":0,"p":["the length of the choice name it sets."]},{"c":108,"i":0,"p":["However, doing so here to include the moves\u0027 names "]},{"c":408,"i":0,"p":["in the choices will usually make the choice window too "]},{"c":408,"i":0,"p":["wide, and it will overlap the coins window."]},{"c":108,"i":0,"p":["This event settles for showing the move\u0027s name in the "]},{"c":408,"i":0,"p":["message below, upon choosing an item."]},{"c":101,"i":0,"p":["\\CN\\bWhich prize would you like?"]},{"c":102,"i":0,"p":[["TM13 - 4000 coins","TM23 - 3500 coins","TM24 - 4000 coins","TM30 - 4500 coins"],0]},{"c":402,"i":0,"p":[0,"TM13 - 4000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :TM13)"]},{"c":655,"i":1,"p":["pbSet(2, 4000)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"TM23 - 3500 coins"]},{"c":355,"i":1,"p":["pbSet(1, :TM23)"]},{"c":655,"i":1,"p":["pbSet(2, 3500)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"TM24 - 4000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :TM24)"]},{"c":655,"i":1,"p":["pbSet(2, 4000)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"TM30 - 4500 coins"]},{"c":355,"i":1,"p":["pbSet(1, :TM30)"]},{"c":655,"i":1,"p":["pbSet(2, 4500)"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":102,"i":0,"p":[["TM35 - 4000 coins","No thanks"],2]},{"c":402,"i":0,"p":[0,"TM35 - 4000 coins"]},{"c":355,"i":1,"p":["pbSet(1, :TM35)"]},{"c":655,"i":1,"p":["pbSet(2, 4000)"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No thanks"]},{"c":101,"i":1,"p":["\\CN\\bPlease save your Coins and come again!"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":108,"i":0,"p":["================================"]},{"c":108,"i":0,"p":["Chose an item, try to buy it."]},{"c":108,"i":0,"p":["================================"]},{"c":355,"i":0,"p":["itm = GameData::Item.get(pbGet(1))"]},{"c":655,"i":0,"p":["move = itm.move"]},{"c":655,"i":0,"p":["mov = GameData::Move.get(move)"]},{"c":655,"i":0,"p":["pbSet(3, itm.name \u002B \u0022 \u0022 \u002B mov.name)"]},{"c":101,"i":0,"p":["\\CN\\bSo, you want the \\v[3]?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":111,"i":1,"p":[12,"pbGet(2) \u003E $player.coins"]},{"c":101,"i":2,"p":["\\CN\\bSorry, you\u0027ll need more coins than that."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[12,"$bag.can_add?(pbGet(1))"]},{"c":101,"i":3,"p":["\\CN\\bHere you go!\\1"]},{"c":250,"i":3,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":355,"i":3,"p":["$player.coins -= pbGet(2)"]},{"c":355,"i":3,"p":["pbBuyPrize(pbGet(1))"]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":101,"i":3,"p":["\\CN\\bYou have no room in your Bag."]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":119,"i":0,"p":["Choice"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="19" name="Slot Machine 8" type="Event" x="160" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="8" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":8,"name":"Slot Machine 8","x":5,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,6]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="20" name="Coin seller" type="Event" x="128" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="19" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":19,"name":"Coin seller","x":4,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\G\\CN\\bWelcome to Rocket Game Corner!"]},{"c":111,"i":0,"p":[12,"!$bag.has?(:COINCASE)"]},{"c":101,"i":1,"p":["\\G\\CN\\bDo you need some game coins?\\nWould you "]},{"c":401,"i":1,"p":["like to buy some?"]},{"c":101,"i":1,"p":["\\G\\CN\\bYou don\u0027t have a Coin Case."]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":118,"i":1,"p":["Start menu"]},{"c":101,"i":1,"p":["\\G\\CN\\bDo you need some game coins?\\nWould you "]},{"c":401,"i":1,"p":["like to buy some?"]},{"c":102,"i":1,"p":[["50 coins [$1,000]","500 coins [$10,000]","Exit"],3]},{"c":402,"i":1,"p":[0,"50 coins [$1,000]"]},{"c":111,"i":2,"p":[12,"$player.coins \u002B 50 \u003E= Settings::MAX_COINS"]},{"c":101,"i":3,"p":["\\G\\CN\\bWhoops!\\nYour Coin Case is full."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[7,999,1]},{"c":101,"i":4,"p":["\\G\\CN\\bYou can\u0027t afford the coins."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":125,"i":4,"p":[1,0,1000]},{"c":355,"i":4,"p":["$player.coins \u002B= 50"]},{"c":250,"i":4,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":101,"i":4,"p":["\\G\\CN\\bThank you\\nHere are your coins!"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"500 coins [$10,000]"]},{"c":111,"i":2,"p":[12,"$player.coins \u002B 500 \u003E= Settings::MAX_COINS"]},{"c":101,"i":3,"p":["\\G\\CN\\bWhoops!\\nYour Coin Case is full."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[7,9999,1]},{"c":101,"i":4,"p":["\\G\\CN\\bYou can\u0027t afford the coins."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":125,"i":4,"p":[1,0,10000]},{"c":355,"i":4,"p":["$player.coins \u002B= 500"]},{"c":250,"i":4,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":101,"i":4,"p":["\\G\\CN\\bThank you\\nHere are your coins!"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[2,"Exit"]},{"c":101,"i":2,"p":["\\G\\CN\\bNo?\\nPlease come play sometime!"]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":119,"i":1,"p":["Start menu"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="21" name="Slot Machine 3" type="Event" x="0" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Slot Machine 3","x":0,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="22" name="Slot Machine 14" type="Event" x="192" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="14" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":14,"name":"Slot Machine 14","x":6,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="23" name="Triple Triad duel with rules" type="Event" x="512" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="25" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":25,"name":"Triple Triad duel with rules","x":16,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_LASS","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rReady for a real rule duel?"]},{"c":111,"i":0,"p":[12,"pbCanTriadDuel?"]},{"c":108,"i":1,"p":["This duel includes certain battle rules. See the wiki "]},{"c":408,"i":1,"p":["for details of what rules can be applied."]},{"c":355,"i":1,"p":["pbTriadDuel(\u0022Alice\u0022, 0, 5,"]},{"c":655,"i":1,"p":["  [\u0022countunplayed\u0022,"]},{"c":655,"i":1,"p":["  \u0022samewins\u0022,"]},{"c":655,"i":1,"p":["  \u0022elements\u0022,"]},{"c":655,"i":1,"p":["  \u0022direct\u0022]"]},{"c":655,"i":1,"p":[")"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\rOh, you don\u0027t have enough cards to play. You need "]},{"c":401,"i":1,"p":["at least 5."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="24" name="Shop exit" type="Event" x="128" y="960" width="32" height="32">
+      <properties>
+        <property name="event_id" value="31" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":31,"name":"Shop exit","x":4,"y":30,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,7,39,19,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="25" name="Slot Machine 9" type="Event" x="160" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="9" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":9,"name":"Slot Machine 9","x":5,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,6]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="26" name="Exit" type="Event" x="288" y="448" width="32" height="32">
+      <properties>
+        <property name="event_id" value="20" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":20,"name":"Exit","x":9,"y":14,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,7,34,20,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="27" name="Triple Triad duel with deck" type="Event" x="512" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="26" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":26,"name":"Triple Triad duel with deck","x":16,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_CAMPER","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bI built my deck specially for this!"]},{"c":111,"i":0,"p":[12,"pbCanTriadDuel?"]},{"c":108,"i":1,"p":["This duel has no special rules, and has a predefined "]},{"c":408,"i":1,"p":["opponent\u0027s deck. The level numbers are unused, but "]},{"c":408,"i":1,"p":["still need to be defined (each being 0-9)."]},{"c":355,"i":1,"p":["pbTriadDuel(\u0022Tim\u0022, 0, 5, nil,"]},{"c":655,"i":1,"p":["  [:BULBASAUR, :CHARMANDER,"]},{"c":655,"i":1,"p":["   :SQUIRTLE, :PIKACHU, :CLEFAIRY]"]},{"c":655,"i":1,"p":[")"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bOh, you don\u0027t have enough cards to play. You need "]},{"c":401,"i":1,"p":["at least 5."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="28" name="Slot Machine 4" type="Event" x="0" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Slot Machine 4","x":0,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="29" name="Slot Machine 15" type="Event" x="192" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="15" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":15,"name":"Slot Machine 15","x":6,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,4]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="30" name="Coin Case giver" type="Event" x="96" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="21" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":21,"name":"Coin Case giver","x":3,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 08","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rWelcome!"]},{"c":111,"i":0,"p":[12,"!$bag.has?(:COINCASE)"]},{"c":101,"i":1,"p":["\\rOh, you don\u0027t have a Coin Case? Here."]},{"c":111,"i":1,"p":[12,"pbReceiveItem(:COINCASE)"]},{"c":101,"i":2,"p":["\\rYou can exchange your coins for fabulous prizes "]},{"c":401,"i":2,"p":["next door."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\rYou don\u0027t have any room for it. Come back when "]},{"c":401,"i":2,"p":["you do."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\rYou can exchange your coins for fabulous prizes "]},{"c":401,"i":1,"p":["next door."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="31" name="Slot Machine 10" type="Event" x="160" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="10" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":10,"name":"Slot Machine 10","x":5,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[6,-1,6]},{"c":355,"i":1,"p":["pbSlotMachine"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

@@ -581,7 +581,7 @@ module AdvancedAI
       end
       
       # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
-      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(user, target, effective_type, move.physicalMove?, type_mod)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(user, target, effective_type, move.physicalMove?, type_mod, move)
       
       # Convert to percentage
       (damage / target.totalhp.to_f) * 100

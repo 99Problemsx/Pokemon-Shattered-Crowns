@@ -117,6 +117,28 @@ class PhotoModeScene
     # Capture
     bitmap = Graphics.snap_to_bitmap
     if bitmap
+      # Render watermark onto the snapped bitmap if configured
+      if PhotoMode::WATERMARK && !PhotoMode::WATERMARK.to_s.empty?
+        wm = PhotoMode::WATERMARK.to_s
+        old_size  = bitmap.font.size
+        old_name  = bitmap.font.name
+        old_color = bitmap.font.color
+        bitmap.font.size = [bitmap.height / 28, 12].max
+        bitmap.font.name = "Arial"
+        text_w = bitmap.text_size(wm).width + 16
+        text_h = bitmap.font.size + 8
+        x = bitmap.width  - text_w - 8
+        y = bitmap.height - text_h - 8
+        # Shadow
+        bitmap.font.color = Color.new(0, 0, 0, 180)
+        bitmap.draw_text(x + 1, y + 1, text_w, text_h, wm, 1)
+        # Foreground
+        bitmap.font.color = Color.new(255, 255, 255, 220)
+        bitmap.draw_text(x, y, text_w, text_h, wm, 1)
+        bitmap.font.size  = old_size
+        bitmap.font.name  = old_name
+        bitmap.font.color = old_color
+      end
       bitmap.to_file(filename) rescue nil
       pbMessage(_INTL("\\se[]Photo saved to {1}!", filename))
     end
@@ -182,7 +204,7 @@ class PhotoModeScene
       end
 
       # Toggle UI
-      if Input.triggerex?(0x48)  # H key
+      if Input.triggerex?(:H)  # H key
         @hide_ui = !@hide_ui
         if @hide_ui
           @sprites["overlay"].bitmap.clear
@@ -234,7 +256,7 @@ EventHandlers.add(:on_frame_update, :sc_photo_mode_key,
   proc {
     next unless PhotoMode::ENABLED
     next unless $scene.is_a?(Scene_Map)
-    if Input.triggerex?(0x76)  # F7
+    if Input.triggerex?(:F7)  # F7
       pbOpenPhotoMode
     end
   }

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="7">
+  <properties>
+    <property name="tileset_id" value="10" />
+    <property name="source" value="Map018.rxdata" />
+    <property name="tileset_name" value="Department Store" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_10.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Department store interior" tilewidth="32" tileheight="32" tilecount="236" columns="8">
+    <image source="../Graphics/Tilesets/Department store interior.png" width="256" height="960" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="17">
+    <data encoding="csv">
+385,386,386,386,386,387,388,389,386,386,386,386,390,384,384,384,384,384,384,384,
+393,475,476,394,394,395,396,397,394,394,394,394,398,384,384,384,384,384,384,384,
+393,483,484,402,402,403,415,405,402,402,497,498,398,384,384,384,384,384,384,384,
+401,491,492,410,410,410,410,410,410,410,505,506,406,384,384,384,384,384,384,384,
+0,0,0,411,411,411,411,411,411,411,0,0,0,384,384,384,384,384,384,384,
+429,429,459,430,420,420,420,420,420,420,429,429,429,384,384,384,384,384,384,384,
+429,420,420,430,420,420,420,420,420,420,437,437,437,384,384,384,384,384,384,384,
+429,420,420,430,420,420,420,420,420,420,420,420,420,384,384,384,384,384,384,384,
+429,420,420,430,420,420,420,420,420,422,420,420,422,384,384,384,384,384,384,384,
+429,437,437,438,420,420,420,429,429,430,429,429,430,384,384,384,384,384,384,384,
+429,420,420,420,420,420,420,437,437,438,437,437,438,384,384,384,384,384,384,384,
+429,420,420,422,420,420,422,420,420,420,420,420,420,384,384,384,384,384,384,384,
+429,420,429,430,420,429,430,420,420,422,420,420,422,384,384,384,384,384,384,384,
+429,420,429,430,420,429,430,429,429,430,429,429,430,384,384,384,384,384,384,384,
+429,437,437,438,437,437,438,437,437,438,437,437,438,384,384,384,384,384,384,384,
+384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,
+384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="17">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,534,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,542,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,442,443,493,0,0,0,0,0,504,441,442,0,0,0,0,0,0,0,0,
+450,450,451,0,0,0,0,0,0,0,449,450,450,0,0,0,0,0,0,0,
+458,458,528,0,0,0,0,0,0,0,457,458,458,0,0,0,0,0,0,0,
+0,0,528,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+513,532,531,0,0,0,0,603,603,0,603,603,0,0,0,0,0,0,0,0,
+537,540,539,0,0,0,0,611,611,0,611,611,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,619,619,0,619,619,0,0,0,0,0,0,0,0,
+0,574,575,0,574,575,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,582,583,0,582,583,0,603,603,0,603,603,0,0,0,0,0,0,0,0,
+0,590,591,0,590,591,0,611,611,0,611,611,0,0,0,0,0,0,0,0,
+556,598,599,0,598,599,0,619,619,0,619,619,556,0,0,0,0,0,0,0,
+564,0,0,0,0,0,0,0,0,0,0,0,564,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="17">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,520,0,0,0,0,0,0,0,587,588,589,0,0,0,0,0,0,0,
+0,0,516,0,0,0,0,0,0,0,595,596,597,0,0,0,0,0,0,0,
+0,0,524,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Cashier top" type="Event" x="32" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"Cashier top","x":1,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbPokemonMart(["]},{"c":655,"i":0,"p":["  :HPUP,"]},{"c":655,"i":0,"p":["  :PROTEIN,"]},{"c":655,"i":0,"p":["  :IRON,"]},{"c":655,"i":0,"p":["  :CALCIUM,"]},{"c":655,"i":0,"p":["  :ZINC,"]},{"c":655,"i":0,"p":["  :CARBOS"]},{"c":655,"i":0,"p":["])"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Cashier bottom" type="Event" x="32" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="6" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":6,"name":"Cashier bottom","x":1,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbPokemonMart(["]},{"c":655,"i":0,"p":["  :XATTACK,"]},{"c":655,"i":0,"p":["  :XDEFENSE,"]},{"c":655,"i":0,"p":["  :XSPEED,"]},{"c":655,"i":0,"p":["  :XSPATK,"]},{"c":655,"i":0,"p":["  :XSPDEF,"]},{"c":655,"i":0,"p":["  :XACCURACY,"]},{"c":655,"i":0,"p":["  :GUARDSPEC,"]},{"c":655,"i":0,"p":["  :DIREHIT"]},{"c":655,"i":0,"p":["])"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Elevator door" type="Event" x="192" y="32" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":1,"name":"Elevator door","x":6,"y":1,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"doors9","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":108,"i":0,"p":["This sets the player\u0027s current floor, so that the "]},{"c":408,"i":0,"p":["elevator knows how many floors to go up/down (this "]},{"c":408,"i":0,"p":["affects the wall animation)."]},{"c":122,"i":0,"p":[10,10,0,0,5]},{"c":209,"i":0,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Door slide","@pitch":100}],"@code":44},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":17},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Door slide","@pitch":100}],"@code":44}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":17}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":210,"i":0,"p":[]},{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":210,"i":0,"p":[]},{"c":208,"i":0,"p":[0]},{"c":355,"i":0,"p":["Followers.follow_into_door"]},{"c":210,"i":0,"p":[]},{"c":209,"i":0,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":17},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":17}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":210,"i":0,"p":[]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":208,"i":0,"p":[1]},{"c":201,"i":0,"p":[0,20,2,5,8,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":22,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"doors9","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":111,"i":0,"p":[12,"get_self.onEvent?"]},{"c":208,"i":1,"p":[0]},{"c":355,"i":1,"p":["Followers.hide_followers"]},{"c":209,"i":1,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Door slide","@pitch":100}],"@code":44},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":17},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Door slide","@pitch":100}],"@code":44}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":17}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":210,"i":1,"p":[]},{"c":208,"i":1,"p":[1]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":1,"p":[]},{"c":355,"i":1,"p":["Followers.put_followers_on_player"]},{"c":209,"i":1,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":17},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":17}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[2],"@code":15}]},{"c":210,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":355,"i":0,"p":["setTempSwitchOn(\u0022A\u0022)"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Stairs down" type="Event" x="320" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Stairs down","x":10,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":39},{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[],"@code":3},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":40},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":39}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":3}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":40}]},{"c":210,"i":0,"p":[]},{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,17,9,2,4,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="Stairs up" type="Event" x="64" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Stairs up","x":2,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":39},{"_class":"RPG::MoveCommand","@parameters":[],"@code":17},{"_class":"RPG::MoveCommand","@parameters":[],"@code":7},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":40},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":39}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":17}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":7}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":40}]},{"c":210,"i":0,"p":[]},{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,19,22,10,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="6" name="Floor sign" type="Event" x="256" y="32" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Floor sign","x":8,"y":1,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\sign[signskin]5F: Drugstore"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

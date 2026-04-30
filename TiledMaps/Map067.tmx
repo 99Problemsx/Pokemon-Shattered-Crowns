@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="3">
+  <properties>
+    <property name="tileset_id" value="3" />
+    <property name="source" value="Map067.rxdata" />
+    <property name="tileset_name" value="Inside" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_3.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Interior general" tilewidth="32" tileheight="32" tilecount="1673" columns="8">
+    <image source="../Graphics/Tilesets/Interior general.png" width="256" height="6720" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+400,400,400,401,402,403,400,400,400,542,542,542,542,542,542,542,542,542,542,542,
+408,408,408,409,410,411,408,408,408,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1092,1094,1093,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1095,1086,1085,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1095,1086,1085,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1095,1086,1085,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1095,1086,1085,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+696,696,696,1095,1086,1085,696,696,696,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1772,1772,2032,0,0,0,2032,1772,1772,0,0,0,0,0,0,0,0,0,0,0,
+1780,1780,2048,0,0,0,2048,1780,1780,0,0,0,0,0,0,0,0,0,0,0,
+1727,1670,2048,0,0,0,2048,1670,1727,0,0,0,0,0,0,0,0,0,0,0,
+1735,0,2048,0,0,0,2048,0,1749,0,0,0,0,0,0,0,0,0,0,0,
+1743,0,2048,0,0,0,2048,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1751,1670,2048,0,0,0,2048,1670,1727,0,0,0,0,0,0,0,0,0,0,0,
+1749,0,2056,1245,1246,1247,2056,0,1749,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1253,1254,1255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Exit" type="Event" x="128" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit","x":4,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,66,12,7,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Counter(4)" type="Event" x="224" y="96" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":2,"name":"Counter(4)","x":7,"y":3,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":2,"list":[{"c":108,"i":0,"p":["This event can notice the player at a distance even "]},{"c":408,"i":0,"p":["though an impassable tile (the desk) is in the way. "]},{"c":408,"i":0,"p":["This is because this event\u0027s name contains the text "]},{"c":408,"i":0,"p":["\u0022Counter(X)\u0022, where \u0022X\u0022 is the number of tiles in front "]},{"c":408,"i":0,"p":["of itself that it can see."]},{"c":101,"i":0,"p":["\\bWelcome to the Safari Zone!"]},{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":18}]},{"c":101,"i":0,"p":["\\G\\bFor just $500, you can play the Safari Game."]},{"c":101,"i":0,"p":["\\G\\bYou can roam the wide-open Safari Zone and "]},{"c":401,"i":0,"p":["catch whatever you like."]},{"c":101,"i":0,"p":["\\G\\bWould you like to play?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":111,"i":1,"p":[12,"pbBoxesFull?"]},{"c":101,"i":2,"p":["\\G\\bSorry, your PC boxes are full."]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":2,"p":[]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[7,499,1]},{"c":101,"i":2,"p":["\\G\\bOops!\\nNot enough money!"]},{"c":101,"i":2,"p":["\\G\\bCome again."]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":2,"p":[]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\G\\bThat\u0027ll be $500, please!\\1"]},{"c":125,"i":2,"p":[1,0,500]},{"c":250,"i":2,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":101,"i":2,"p":["\\G\\bWe only use a special kind of Pok\u00E9 Ball here."]},{"c":101,"i":2,"p":["\\G\\PN received 30 Safari Balls from the attendant."]},{"c":401,"i":2,"p":["\\me[Item get]\\wtnp[40]"]},{"c":101,"i":2,"p":["\\G\\bWe\u0027ll call you on the PA when you run out of time "]},{"c":401,"i":2,"p":["or Safari Balls."]},{"c":101,"i":2,"p":["\\G\\bWell, I\u0027ll wish you the best of luck!"]},{"c":111,"i":2,"p":[12,"$game_player.x == 3"]},{"c":209,"i":3,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":3},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":3,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":3,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":3,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":3}]},{"c":509,"i":3,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":3,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[12,"$game_player.x == 5"]},{"c":209,"i":4,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":2},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":2}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":209,"i":4,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":4,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":210,"i":2,"p":[]},{"c":355,"i":2,"p":["Followers.follow_into_door"]},{"c":210,"i":2,"p":[]},{"c":355,"i":2,"p":["pbSafariState.pbStart(30)"]},{"c":250,"i":2,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":2,"p":[8]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[255],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[255],"@code":42}]},{"c":201,"i":2,"p":[0,68,25,27,0,1]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\G\\bOkay.\\nPlease come again!"]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":25,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 07","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"pbSafariState.decision == 0"]},{"c":101,"i":1,"p":["\\bAre you going to leave the Safari Zone early?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":101,"i":2,"p":["\\bPlease return any Safari Balls you may have left."]},{"c":355,"i":2,"p":["pbSafariState.pbEnd"]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":2,"p":[]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":101,"i":2,"p":["\\bGood luck!"]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":210,"i":2,"p":[]},{"c":355,"i":2,"p":["Followers.follow_into_door"]},{"c":210,"i":2,"p":[]},{"c":250,"i":2,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":2,"p":[8]},{"c":209,"i":2,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[255],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[255],"@code":42}]},{"c":201,"i":2,"p":[0,68,25,27,0,1]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"pbSafariState.decision == 1"]},{"c":101,"i":1,"p":["\\bDid you catch your fair share? Come again!"]},{"c":355,"i":1,"p":["pbSafariState.pbEnd"]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

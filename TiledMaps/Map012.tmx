@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="6">
+  <properties>
+    <property name="tileset_id" value="3" />
+    <property name="source" value="Map012.rxdata" />
+    <property name="tileset_name" value="Inside" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_3.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Interior general" tilewidth="32" tileheight="32" tilecount="1743" columns="8">
+    <image source="../Graphics/Tilesets/Interior general.png" width="256" height="6976" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+558,558,558,558,558,541,542,543,558,558,558,558,558,542,542,542,542,542,542,542,
+566,566,566,566,566,549,542,551,566,566,566,566,566,542,542,542,542,542,542,542,
+673,673,673,673,673,549,542,551,673,673,673,673,673,542,542,542,542,542,542,542,
+673,664,664,664,664,549,542,551,664,664,664,664,664,542,542,542,542,542,542,542,
+673,664,664,664,667,549,542,551,664,664,664,664,667,542,542,542,542,542,542,542,
+673,664,664,673,674,557,558,559,664,664,664,673,674,542,542,542,542,542,542,542,
+673,664,673,673,674,565,566,567,664,664,673,673,674,542,542,542,542,542,542,542,
+673,664,689,681,682,664,664,664,664,664,689,681,682,542,542,542,542,542,542,542,
+673,664,664,664,664,664,664,664,664,664,664,664,664,542,542,542,542,542,542,542,
+673,664,664,664,664,664,664,664,664,664,664,664,664,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+1766,1534,1535,1534,1535,0,0,0,1766,1441,1442,0,1766,0,0,0,0,0,0,0,
+1774,1542,1543,1542,1543,0,0,0,1774,1449,1450,0,1774,0,0,0,0,0,0,0,
+1782,1550,1551,1550,1551,0,0,0,1782,0,0,0,1782,0,0,0,0,0,0,0,
+0,1662,2101,1662,0,0,0,0,0,1662,2101,1662,0,0,0,0,0,0,0,0,
+0,2108,2109,2110,0,0,0,0,0,2108,2109,2110,0,0,0,0,0,0,0,0,
+1662,2116,2117,2118,1662,0,1459,0,1662,2116,2117,2118,1662,0,0,0,0,0,0,0,
+0,2124,2125,2126,0,0,1467,0,0,2124,2125,2126,0,0,0,0,0,0,0,0,
+0,1662,0,1662,0,0,0,0,0,1662,0,1662,0,0,0,0,0,0,0,0,
+1771,0,0,0,0,0,0,0,0,0,0,0,1771,0,0,0,0,0,0,0,
+1779,0,0,0,0,1245,1246,1247,0,0,0,0,1779,0,0,0,0,0,0,0,
+0,0,0,0,0,1253,1254,1255,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,2100,0,2102,0,0,0,0,0,2100,0,2102,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Move Tutor" type="Event" x="64" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"Move Tutor","x":2,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":4,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 11","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\rHello! I\u0027m a Move Tutor!"]},{"c":101,"i":0,"p":["\\rI can teach a special and powerful move to your "]},{"c":401,"i":0,"p":["Pok\u00E9mon."]},{"c":118,"i":0,"p":["Start"]},{"c":101,"i":0,"p":["\\rWhich special move would you like me to teach?"]},{"c":102,"i":0,"p":[["Frenzy Plant","Blast Burn","Hydro Cannon","Exit"],4]},{"c":402,"i":0,"p":[0,"Frenzy Plant"]},{"c":111,"i":1,"p":[12,"pbMoveTutorChoose(:FRENZYPLANT)"]},{"c":101,"i":2,"p":["\\rWould you like me to teach another Pok\u00E9mon a "]},{"c":401,"i":2,"p":["special move?"]},{"c":102,"i":2,"p":[["Yes","No"],2]},{"c":402,"i":2,"p":[0,"Yes"]},{"c":119,"i":3,"p":["Start"]},{"c":0,"i":3,"p":[]},{"c":402,"i":2,"p":[1,"No"]},{"c":0,"i":3,"p":[]},{"c":404,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":119,"i":2,"p":["Start"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Blast Burn"]},{"c":111,"i":1,"p":[12,"pbMoveTutorChoose(:BLASTBURN)"]},{"c":101,"i":2,"p":["\\rWould you like me to teach another Pok\u00E9mon a "]},{"c":401,"i":2,"p":["special move?"]},{"c":102,"i":2,"p":[["Yes","No"],2]},{"c":402,"i":2,"p":[0,"Yes"]},{"c":119,"i":3,"p":["Start"]},{"c":0,"i":3,"p":[]},{"c":402,"i":2,"p":[1,"No"]},{"c":0,"i":3,"p":[]},{"c":404,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":119,"i":2,"p":["Start"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Hydro Cannon"]},{"c":111,"i":1,"p":[12,"pbMoveTutorChoose(:HYDROCANNON)"]},{"c":101,"i":2,"p":["\\rWould you like me to teach another Pok\u00E9mon a "]},{"c":401,"i":2,"p":["special move?"]},{"c":102,"i":2,"p":[["Yes","No"],2]},{"c":402,"i":2,"p":[0,"Yes"]},{"c":119,"i":3,"p":["Start"]},{"c":0,"i":3,"p":[]},{"c":402,"i":2,"p":[1,"No"]},{"c":0,"i":3,"p":[]},{"c":404,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":119,"i":2,"p":["Start"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Exit"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":101,"i":0,"p":["\\rCome back any time!"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Exit" type="Event" x="192" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit","x":6,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,7,22,28,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Move Deleter" type="Event" x="192" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Move Deleter","x":6,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":4,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_ENGINEER","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bUh...\\nOh, yes, I\u0027m the Move Deleter."]},{"c":101,"i":0,"p":["\\bI can make Pok\u00E9mon forget their moves."]},{"c":101,"i":0,"p":["\\bWould you like me to do that?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":118,"i":1,"p":["ChoosePokemon"]},{"c":101,"i":1,"p":["\\bWhich Pok\u00E9mon should forget a move?"]},{"c":355,"i":1,"p":["pbChoosePokemon(1, 3)"]},{"c":108,"i":1,"p":["If Game Variable 1 is less than 0, it means the player "]},{"c":408,"i":1,"p":["has canceled choosing a Pok\u00E9mon."]},{"c":111,"i":1,"p":[1,1,0,0,4]},{"c":101,"i":2,"p":["\\bCome again if there are moves that need to be "]},{"c":401,"i":2,"p":["forgotten."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[12,"pbGetPokemon(1).egg?"]},{"c":101,"i":3,"p":["\\bWhat? No Egg should know any moves."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[12,"pbGetPokemon(1).shadowPokemon?"]},{"c":101,"i":3,"p":["\\bWhat? I can\u0027t make a Shadow Pok\u00E9mon forget a "]},{"c":401,"i":3,"p":["move."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[12,"pbGetPokemon(1).numMoves == 1"]},{"c":101,"i":3,"p":["\\b\\v[3] seems to know only one move..."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":101,"i":2,"p":["\\bWhich move should be forgotten?"]},{"c":355,"i":2,"p":["pbChooseMove(pbGetPokemon(1), 2, 4)"]},{"c":111,"i":2,"p":[1,2,0,0,4]},{"c":119,"i":3,"p":["ChoosePokemon"]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":101,"i":3,"p":["\\bHm! \\v[3]\u0027s \\v[4]? That move should be forgotten?"]},{"c":102,"i":3,"p":[["Yes","No"],2]},{"c":402,"i":3,"p":[0,"Yes"]},{"c":249,"i":4,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Forget move","@pitch":100}]},{"c":106,"i":4,"p":[40]},{"c":355,"i":4,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":4,"p":["pkmn.forget_move_at_index(pbGet(2))"]},{"c":101,"i":4,"p":["\\bIt worked to perfection!"]},{"c":101,"i":4,"p":["\\b\\v[3] has forgotten \\v[4] completely."]},{"c":0,"i":4,"p":[]},{"c":402,"i":3,"p":[1,"No"]},{"c":101,"i":4,"p":["\\bCome again if there are moves that need to be "]},{"c":401,"i":4,"p":["forgotten."]},{"c":0,"i":4,"p":[]},{"c":404,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\bCome again if there are moves that need to be "]},{"c":401,"i":1,"p":["forgotten."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Move Relearner" type="Event" x="160" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Move Relearner","x":5,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":4,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 06","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"isTempSwitchOff?(\u0022A\u0022)"]},{"c":101,"i":1,"p":["\\bI\u0027m the Pok\u00E9mon Move Maniac."]},{"c":101,"i":1,"p":["\\bI know every single move that Pok\u00E9mon learn "]},{"c":401,"i":1,"p":["growing up."]},{"c":101,"i":1,"p":["\\bI\u0027m also a collector of Heart Scales."]},{"c":101,"i":1,"p":["\\bIf you bring me one, I\u0027ll teach a move to one of your "]},{"c":401,"i":1,"p":["Pok\u00E9mon."]},{"c":355,"i":1,"p":["setTempSwitchOn(\u0022A\u0022)"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"$bag.has?(:HEARTSCALE)"]},{"c":101,"i":1,"p":["\\bOh! That\u0027s it! That\u0027s an honest to goodness Heart "]},{"c":401,"i":1,"p":["Scale!"]},{"c":101,"i":1,"p":["\\bLet me guess, you want me to teach one of your "]},{"c":401,"i":1,"p":["Pok\u00E9mon a move?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":118,"i":2,"p":["ChoosePokemon"]},{"c":101,"i":2,"p":["\\bWhich Pok\u00E9mon needs tutoring?"]},{"c":355,"i":2,"p":["pbChoosePokemon(1, 3,"]},{"c":655,"i":2,"p":["  proc { |pkmn|"]},{"c":655,"i":2,"p":["    pkmn.can_relearn_move?"]},{"c":655,"i":2,"p":["  },"]},{"c":655,"i":2,"p":["  true"]},{"c":655,"i":2,"p":[")"]},{"c":108,"i":2,"p":["If Game Variable 1 is less than 0, it means the player "]},{"c":408,"i":2,"p":["has canceled choosing a Pok\u00E9mon."]},{"c":111,"i":2,"p":[1,1,0,0,4]},{"c":101,"i":3,"p":["\\bIf your Pok\u00E9mon need to learn a move, come back "]},{"c":401,"i":3,"p":["with a Heart Scale."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[12,"pbGetPokemon(1).egg?"]},{"c":101,"i":4,"p":["\\bHunh? There isn\u0027t a single move that I can teach an "]},{"c":401,"i":4,"p":["Egg."]},{"c":119,"i":4,"p":["ChoosePokemon"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":111,"i":3,"p":[12,"pbGetPokemon(1).shadowPokemon?"]},{"c":101,"i":4,"p":["\\bNo way, I don\u0027t want to go near a Shadow "]},{"c":401,"i":4,"p":["Pok\u00E9mon."]},{"c":119,"i":4,"p":["ChoosePokemon"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":111,"i":3,"p":[12,"!pbGetPokemon(1).can_relearn_move?"]},{"c":101,"i":4,"p":["\\bSorry..."]},{"c":101,"i":4,"p":["\\bIt doesn\u0027t appear as if I have any move I can teach "]},{"c":401,"i":4,"p":["to your \\v[3]."]},{"c":119,"i":4,"p":["ChoosePokemon"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":101,"i":3,"p":["\\bWhich move should I teach to your \\v[3]?"]},{"c":111,"i":3,"p":[12,"pbRelearnMoveScreen(pbGetPokemon(1))"]},{"c":355,"i":4,"p":["$bag.remove(:HEARTSCALE)"]},{"c":101,"i":4,"p":["\\PN handed over one Heart Scale in exchange."]},{"c":101,"i":4,"p":["\\bIf your Pok\u00E9mon need to learn a move, come back "]},{"c":401,"i":4,"p":["with a Heart Scale."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\bIf your Pok\u00E9mon need to learn a move, come back "]},{"c":401,"i":4,"p":["with a Heart Scale."]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":101,"i":2,"p":["\\bIf your Pok\u00E9mon need to learn a move, come back "]},{"c":401,"i":2,"p":["with a Heart Scale."]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bIf your Pok\u00E9mon need to learn a move, come back "]},{"c":401,"i":1,"p":["with a Heart Scale."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="Name Rater" type="Event" x="320" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Name Rater","x":10,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 10","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bHello, hello!\\nI am the official Name Rater!"]},{"c":101,"i":0,"p":["\\bWant me to rate the nicknames of your Pok\u00E9mon?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":101,"i":1,"p":["\\bWhich Pok\u00E9mon\u0027s nickname should I critique?"]},{"c":108,"i":1,"p":["Opens a screen for choosing a Pok\u00E9mon. The index "]},{"c":408,"i":1,"p":["is stored in Game Variable 1, and the name in Game "]},{"c":408,"i":1,"p":["Variable 3."]},{"c":355,"i":1,"p":["pbChoosePokemon(1, 3)"]},{"c":108,"i":1,"p":["If Game Variable 1 is less than 0, it means the player "]},{"c":408,"i":1,"p":["has canceled choosing a Pok\u00E9mon."]},{"c":111,"i":1,"p":[1,1,0,0,4]},{"c":101,"i":2,"p":["\\bI see.\\nDo come visit again."]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":108,"i":1,"p":["Check for eggs."]},{"c":111,"i":1,"p":[12,"pbGetPokemon(1).egg?"]},{"c":101,"i":2,"p":["\\bNow, now... That is merely an Egg!"]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":108,"i":1,"p":["Check for Shadow Pok\u00E9mon."]},{"c":111,"i":1,"p":[12,"pbGetPokemon(1).shadowPokemon?"]},{"c":101,"i":2,"p":["\\bI wouldn\u0027t dare critique a Shadow Pok\u00E9mon\u0027s name!"]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[12,"pbGetPokemon(1).foreign?($player)"]},{"c":101,"i":2,"p":["\\bHmmm... \\v[3] it is!"]},{"c":101,"i":2,"p":["\\bThis is a magnificent nickname! It is impeccably "]},{"c":401,"i":2,"p":["beyond reproach!"]},{"c":101,"i":2,"p":["\\bYou\u0027ll do well to cherish your \\v[3] now and "]},{"c":401,"i":2,"p":["beyond."]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":101,"i":1,"p":["\\b\\v[3], is it?\\nThat is a decent nickname!"]},{"c":101,"i":1,"p":["\\bBut, would you like me to give it a nicer name?"]},{"c":101,"i":1,"p":["\\bHow about it?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":101,"i":2,"p":["\\bAh, good. Then, what shall the new nickname be?"]},{"c":355,"i":2,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":2,"p":["species = pkmn.speciesName"]},{"c":655,"i":2,"p":["pbSet(4, species)"]},{"c":655,"i":2,"p":["pbTextEntry("]},{"c":655,"i":2,"p":["  _I(\u0022{1}\u0027s nickname?\u0022, species),"]},{"c":655,"i":2,"p":["  0, Pokemon::MAX_NAME_SIZE, 5"]},{"c":655,"i":2,"p":[")"]},{"c":111,"i":2,"p":[12,"pbGet(5) == pbGet(3) || (pbGet(5) == \u0022\u0022 \u0026\u0026 pbGet(3) == pbGet(4))"]},{"c":108,"i":3,"p":["The Pok\u00E9mon\u0027s nickname wasn\u0027t changed."]},{"c":101,"i":3,"p":["\\bI see. You\u0027re right, there\u0027s no need to change this "]},{"c":401,"i":3,"p":["Pok\u00E9mon\u0027s nickname."]},{"c":101,"i":3,"p":["\\bIt already had a superb name!"]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[12,"pbGet(5) == \u0022\u0022 || pbGet(5) == pbGet(4)"]},{"c":108,"i":4,"p":["Resets the Pok\u00E9mon\u0027s nickname to the species name."]},{"c":355,"i":4,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":4,"p":["pkmn.name = nil"]},{"c":655,"i":4,"p":["pbSet(3, pkmn.name)"]},{"c":101,"i":4,"p":["\\bDone! From now on, this Pok\u00E9mon shall be known"]},{"c":401,"i":4,"p":["as \\v[3]!"]},{"c":101,"i":4,"p":["\\bIt looks no different from before, and yet, this is "]},{"c":401,"i":4,"p":["vastly superior!"]},{"c":101,"i":4,"p":["\\bHow fortunate for you!"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":108,"i":4,"p":["Retrieves the Pok\u00E9mon whose party index is stored in "]},{"c":408,"i":4,"p":["Game Variable 1, and changes its name to the name "]},{"c":408,"i":4,"p":["stored in Game Variable 5."]},{"c":355,"i":4,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":4,"p":["pkmn.name = pbGet(5)"]},{"c":101,"i":4,"p":["\\bDone! From now on, this Pok\u00E9mon shall be known"]},{"c":401,"i":4,"p":["as \\v[5]!"]},{"c":101,"i":4,"p":["\\bIt is a better name than before!\\nHow fortunate for "]},{"c":401,"i":4,"p":["you!"]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":101,"i":2,"p":["\\bI see.\\nDo come visit again."]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\bI see.\\nDo come visit again."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

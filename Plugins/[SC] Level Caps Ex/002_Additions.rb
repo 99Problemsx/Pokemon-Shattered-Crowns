@@ -232,6 +232,12 @@ module Game
   def self.start_new(*args)
     __level_caps__start_new(*args)
     $game_variables[LevelCapsEX::LEVEL_CAP_MODE_VARIABLE] = LevelCapsEX::DEFAULT_LEVEL_CAP_MODE
+    # SC Fix: also seed the cap value so a fresh save isn't effectively
+    # uncapped until the first map transition runs the badge-auto-cap.
+    if defined?(LevelCapsEX::BADGE_AUTO_CAP) && LevelCapsEX::BADGE_AUTO_CAP
+      starting_cap = LevelCapsEX::BADGE_LEVEL_CAPS[0]
+      $game_variables[LevelCapsEX::LEVEL_CAP_VARIABLE] = starting_cap if starting_cap
+    end
   end
 end
 

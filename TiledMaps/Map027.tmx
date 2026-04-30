@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="5">
+  <properties>
+    <property name="tileset_id" value="3" />
+    <property name="source" value="Map027.rxdata" />
+    <property name="tileset_name" value="Inside" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_3.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Interior general" tilewidth="32" tileheight="32" tilecount="1795" columns="8">
+    <image source="../Graphics/Tilesets/Interior general.png" width="256" height="7200" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+432,433,433,433,433,433,433,433,433,433,433,434,542,542,542,542,542,542,542,542,
+440,441,441,441,441,441,441,441,441,441,441,442,542,542,542,542,542,542,542,542,
+1037,1045,1045,1045,1077,1069,1071,1077,1077,1077,1077,1063,542,542,542,542,542,542,542,542,
+1055,1054,1054,1054,1060,1192,1193,1193,1193,1193,1194,1060,542,542,542,542,542,542,542,542,
+1069,1060,1060,1060,1060,1200,1201,1201,1201,1201,1202,1060,542,542,542,542,542,542,542,542,
+1069,1060,1060,1060,1060,1200,1201,1201,1201,1201,1202,1060,542,542,542,542,542,542,542,542,
+1069,1060,1060,1060,1060,1208,1209,1209,1209,1209,1210,1060,542,542,542,542,542,542,542,542,
+1069,1060,1060,1060,1060,1060,1060,1060,1060,1060,1060,1060,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,389,390,391,0,1693,0,0,1493,1493,0,0,0,0,0,0,0,0,0,0,
+0,397,398,399,2162,1701,0,0,1501,1501,0,0,0,0,0,0,0,0,0,0,
+448,0,0,0,2170,1709,0,0,0,0,0,450,0,0,0,0,0,0,0,0,
+2177,2177,2177,2177,2178,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1756,0,0,0,0,0,1671,2131,2133,1671,0,0,0,0,0,0,0,0,0,0,
+1764,0,0,0,0,0,1671,2139,2141,1671,0,0,0,0,0,0,0,0,0,0,
+1756,0,0,0,0,0,0,0,0,0,0,1756,0,0,0,0,0,0,0,0,
+1764,0,0,1245,1246,1247,0,0,0,0,0,1764,0,0,0,0,0,0,0,0,
+0,0,0,1253,1254,1255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Exit" type="Event" x="128" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit","x":4,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,23,28,10,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="PC" type="Event" x="160" y="32" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"PC","x":5,"y":1,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbPokeCenterPC"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Day Care Lady" type="Event" x="128" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Day Care Lady","x":4,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 11","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"DayCare.egg_generated?"]},{"c":101,"i":1,"p":["\\rAh, there you are! My husband was looking for "]},{"c":401,"i":1,"p":["you."]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":123,"i":0,"p":["A",1]},{"c":111,"i":0,"p":[12,"DayCare.count == 0"]},{"c":101,"i":1,"p":["\\rI\u0027m the Day-Care Lady. We can raise Pok\u00E9mon for "]},{"c":401,"i":1,"p":["you."]},{"c":101,"i":1,"p":["\\rWould you like us to raise your Pok\u00E9mon?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":111,"i":2,"p":[12,"$player.pokemon_count \u003C= 1"]},{"c":101,"i":3,"p":["\\rOh? But you only have one Pok\u00E9mon with you."]},{"c":101,"i":3,"p":["\\rYou can\u0027t go off without a Pok\u00E9mon. Come back "]},{"c":401,"i":3,"p":["another time."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":101,"i":2,"p":["\\rWhich Pok\u00E9mon should we raise for you?"]},{"c":355,"i":2,"p":["pbChooseNonEggPokemon(1, 3)"]},{"c":111,"i":2,"p":[1,1,0,0,4]},{"c":101,"i":3,"p":["\\rOh, fine, then.\\nCome again."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":111,"i":2,"p":[12,"!$player.has_other_able_pokemon?(pbGet(1))"]},{"c":101,"i":3,"p":["\\rIf you leave me that Pok\u00E9mon, what are you gonna "]},{"c":401,"i":3,"p":["battle with?"]},{"c":101,"i":3,"p":["\\rCome back another time."]},{"c":115,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":355,"i":2,"p":["DayCare.deposit(pbGet(1))"]},{"c":101,"i":2,"p":["\\rFine, we\u0027ll raise your \\v[3] for a while."]},{"c":101,"i":2,"p":["\\rCome back for it later."]},{"c":118,"i":2,"p":["RaiseAnother"]},{"c":101,"i":2,"p":["\\rWe can raise two of your Pok\u00E9mon. Would you like "]},{"c":401,"i":2,"p":["us to raise another?"]},{"c":102,"i":2,"p":[["Yes","No"],2]},{"c":402,"i":2,"p":[0,"Yes"]},{"c":111,"i":3,"p":[12,"$player.pokemon_count \u003C= 1"]},{"c":101,"i":4,"p":["\\rOh? But you only have one Pok\u00E9mon with you."]},{"c":101,"i":4,"p":["\\rYou can\u0027t go off without a Pok\u00E9mon. Come back "]},{"c":401,"i":4,"p":["another time."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":101,"i":3,"p":["\\rWhich Pok\u00E9mon should we raise for you?"]},{"c":355,"i":3,"p":["pbChooseNonEggPokemon(1, 3)"]},{"c":111,"i":3,"p":[1,1,0,0,4]},{"c":101,"i":4,"p":["\\rVery good. Come again."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":111,"i":3,"p":[12,"!$player.has_other_able_pokemon?(pbGet(1))"]},{"c":101,"i":4,"p":["\\rIf you leave me that Pok\u00E9mon, what are you gonna "]},{"c":401,"i":4,"p":["battle with?"]},{"c":101,"i":4,"p":["\\rCome back another time."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":111,"i":3,"p":[12,"pbGetPokemon(1).cannot_store"]},{"c":101,"i":4,"p":["\\rThat Pok\u00E9mon looks like it would rather stay with "]},{"c":401,"i":4,"p":["you."]},{"c":101,"i":4,"p":["\\rCome back another time."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":355,"i":3,"p":["DayCare.deposit(pbGet(1))"]},{"c":101,"i":3,"p":["\\rFine, we\u0027ll raise your \\v[3] for a while."]},{"c":101,"i":3,"p":["\\rCome back for it later."]},{"c":0,"i":3,"p":[]},{"c":402,"i":2,"p":[1,"No"]},{"c":111,"i":3,"p":[2,"A",0]},{"c":119,"i":4,"p":["TakeBack"]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\rVery good. Come again."]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":404,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":101,"i":2,"p":["\\rOh, fine, then.\\nCome again."]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\rAh, it\u0027s you! Good to see you. Now, about your "]},{"c":401,"i":1,"p":["Pok\u00E9mon..."]},{"c":111,"i":1,"p":[12,"DayCare.get_level_gain(0, 3, 4) \u0026\u0026 pbGet(4) \u003E 0"]},{"c":101,"i":2,"p":["\\rBy level, your \\v[3] has grown by about \\v[4]."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[12,"DayCare.get_level_gain(1, 3, 4) \u0026\u0026 pbGet(4) \u003E 0"]},{"c":101,"i":2,"p":["\\rBy level, your \\v[3] has grown by about \\v[4]."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":111,"i":1,"p":[12,"DayCare.count == 1"]},{"c":123,"i":2,"p":["A",0]},{"c":119,"i":2,"p":["RaiseAnother"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":118,"i":2,"p":["TakeBack"]},{"c":101,"i":2,"p":["\\rDo you want your Pok\u00E9mon back?"]},{"c":102,"i":2,"p":[["Yes","No"],2]},{"c":402,"i":2,"p":[0,"Yes"]},{"c":118,"i":3,"p":["TakeBackChosen"]},{"c":111,"i":3,"p":[12,"$player.party_full?"]},{"c":101,"i":4,"p":["\\rYour Pok\u00E9mon team is full. Make room, then come "]},{"c":401,"i":4,"p":["see me."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":355,"i":3,"p":["DayCare.choose("]},{"c":655,"i":3,"p":["  _I(\u0022Which one do you want back?\u0022),"]},{"c":655,"i":3,"p":["  1"]},{"c":655,"i":3,"p":[")"]},{"c":111,"i":3,"p":[1,1,0,0,4]},{"c":101,"i":4,"p":["\\rVery good. Come again."]},{"c":115,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":355,"i":3,"p":["DayCare.get_details(pbGet(1), 3, 4)"]},{"c":101,"i":3,"p":["\\G\\rIf you want your \\v[3] back, it will cost $\\v[4]."]},{"c":102,"i":3,"p":[["Yes","No"],2]},{"c":402,"i":3,"p":[0,"Yes"]},{"c":122,"i":4,"p":[5,5,0,7,2]},{"c":111,"i":4,"p":[1,5,1,4,4]},{"c":101,"i":5,"p":["\\G\\rYou don\u0027t have enough money..."]},{"c":115,"i":5,"p":[]},{"c":0,"i":5,"p":[]},{"c":412,"i":4,"p":[]},{"c":125,"i":4,"p":[1,1,4]},{"c":250,"i":4,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"Mart buy item","@pitch":100}]},{"c":355,"i":4,"p":["DayCare.withdraw(pbGet(1))"]},{"c":101,"i":4,"p":["\\G\\rExcellent\\nHere\u0027s your Pok\u00E9mon."]},{"c":101,"i":4,"p":["\\PN took \\v[3] back from the Day-Care Lady."]},{"c":111,"i":4,"p":[12,"DayCare.count == 1"]},{"c":101,"i":5,"p":["\\G\\rDo you want to take back the other one, too?"]},{"c":102,"i":5,"p":[["Yes","No"],2]},{"c":402,"i":5,"p":[0,"Yes"]},{"c":119,"i":6,"p":["TakeBackChosen"]},{"c":0,"i":6,"p":[]},{"c":402,"i":5,"p":[1,"No"]},{"c":101,"i":6,"p":["\\rVery good. Come again."]},{"c":0,"i":6,"p":[]},{"c":404,"i":5,"p":[]},{"c":0,"i":5,"p":[]},{"c":411,"i":4,"p":[]},{"c":101,"i":5,"p":["\\rVery good. Come again."]},{"c":0,"i":5,"p":[]},{"c":412,"i":4,"p":[]},{"c":0,"i":4,"p":[]},{"c":402,"i":3,"p":[1,"No"]},{"c":101,"i":4,"p":["\\rVery good. Come again."]},{"c":0,"i":4,"p":[]},{"c":404,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":402,"i":2,"p":[1,"No"]},{"c":101,"i":3,"p":["\\rVery good. Come again."]},{"c":0,"i":3,"p":[]},{"c":404,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Hidden Power checker" type="Event" x="192" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Hidden Power checker","x":6,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_BIRDKEEPER","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bI\u0027ll tell you what type your Pok\u00E9mon\u0027s Hidden Power "]},{"c":401,"i":0,"p":["will be."]},{"c":101,"i":0,"p":["\\bMy own hidden power lets me do that."]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":355,"i":1,"p":["pbChooseNonEggPokemon(1, 3)"]},{"c":111,"i":1,"p":[1,1,0,0,1]},{"c":108,"i":2,"p":["The below scripts check whether the chosen Pok\u00E9mon "]},{"c":408,"i":2,"p":["knows or is able to learn Hidden Power (by level "]},{"c":408,"i":2,"p":["up/TM/Move Tutor)."]},{"c":408,"i":2,"p":["Game Variable 2 will contain the name of Hidden "]},{"c":408,"i":2,"p":["Power\u0027s type if it is learnable, or \u0022\u0022 if it can\u0027t be "]},{"c":408,"i":2,"p":["learned."]},{"c":355,"i":2,"p":["move = :HIDDENPOWER"]},{"c":655,"i":2,"p":["pkmn = pbGetPokemon(1)"]},{"c":655,"i":2,"p":["data = pkmn.species_data"]},{"c":655,"i":2,"p":["compatible = false"]},{"c":655,"i":2,"p":["if pkmn.hasMove?(move) ||"]},{"c":655,"i":2,"p":["   pkmn.compatible_with_move?(move)"]},{"c":655,"i":2,"p":["  compatible = true"]},{"c":655,"i":2,"p":["end"]},{"c":355,"i":2,"p":["# Check level-up moves"]},{"c":655,"i":2,"p":["if !compatible"]},{"c":655,"i":2,"p":["  lvm = pkmn.getMoveList"]},{"c":655,"i":2,"p":["  if lvm.any? { |m| m[1] == move }"]},{"c":655,"i":2,"p":["    compatible = true"]},{"c":655,"i":2,"p":["  end"]},{"c":655,"i":2,"p":["end"]},{"c":355,"i":2,"p":["# Get type\u0027s name"]},{"c":655,"i":2,"p":["if compatible"]},{"c":655,"i":2,"p":["  type = pbHiddenPower(pkmn)[0]"]},{"c":655,"i":2,"p":["  nm = GameData::Type.get(type).name"]},{"c":655,"i":2,"p":["  pbSet(2, nm)"]},{"c":655,"i":2,"p":["else"]},{"c":655,"i":2,"p":["  pbSet(2, \u0022\u0022)"]},{"c":655,"i":2,"p":["end"]},{"c":111,"i":2,"p":[12,"pbGet(2) == \u0022\u0022"]},{"c":101,"i":3,"p":["\\bOh, no. This Pok\u00E9mon can\u0027t learn the move Hidden "]},{"c":401,"i":3,"p":["Power in the first place."]},{"c":0,"i":3,"p":[]},{"c":411,"i":2,"p":[]},{"c":111,"i":3,"p":[12,"pbGetPokemon(1).hasMove?(:HIDDENPOWER)"]},{"c":101,"i":4,"p":["\\bThis Pok\u00E9mon\u0027s Hidden Power is the \\v[2] type."]},{"c":0,"i":4,"p":[]},{"c":411,"i":3,"p":[]},{"c":101,"i":4,"p":["\\bIf this Pok\u00E9mon were to learn Hidden Power, the "]},{"c":401,"i":4,"p":["move\u0027s type would be \\v[2]."]},{"c":0,"i":4,"p":[]},{"c":412,"i":3,"p":[]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":108,"i":2,"p":["No Pok\u00E9mon was chosen."]},{"c":119,"i":2,"p":["Cancel"]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":118,"i":1,"p":["Cancel"]},{"c":101,"i":1,"p":["\\bIf you want to know, ask me, and I\u0027ll activate my "]},{"c":401,"i":1,"p":["hidden power for you."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

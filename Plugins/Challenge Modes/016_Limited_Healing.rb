@@ -68,26 +68,24 @@ def pbPokeCenterPC(*args)
                       ChallengeModes::LIMITED_HEALING_COUNT, map_name))
       return false
     end
-    
-    # Increment counter BEFORE healing
-    ChallengeModes.increment_healing_count(map_id)
-    
-    # Show remaining heals
-    remaining = ChallengeModes.remaining_heals(map_id)
-    map_name = pbGetMapNameFromId(map_id)
-    
-    # Perform normal healing
+
+    # Perform healing first (alias chain may block it, e.g. NO_POKEMON_CENTER)
     result = __challengemodes_limitheal__pbPokeCenterPC(*args)
-    
-    # Show message after healing
-    if remaining == 0
-      pbMessage(_INTL("This was your last healing visit in {1}!", map_name))
-    elsif remaining == 1
-      pbMessage(_INTL("You have 1 healing visit left in {1}.", map_name))
-    else
-      pbMessage(_INTL("You have {1} healing visits left in {2}.", remaining, map_name))
+
+    # Only count the visit if healing was not blocked
+    if result != false
+      ChallengeModes.increment_healing_count(map_id)
+      remaining = ChallengeModes.remaining_heals(map_id)
+      map_name = pbGetMapNameFromId(map_id)
+      if remaining == 0
+        pbMessage(_INTL("This was your last healing visit in {1}!", map_name))
+      elsif remaining == 1
+        pbMessage(_INTL("You have 1 healing visit left in {1}.", map_name))
+      else
+        pbMessage(_INTL("You have {1} healing visits left in {2}.", remaining, map_name))
+      end
     end
-    
+
     return result
   end
   
@@ -128,17 +126,7 @@ def pbCheckHealingStatus
     pbMessage(_INTL("Healing visits in {1}:\\n{2} used, {3} remaining", 
                     map_name, count, remaining))
   else
-    pbMessage(_INTL("You've used all {1} healing visits in {2}!", 
-                    ChallengeModes::LIMITED_HEALING_COUNT, map_name))
-  end
-end
-
-#===============================================================================
-# Console logging for debugging
-#===============================================================================
-if ChallengeModes.running?
-  puts "Challenge Modes: Limited Healing rule loaded"
-  puts "  - Max heals per area: #{ChallengeModes::LIMITED_HEALING_COUNT}"
-  puts "  - Tracks healing by map ID"
-  puts "  - Shows remaining heals after each visit"
-end
+      pbMessage(_INTL("You've used all {1} healing visits in {2}!", 
+                        ChallengeModes::LIMITED_HEALING_COUNT, map_name))
+      end
+    end

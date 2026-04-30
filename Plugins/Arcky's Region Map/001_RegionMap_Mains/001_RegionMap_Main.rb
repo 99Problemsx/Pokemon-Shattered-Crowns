@@ -52,7 +52,6 @@ class PokemonRegionMap_Scene
   end
 
   def main
-    echoln("#{ARMSettings.constants.size} Settings")
     changeBGM
     addBackgroundAndRegionSprite
     getMapObject

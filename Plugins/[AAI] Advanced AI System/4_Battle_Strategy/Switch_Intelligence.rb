@@ -1367,6 +1367,12 @@ class Battle::AI
       end
     end
     
+    # === Gen 9 switch-in ability bonuses (Zero to Hero, Booster Energy paradox, Intimidate, etc.) ===
+    begin
+      score += gen9_switchin_bonus(switch_pkmn) if respond_to?(:gen9_switchin_bonus)
+    rescue
+    end
+    
     return score
   end
 
@@ -1651,9 +1657,15 @@ class Battle::AI
     # === SPIKES ===
     spikes_layers = our_side.effects[PBEffects::Spikes]
     if spikes_layers && spikes_layers > 0
-      # Spikes don't affect Flying types or Levitate
+      # Spikes don't affect Flying types or Levitate UNLESS grounded by
+      # Iron Ball / Gravity / Smack Down. Air Balloon makes immune entirely.
+      grav_active = (@battle.field.effects[PBEffects::Gravity] > 0 rescue false)
+      iron_ball   = (switch_pkmn.item_id == :IRONBALL)
+      air_balloon = (switch_pkmn.item_id == :AIRBALLOON)
       grounded = !switch_pkmn.types.include?(:FLYING)
       grounded = grounded && switch_pkmn.ability_id != :LEVITATE
+      grounded = true if iron_ball || grav_active
+      grounded = false if air_balloon  # Air Balloon negates Spikes until popped
       
       if grounded
         # 1 layer = 12.5%, 2 layers = 16.67%, 3 layers = 25%
@@ -1673,9 +1685,15 @@ class Battle::AI
     # === TOXIC SPIKES ===
     toxic_spikes_layers = our_side.effects[PBEffects::ToxicSpikes]
     if toxic_spikes_layers && toxic_spikes_layers > 0
-      # Toxic Spikes don't affect Flying, Poison, or Steel types
+      # Toxic Spikes don't affect Flying, Poison, or Steel types.
+      # Poison-types ABSORB the layers (whether airborne or not).
+      grav_active = (@battle.field.effects[PBEffects::Gravity] > 0 rescue false)
+      iron_ball   = (switch_pkmn.item_id == :IRONBALL)
+      air_balloon = (switch_pkmn.item_id == :AIRBALLOON)
       grounded = !switch_pkmn.types.include?(:FLYING)
       grounded = grounded && switch_pkmn.ability_id != :LEVITATE
+      grounded = true if iron_ball || grav_active
+      grounded = false if air_balloon
       immune = switch_pkmn.types.include?(:POISON) || switch_pkmn.types.include?(:STEEL)
       
       if grounded && !immune
@@ -1694,9 +1712,14 @@ class Battle::AI
     # === STICKY WEB ===
     if our_side.effects[PBEffects::StickyWeb]
       # Sticky Web lowers Speed by 1 stage (no immediate damage)
-      # Flying types and Levitate are immune
+      # Flying types and Levitate are immune unless grounded by
+      # Iron Ball / Gravity. Air Balloon does NOT block Sticky Web in canon
+      # (Web is a sticky surface, not airborne hazard) — but treat conservatively.
+      grav_active = (@battle.field.effects[PBEffects::Gravity] > 0 rescue false)
+      iron_ball   = (switch_pkmn.item_id == :IRONBALL)
       grounded = !switch_pkmn.types.include?(:FLYING)
       grounded = grounded && switch_pkmn.ability_id != :LEVITATE
+      grounded = true if iron_ball || grav_active
       
       if grounded
         # Assign a penalty for speed drop (especially bad for fast Pokemon)

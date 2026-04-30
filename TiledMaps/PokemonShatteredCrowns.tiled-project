@@ -1,0 +1,51 @@
+{
+    "automappingRulesFile": "",
+    "commands": [],
+    "compatibilityVersion": 1100,
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "propertyTypes": [
+        {
+            "id": 1,
+            "name": "EventTrigger",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Action Button",
+                "Player Touch",
+                "Event Touch",
+                "Autorun",
+                "Parallel Process"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 2,
+            "name": "MoveType",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Fixed",
+                "Random",
+                "Approach",
+                "Custom"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 3,
+            "name": "Direction",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Down",
+                "Left",
+                "Right",
+                "Up"
+            ],
+            "valuesAsFlags": false
+        }
+    ]
+}

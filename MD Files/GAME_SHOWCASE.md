@@ -31,7 +31,7 @@
 - **Character Deaths** that carry real weight
 
 ### Two Regions to Explore
-- **Verdania** - A land of rolling hills, ancient forests, and hidden secrets
+- **Asgheim** - A land of rolling hills, ancient forests, and hidden secrets
 - **Astoria** - The forgotten region holding the key to salvation
 
 ### Legendary Encounters
@@ -77,7 +77,7 @@
 
 ### Act 2: Rising Shadows
 *Chapters 8-19 + Perspective Interludes*
-> The Chosen discover their purpose as darkness spreads across Verdania. Alliances form, enemies emerge, and the stakes grow higher with each battle.
+> The Chosen discover their purpose as darkness spreads across Asgheim. Alliances form, enemies emerge, and the stakes grow higher with each battle.
 
 ### Act 3: The Gathering Storm
 *Chapters 20-28*

@@ -37,6 +37,12 @@ module AdvancedAI
   # Enable smart AI for wild Pokemon (uses move scoring instead of random selection)
   ENABLE_WILD_POKEMON_AI = true
   
+  # Enable intelligent lead selection for AI trainers
+  # When true, AI trainers will pick an optimal lead Pokemon based on matchup
+  # analysis instead of always sending out the first party member.
+  # Requires the trainer's skill level to qualify for Advanced AI.
+  ENABLE_LEAD_SELECTION = true
+  
   # Skill level for wild Pokemon when AI is enabled (0-100)
   # 0     = Random moves (vanilla behavior)
   # 50-69 = Core AI features

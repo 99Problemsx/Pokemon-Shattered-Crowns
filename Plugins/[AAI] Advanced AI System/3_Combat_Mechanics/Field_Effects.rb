@@ -128,6 +128,20 @@ module AdvancedAI
         if target && target.hasActiveAbility?(:SNOWCLOAK)
           bonus -= 10
         end
+        
+      when :StrongWinds
+        # Delta Stream: Flying-type weaknesses are neutralized
+        # The engine handles type effectiveness, but we score moves that benefit
+        if move.type == :FLYING
+          bonus += 15  # Flying moves are safer (weaknesses neutralized for user)
+        end
+        # Penalize Ice/Rock/Electric vs Flying targets — they're no longer SE
+        if target && target.pbHasType?(:FLYING)
+          if [:ICE, :ROCK, :ELECTRIC].include?(move.type)
+            bonus -= 20  # Normally SE, but neutralized by Strong Winds
+          end
+        end
+        bonus += 20 if move.id == :WEATHERBALL
       end
       
       # Ability Synergies

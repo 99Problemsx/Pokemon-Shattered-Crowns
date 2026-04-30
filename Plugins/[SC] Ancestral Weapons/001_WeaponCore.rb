@@ -304,7 +304,7 @@ end
 # Battle Integration — End-of-Round HP Regen (Xerneas HEAL_16: 1/16 HP)
 #===============================================================================
 
-EventHandlers.add(:on_end_round, :sc_ancestral_weapon_regen,
+EventHandlers.add(:on_battle_end_round, :sc_ancestral_weapon_regen,
   proc { |battle|
     next unless AncestralWeapons::ENABLED
     AncestralWeapons::WEAPONS.each do |weapon_id, weapon_def|

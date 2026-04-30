@@ -59,11 +59,19 @@ module AdvancedAI
       # Calculate PP drain
       drain = 1
       
-      # Check for Pressure ability on opponents
-      battle.allOtherSideBattlers(battler.index).each do |opp|
-        next unless opp && !opp.fainted?
-        if opp.hasActiveAbility?(:PRESSURE)
-          drain += 1  # Pressure doubles PP usage
+      # Pressure only drains extra PP for moves that TARGET the Pressure user.
+      # In singles, if any opponent has Pressure and this move targets opponents,
+      # add +1 drain. We approximate by checking if the move targets foes.
+      move_targets_foes = move.respond_to?(:damagingMove?) ? move.damagingMove? : true
+      move_targets_foes = true if move.respond_to?(:statusMove?) && move.statusMove? &&
+                                  move.respond_to?(:pbTarget) rescue true
+      if move_targets_foes
+        battle.allOtherSideBattlers(battler.index).each do |opp|
+          next unless opp && !opp.fainted?
+          if opp.hasActiveAbility?(:PRESSURE)
+            drain += 1  # Pressure doubles PP usage for moves targeting it
+            break  # Only +1 total even with multiple Pressure users (per official mechanics)
+          end
         end
       end
       
@@ -215,6 +223,19 @@ module AdvancedAI
     # PP Conservation Strategies
     #===========================================================================
     
+    # Check if this is the only move with PP that can damage the target
+    def self.only_viable_move?(attacker, move)
+      return true unless attacker && move
+      return true unless attacker.respond_to?(:moves)
+      other_viable = attacker.moves.any? do |m|
+        next false unless m && m.id != move.id
+        next false if m.pp == 0 && m.total_pp > 0
+        next false unless m.respond_to?(:damagingMove?) && m.damagingMove?
+        true
+      end
+      !other_viable
+    end
+
     # Should we conserve PP on this move?
     def self.should_conserve_pp?(battle, attacker, move, skill_level = 100)
       return false unless skill_level >= 65
@@ -354,13 +375,6 @@ module AdvancedAI
       "#{battler.index}_#{pid}"
     end
     
-    def self.only_viable_move?(attacker, move)
-      return true unless attacker.moves
-      
-      attacker.moves.count do |m|
-        m && m.id != move.id && get_remaining_pp(attacker, m.id).to_i > 0
-      end == 0
-    end
   end
 end
 

@@ -400,3 +400,49 @@ module AdvancedAI
     TeamPreviewIntelligence.detect_lead_roles(pokemon, party)
   end
 end
+
+#===============================================================================
+# Hook: Override pbSetUpSides to reorder AI trainer party for optimal lead
+#===============================================================================
+class Battle
+  alias aai_pbSetUpSides pbSetUpSides
+  def pbSetUpSides
+    # Reorder AI trainer parties before vanilla setup picks leads
+    if @opponent && !wildBattle? && AdvancedAI::ENABLE_LEAD_SELECTION
+      @opponent.each_with_index do |trainer, idxTrainer|
+        next unless trainer
+        skill = trainer.skill || 100
+        next unless AdvancedAI.qualifies_for_advanced_ai?(skill)
+        # Respect UsePokemonInOrder — don't reorder party
+        next if trainer.flags&.include?("UsePokemonInOrder")
+        
+        party = pbParty(1)
+        starts = pbPartyStarts(1)
+        party_start = starts[idxTrainer] || 0
+        party_end = (starts[idxTrainer + 1] || party.length)
+        trainer_party = party[party_start...party_end]
+        next if trainer_party.length <= 1
+        
+        # Get opponent's party for matchup analysis
+        player_party = pbParty(0)
+        
+        best_lead = AdvancedAI.select_best_lead(self, trainer_party, player_party)
+        
+        if best_lead && best_lead > 0 && best_lead < trainer_party.length
+          # Swap the best lead to the front of this trainer's sub-party
+          real_idx = party_start + best_lead
+          party[party_start], party[real_idx] = party[real_idx], party[party_start]
+          # Also update party order array
+          order = pbPartyOrder(1)
+          if order
+            order[party_start], order[real_idx] = order[real_idx], order[party_start]
+          end
+          AdvancedAI.log("[Lead Selection] Swapped #{trainer_party[best_lead].name} to lead for #{trainer.name}", :team_preview)
+        end
+      end
+    end
+    
+    # Call vanilla pbSetUpSides
+    aai_pbSetUpSides
+  end
+end

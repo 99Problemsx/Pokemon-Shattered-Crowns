@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="7">
+  <properties>
+    <property name="tileset_id" value="5" />
+    <property name="source" value="Map054.rxdata" />
+    <property name="tileset_name" value="Poké Mart" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_5.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Mart interior" tilewidth="32" tileheight="32" tilecount="120" columns="8">
+    <image source="../Graphics/Tilesets/Mart interior.png" width="256" height="480" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+409,385,385,385,385,385,385,385,385,385,409,409,409,409,409,409,409,409,409,409,
+409,393,393,393,393,393,393,393,393,393,409,409,409,409,409,409,409,409,409,409,
+425,433,433,425,443,433,433,423,425,425,425,409,409,409,409,409,409,409,409,409,
+407,416,416,425,426,416,416,416,416,416,440,409,409,409,409,409,409,409,409,409,
+425,425,425,425,426,416,416,416,425,425,425,409,409,409,409,409,409,409,409,409,
+425,433,433,433,434,416,416,416,425,443,433,409,409,409,409,409,409,409,409,409,
+425,425,425,427,416,416,416,416,425,426,407,409,409,409,409,409,409,409,409,409,
+425,441,433,434,416,416,416,416,425,426,416,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+384,0,388,0,387,387,387,485,486,487,386,0,0,0,0,0,0,0,0,0,
+392,390,396,456,395,395,395,493,494,495,394,0,0,0,0,0,0,0,0,0,
+400,398,0,464,0,0,0,501,502,503,402,0,0,0,0,0,0,0,0,0,
+488,489,491,480,0,0,0,456,488,490,491,0,0,0,0,0,0,0,0,0,
+496,497,499,472,0,0,0,464,496,498,499,0,0,0,0,0,0,0,0,0,
+0,488,491,0,0,0,0,480,0,0,0,0,0,0,0,0,0,0,0,0,
+0,496,499,0,0,0,0,480,0,0,0,0,0,0,0,0,0,0,0,0,
+408,0,0,403,404,405,0,472,0,0,410,0,0,0,0,0,0,0,0,0,
+0,0,0,411,412,413,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,452,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,460,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="BP shop bottom" type="Event" x="256" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"BP shop bottom","x":8,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbBattlePointShop(["]},{"c":655,"i":0,"p":["  :PROTEIN, :CALCIUM, :IRON,"]},{"c":655,"i":0,"p":["  :ZINC, :CARBOS, :HPUP,"]},{"c":655,"i":0,"p":["  :POWERBRACER, :POWERBELT,"]},{"c":655,"i":0,"p":["  :POWERLENS, :POWERBAND,"]},{"c":655,"i":0,"p":["  :POWERANKLET, :POWERWEIGHT,"]},{"c":655,"i":0,"p":["  :CHOICEBAND, :CHOICESPECS,"]},{"c":655,"i":0,"p":["  :CHOICESCARF,"]},{"c":655,"i":0,"p":["  :FOCUSBAND, :FOCUSSASH"]},{"c":655,"i":0,"p":["])"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="BP shop top" type="Event" x="256" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="6" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":6,"name":"BP shop top","x":8,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbBattlePointShop(["]},{"c":655,"i":0,"p":["  :SCOPELENS, :WIDELENS, :ZOOMLENS,"]},{"c":655,"i":0,"p":["  :WISEGLASSES, :MUSCLEBAND,"]},{"c":655,"i":0,"p":["  :BINDINGBAND,"]},{"c":655,"i":0,"p":["  :RAZORCLAW, :RAZORFANG,"]},{"c":655,"i":0,"p":["  :AIRBALLOON, :IRONBALL, :TOXICORB,"]},{"c":655,"i":0,"p":["  :FLAMEORB, :LIFEORB,"]},{"c":655,"i":0,"p":["  :WHITEHERB, :POWERHERB,"]},{"c":655,"i":0,"p":["  :ABSORBBULB, :CELLBATTERY,"]},{"c":655,"i":0,"p":["  :REDCARD, :EJECTBUTTON, :RARECANDY"]},{"c":655,"i":0,"p":["])"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Exit" type="Event" x="128" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit","x":4,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,52,22,13,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Mart" type="Event" x="64" y="96" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Mart","x":2,"y":3,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 19","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"$player.badge_count \u003E= 8"]},{"c":355,"i":1,"p":["pbPokemonMart(["]},{"c":655,"i":1,"p":["  :POKEBALL, :GREATBALL, :ULTRABALL,"]},{"c":655,"i":1,"p":["  :POTION, :SUPERPOTION,"]},{"c":655,"i":1,"p":["  :HYPERPOTION, :MAXPOTION,"]},{"c":655,"i":1,"p":["  :FULLRESTORE, :REVIVE,"]},{"c":655,"i":1,"p":["  :ANTIDOTE, :PARALYZEHEAL,"]},{"c":655,"i":1,"p":["  :AWAKENING, :BURNHEAL, :ICEHEAL,"]},{"c":655,"i":1,"p":["  :FULLHEAL,"]},{"c":655,"i":1,"p":["  :ESCAPEROPE,"]},{"c":655,"i":1,"p":["  :REPEL, :SUPERREPEL, :MAXREPEL"]},{"c":655,"i":1,"p":["])"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"$player.badge_count \u003E= 7"]},{"c":355,"i":1,"p":["pbPokemonMart(["]},{"c":655,"i":1,"p":["  :POKEBALL, :GREATBALL, :ULTRABALL,"]},{"c":655,"i":1,"p":["  :POTION, :SUPERPOTION,"]},{"c":655,"i":1,"p":["  :HYPERPOTION, :MAXPOTION,"]},{"c":655,"i":1,"p":["  :REVIVE,"]},{"c":655,"i":1,"p":["  :ANTIDOTE, :PARALYZEHEAL,"]},{"c":655,"i":1,"p":["  :AWAKENING, :BURNHEAL, :ICEHEAL,"]},{"c":655,"i":1,"p":["  :FULLHEAL,"]},{"c":655,"i":1,"p":["  :ESCAPEROPE,"]},{"c":655,"i":1,"p":["  :REPEL, :SUPERREPEL, :MAXREPEL"]},{"c":655,"i":1,"p":["])"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"$player.badge_count \u003E= 5"]},{"c":355,"i":1,"p":["pbPokemonMart(["]},{"c":655,"i":1,"p":["  :POKEBALL, :GREATBALL, :ULTRABALL,"]},{"c":655,"i":1,"p":["  :POTION, :SUPERPOTION,"]},{"c":655,"i":1,"p":["  :HYPERPOTION,"]},{"c":655,"i":1,"p":["  :REVIVE,"]},{"c":655,"i":1,"p":["  :ANTIDOTE, :PARALYZEHEAL,"]},{"c":655,"i":1,"p":["  :AWAKENING, :BURNHEAL, :ICEHEAL,"]},{"c":655,"i":1,"p":["  :FULLHEAL,"]},{"c":655,"i":1,"p":["  :ESCAPEROPE,"]},{"c":655,"i":1,"p":["  :REPEL, :SUPERREPEL, :MAXREPEL"]},{"c":655,"i":1,"p":["])"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"$player.badge_count \u003E= 3"]},{"c":355,"i":1,"p":["pbPokemonMart(["]},{"c":655,"i":1,"p":["  :POKEBALL, :GREATBALL,"]},{"c":655,"i":1,"p":["  :POTION, :SUPERPOTION,"]},{"c":655,"i":1,"p":["  :HYPERPOTION,"]},{"c":655,"i":1,"p":["  :REVIVE,"]},{"c":655,"i":1,"p":["  :ANTIDOTE, :PARALYZEHEAL,"]},{"c":655,"i":1,"p":["  :AWAKENING, :BURNHEAL, :ICEHEAL,"]},{"c":655,"i":1,"p":["  :ESCAPEROPE,"]},{"c":655,"i":1,"p":["  :REPEL, :SUPERREPEL"]},{"c":655,"i":1,"p":["])"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":111,"i":0,"p":[12,"$player.badge_count \u003E= 1"]},{"c":355,"i":1,"p":["pbPokemonMart(["]},{"c":655,"i":1,"p":["  :POKEBALL, :GREATBALL,"]},{"c":655,"i":1,"p":["  :POTION, :SUPERPOTION,"]},{"c":655,"i":1,"p":["  :ANTIDOTE, :PARALYZEHEAL,"]},{"c":655,"i":1,"p":["  :AWAKENING, :BURNHEAL, :ICEHEAL,"]},{"c":655,"i":1,"p":["  :ESCAPEROPE,"]},{"c":655,"i":1,"p":["  :REPEL"]},{"c":655,"i":1,"p":["])"]},{"c":115,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":355,"i":0,"p":["pbPokemonMart(["]},{"c":655,"i":0,"p":["  :POKEBALL,"]},{"c":655,"i":0,"p":["  :POTION"]},{"c":655,"i":0,"p":["])"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="Questionnaire" type="Event" x="32" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Questionnaire","x":1,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"$player.mystery_gift_unlocked"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["There is a questionnaire.\\nWould you like to fill it out?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":101,"i":2,"p":["\\PN filled in the questionnaire."]},{"c":209,"i":2,"p":[2,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":2,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":355,"i":2,"p":["pbExclaim(get_character(2))"]},{"c":106,"i":2,"p":[20]},{"c":101,"i":2,"p":["\\bOh, hello!\\nYou filled in the questionnaire?"]},{"c":101,"i":2,"p":["\\bThat means you must know about the Mystery Gift."]},{"c":101,"i":2,"p":["\\bFrom now on, you should be receiving Mystery "]},{"c":401,"i":2,"p":["Gifts!"]},{"c":355,"i":2,"p":["$player.mystery_gift_unlocked = true"]},{"c":101,"i":2,"p":["\\w[signskin]Once you save your game, you can "]},{"c":401,"i":2,"p":["access the Mystery Gift."]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="6" name="Deliveryman" type="Event" x="96" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":4,"name":"Deliveryman","x":3,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":30,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":30,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 01","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"pbNextMysteryGiftID \u003E 0"]},{"c":101,"i":1,"p":["\\bHello. You must be \\PN."]},{"c":101,"i":1,"p":["\\bI\u0027ve received a gift for you.\\nHere you go!"]},{"c":355,"i":1,"p":["id = pbNextMysteryGiftID"]},{"c":655,"i":1,"p":["pbReceiveMysteryGift(id)"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bI haven\u0027t received any other gifts for you."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":101,"i":0,"p":["\\bWe look forward to your next visit."]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

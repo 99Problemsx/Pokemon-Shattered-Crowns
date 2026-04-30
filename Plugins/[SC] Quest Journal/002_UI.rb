@@ -11,6 +11,8 @@ class QuestJournalScene
     @quest_index = 0
     @categories = QuestJournal::CATEGORIES.keys
     @mode = :category
+    # Filter cycle: :all -> :active -> :complete -> :failed -> :all
+    @filter_state = :all
   end
 
   def pbStartScene
@@ -59,10 +61,18 @@ class QuestJournalScene
     cat_id = @categories[@cat_index]
     cat = QuestJournal::CATEGORIES[cat_id]
     all_quests = QuestRegistry.by_category(cat_id).values
-    visible = all_quests.select { |q| pbQuests.state(q.id) > QuestJournal::STATE_HIDDEN }
+    visible = filter_quests(all_quests)
 
+    filter_label = case @filter_state
+                   when :active   then "Active"
+                   when :complete then "Completed"
+                   when :failed   then "Failed"
+                   else "All"
+                   end
     pbDrawTextPositions(overlay, [
-      [cat[:name], Graphics.width / 2, 8, 2, cat[:color], QuestJournal::TEXT_SHADOW]
+      [cat[:name], Graphics.width / 2, 8, 2, cat[:color], QuestJournal::TEXT_SHADOW],
+      [_INTL("[Q/W: {1}]", filter_label), Graphics.width - 20, 8, 1,
+       QuestJournal::TEXT_BASE, QuestJournal::TEXT_SHADOW]
     ])
 
     if visible.empty?
@@ -155,14 +165,16 @@ class QuestJournalScene
         end
       when :quest
         cat_id = @categories[@cat_index]
-        visible = QuestRegistry.by_category(cat_id).values.select { |q|
-          pbQuests.state(q.id) > QuestJournal::STATE_HIDDEN
-        }
+        visible = filter_quests(QuestRegistry.by_category(cat_id).values)
         if Input.trigger?(Input::DOWN) && !visible.empty?
           @quest_index = (@quest_index + 1) % visible.length
           pbPlayCursorSE; draw_quests
         elsif Input.trigger?(Input::UP) && !visible.empty?
           @quest_index = (@quest_index - 1) % visible.length
+          pbPlayCursorSE; draw_quests
+        elsif Input.trigger?(Input::L) || Input.trigger?(Input::R)
+          cycle_filter(Input.trigger?(Input::R))
+          @quest_index = 0
           pbPlayCursorSE; draw_quests
         elsif Input.trigger?(Input::BACK)
           @mode = :category; pbPlayCancelSE; draw_categories
@@ -174,6 +186,27 @@ class QuestJournalScene
   def pbEndScene
     pbDisposeSpriteHash(@sprites)
     @viewport.dispose
+  end
+
+  FILTER_ORDER = [:all, :active, :complete, :failed].freeze
+
+  def cycle_filter(forward = true)
+    idx = FILTER_ORDER.index(@filter_state) || 0
+    idx = forward ? (idx + 1) % FILTER_ORDER.length : (idx - 1) % FILTER_ORDER.length
+    @filter_state = FILTER_ORDER[idx]
+  end
+
+  def filter_quests(list)
+    list.select do |q|
+      st = pbQuests.state(q.id)
+      next false if st <= QuestJournal::STATE_HIDDEN
+      case @filter_state
+      when :active   then st == QuestJournal::STATE_ACTIVE
+      when :complete then st == QuestJournal::STATE_COMPLETE
+      when :failed   then st == QuestJournal::STATE_FAILED
+      else true
+      end
+    end
   end
 end
 

@@ -1,0 +1,30 @@
+{
+    "activeFile": "Map003.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Alle Dateien (*)",
+    "fileStates": {
+        "Map003.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 282,
+                "y": 235
+            }
+        },
+        "Map003.tmx#Interior general": {
+            "scaleInDock": 1
+        },
+        "Map003.tmx#rpgmaker_autotiles": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+        "Map003.tmx"
+    ],
+    "project": "PokemonShatteredCrowns.tiled-project",
+    "recentFiles": [
+        "Map003.tmx"
+    ]
+}

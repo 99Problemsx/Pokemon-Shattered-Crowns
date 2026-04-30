@@ -10171,7 +10171,7 @@
 > *Ragnar's eighth badge.*  
 > *The one he never got to earn.*  
 - **\Player**: I got this for you.  
-- **\Player**: Champion of Verdania.  
+- **\Player**: Champion of Asgheim.  
 - **\Player**: That's what you would've been.  
 > *The wind rustled the grass.*  
 > *Almost like a response.*  
@@ -10305,7 +10305,7 @@
 
 #### Scene: Chapter 35 act4 end (`ch35_act4_end`)
 > *\\ts[]ONE YEAR LATER...*  
-> *Peace had returned to Verdania.*  
+> *Peace had returned to Asgheim.*  
 > *But some stories... are not yet finished.*  
 
 
@@ -10334,7 +10334,7 @@
 > *The kitchen smelled like home.*  
 > *Mom was humming. Dad was reading the paper.*  
 - **Aurora**: There's my hero!  
-- **Marcus**: *grinning* Champion of Verdania AND the world.  
+- **Marcus**: *grinning* Champion of Asgheim AND the world.  
 - **\Player**: Dad, please...  
 - **Marcus**: What? I'm proud!  
 > *Your pendant pulsed warmly against your chest.*  
@@ -10535,7 +10535,7 @@
 - **Lyra**: Cheerful.  
 - **Captain Maren**: Realistic.  
 > *You set sail as the sun set behind you.*  
-> *Leaving Verdania. Perhaps for the last time.*  
+> *Leaving Asgheim. Perhaps for the last time.*  
 
 #### Scene: Chapter 37 at sea (`ch37_at_sea`)
 > *The open ocean was vast and terrifying.*  
@@ -11403,7 +11403,7 @@
 - **Captain Maren**: *grinning* Knew you'd make it.  
 - **Kael**: How?  
 - **Captain Maren**: You had that look. The kind that doesn't quit.  
-> *The Stormbreaker set sail for Verdania.*  
+> *The Stormbreaker set sail for Asgheim.*  
 > *Home at last.*  
 
 #### Scene: Chapter 48 voyage home (`ch48_voyage_home`)
@@ -11415,8 +11415,8 @@
 - **\Player**: *joining them* What now?  
 - **Lyra**: Now? We live.  
 
-#### Scene: Chapter 48 verdania sighted (`ch48_verdania_sighted`)
-> *On the third day, Verdania appeared.*  
+#### Scene: Chapter 48 Asgheim sighted (`ch48_Asgheim_sighted`)
+> *On the third day, Asgheim appeared.*  
 > *Green hills. Familiar shores.*  
 > *Home.*  
 - **Captain Maren**: There she is. Safe and sound.  
@@ -11551,7 +11551,7 @@
 > *Just like old times.*  
 - **Lyra**: We did it, didn't we?  
 - **Kael**: Saved the world. Sealed a god.  
-- **\Player**: Not bad for a bunch of kids from Verdania.  
+- **\Player**: Not bad for a bunch of kids from Asgheim.  
 - **Lyra**: *laughing* We're not kids anymore.  
 - **Kael**: No. We're not.  
 > *The sun dipped below the horizon.*  
@@ -11791,7 +11791,7 @@
 - **Zacian**: Nor we without you.  
 
 #### Scene: Chapter 55 final sunset (`ch55_final_sunset`)
-> *The sun set over Verdania.*  
+> *The sun set over Asgheim.*  
 > *Golden light on green hills.*  
 > *The world you'd saved, beautiful and whole.*  
 - **Lyra**: *taking Kael's hand* I love you both.  

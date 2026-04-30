@@ -10,12 +10,26 @@ class TrainerCardExSaveData
   attr_accessor :earned_badges    # Array of earned badge keys
   attr_accessor :total_battles    # Lifetime battles won
   attr_accessor :total_steps      # Lifetime steps
+  attr_accessor :total_battles_lost
+  attr_accessor :total_captures
+  attr_accessor :total_eggs_hatched
+  attr_accessor :total_money_earned
 
   def initialize
-    @earned_badges = []
-    @total_battles = 0
-    @total_steps   = 0
+    @earned_badges       = []
+    @total_battles       = 0
+    @total_steps         = 0
+    @total_battles_lost  = 0
+    @total_captures      = 0
+    @total_eggs_hatched  = 0
+    @total_money_earned  = 0
   end
+
+  # Backwards-compatible getters in case loaded saves predate new fields.
+  def total_battles_lost;  @total_battles_lost  ||= 0; end
+  def total_captures;      @total_captures      ||= 0; end
+  def total_eggs_hatched;  @total_eggs_hatched  ||= 0; end
+  def total_money_earned;  @total_money_earned  ||= 0; end
 
   def check_badges
     TrainerCardEx::BADGES_DISPLAY.each do |key, config|
@@ -59,8 +73,12 @@ end
 
 EventHandlers.add(:on_end_battle, :sc_trainer_card_battle,
   proc { |result, _can_lose|
-    next unless TrainerCardEx::ENABLED && result == 1
-    $PokemonGlobal.trainer_card_ex_data.total_battles += 1
+    next unless TrainerCardEx::ENABLED
+    data = $PokemonGlobal.trainer_card_ex_data
+    case result
+    when 1 then data.total_battles      += 1     # win
+    when 2 then data.total_battles_lost = data.total_battles_lost + 1  # loss
+    end
   }
 )
 
@@ -68,6 +86,23 @@ EventHandlers.add(:on_player_step_taken, :sc_trainer_card_steps,
   proc {
     next unless TrainerCardEx::ENABLED
     $PokemonGlobal.trainer_card_ex_data.total_steps += 1
+  }
+)
+
+EventHandlers.add(:on_pokemon_added_to_party, :sc_trainer_card_capture,
+  proc { |pkmn, source|
+    next unless TrainerCardEx::ENABLED
+    next unless source == :capture || source == :wild
+    data = $PokemonGlobal.trainer_card_ex_data
+    data.total_captures = data.total_captures + 1
+  }
+)
+
+EventHandlers.add(:on_egg_hatched, :sc_trainer_card_hatch,
+  proc { |_pkmn|
+    next unless TrainerCardEx::ENABLED
+    data = $PokemonGlobal.trainer_card_ex_data
+    data.total_eggs_hatched = data.total_eggs_hatched + 1
   }
 )
 
@@ -103,11 +138,14 @@ def pbShowTrainerCardEx
   end
 
   msg += _INTL("║ Battles Won: {1}\n", data.total_battles) if TrainerCardEx::SHOW_BATTLES_WON
+  msg += _INTL("║ Battles Lost: {1}\n", data.total_battles_lost) if TrainerCardEx::SHOW_BATTLES_WON
+  msg += _INTL("║ Pokemon Caught: {1}\n", data.total_captures) if TrainerCardEx::SHOW_BATTLES_WON
+  msg += _INTL("║ Eggs Hatched: {1}\n", data.total_eggs_hatched) if TrainerCardEx::SHOW_BATTLES_WON
   msg += _INTL("║ Steps: {1}\n", data.total_steps) if TrainerCardEx::SHOW_STEPS
 
   # Cross-plugin stats
   if TrainerCardEx::SHOW_ARENA_STREAK && defined?(BattleArena) &&
-     $PokemonGlobal.respond_to?(:arena_data)
+     $PokemonGlobal.respond_to?(:arena_data) && $PokemonGlobal.arena_data
     msg += _INTL("║ Arena Best Streak: {1}\n", $PokemonGlobal.arena_data.best_streak)
   end
 

@@ -38,10 +38,25 @@ module AdvancedAI
         ate_map = { PIXILATE: :FAIRY, AERILATE: :FLYING, REFRIGERATE: :ICE, GALVANIZE: :ELECTRIC }
         if user.respond_to?(:hasActiveAbility?)
           ate_ability = ate_map.keys.find { |a| user.hasActiveAbility?(a) }
+          # Normalize: all moves become Normal (already Normal, but flag for non-Normal moves)
         elsif user.respond_to?(:ability_id)
           ate_ability = ate_map.keys.find { |a| user.ability_id == a }
         end
         effective_type = ate_map[ate_ability] if ate_ability
+      end
+      # Normalize: all moves become Normal type
+      if user.respond_to?(:hasActiveAbility?)
+        effective_type = :NORMAL if user.hasActiveAbility?(:NORMALIZE) && effective_type != :NORMAL
+      elsif user.respond_to?(:ability_id)
+        effective_type = :NORMAL if user.ability_id == :NORMALIZE && effective_type != :NORMAL
+      end
+      # Liquid Voice: sound moves become Water type
+      if move.respond_to?(:soundMove?) && move.soundMove?
+        if user.respond_to?(:hasActiveAbility?)
+          effective_type = :WATER if user.hasActiveAbility?(:LIQUIDVOICE)
+        elsif user.respond_to?(:ability_id)
+          effective_type = :WATER if user.ability_id == :LIQUIDVOICE
+        end
       end
       # Handle Tera Blast: becomes user's Tera type when Terastallized
       if move.respond_to?(:id) && move.id == :TERABLAST
@@ -125,14 +140,17 @@ module AdvancedAI
       return mod unless battle
       
       # Weather modifiers (Sun/Rain boost/nerf Fire/Water by 1.5x/0.5x)
+      # Utility Umbrella holders are unaffected by weather
       weather = battle.pbWeather rescue nil
-      if weather
+      attacker_umbrella = (attacker.item_id == :UTILITYUMBRELLA rescue false)
+      target_umbrella = target && (target.item_id == :UTILITYUMBRELLA rescue false)
+      if weather && !attacker_umbrella
         if weather == :Sun || weather == :HarshSun
-          mod *= 1.5 if effective_type == :FIRE
-          mod *= 0.5 if effective_type == :WATER
+          mod *= 1.5 if effective_type == :FIRE && !target_umbrella
+          mod *= 0.5 if effective_type == :WATER && !target_umbrella
         elsif weather == :Rain || weather == :HeavyRain
-          mod *= 1.5 if effective_type == :WATER
-          mod *= 0.5 if effective_type == :FIRE
+          mod *= 1.5 if effective_type == :WATER && !target_umbrella
+          mod *= 0.5 if effective_type == :FIRE && !target_umbrella
         end
       end
       
@@ -164,6 +182,11 @@ module AdvancedAI
         mod *= 1.5 if is_physical && attacker_item == :CHOICEBAND
         mod *= 1.5 if !is_physical && attacker_item == :CHOICESPECS
         mod *= 1.3 if attacker_item == :LIFEORB
+        # Punching Glove: 1.1x for punching moves (also removes contact)
+        if attacker_item == :PUNCHINGGLOVE
+          is_punching = (move.respond_to?(:punchingMove?) && move.punchingMove?) rescue false
+          mod *= 1.1 if is_punching
+        end
       end
       
       # Burn halves physical damage (unless Guts)
@@ -265,7 +288,7 @@ module AdvancedAI
     # and offensive abilities like Tinted Lens.
     #===========================================================================
     
-    def self.ability_damage_modifier(attacker, target, effective_type, is_physical, effectiveness)
+    def self.ability_damage_modifier(attacker, target, effective_type, is_physical, effectiveness, move = nil)
       mod = 1.0
       
       # --- Target defensive abilities ---
@@ -273,8 +296,17 @@ module AdvancedAI
       if target.respond_to?(:hasActiveAbility?)
         # Fur Coat: physical damage halved
         mod *= 0.5 if is_physical && target.hasActiveAbility?(:FURCOAT)
+        # Fluffy: contact damage halved (Fire doubled, handled below)
+        if is_physical && target.hasActiveAbility?(:FLUFFY)
+          is_contact = (move.respond_to?(:contactMove?) && move.contactMove?) rescue false
+          mod *= 0.5 if is_contact && effective_type != :FIRE
+          mod *= 2.0 if effective_type == :FIRE
+        end
         # Ice Scales: special damage halved
         mod *= 0.5 if !is_physical && target.hasActiveAbility?(:ICESCALES)
+        # Punk Rock: sound move damage halved
+        is_sound = (move.respond_to?(:soundMove?) && move.soundMove?) rescue false
+        mod *= 0.5 if is_sound && target.hasActiveAbility?(:PUNKROCK)
         # Thick Fat: Fire/Ice damage halved
         mod *= 0.5 if target.hasActiveAbility?(:THICKFAT) && [:FIRE, :ICE].include?(effective_type)
         # Heatproof: Fire damage halved
@@ -299,10 +331,13 @@ module AdvancedAI
         if target_ability
           mod *= 0.5 if is_physical && target_ability == :FURCOAT
           mod *= 0.5 if !is_physical && target_ability == :ICESCALES
+          mod *= 0.5 if target_ability == :THICKFAT && [:FIRE, :ICE].include?(effective_type)
           mod *= 0.5 if target_ability == :HEATPROOF && effective_type == :FIRE
           mod *= 0.5 if target_ability == :WATERBUBBLE && effective_type == :FIRE
           if Effectiveness.super_effective?(effectiveness)
-            mod *= 0.75 if target_ability == :PRISMARMOR
+            if [:FILTER, :SOLIDROCK, :PRISMARMOR].include?(target_ability)
+              mod *= 0.75
+            end
           end
           # Multiscale/Shadow Shield: party Pokemon → assume full HP (switching in)
           if [:MULTISCALE, :SHADOWSHIELD].include?(target_ability)
@@ -316,6 +351,29 @@ module AdvancedAI
         # Tinted Lens: NVE damage doubled
         if attacker.hasActiveAbility?(:TINTEDLENS) && Effectiveness.not_very_effective?(effectiveness)
           mod *= 2.0
+        end
+        # Sharpness: slicing moves 1.5x
+        is_slicing = (move.respond_to?(:slicingMove?) && move.slicingMove?) rescue false
+        mod *= 1.5 if is_slicing && attacker.hasActiveAbility?(:SHARPNESS)
+        # Strong Jaw: biting moves 1.5x
+        is_biting = (move.respond_to?(:bitingMove?) && move.bitingMove?) rescue false
+        mod *= 1.5 if is_biting && attacker.hasActiveAbility?(:STRONGJAW)
+        # Iron Fist: punching moves 1.2x
+        is_punching = (move.respond_to?(:punchingMove?) && move.punchingMove?) rescue false
+        mod *= 1.2 if is_punching && attacker.hasActiveAbility?(:IRONFIST)
+        # Mega Launcher: pulse moves 1.5x
+        is_pulse = (move.respond_to?(:pulseMove?) && move.pulseMove?) rescue false
+        mod *= 1.5 if is_pulse && attacker.hasActiveAbility?(:MEGALAUNCHER)
+        # Punk Rock (attacker): sound moves 1.3x
+        mod *= 1.3 if is_sound && attacker.hasActiveAbility?(:PUNKROCK)
+        # Water Bubble (attacker): Water moves 2x
+        mod *= 2.0 if effective_type == :WATER && attacker.hasActiveAbility?(:WATERBUBBLE)
+        # Steelworker: Steel moves 1.5x
+        mod *= 1.5 if effective_type == :STEEL && attacker.hasActiveAbility?(:STEELWORKER)
+        # Supreme Overlord: +10% per fainted ally (max +50%)
+        if attacker.hasActiveAbility?(:SUPREMEOVERLORD)
+          fainted = (attacker.effects[PBEffects::SupremeOverlord] rescue 0) || 0
+          mod *= (1.0 + fainted * 0.1) if fainted > 0
         end
       else
         atk_ability = attacker.ability_id rescue nil
@@ -331,6 +389,20 @@ module AdvancedAI
     # Simplified Damage Calculation (For Quick Estimates)
     #===========================================================================
     
+    # Stat stage multiplier: converts a stage (-6..+6) to a multiplier.
+    # Positive stages: (2+stage)/2; Negative stages: 2/(2+stage.abs)
+    STAGE_MULTIPLIERS = {
+      -6 => 2.0/8, -5 => 2.0/7, -4 => 2.0/6, -3 => 2.0/5,
+      -2 => 2.0/4, -1 => 2.0/3,  0 => 1.0,
+       1 => 3.0/2,  2 => 4.0/2,  3 => 5.0/2,
+       4 => 6.0/2,  5 => 7.0/2,  6 => 8.0/2
+    }
+
+    def self.stage_multiplier(stage)
+      stage = stage.clamp(-6, 6)
+      STAGE_MULTIPLIERS[stage] || 1.0
+    end
+
     def self.estimate_damage(attacker, move, defender, options = {})
       return 0 unless attacker && move && defender
       return 0 unless move.damagingMove?
@@ -342,13 +414,30 @@ module AdvancedAI
       # Resolve effective type considering -ate abilities and Tera Blast
       effective_type = resolve_move_type(attacker, move)
       
-      # Get stats based on move category
+      # Get stats based on move category, applying stat stage boosts
       if move.physicalMove?
         atk = attacker.attack
         defense = defender.defense
+        # Apply stat stages if available (Battle::Battler has .stages hash)
+        if attacker.respond_to?(:stages) && attacker.stages
+          atk_stage = attacker.stages[:ATTACK] || 0
+          atk = (atk * stage_multiplier(atk_stage)).to_i
+        end
+        if defender.respond_to?(:stages) && defender.stages
+          def_stage = defender.stages[:DEFENSE] || 0
+          defense = (defense * stage_multiplier(def_stage)).to_i
+        end
       elsif move.specialMove?
         atk = attacker.spatk
         defense = defender.spdef
+        if attacker.respond_to?(:stages) && attacker.stages
+          spa_stage = attacker.stages[:SPECIAL_ATTACK] || 0
+          atk = (atk * stage_multiplier(spa_stage)).to_i
+        end
+        if defender.respond_to?(:stages) && defender.stages
+          spd_stage = defender.stages[:SPECIAL_DEFENSE] || 0
+          defense = (defense * stage_multiplier(spd_stage)).to_i
+        end
       else
         return 0
       end
@@ -388,7 +477,7 @@ module AdvancedAI
       end
       
       # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
-      abil_mod = ability_damage_modifier(attacker, defender, effective_type, move.physicalMove?, effectiveness)
+      abil_mod = ability_damage_modifier(attacker, defender, effective_type, move.physicalMove?, effectiveness, move)
       
       # Apply modifiers
       estimated_damage = (base_damage * stab * effectiveness_mult * field_mod * def_mod * scr_mod * pb_mod * abil_mod * 0.925).to_i

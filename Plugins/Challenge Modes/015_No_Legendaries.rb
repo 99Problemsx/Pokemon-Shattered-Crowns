@@ -47,21 +47,23 @@ class Battle
 end
 
 #===============================================================================
-# Block using legendaries in battle
+# Block storing legendaries that somehow got caught
+# SC Fix: PE v21.1 uses `class Battle::Peer` (NOT `module Battle::BattlePeer`)
+# and pbStorePokemon takes (player, pkmn). Old code raised NameError at load.
 #===============================================================================
-module Battle::BattlePeer
+class Battle::Peer
   alias __challengemodes_nolegend__pbStorePokemon pbStorePokemon unless method_defined?(:__challengemodes_nolegend__pbStorePokemon)
   
-  def pbStorePokemon(pkmn)
+  def pbStorePokemon(player, pkmn)
     # Check if caught Pokémon is legendary and rule is active
     if ChallengeModes.no_legendaries? && ChallengeModes.is_legendary?(pkmn)
       pbMessage(_INTL("The Legendary Pokémon broke free and fled!"))
       pbMessage(_INTL("(Legendary Pokémon cannot be caught in Challenge Mode)"))
-      return
+      return -1
     end
     
     # Normal storage
-    return __challengemodes_nolegend__pbStorePokemon(pkmn)
+    return __challengemodes_nolegend__pbStorePokemon(player, pkmn)
   end
 end
 
@@ -106,14 +108,4 @@ def pbAddPokemon(*args)
   
   # Normal add
   return __challengemodes_nolegend__pbAddPokemon(*args)
-end
-
-#===============================================================================
-# Console logging for debugging
-#===============================================================================
-if ChallengeModes.running?
-  puts "Challenge Modes: No Legendaries rule loaded"
-  puts "  - Blocks catching legendary/mythical Pokémon"
-  puts "  - Prevents using legendaries in battle"
-  puts "  - Checks Legendary and Mythical flags"
 end

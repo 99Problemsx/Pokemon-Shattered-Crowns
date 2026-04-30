@@ -80,7 +80,8 @@ class Battle::AI
     
     # Get skill from trainer OR wild Pokemon setting
     if @trainer
-      skill = @trainer.skill
+      # Check for debug menu skill override
+      skill = (@trainer.instance_variable_get(:@aai_skill_override) rescue nil) || @trainer.skill
     else
       # Wild Pokemon - check if AI is enabled
       return aai_pbGetMoveScore(*args) unless AdvancedAI::ENABLE_WILD_POKEMON_AI
@@ -105,9 +106,12 @@ class Battle::AI
     # Redirection/Helping Hand/Protect coordination).
     @_resolved_target = target
     @_resolved_skill  = skill
-    score = pbRegisterMove(@user, @move)
-    @_resolved_target = nil
-    @_resolved_skill  = nil
+    begin
+      score = pbRegisterMove(@user, @move)
+    ensure
+      @_resolved_target = nil
+      @_resolved_skill  = nil
+    end
     
     # Apply Advanced AI enhancements (Layers on top of base advanced score)
     score = apply_advanced_modifiers(score, @move, @user, target, skill)
@@ -117,8 +121,9 @@ class Battle::AI
       move_name = @move.name rescue @move.id.to_s
       target_name = target.name rescue "???"
       user_name = @user.name rescue "???"
+      actual_base = @_actual_base_score || 100
       echoln "  ┌─ MOVE SCORE: #{move_name} (#{user_name} vs #{target_name}) ─┐"
-      echoln "    Base Score:                  100"
+      echoln "    Base Score:                  #{actual_base}"
       @_score_factors.each do |name, value|
         next if value == 0
         sign = value >= 0 ? "+" : "-"
@@ -159,38 +164,38 @@ class Battle::AI
     end
     
     # Setup Recognition (55+)
-    if AdvancedAI.feature_enabled?(:setup, skill)
+    if AdvancedAI.feature_enabled?(:setup, skill) && target
       pre = score; score = apply_setup_evaluation(score, move, user, target)
       factors["Setup Recognition"] = score - pre if factors && score != pre
     end
     
     # Endgame Scenarios (60+)
-    if AdvancedAI.feature_enabled?(:endgame, skill)
+    if AdvancedAI.feature_enabled?(:endgame, skill) && target
       pre = score; score = apply_endgame_logic(score, move, user, target)
       factors["Endgame Logic"] = score - pre if factors && score != pre
     end
     
     # Battle Personalities (65+)
-    if AdvancedAI.feature_enabled?(:personalities, skill)
+    if AdvancedAI.feature_enabled?(:personalities, skill) && target
       pre = score; score = apply_personality_modifiers(score, move, user, target)
       factors["Personality"] = score - pre if factors && score != pre
     end
     
     # Strategic Awareness (70+) — archetype counters, win condition shifts,
     # coverage gaps, sacking, collective health, threat persistence, cores
-    if skill >= 70
+    if skill >= 70 && target
       pre = score; score = apply_strategic_awareness(score, move, user, target, skill)
       factors["Strategic Awareness"] = score - pre if factors && score != pre
     end
     
     # Tactical Enhancements (50+) — ability/item/move awareness, multi-turn planning
-    if skill >= 50
+    if skill >= 50 && target
       pre = score; score = apply_tactical_enhancements(score, move, user, target, skill)
       factors["Tactical Enhancements"] = score - pre if factors && score != pre
     end
     
     # Item Intelligence (85+)
-    if AdvancedAI.feature_enabled?(:items, skill)
+    if AdvancedAI.feature_enabled?(:items, skill) && target
       pre = score; score = apply_item_intelligence(score, move, user, target)
       factors["Item Intelligence"] = score - pre if factors && score != pre
     end
@@ -273,6 +278,11 @@ Battle::AI::Handlers::ShouldSwitch.add(:advanced_ai_switch_intelligence,
     
     # Wild Pokemon: respect ENABLE_WILD_POKEMON_AI setting
     if battle.wildBattle? && !AdvancedAI::ENABLE_WILD_POKEMON_AI
+      next false
+    end
+    
+    # Respect UsePokemonInOrder — skip advanced switch analysis
+    if ai.trainer && ai.trainer.has_skill_flag?("UsePokemonInOrder")
       next false
     end
     
@@ -382,13 +392,51 @@ class Battle::AI
   alias aai_choose_best_replacement_pokemon choose_best_replacement_pokemon
   def choose_best_replacement_pokemon(idxBattler, terrible_moves = false)
     begin
+      # Detect MANDATORY switches (faint, U-turn / Volt Switch / Flip Turn /
+      # Baton Pass / Parting Shot / Teleport / Chilly Reception / Shed Tail,
+      # Roar/Whirlwind/Dragon Tail phaze, Red/Eject Button, Eject Pack, etc.).
+      mandatory_switch = false
+      begin
+        if @user
+          if @user.respond_to?(:fainted?) && @user.fainted?
+            mandatory_switch = true
+          elsif @user.battler
+            last_move = @user.battler.lastMoveUsed
+            if last_move
+              move_data = GameData::Move.try_get(last_move)
+              if move_data
+                fc = move_data.function_code
+                pivot_ids = (defined?(AdvancedAI::PivotMoves::ALL_PIVOTS) ? AdvancedAI::PivotMoves::ALL_PIVOTS : [])
+                if pivot_ids.include?(move_data.id) ||
+                   ["SwitchOutUserDamagingMove",       # U-turn/Volt Switch/Flip Turn
+                    "SwitchOutUserPassOnEffects",      # Baton Pass
+                    "SwitchOutUserStatDownTarget",     # Parting Shot
+                    "SwitchOutUserHealReplacement",    # Teleport (Gen 8+)
+                    "SwitchOutUserAndChangeWeather",   # Chilly Reception
+                    "SwitchOutUserPassOnSubstitute"    # Shed Tail
+                   ].include?(fc)
+                  mandatory_switch = true
+                end
+              end
+            end
+          end
+        end
+      rescue
+        mandatory_switch = false
+      end
+      
       # Wild Pokemon: respect ENABLE_WILD_POKEMON_AI setting
       if @battle.wildBattle? && !AdvancedAI::ENABLE_WILD_POKEMON_AI
         return aai_choose_best_replacement_pokemon(idxBattler, terrible_moves)
       end
       
+      # Respect UsePokemonInOrder flag — vanilla already handles party-order selection
+      if @trainer && @trainer.has_skill_flag?("UsePokemonInOrder")
+        return aai_choose_best_replacement_pokemon(idxBattler, terrible_moves)
+      end
+      
       skill = if @trainer
-                @trainer.skill
+                (@trainer.instance_variable_get(:@aai_skill_override) rescue nil) || @trainer.skill
               elsif @battle.wildBattle?
                 AdvancedAI::WILD_POKEMON_SKILL_LEVEL
               else
@@ -408,7 +456,9 @@ class Battle::AI
       # due to "terrible moves". Stall teams have low-scoring moves that are
       # still strategically correct (Toxic, Protect, Recover, etc.).
       # This prevents Blissey <-> Toxapex infinite switching loops.
-      if terrible_moves && @user.turnCount < 2 && !@user.fainted?
+      # Skip when the switch is mandatory (pivot move / phaze / faint) —
+      # otherwise the Pokemon would just stay on the field.
+      if !mandatory_switch && terrible_moves && @user.turnCount < 2 && !@user.fainted?
         if dbg
           echoln "  >>> Anti-ping-pong: #{@user.name} just switched in (turn #{@user.turnCount})"
           echoln "  >>> Staying to use available moves instead of switching"
@@ -420,7 +470,8 @@ class Battle::AI
       # Stall archetype protection: Stall mons should NOT switch out due to
       # "terrible moves" when their stall gameplan is active (Toxic/Burn ticking,
       # Leech Seed draining). Their moves ARE the strategy.
-      if terrible_moves && !@user.fainted? && AdvancedAI.has_stall_moveset?(@user)
+      # Skip when the switch is mandatory (pivot move / phaze / faint).
+      if !mandatory_switch && terrible_moves && !@user.fainted? && AdvancedAI.has_stall_moveset?(@user)
         # Check if stall gameplan is working (opponent has passive damage)
         stall_working = false
         @battle.allOtherSideBattlers(@user.index).each do |target|

@@ -26,12 +26,3 @@ def pbPokeCenterPC(*args)
   # Normal Pokémon Center functionality
   return __challengemodes_nopc__pbPokeCenterPC(*args)
 end
-
-#===============================================================================
-# Console logging for debugging
-#===============================================================================
-if ChallengeModes.running?
-  puts "Challenge Modes: No Pokémon Center rule loaded"
-  puts "  - Blocks pbPokeCenterPC healing"
-  puts "  - Shows rejection message when attempted"
-end

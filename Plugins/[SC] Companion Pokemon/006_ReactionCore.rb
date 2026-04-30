@@ -887,9 +887,11 @@ EventHandlers.add(:on_pokemon_evolved, :sc_companion_evolution,
 #===============================================================================
 
 EventHandlers.add(:on_faint, :sc_companion_faint,
-  proc { |pkmn, _battle|
+  proc { |_battle, battler|
     # Only react if this is the follower
     next unless CompanionPokemon::ENABLED
+    pkmn = battler.pokemon
+    next unless pkmn
     follower = CompanionFollower.get_pokemon
     next unless follower && follower == pkmn
     CompanionReactionEngine.on_faint(pkmn)

@@ -689,15 +689,11 @@ class Lighting
         spr.blend_type = 1
         spr.z = 150
         spr.mirror = false
-        # Reuse cached gradient
+        # Reuse cached gradient (LRU)
         radius = effect.radius
         real_radius = (radius * 1.5).ceil
         cache_key = [real_radius, false]
-        bitmap = @gradient_cache[cache_key]
-        if !bitmap
-          bitmap = generate_gradient(real_radius, false)
-          @gradient_cache[cache_key] = bitmap
-        end
+        bitmap = cached_gradient(cache_key, real_radius, false)
         spr.bitmap = bitmap
         spr.ox = real_radius
         spr.oy = 0  # Top-aligned since we flip vertically
@@ -3507,11 +3503,7 @@ class Lighting
     is_follower = (effect.id == :follower_light)
     cache_key = [real_radius, is_follower]
     
-    bitmap = @gradient_cache[cache_key]
-    if !bitmap
-      bitmap = generate_gradient(real_radius, is_follower)
-      @gradient_cache[cache_key] = bitmap
-    end
+    bitmap = cached_gradient(cache_key, real_radius, is_follower)
     
     sprite.bitmap = bitmap
     sprite.ox = real_radius
@@ -3532,6 +3524,28 @@ class Lighting
     apply_light_layer(sprite, effect)
     
     @light_sprites[effect.id] = sprite
+  end
+
+  # LRU cache lookup for gradient bitmaps. Caps cache to GRADIENT_CACHE_MAX
+  # entries to prevent unbounded memory growth on maps with many radii.
+  GRADIENT_CACHE_MAX = 64
+  def cached_gradient(cache_key, real_radius, is_follower)
+    @gradient_cache_lru ||= []
+    bitmap = @gradient_cache[cache_key]
+    if bitmap && !bitmap.disposed?
+      @gradient_cache_lru.delete(cache_key)
+      @gradient_cache_lru.push(cache_key)
+      return bitmap
+    end
+    bitmap = generate_gradient(real_radius, is_follower)
+    @gradient_cache[cache_key] = bitmap
+    @gradient_cache_lru.push(cache_key)
+    while @gradient_cache_lru.length > GRADIENT_CACHE_MAX
+      old_key = @gradient_cache_lru.shift
+      old_bmp = @gradient_cache.delete(old_key)
+      old_bmp.dispose if old_bmp && !old_bmp.disposed?
+    end
+    bitmap
   end
 
   def generate_gradient(real_radius, is_follower = false)
@@ -3875,8 +3889,9 @@ class Lighting
     @sprite_sub.dispose
     @light_sprites.each_value { |sprite| sprite.dispose }
     @light_sprites.clear
-    @gradient_cache.each_value { |bmp| bmp.dispose if bmp }
+    @gradient_cache.each_value { |bmp| bmp.dispose if bmp && !bmp.disposed? }
     @gradient_cache.clear
+    @gradient_cache_lru.clear if @gradient_cache_lru
     @reflect_sprites.each_value { |s| s.dispose } if @reflect_sprites
     @reflect_sprites.clear if @reflect_sprites
     @ember_particles.each { |p| p[:sprite].bitmap&.dispose; p[:sprite].dispose } if @ember_particles

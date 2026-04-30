@@ -11,6 +11,8 @@
 //   patch-exe  Patch Game.exe with custom encryption key
 //   protect    Encrypt RGSSAD -> .scd (AES-256)
 //   unprotect  Decrypt .scd -> RGSSAD
+//   encrypt-scripts  RC4-encrypt a file (for preload scripts)
+//   decrypt-scripts  RC4-decrypt a .scscr file
 //   gui        Open graphical web interface
 // =============================================================================
 using System;
@@ -55,6 +57,8 @@ class Program
                 "patch-exe" => RunPatchExe(args),
                 "protect"   => RunProtect(args, encrypt: true),
                 "unprotect" => RunProtect(args, encrypt: false),
+                "encrypt-scripts" => RunScriptProtect(args, encrypt: true),
+                "decrypt-scripts" => RunScriptProtect(args, encrypt: false),
                 "gui"       => WebGui.RunAsync().GetAwaiter().GetResult(),
                 "-h" or "--help" => PrintUsage(),
                 _ => PrintUsage()
@@ -511,6 +515,69 @@ class Program
     }
 
     // =========================================================================
+    // encrypt-scripts / decrypt-scripts — RC4 stream cipher for preload scripts
+    // =========================================================================
+    static int RunScriptProtect(string[] args, bool encrypt)
+    {
+        string? inputFile = null;
+        string? outputFile = null;
+        string? hexKey = null;
+
+        for (int i = 0; i < args.Length; i++)
+        {
+            switch (args[i])
+            {
+                case "-i" or "--input":
+                    if (i + 1 < args.Length) inputFile = args[++i];
+                    break;
+                case "-o" or "--output":
+                    if (i + 1 < args.Length) outputFile = args[++i];
+                    break;
+                case "-k" or "--key":
+                    if (i + 1 < args.Length) hexKey = args[++i];
+                    break;
+            }
+        }
+
+        if (inputFile == null)
+        {
+            Console.Error.WriteLine($"Error: -i <input> is required for '{(encrypt ? "encrypt-scripts" : "decrypt-scripts")}'.");
+            return 1;
+        }
+        if (hexKey == null)
+        {
+            Console.Error.WriteLine($"Error: -k <hex-key> is required (32 bytes = 64 hex chars).");
+            return 1;
+        }
+
+        inputFile = Path.GetFullPath(inputFile);
+        if (!File.Exists(inputFile))
+        {
+            Console.Error.WriteLine($"Error: File not found: {inputFile}");
+            return 1;
+        }
+
+        byte[] key = ScriptProtector.ParseHexKey(hexKey);
+        outputFile ??= encrypt
+            ? Path.ChangeExtension(inputFile, ".scscr")
+            : Path.ChangeExtension(inputFile, ".rb");
+        outputFile = Path.GetFullPath(outputFile);
+
+        string op = encrypt ? "Encrypting" : "Decrypting";
+        Console.WriteLine($"  {op}: {Path.GetFileName(inputFile)}");
+        Console.Write($"  RC4 {op.ToLower()}...");
+
+        if (encrypt)
+            ScriptProtector.Encrypt(inputFile, outputFile, key);
+        else
+            ScriptProtector.Decrypt(inputFile, outputFile, key);
+
+        Console.WriteLine(" done!");
+        Console.WriteLine($"  Output: {Path.GetFileName(outputFile)} ({FormatSize(new FileInfo(outputFile).Length)})");
+        return 0;
+    }
+
+    // =========================================================================
     // Helpers
     // =========================================================================
     static uint ParseHexKey(string value)
@@ -546,6 +613,8 @@ class Program
         Console.WriteLine("  patch-exe    Patch Game.exe with custom encryption key");
         Console.WriteLine("  protect      Encrypt RGSSAD -> .scd (AES-256-CBC)");
         Console.WriteLine("  unprotect    Decrypt .scd -> RGSSAD");
+        Console.WriteLine("  encrypt-scripts  RC4-encrypt a file (for preload scripts)");
+        Console.WriteLine("  decrypt-scripts  RC4-decrypt a .scscr file");
         Console.WriteLine("  gui          Open graphical web interface");
         Console.WriteLine();
         Console.WriteLine("Common options:");
@@ -568,6 +637,8 @@ class Program
         Console.WriteLine("  RGSSArchiver patch-exe -i Game.exe -k 0xB7A3C1D9");
         Console.WriteLine("  RGSSArchiver protect -i Game.rgssad -p \"MySecret123\"");
         Console.WriteLine("  RGSSArchiver unprotect -i Game.scd -p \"MySecret123\"");
+        Console.WriteLine("  RGSSArchiver encrypt-scripts -i scripts.rb -k <64-hex-chars>");
+        Console.WriteLine("  RGSSArchiver decrypt-scripts -i scripts.scscr -k <64-hex-chars>");
         Console.WriteLine();
         Console.WriteLine("Anti-decryption workflow:");
         Console.WriteLine("  1. Choose a custom key:  e.g. 0xB7A3C1D9");

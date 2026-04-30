@@ -1,0 +1,438 @@
+[01:11:29] pbCommonAnimation: name=nil, user=
+[01:11:29]   animations: 311 entries, class=PBAnimations
+[01:11:29]   NOT FOUND: 'Common:'
+[01:11:29] pbCommonAnimation: name=nil, user=
+[01:11:29]   animations: 311 entries, class=PBAnimations
+[01:11:29]   NOT FOUND: 'Common:'
+[01:11:37] pbAnimation: moveID=:UTURN, user=Cinderace, showAnims=true
+[01:11:37]   move2anim: 2 hashes
+[01:11:37]   animID=[287, false]
+[01:11:37]   animations: 311 entries, class=PBAnimations
+[01:11:37]   anim_obj[287]="Move:TWINEEDLE"
+[01:11:40] pbAnimation: moveID=:THUNDERSHOCK, user=Pikachu, showAnims=true
+[01:11:40]   move2anim: 2 hashes
+[01:11:40]   animID=[283, false]
+[01:11:40]   animations: 311 entries, class=PBAnimations
+[01:11:40]   anim_obj[283]="Move:THUNDERSHOCK"
+[01:11:41] pbCommonAnimation: name=nil, user=
+[01:11:41]   animations: 311 entries, class=PBAnimations
+[01:11:41]   NOT FOUND: 'Common:'
+[01:12:49] pbAnimation: moveID=:UTURN, user=Cinderace, showAnims=true
+[01:12:49]   move2anim: 2 hashes
+[01:12:49]   animID=[287, false]
+[01:12:49]   animations: 311 entries, class=PBAnimations
+[01:12:49]   anim_obj[287]="Move:TWINEEDLE"
+[01:12:56] pbCommonAnimation: name=nil, user=
+[01:12:56]   animations: 311 entries, class=PBAnimations
+[01:12:56]   NOT FOUND: 'Common:'
+[01:13:11] pbAnimation: moveID=:DIG, user=Diglett, showAnims=true
+[01:13:11]   move2anim: 2 hashes
+[01:13:11]   animID=[275, false]
+[01:13:11]   animations: 311 entries, class=PBAnimations
+[01:13:11]   anim_obj[275]="Move:TACKLE"
+[01:13:11] pbCommonAnimation: name=nil, user=
+[01:13:11]   animations: 311 entries, class=PBAnimations
+[01:13:11]   NOT FOUND: 'Common:'
+[01:13:14] pbAnimation: moveID=:DIG, user=Diglett, showAnims=true
+[01:13:14]   move2anim: 2 hashes
+[01:13:14]   animID=[275, false]
+[01:13:14]   animations: 311 entries, class=PBAnimations
+[01:13:14]   anim_obj[275]="Move:TACKLE"
+[01:13:15] pbCommonAnimation: name=nil, user=
+[01:13:15]   animations: 311 entries, class=PBAnimations
+[01:13:15]   NOT FOUND: 'Common:'
+[01:13:19] pbAnimation: moveID=:UTURN, user=Inteleon, showAnims=true
+[01:13:19]   move2anim: 2 hashes
+[01:13:19]   animID=[287, false]
+[01:13:19]   animations: 311 entries, class=PBAnimations
+[01:13:19]   anim_obj[287]="Move:TWINEEDLE"
+[01:13:27] pbCommonAnimation: name=nil, user=
+[01:13:27]   animations: 311 entries, class=PBAnimations
+[01:13:27]   NOT FOUND: 'Common:'
+[03:17:38] pbAnimation: moveID=:FURYATTACK, user=Fearow, showAnims=true
+[03:17:38]   move2anim: 2 hashes
+[03:17:38]   animID=[132, true]
+[03:17:38]   animations: 311 entries, class=PBAnimations
+[03:17:38]   anim_obj[132]="Fury Attack hit 2 opp"
+[03:18:19] pbAnimation: moveID=:DEFENSECURL, user=Furret, showAnims=true
+[03:18:19]   move2anim: 2 hashes
+[03:18:19]   animID=[79, false]
+[03:18:19]   animations: 311 entries, class=PBAnimations
+[03:18:19]   anim_obj[79]="Move:DEFENSECURL"
+[03:18:27] pbAnimation: moveID=:DEFENSECURL, user=Furret, showAnims=true
+[03:18:27]   move2anim: 2 hashes
+[03:18:27]   animID=[79, false]
+[03:18:27]   animations: 311 entries, class=PBAnimations
+[03:18:27]   anim_obj[79]="Move:DEFENSECURL"
+[03:18:38] pbAnimation: moveID=:DEFENSECURL, user=Furret, showAnims=true
+[03:18:38]   move2anim: 2 hashes
+[03:18:38]   animID=[79, false]
+[03:18:38]   animations: 311 entries, class=PBAnimations
+[03:18:38]   anim_obj[79]="Move:DEFENSECURL"
+[03:18:43] pbAnimation: moveID=:DEFENSECURL, user=Furret, showAnims=true
+[03:18:43]   move2anim: 2 hashes
+[03:18:43]   animID=[79, false]
+[03:18:43]   animations: 311 entries, class=PBAnimations
+[03:18:43]   anim_obj[79]="Move:DEFENSECURL"
+[03:18:48] pbAnimation: moveID=:DEFENSECURL, user=Furret, showAnims=true
+[03:18:48]   move2anim: 2 hashes
+[03:18:48]   animID=[79, false]
+[03:18:48]   animations: 311 entries, class=PBAnimations
+[03:18:48]   anim_obj[79]="Move:DEFENSECURL"
+[04:04:40] pbCommonAnimation: name="Paralysis", user=Accelgor
+[04:04:40]   animations: 311 entries, class=PBAnimations
+[04:04:40]   NOT FOUND: 'Common:Paralysis'
+[04:04:44] pbCommonAnimation: name="StatDown", user=Pikachu
+[04:04:44]   animations: 311 entries, class=PBAnimations
+[04:04:44]   NOT FOUND: 'Common:StatDown'
+[04:04:49] pbAnimation: moveID=:DOUBLETEAM, user=Accelgor, showAnims=true
+[04:04:49]   move2anim: 2 hashes
+[04:04:49]   animID=[79, false]
+[04:04:49]   animations: 311 entries, class=PBAnimations
+[04:04:49]   anim_obj[79]="Move:DEFENSECURL"
+[04:04:50] pbCommonAnimation: name="StatUp", user=Accelgor
+[04:04:50]   animations: 311 entries, class=PBAnimations
+[04:04:50]   NOT FOUND: 'Common:StatUp'
+[04:04:55] pbCommonAnimation: name="StatDown", user=Accelgor
+[04:04:55]   animations: 311 entries, class=PBAnimations
+[04:04:55]   NOT FOUND: 'Common:StatDown'
+[04:04:56] pbCommonAnimation: name="Paralysis", user=Accelgor
+[04:04:56]   animations: 311 entries, class=PBAnimations
+[04:04:56]   NOT FOUND: 'Common:Paralysis'
+[04:05:01] pbCommonAnimation: name="StatDown", user=Accelgor
+[04:05:01]   animations: 311 entries, class=PBAnimations
+[04:05:01]   NOT FOUND: 'Common:StatDown'
+[04:11:36] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:11:36]   move2anim: 2 hashes
+[04:11:36]   animID=[275, false]
+[04:11:36]   animations: 311 entries, class=PBAnimations
+[04:11:36]   anim_obj[275]="Move:TACKLE"
+[04:11:38] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:11:38]   animations: 311 entries, class=PBAnimations
+[04:11:38]   NOT FOUND: 'Common:UseItem'
+[04:11:38] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:11:38]   animations: 311 entries, class=PBAnimations
+[04:11:38]   NOT FOUND: 'Common:HealthUp'
+[04:18:32] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:18:32]   move2anim: 2 hashes
+[04:18:32]   animID=[275, false]
+[04:18:32]   animations: 311 entries, class=PBAnimations
+[04:18:32]   anim_obj[275]="Move:TACKLE"
+[04:18:33] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:18:33]   animations: 311 entries, class=PBAnimations
+[04:18:33]   NOT FOUND: 'Common:HealthUp'
+[04:18:49] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:18:49]   animations: 311 entries, class=PBAnimations
+[04:18:49]   NOT FOUND: 'Common:StatDown'
+[04:18:57] pbCommonAnimation: name="Paralysis", user=Gyarados
+[04:18:57]   animations: 311 entries, class=PBAnimations
+[04:18:57]   NOT FOUND: 'Common:Paralysis'
+[04:18:58] pbCommonAnimation: name="Paralysis", user=Gyarados
+[04:18:58]   animations: 311 entries, class=PBAnimations
+[04:18:58]   NOT FOUND: 'Common:Paralysis'
+[04:19:03] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:19:03]   move2anim: 2 hashes
+[04:19:03]   animID=[275, false]
+[04:19:03]   animations: 311 entries, class=PBAnimations
+[04:19:03]   anim_obj[275]="Move:TACKLE"
+[04:19:04] pbCommonAnimation: name="Paralysis", user=Gyarados
+[04:19:04]   animations: 311 entries, class=PBAnimations
+[04:19:04]   NOT FOUND: 'Common:Paralysis'
+[04:19:12] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:19:12]   animations: 311 entries, class=PBAnimations
+[04:19:12]   NOT FOUND: 'Common:UseItem'
+[04:19:12] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:19:12]   animations: 311 entries, class=PBAnimations
+[04:19:12]   NOT FOUND: 'Common:HealthUp'
+[04:19:20] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:19:20]   move2anim: 2 hashes
+[04:19:20]   animID=[275, false]
+[04:19:20]   animations: 311 entries, class=PBAnimations
+[04:19:20]   anim_obj[275]="Move:TACKLE"
+[04:19:20] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:19:20]   animations: 311 entries, class=PBAnimations
+[04:19:20]   NOT FOUND: 'Common:HealthUp'
+[04:19:25] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:19:25]   animations: 311 entries, class=PBAnimations
+[04:19:25]   NOT FOUND: 'Common:UseItem'
+[04:19:25] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:19:25]   animations: 311 entries, class=PBAnimations
+[04:19:25]   NOT FOUND: 'Common:HealthUp'
+[04:19:35] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:19:35]   animations: 311 entries, class=PBAnimations
+[04:19:35]   NOT FOUND: 'Common:UseItem'
+[04:19:35] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:19:35]   animations: 311 entries, class=PBAnimations
+[04:19:35]   NOT FOUND: 'Common:HealthUp'
+[04:19:50] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:19:50]   move2anim: 2 hashes
+[04:19:50]   animID=[275, false]
+[04:19:50]   animations: 311 entries, class=PBAnimations
+[04:19:50]   anim_obj[275]="Move:TACKLE"
+[04:19:51] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:19:51]   animations: 311 entries, class=PBAnimations
+[04:19:51]   NOT FOUND: 'Common:HealthUp'
+[04:19:58] pbCommonAnimation: name="Paralysis", user=Chansey
+[04:19:58]   animations: 311 entries, class=PBAnimations
+[04:19:58]   NOT FOUND: 'Common:Paralysis'
+[04:20:03] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:20:03]   move2anim: 2 hashes
+[04:20:03]   animID=[275, false]
+[04:20:03]   animations: 311 entries, class=PBAnimations
+[04:20:03]   anim_obj[275]="Move:TACKLE"
+[04:20:10] pbCommonAnimation: name="Paralysis", user=Chansey
+[04:20:10]   animations: 311 entries, class=PBAnimations
+[04:20:10]   NOT FOUND: 'Common:Paralysis'
+[04:21:03] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:21:03]   move2anim: 2 hashes
+[04:21:03]   animID=[275, false]
+[04:21:03]   animations: 311 entries, class=PBAnimations
+[04:21:03]   anim_obj[275]="Move:TACKLE"
+[04:21:04] pbAnimation: moveID=:CONFUSION, user=Kadabra, showAnims=true
+[04:21:04]   move2anim: 2 hashes
+[04:21:04]   animID=[275, false]
+[04:21:04]   animations: 311 entries, class=PBAnimations
+[04:21:04]   anim_obj[275]="Move:TACKLE"
+[04:21:06] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:21:06]   animations: 311 entries, class=PBAnimations
+[04:21:06]   NOT FOUND: 'Common:UseItem'
+[04:21:06] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:21:06]   animations: 311 entries, class=PBAnimations
+[04:21:06]   NOT FOUND: 'Common:HealthUp'
+[04:21:12] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:21:12]   move2anim: 2 hashes
+[04:21:12]   animID=[275, false]
+[04:21:12]   animations: 311 entries, class=PBAnimations
+[04:21:12]   anim_obj[275]="Move:TACKLE"
+[04:21:12] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:21:12]   animations: 311 entries, class=PBAnimations
+[04:21:12]   NOT FOUND: 'Common:HealthUp'
+[04:21:14] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:21:14]   animations: 311 entries, class=PBAnimations
+[04:21:14]   NOT FOUND: 'Common:StatDown'
+[04:21:43] pbCommonAnimation: name="Paralysis", user=Pidgeotto
+[04:21:43]   animations: 311 entries, class=PBAnimations
+[04:21:43]   NOT FOUND: 'Common:Paralysis'
+[04:21:53] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:21:53]   animations: 311 entries, class=PBAnimations
+[04:21:53]   NOT FOUND: 'Common:UseItem'
+[04:21:53] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:21:53]   animations: 311 entries, class=PBAnimations
+[04:21:53]   NOT FOUND: 'Common:HealthUp'
+[04:21:57] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:21:57]   move2anim: 2 hashes
+[04:21:57]   animID=[275, false]
+[04:21:57]   animations: 311 entries, class=PBAnimations
+[04:21:57]   anim_obj[275]="Move:TACKLE"
+[04:21:58] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:21:58]   animations: 311 entries, class=PBAnimations
+[04:21:58]   NOT FOUND: 'Common:HealthUp'
+[04:22:02] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:02]   animations: 311 entries, class=PBAnimations
+[04:22:02]   NOT FOUND: 'Common:UseItem'
+[04:22:02] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:02]   animations: 311 entries, class=PBAnimations
+[04:22:02]   NOT FOUND: 'Common:HealthUp'
+[04:22:09] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:22:09]   animations: 311 entries, class=PBAnimations
+[04:22:09]   NOT FOUND: 'Common:StatDown'
+[04:22:10] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:10]   animations: 311 entries, class=PBAnimations
+[04:22:10]   NOT FOUND: 'Common:UseItem'
+[04:22:10] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:10]   animations: 311 entries, class=PBAnimations
+[04:22:10]   NOT FOUND: 'Common:HealthUp'
+[04:22:27] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:22:27]   move2anim: 2 hashes
+[04:22:27]   animID=[275, false]
+[04:22:27]   animations: 311 entries, class=PBAnimations
+[04:22:27]   anim_obj[275]="Move:TACKLE"
+[04:22:31] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:22:31]   animations: 311 entries, class=PBAnimations
+[04:22:31]   NOT FOUND: 'Common:Paralysis'
+[04:22:31] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:31]   animations: 311 entries, class=PBAnimations
+[04:22:31]   NOT FOUND: 'Common:UseItem'
+[04:22:31] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:31]   animations: 311 entries, class=PBAnimations
+[04:22:31]   NOT FOUND: 'Common:HealthUp'
+[04:22:36] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:22:36]   animations: 311 entries, class=PBAnimations
+[04:22:36]   NOT FOUND: 'Common:Paralysis'
+[04:22:39] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:39]   animations: 311 entries, class=PBAnimations
+[04:22:39]   NOT FOUND: 'Common:UseItem'
+[04:22:39] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:39]   animations: 311 entries, class=PBAnimations
+[04:22:39]   NOT FOUND: 'Common:HealthUp'
+[04:22:42] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:22:42]   animations: 311 entries, class=PBAnimations
+[04:22:42]   NOT FOUND: 'Common:Paralysis'
+[04:22:45] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:45]   animations: 311 entries, class=PBAnimations
+[04:22:45]   NOT FOUND: 'Common:UseItem'
+[04:22:45] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:45]   animations: 311 entries, class=PBAnimations
+[04:22:45]   NOT FOUND: 'Common:HealthUp'
+[04:22:49] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:22:49]   move2anim: 2 hashes
+[04:22:49]   animID=[275, false]
+[04:22:49]   animations: 311 entries, class=PBAnimations
+[04:22:49]   anim_obj[275]="Move:TACKLE"
+[04:22:50] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:50]   animations: 311 entries, class=PBAnimations
+[04:22:50]   NOT FOUND: 'Common:HealthUp'
+[04:22:53] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:22:53]   animations: 311 entries, class=PBAnimations
+[04:22:53]   NOT FOUND: 'Common:UseItem'
+[04:22:53] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:22:53]   animations: 311 entries, class=PBAnimations
+[04:22:53]   NOT FOUND: 'Common:HealthUp'
+[04:22:59] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:22:59]   move2anim: 2 hashes
+[04:22:59]   animID=[275, false]
+[04:22:59]   animations: 311 entries, class=PBAnimations
+[04:22:59]   anim_obj[275]="Move:TACKLE"
+[04:23:00] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:00]   animations: 311 entries, class=PBAnimations
+[04:23:00]   NOT FOUND: 'Common:HealthUp'
+[04:23:02] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:02]   animations: 311 entries, class=PBAnimations
+[04:23:02]   NOT FOUND: 'Common:StatDown'
+[04:23:05] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:23:05]   move2anim: 2 hashes
+[04:23:05]   animID=[275, false]
+[04:23:05]   animations: 311 entries, class=PBAnimations
+[04:23:05]   anim_obj[275]="Move:TACKLE"
+[04:23:07] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:07]   animations: 311 entries, class=PBAnimations
+[04:23:07]   NOT FOUND: 'Common:StatDown'
+[04:23:10] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:23:10]   animations: 311 entries, class=PBAnimations
+[04:23:10]   NOT FOUND: 'Common:Paralysis'
+[04:23:12] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:12]   animations: 311 entries, class=PBAnimations
+[04:23:12]   NOT FOUND: 'Common:StatDown'
+[04:23:15] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:23:15]   animations: 311 entries, class=PBAnimations
+[04:23:15]   NOT FOUND: 'Common:Paralysis'
+[04:23:17] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:17]   animations: 311 entries, class=PBAnimations
+[04:23:17]   NOT FOUND: 'Common:StatDown'
+[04:23:24] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:23:24]   animations: 311 entries, class=PBAnimations
+[04:23:24]   NOT FOUND: 'Common:UseItem'
+[04:23:24] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:24]   animations: 311 entries, class=PBAnimations
+[04:23:24]   NOT FOUND: 'Common:HealthUp'
+[04:23:30] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:23:30]   move2anim: 2 hashes
+[04:23:30]   animID=[275, false]
+[04:23:30]   animations: 311 entries, class=PBAnimations
+[04:23:30]   anim_obj[275]="Move:TACKLE"
+[04:23:30] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:30]   animations: 311 entries, class=PBAnimations
+[04:23:30]   NOT FOUND: 'Common:HealthUp'
+[04:23:34] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:23:34]   animations: 311 entries, class=PBAnimations
+[04:23:34]   NOT FOUND: 'Common:UseItem'
+[04:23:34] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:34]   animations: 311 entries, class=PBAnimations
+[04:23:34]   NOT FOUND: 'Common:HealthUp'
+[04:23:38] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:23:38]   animations: 311 entries, class=PBAnimations
+[04:23:38]   NOT FOUND: 'Common:Paralysis'
+[04:23:40] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:40]   animations: 311 entries, class=PBAnimations
+[04:23:40]   NOT FOUND: 'Common:StatDown'
+[04:23:41] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:23:41]   animations: 311 entries, class=PBAnimations
+[04:23:41]   NOT FOUND: 'Common:UseItem'
+[04:23:41] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:41]   animations: 311 entries, class=PBAnimations
+[04:23:41]   NOT FOUND: 'Common:HealthUp'
+[04:23:44] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:23:44]   move2anim: 2 hashes
+[04:23:44]   animID=[275, false]
+[04:23:44]   animations: 311 entries, class=PBAnimations
+[04:23:44]   anim_obj[275]="Move:TACKLE"
+[04:23:46] pbCommonAnimation: name="StatDown", user=Togekiss
+[04:23:46]   animations: 311 entries, class=PBAnimations
+[04:23:46]   NOT FOUND: 'Common:StatDown'
+[04:23:53] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:23:53]   animations: 311 entries, class=PBAnimations
+[04:23:53]   NOT FOUND: 'Common:UseItem'
+[04:23:53] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:23:53]   animations: 311 entries, class=PBAnimations
+[04:23:53]   NOT FOUND: 'Common:HealthUp'
+[04:24:00] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:24:00]   move2anim: 2 hashes
+[04:24:00]   animID=[275, false]
+[04:24:00]   animations: 311 entries, class=PBAnimations
+[04:24:00]   anim_obj[275]="Move:TACKLE"
+[04:24:01] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:24:01]   animations: 311 entries, class=PBAnimations
+[04:24:01]   NOT FOUND: 'Common:HealthUp'
+[04:24:07] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:24:07]   animations: 311 entries, class=PBAnimations
+[04:24:07]   NOT FOUND: 'Common:Paralysis'
+[04:24:08] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:24:08]   animations: 311 entries, class=PBAnimations
+[04:24:08]   NOT FOUND: 'Common:UseItem'
+[04:24:08] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:24:08]   animations: 311 entries, class=PBAnimations
+[04:24:08]   NOT FOUND: 'Common:HealthUp'
+[04:24:14] pbAnimation: moveID=:ROOST, user=Togekiss, showAnims=true
+[04:24:14]   move2anim: 2 hashes
+[04:24:14]   animID=[275, false]
+[04:24:14]   animations: 311 entries, class=PBAnimations
+[04:24:14]   anim_obj[275]="Move:TACKLE"
+[04:24:15] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:24:15]   animations: 311 entries, class=PBAnimations
+[04:24:15]   NOT FOUND: 'Common:HealthUp'
+[04:24:21] pbAnimation: moveID=:TAILWIND, user=Togekiss, showAnims=true
+[04:24:21]   move2anim: 2 hashes
+[04:24:21]   animID=[275, false]
+[04:24:21]   animations: 311 entries, class=PBAnimations
+[04:24:21]   anim_obj[275]="Move:TACKLE"
+[04:24:22] pbCommonAnimation: name="UseItem", user=Togekiss
+[04:24:22]   animations: 311 entries, class=PBAnimations
+[04:24:22]   NOT FOUND: 'Common:UseItem'
+[04:24:22] pbCommonAnimation: name="HealthUp", user=Togekiss
+[04:24:22]   animations: 311 entries, class=PBAnimations
+[04:24:22]   NOT FOUND: 'Common:HealthUp'
+[04:24:28] pbCommonAnimation: name="Paralysis", user=Togekiss
+[04:24:28]   animations: 311 entries, class=PBAnimations
+[13:05:41] pbAnimation: moveID=:DRAGONDANCE, user=Dragonite, showAnims=true
+[13:05:41]   move2anim: 2 hashes
+[13:05:41]   animID=[93, false]
+[13:05:41]   animations: 311 entries, class=PBAnimations
+[13:05:41]   anim_obj[93]="Move:DRAGONDANCE"
+[13:05:48] pbCommonAnimation: name="EatBerry", user=Dragonite
+[13:05:48]   animations: 311 entries, class=PBAnimations
+[13:05:48]   NOT FOUND: 'Common:EatBerry'
+[13:05:52] pbAnimation: moveID=:DRAGONDANCE, user=Dragonite, showAnims=true
+[13:05:52]   move2anim: 2 hashes
+[13:05:52]   animID=[93, false]
+[13:05:52]   animations: 311 entries, class=PBAnimations
+[13:05:52]   anim_obj[93]="Move:DRAGONDANCE"
+[13:06:08] pbAnimation: moveID=:DRAGONDANCE, user=Dragonite, showAnims=true
+[13:06:08]   move2anim: 2 hashes
+[13:06:08]   animID=[93, false]
+[13:06:08]   animations: 311 entries, class=PBAnimations
+[13:06:08]   anim_obj[93]="Move:DRAGONDANCE"
+[13:27:24] pbAnimation: moveID=:CONFUSION, user=Kadabra, showAnims=true
+[13:27:24]   move2anim: 2 hashes
+[13:27:24]   animID=[275, false]
+[13:27:24]   animations: 311 entries, class=PBAnimations
+[13:27:24]   anim_obj[275]="Move:TACKLE"
+[13:27:33] pbAnimation: moveID=:CONFUSION, user=Kadabra, showAnims=true
+[13:27:33]   move2anim: 2 hashes
+[13:27:33]   animID=[275, false]
+[13:27:33]   animations: 311 entries, class=PBAnimations
+[13:27:33]   anim_obj[275]="Move:TACKLE"
+[13:27:39] pbAnimation: moveID=:CONFUSION, user=Kadabra, showAnims=true
+[13:27:39]   move2anim: 2 hashes
+[13:27:39]   animID=[275, false]
+[13:27:39]   animations: 311 entries, class=PBAnimations
+[13:27:39]   anim_obj[275]="Move:TACKLE"

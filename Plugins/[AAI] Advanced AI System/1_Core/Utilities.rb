@@ -295,6 +295,10 @@ module AdvancedAI
       # Protective Pads ignores contact effects
       return 0 if attacker.item_id == :PROTECTIVEPADS
       
+      # Punching Glove removes contact from punching moves
+      is_punching = (move.respond_to?(:punchingMove?) && move.punchingMove?) rescue false
+      return 0 if is_punching && attacker.item_id == :PUNCHINGGLOVE
+      
       score_penalty = 0
       
       # Ability punishment (check Mold Breaker)
@@ -471,8 +475,13 @@ module AdvancedAI
         return true if target.item_id == :SAFETYGOGGLES && is_powder
         
       when :POISON, :TOXIC
-        return true if has_type.call(:POISON)
-        return true if has_type.call(:STEEL)
+        # Corrosion bypasses Poison/Steel type immunity
+        attacker_has_corrosion = attacker && attacker.respond_to?(:hasActiveAbility?) && 
+                                 attacker.hasActiveAbility?(:CORROSION)
+        unless attacker_has_corrosion
+          return true if has_type.call(:POISON)
+          return true if has_type.call(:STEEL)
+        end
         
         unless ignores_ability?(attacker)
           return true if ability_active?(target, :IMMUNITY)

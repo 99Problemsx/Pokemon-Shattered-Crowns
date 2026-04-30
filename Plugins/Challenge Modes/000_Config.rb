@@ -120,12 +120,26 @@ module ChallengeModes
       :name  => _INTL("Item Restrictions"),
       :desc  => _INTL("X-Items are banned in battle. Limited Revives and Full Restores per battle."),
       :order => 18
+    },
+    :METAMORPH_CHALLENGE => {
+      :name  => _INTL("Metamorph Challenge"),
+      :desc  => _INTL("After every battle your team transforms! Each Pokémon becomes a random species at the same level."),
+      :order => 20
     }
   }
   
   # Configuration for Limited Healing
   LIMITED_HEALING_COUNT = 3  # Heals allowed per area/town
   
+  # Configuration for Metamorph Challenge
+  METAMORPH_CONFIG = {
+    :keep_held_items => true,      # Keep held items after transformation
+    :keep_happiness  => false,     # Keep happiness value
+    :respect_legends => true,      # Don't transform into legendaries
+    :only_regional   => true,      # Only use Pokémon from regional dex
+    :show_message    => true       # Show transformation message after battle
+  }
+
   # Configuration for Item Restrictions
   ITEM_RESTRICTIONS_CONFIG = {
     :banned_x_items => true,          # Ban X-Items (X Attack, X Defense, etc.)

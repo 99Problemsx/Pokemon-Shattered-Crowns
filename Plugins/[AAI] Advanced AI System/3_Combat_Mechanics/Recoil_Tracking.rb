@@ -91,8 +91,8 @@ module AdvancedAI
       
       # Magic Guard negates recoil/self-damage EXCEPT Belly Drum (direct HP cost)
       if user.hasActiveAbility?(:MAGICGUARD)
-        if move.id == :BELLYDRUM
-          # Belly Drum HP cost is NOT prevented by Magic Guard
+        if move.id == :BELLYDRUM || move.id == :FILLETAWAY
+          # Belly Drum/Fillet Away HP cost is NOT prevented by Magic Guard
           total_recoil = (user.totalhp * 0.50).to_i
         else
           total_recoil = 0

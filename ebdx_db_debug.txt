@@ -1,0 +1,30 @@
+
+[2026-04-16 22:14:00 +0200] === PokemonDataBox#initialize ===
+  battler=0, sideSize=1
+[2026-04-16 22:14:00 +0200] ebdx_db_create_sprites called for battler 0
+  EBDX_DB_PATH = "Graphics/Plugins/EBDX Battle UI/"
+  pbResolveBitmap(dataBox)     = "Graphics/Plugins/EBDX Battle UI/dataBox.png"
+  pbResolveBitmap(containers)  = "Graphics/Plugins/EBDX Battle UI/containers.png"
+  pbResolveBitmap(barColors)   = "Graphics/Plugins/EBDX Battle UI/barColors.png"
+  ebdx_db_hide_standard: clearing bitmap, hiding hpBar/expBar/hpNumbers
+  self.bitmap=#<Bitmap>, @hpBar=#<Sprite>
+  EBDX DataBox created OK: available=true, loaded=true
+  @ebdx_base=#<Sprite>, @ebdx_base.visible=true
+  spriteX=416, spriteY=350
+  ebdx_db_hide_standard: clearing bitmap, hiding hpBar/expBar/hpNumbers
+  self.bitmap=#<Bitmap>, @hpBar=#<Sprite>
+
+[2026-04-16 22:14:00 +0200] === PokemonDataBox#initialize ===
+  battler=1, sideSize=1
+[2026-04-16 22:14:00 +0200] ebdx_db_create_sprites called for battler 1
+  EBDX_DB_PATH = "Graphics/Plugins/EBDX Battle UI/"
+  pbResolveBitmap(dataBox)     = "Graphics/Plugins/EBDX Battle UI/dataBox.png"
+  pbResolveBitmap(containers)  = "Graphics/Plugins/EBDX Battle UI/containers.png"
+  pbResolveBitmap(barColors)   = "Graphics/Plugins/EBDX Battle UI/barColors.png"
+  ebdx_db_hide_standard: clearing bitmap, hiding hpBar/expBar/hpNumbers
+  self.bitmap=#<Bitmap>, @hpBar=#<Sprite>
+  EBDX DataBox created OK: available=true, loaded=true
+  @ebdx_base=#<Sprite>, @ebdx_base.visible=true
+  spriteX=0, spriteY=52
+  ebdx_db_hide_standard: clearing bitmap, hiding hpBar/expBar/hpNumbers
+  self.bitmap=#<Bitmap>, @hpBar=#<Sprite>

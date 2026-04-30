@@ -6,8 +6,8 @@
 #
 # ASGHEIM REGION LOCATIONS:
 # - Dawnhaven Village (Starter)
-# - Sunrise Farm, Willowmere, Thornwood Town (Gym 1)
-# - Ashwood Crossing, Misthollow City (Gym 2), Ravenwatch Post
+# - Sunrise Farm, Willowmere, Thornwood Town (Festival of Crowns)
+# - Verdantia Town (Gym 1, Grass), Ashbury City (Gym 2, Electric)
 # - Shadowfen, Ironpeak Village (Gym 3), Glacier Pass
 # - Frostfall Town (Gym 4), Hollowbrook, Corona City (Gym 5)
 # - Hearthstone, Ashvale Town (Gym 6), Grimholt Fortress (Gym 7)
@@ -18,8 +18,8 @@
 
 #===============================================================================
 # ACT 1: NORMAL LIFE (Chapters 1-8)
-# Locations: Dawnhaven → Sunrise Farm → Willowmere → Thornwood → Ashwood 
-#            → Misthollow → Ravenwatch → Shadowfen → Ironpeak
+# Locations: Dawnhaven → Sunrise Farm → Willowmere → Thornwood (Festival)
+#            → Verdantia (Gym 1) → Ashbury (Gym 2) → Ravenwatch → Shadowfen → Ironpeak
 #===============================================================================
 
 #===============================================================================
@@ -2477,6 +2477,38 @@ GameData::Cutscene.define :ch5_leaving_ironvale do |scene|
   # scene.message "And that would have to be enough."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 5 Addition: Marcus's Letter (SC story-audit fix #1 — Marcus cameo)
+# Trigger: After leaving Ironvale; postman/Pelipper delivers a letter from Dad.
+# Purpose: Re-establish Marcus's presence so he doesn't vanish from Ch.2-35.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch5_marcus_letter do |scene|
+  scene.play_bgm 'Pokemon XY - Route 1'
+
+  # TODO: Event Sequence - Pelipper Delivery
+  # - A Pelipper swoops down on the road
+  # - Drops a sealed letter at the player's feet
+  # - Show letter icon / paper SE
+
+  scene.message "A Pelipper drops a letter at your feet."
+  scene.message "\\i[The seal bears your father's old Champion crest.]"
+  scene.wait 30
+
+  scene.message "\\bDad's Letter\\b: \\PN — your mother and I have been hearing things."
+  scene.message "\\bDad's Letter\\b: A cult moving in the shadows. Old names being spoken again."
+  scene.message "\\bDad's Letter\\b: Names I had hoped you'd never have to hear."
+  scene.wait 30
+
+  scene.message "\\bDad's Letter\\b: I won't tell you to come home. You're past that, and I'm proud of it."
+  scene.message "\\bDad's Letter\\b: But know this: when you need us, we are here."
+  scene.message "\\bDad's Letter\\b: One word, and we ride. — Dad."
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: Aww. Your dad's the best."
+  scene.message "\\bKael\\b: ...A former Champion. That might matter, before this is over."
+  scene.message "\\b\\PN\\b: *folds the letter carefully* Yeah. It might."
+end
+
 #===============================================================================
 # Chapter 6: Rumors - The Shattered Hand
 #===============================================================================
@@ -4800,6 +4832,39 @@ GameData::Cutscene.define :ch9_morning_departure do |scene|
   # scene.message "Toward answers. Toward destiny."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 9 Addition: Ragnar's Real Mission (audit fix — motivated departure)
+# Trigger: Right after :ch9_ragnar_splits, before he disappears for real.
+# Purpose: Give Ragnar's split a concrete, earned reason instead of "just leaving".
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch9_ragnar_real_mission do |scene|
+  scene.play_bgm 'Pokemon XY - Route 4'
+
+  # TODO: Event Sequence - Ragnar Comes Back
+  # - Ragnar runs back, breathless, before fully leaving
+
+  scene.message "\\i[Ragnar stopped at the bend in the road. Turned back. Came running.]"
+  scene.wait 30
+
+  scene.message "\\bRagnar\\b: Wait. Wait, wait. \\PN."
+  scene.message "\\bRagnar\\b: Your dad sent me a letter. Two weeks ago."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...My dad wrote *you*?"
+  scene.message "\\bRagnar\\b: Said if things ever got bad, I should ride to Ironvale myself. Talk to the old guard captains."
+  scene.message "\\bRagnar\\b: Get them ready. Quietly. So nobody panics."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: A Champion's contingency plan. Smart."
+  scene.message "\\bRagnar\\b: I didn't get it then. I get it now."
+  scene.message "\\bRagnar\\b: You three handle the destiny stuff. I'll go make sure when this hits the world, the world is ready to fight back."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Ragnar... that's actually really brave."
+  scene.message "\\bRagnar\\b: *grinning* Don't sound so surprised! — I'll meet you at Asgaheim's gates. With an army if I have to."
+  scene.message "\\b\\PN\\b: We'll hold you to that."
+end
+
 #===============================================================================
 # Chapter 10: The Mountain Path - Journey to the Summit Temple
 #===============================================================================
@@ -5338,6 +5403,35 @@ GameData::Cutscene.define :ch10_entering_temple do |scene|
   # scene.message "Toward the First Revelation."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 10 Addition: The Four Guardians (SC story-audit fix #2 — Rayquaza setup)
+# Trigger: Mountain Path side-shrine; an inscription on a weather-worn stele.
+# Purpose: Foreshadow that there are FOUR guardians, not three. Sets up Rayquaza.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch10_four_guardians_lore do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - Stone Stele
+  # - Player approaches a half-buried stele off the mountain path
+  # - Camera focuses on weathered carvings
+
+  scene.message "\\i[A stone stele leans against the cliff, half-buried by centuries of rockfall.]"
+  scene.wait 30
+
+  scene.message "\\bKael\\b: There's writing here. Older than the temple."
+  scene.message "\\bKael\\b: ...'Four crowns were forged. Four guardians wore them.'"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Four? But the legends only ever speak of three."
+  scene.message "\\bKael\\b: ...'The Sky-Bound One saw the betrayal coming.'"
+  scene.message "\\bKael\\b: ...'It hid its crown where mortals cannot reach. And so it was forgotten.'"
+  scene.wait 60
+
+  scene.message "\\b\\PN\\b: Sky-Bound. Forgotten on purpose."
+  scene.message "\\bKael\\b: A guardian no story names. That's... worth remembering."
+  scene.message "\\bLyra\\b: Three crowns shattered. One hidden in the sky. *shivers* What was it hiding from?"
+end
+
 #===============================================================================
 # Chapter 11: The First Truth - Summit Temple Revelations
 #===============================================================================
@@ -5871,6 +5965,43 @@ GameData::Cutscene.define :ch11_mountain_escape do |scene|
   # scene.message "You were surrounded."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 11 Addition: The Third Name (audit fix — Yveltal's mortal name)
+# Trigger: After :ch11_yveltal_vision and the Hoopa revelation, Kael returns to
+#          the mural and finishes translating. Resolves Ch11 "...can't make out
+#          the third name." Yveltal was once a man called Aldemar.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch11_third_name_revealed do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  # TODO: Event Sequence - Kael at Mural
+  # - Kael returns alone to the half-translated mural
+  # - Brushes dust from the carving with shaking hand
+
+  scene.message "\\i[Kael went back to the mural while the others rested. He had to know.]"
+  scene.message "\\i[He brushed centuries of grime from the third figure's name.]"
+  scene.wait 45
+
+  scene.message "\\bKael\\b: Valdris. Moira. And..."
+  scene.message "\\bKael\\b: ...Aldemar. The third name was Aldemar."
+  scene.wait 30
+
+  scene.message "\\bYveltal\\b: \\i[A name I have not been called in three thousand years.]"
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *startled* You can hear me from the temple?"
+  scene.message "\\bYveltal\\b: \\i[I hear you wherever you are, bearer. Aldemar was a stonemason.]"
+  scene.message "\\bYveltal\\b: \\i[He carved tombs. He learned the dignity of endings. That is why I chose him.]"
+  scene.wait 45
+
+  scene.message "\\bKael\\b: A stonemason. ...A man who buried people for a living."
+  scene.message "\\bYveltal\\b: \\i[He did not fear death. He honored it. Carry his name forward, if you wish.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: \\i[from the temple entrance]\\PN: Kael? Everything okay?"
+  scene.message "\\bKael\\b: ...Yes. I just learned a name I needed to hear."
+end
+
 #===============================================================================
 # Chapter 12: General Shade - First Confrontation
 #===============================================================================
@@ -6375,6 +6506,42 @@ GameData::Cutscene.define :ch12_dawn_departure do |scene|
   # scene.message "For a moment, despite everything..."
   # scene.message "Things felt almost normal."
   # scene.message "Almost."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 12 Addition: League Sends Investigators (audit fix — world response)
+# Trigger: Morning after the General Shade encounter. Two League agents catch up.
+# Purpose: Establish that the world is NOT ignoring an open cult. Plants seed for
+#          Marcus's later contingency and Ragnar's mission.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch12_league_investigators do |scene|
+  scene.play_bgm 'Pokemon XY - Sycamore Theme'
+
+  # TODO: Event Sequence - Two Agents Approach
+  # - Two trainers in League uniforms (one veteran, one young) approach
+  # - They show ID badges
+
+  scene.message "\\i[Two figures in dark blue League coats stepped onto the road. They moved like soldiers.]"
+  scene.wait 30
+
+  scene.message "\\bAgent Vesper\\b: Don't startle. Pokémon League, Internal Affairs. We've been tracking the Shattered Hand for six months."
+  scene.message "\\bAgent Vesper\\b: \\PN, isn't it? We had your father's word you'd be on this road today."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Dad sent you?"
+  scene.message "\\bAgent Vesper\\b: Marcus opened a private case file the day you left Dawnhaven. The League has been quietly mobilizing ever since."
+  scene.message "\\bAgent Vesper\\b: We can't move openly — the cult has eyes in three Gyms we've identified. But we're moving."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: Why tell us at all, then?"
+  scene.message "\\bAgent Vesper\\b: Because you keep walking into ambushes alone. That ends today. From here on, you have backup you can't see."
+  scene.message "\\bAgent Vesper\\b: Routes will be cleared ahead of you. Pokémon Centers will be safe. If a town goes dark, we will know."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: We're... not alone in this anymore?"
+  scene.message "\\bAgent Vesper\\b: You never were, Miss. The world just hadn't told you yet."
+  scene.message "\\b\\PN\\b: Tell my father thank you."
+  scene.message "\\bAgent Vesper\\b: *small smile* He said you'd say that. Move safe, Chosen."
 end
 
 #===============================================================================
@@ -7938,6 +8105,72 @@ GameData::Cutscene.define :ch14_5_ending do |scene|
   scene.message "\\i[Return to main story...]"
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 14 Addition: Xerneas Warns of a Deeper Dark (SC story-audit fix #3)
+# Trigger: After Xerneas is named; quiet moment by the shrine that night.
+# Purpose: First Nidhoggr foreshadow. Hoopa is only a symptom — something older stirs.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch14_deeper_dark_warning do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[Lyra had fallen asleep against the shrine wall. The fire was low.]"
+  scene.message "\\i[A voice that was not a voice settled into your bones.]"
+  scene.wait 45
+
+  scene.message "\\bXerneas\\b: \\i[Chosen. You think the prison-thief is the worst of it.]"
+  scene.message "\\bXerneas\\b: \\i[It is not. Hoopa is a wound. Something older is the knife.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Older? What's older than a god in a prison?"
+  scene.message "\\bXerneas\\b: \\i[The thing that gnaws. The thing under the roots.]"
+  scene.message "\\bXerneas\\b: \\i[We do not name it. To name it is to call it. Be ready, Chosen.]"
+  scene.wait 60
+
+  scene.message "\\i[The voice faded. The fire popped. Lyra never woke.]"
+  scene.message "\\b\\PN\\b: *quietly* ...The thing that gnaws."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 14.5 Addition: The Cult Sleeper (audit suggestion #8)
+# Trigger: Next morning at the Pokémon Center. A familiar nurse acts strange.
+# Purpose: Pay off the League agent's warning that the Hand has eyes in trusted
+#          places. Paranoia beat. Establishes that safe spaces are not safe.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch14_5_cult_sleeper do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  # TODO: Event Sequence - Center Lobby
+  # - Familiar Nurse Joy at counter
+  # - Hands player a small parcel "that came in for you"
+
+  scene.message "\\bNurse\\b: \\PN! A package came for you on the morning train. From a Professor Aldric, I believe."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...Aldric didn't mention sending anything."
+  scene.message "\\bKael\\b: *low* The seal on that parcel. That's a Shattered Hand glyph. Inverted, but it's the same hand."
+  scene.wait 30
+
+  scene.message "\\bNurse\\b: *smile faltering* I'm sure I just took it from the courier. I haven't even —"
+  scene.message "\\bLyra\\b: Your sleeve, ma'am."
+  scene.wait 30
+
+  scene.message "\\i[Beneath her uniform cuff, half-hidden: a faded brand. The cult's mark.]"
+  scene.wait 45
+
+  scene.message "\\bNurse\\b: *very quietly* I'm sorry. They have my brother. They said if I just *delivered* the package, no one would get hurt."
+  scene.message "\\bNurse\\b: I don't know what's inside. I swear by the Guardians I don't."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *carefully opening the parcel* ...A tracking sigil. Not a bomb. They wanted to know where you go next."
+  scene.message "\\b\\PN\\b: *to the nurse* Where is your brother being held?"
+  scene.message "\\bNurse\\b: Ravenwatch Post. East dock. *please* — don't tell them I told you."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Tell the League agent in the back row of this lobby. He'll handle your brother."
+  scene.message "\\bNurse\\b: ...There's a League agent here?"
+  scene.message "\\bLyra\\b: There's been one in every town since Ironvale. We just stopped looking."
+end
+
 #===============================================================================
 # Chapter 15: The Trail Goes Cold - Mystery Deepens
 #===============================================================================
@@ -8369,6 +8602,45 @@ GameData::Cutscene.define :ch15_mystery_deepens do |scene|
   # scene.message "But so did your resolve."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 15 Addition: Letter from Home (audit fix — Elena & Mom presence)
+# Trigger: Camp at dusk. Two letters arrive in the same delivery.
+# Purpose: Bridge Elena's Ch2-mention to her Ch20 onscreen arrival, and give Mom
+#          her own voice between Marcus's letters.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch15_letters_from_home do |scene|
+  scene.play_bgm 'Pokemon XY - Cyllage City'
+
+  # TODO: Event Sequence - Postal Delivery
+  # - A young courier reaches their camp, hands two letters
+
+  scene.message "\\i[A courier on a Doduo found you at sundown with two sealed letters.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: One for me?! From — *gasps* — Elena! Finally!"
+  scene.wait 30
+
+  scene.message "\\bElena's Letter\\b: Lyra. I'm sorry I've been quiet. I'm sorry it's been months."
+  scene.message "\\bElena's Letter\\b: I found something Grandma didn't want me to find. About our family. About our mark."
+  scene.message "\\bElena's Letter\\b: I'm following the trail east. If I'm right, I'll catch up with you on the road, just before you reach the Eternal Forest."
+  scene.message "\\bElena's Letter\\b: If I'm wrong... I'll meet you anyway. Stay alive, little sister. — E."
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: *eyes wet* She's coming. She's actually coming."
+  scene.message "\\bKael\\b: That's a long ride. She must love you very much."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...And one for me. From Mom."
+  scene.message "\\bMom's Letter\\b: \\PN. Your father has been writing you. I let him, because he says better than I do."
+  scene.message "\\bMom's Letter\\b: But I want you to hear this from me: I am proud of you. Not because of what you are doing. Because of who you have been your whole life."
+  scene.message "\\bMom's Letter\\b: Eat. Sleep. Let your friends carry the heavy things sometimes. Come home."
+  scene.message "\\bMom's Letter\\b: — Mom. (P.S. Your room is exactly as you left it. The Snorlax plushie is still on the bed.)"
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: *laughing through tears* Snorlax plushie?"
+  scene.message "\\b\\PN\\b: *quietly, smiling* ...Don't."
+end
+
 #===============================================================================
 # Chapter 16: Bonds Tested - Rival Challenge
 #===============================================================================
@@ -8780,6 +9052,40 @@ GameData::Cutscene.define :ch16_team_moment do |scene|
   # scene.message "But tonight, they had each other."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 16 Addition: Fern Writes Back (audit fix — Fern is not abandoned)
+# Trigger: Morning. A Vivillon arrives with a folded leaf-letter. Pays off Fern's
+#          Ch4 forest-whispers warning by showing she's been investigating since.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch16_fern_letter do |scene|
+  scene.play_bgm 'Pokemon XY - Santalune Forest'
+
+  # TODO: Event Sequence - Vivillon Letter
+  # - A Vivillon flutters into camp, lands on Lyra's shoulder
+  # - A folded leaf is tied to its leg
+
+  scene.message "\\i[A Vivillon — wing pattern unmistakably from the Forest Gym — lands on Lyra's shoulder.]"
+  scene.message "\\i[A folded oak leaf is tied to its leg with green thread.]"
+  scene.wait 30
+
+  scene.message "\\bFern's Letter\\b: Three of my best students. The forest still whispers about you."
+  scene.message "\\bFern's Letter\\b: After you left, I followed those whispers. I have not slept much."
+  scene.wait 30
+
+  scene.message "\\bFern's Letter\\b: There is a corruption in the deep wood. Roots that should not move. A patch of trees that grew twenty meters in a season."
+  scene.message "\\bFern's Letter\\b: It points east. Toward the Eternal Forest. Whatever is feeding it is *under* the world, not on it."
+  scene.wait 30
+
+  scene.message "\\bFern's Letter\\b: I am taking my Gym off-circuit and going in personally. Two other Leaders are coming with me."
+  scene.message "\\bFern's Letter\\b: If we silence the corruption at our end, you will have one less front to fight."
+  scene.message "\\bFern's Letter\\b: Stay alive. The forest is on your side. — F."
+  scene.wait 60
+
+  scene.message "\\bKael\\b: A Gym Leader going dark voluntarily. That's not nothing."
+  scene.message "\\bLyra\\b: Three of them. We have *three Gym Leaders* in the field for us."
+  scene.message "\\b\\PN\\b: ...The world really is moving with us."
+end
+
 #===============================================================================
 # Chapter 17: Your Starter Nearly Dies
 #===============================================================================
@@ -8906,7 +9212,7 @@ GameData::Cutscene.define :ch17_ambush_begins do |scene|
   
   scene.message "\\bKael\\b: Shadow, defensive position!"
   scene.show_emotion :LYRA, :exclamation
-  scene.message "\\bLyra\\b: Mimi, protect us!"
+  scene.message "\\bLyra\\b: Willow, protect us!"
   
   scene.message "\\b\\PN\\b: Everyone, ready for battle!"
   
@@ -8943,9 +9249,9 @@ GameData::Cutscene.define :ch17_battle_overwhelmed do |scene|
   scene.message "\\bKael\\b: We need to break through!"
   
   # TODO: Event Sequence - Battle Chaos
-  # - Split screen showing Shadow, Mimi fighting three at once
+  # - Split screen showing Shadow, Willow fighting three at once
   # - Illusion flicker effect on Shadow under strain
-  # - Defensive barrier animation on Mimi protecting Lyra
+  # - Defensive barrier animation on Willow protecting Lyra
   
   scene.show_emotion :player, :exclamation
   scene.message "\\bCultist Leader\\b: Use the dark binding!"
@@ -10205,6 +10511,40 @@ GameData::Cutscene.define :ch18_morning_resolve do |scene|
   # - Ready to face whatever came next.
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 18 Addition: Vex Returns (audit fix — cult hierarchy + recurring villain)
+# Trigger: After Dread's defeat. Vex appears alone on a ridge, watching.
+# Purpose: Vex hasn't been forgotten. Establishes he outranks both fallen Generals
+#          and reports directly to Malachar. Sets up his Ch28 final return.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch18_vex_returns do |scene|
+  scene.play_bgm 'Pokemon XY - Team Flare Encounter'
+
+  # TODO: Event Sequence - Silhouette on Ridge
+  # - The party walks past a high ridge
+  # - Camera pans up to reveal Vex standing alone, hands behind back
+
+  scene.message "\\i[On the ridge above the road, a figure in black watched without hiding.]"
+  scene.wait 45
+
+  scene.message "\\bVex\\b: Two Generals. Two months. Impressive even by my standards."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: That voice —"
+  scene.message "\\bKael\\b: Vex. The first General we ever met. He's still alive."
+  scene.message "\\bVex\\b: General is generous. Shade and Dread were tools. I am closer to the Hand than the fingers ever were."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Then come down here and fight."
+  scene.message "\\bVex\\b: *almost amused* No. Today I am only counting. Three marked. Three guardians named. Three shards yet to gather."
+  scene.message "\\bVex\\b: Malachar is patient. So am I. We will speak again at the gate."
+  scene.wait 45
+
+  scene.message "\\i[He turned and walked away. No fanfare. No threat. Worse than either.]"
+  scene.message "\\bKael\\b: He knows everything about us. And he isn't worried."
+  scene.message "\\bLyra\\b: ...That's the scariest thing anyone's done all year."
+end
+
 #===============================================================================
 # ACT 3: THE QUEST (Chapters 19-28)
 #===============================================================================
@@ -10502,6 +10842,7 @@ GameData::Cutscene.define :ch19_pokemon_bonding do |scene|
   # TODO: Event Sequence - Narrative
   # - Shadow and Willow played together.
   # - Mimi watched over them like a parent.
+  # NOTE: "Mimi" left intact here — narrative-only commented line; if uncommenting later, rename to Willow.
   
   scene.message "\\bLyra\\b: Look at them!"
   scene.message "\\bLyra\\b: Our Pokémon are friends too!"
@@ -10710,6 +11051,85 @@ GameData::Cutscene.define :ch19_preparing_to_enter do |scene|
   # TODO: Event Sequence - Narrative
   # - The group moved toward the treeline.
   # - The Eternal Forest waited.
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 19 Addition: Aldric Explains the Shards (audit fix — mechanic clarity)
+# Trigger: Aldric's briefing room, before the Shard Hunt begins.
+# Purpose: Clarify (a) why these specific three essences seal Hoopa, (b) why the
+#          original seal is failing now, (c) reframe "hunt" as "trials".
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch19_aldric_shard_lore do |scene|
+  scene.play_bgm 'Pokemon DPPT - Professor Rowan'
+
+  # TODO: Event Sequence - Map Table
+  # - Aldric unrolls a parchment with three shard sigils
+  # - Three small carved stones rest on it
+
+  scene.message "\\bProf. Aldric\\b: Sit. This will take a moment, and you need to understand it cleanly."
+  scene.wait 30
+
+  scene.message "\\bProf. Aldric\\b: The Divine Reckoning didn't just imprison Hoopa. The guardians broke their own crowns."
+  scene.message "\\bProf. Aldric\\b: A whole crown is a tool of dominion. A shattered crown is a *binding*. Each shard holds one essence."
+  scene.wait 30
+
+  scene.message "\\bProf. Aldric\\b: \\bGrowth\\b — from Xerneas. The thing that wants to live."
+  scene.message "\\bProf. Aldric\\b: \\bEntropy\\b — from Yveltal. The thing that ends."
+  scene.message "\\bProf. Aldric\\b: \\bBlade\\b — from Zacian. The thing that cuts the choice."
+  scene.message "\\bProf. Aldric\\b: Together they form a paradox Hoopa cannot warp around. A door that is open and closed and severed in the same breath."
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: So we don't just *find* the shards. The guardians have to *give* them to us."
+  scene.message "\\bProf. Aldric\\b: Correct. They will test you first. Three trials. Three gifts. Don't think of it as a hunt — think of it as being *judged worthy*."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: And the original seal? Why is it failing now?"
+  scene.message "\\bProf. Aldric\\b: Two reasons. One: a seal made of three living essences degrades when the bearers die. Marcus and your mother were the last reinforcement. They sealed, but they aged."
+  scene.message "\\bProf. Aldric\\b: Two: the cult is *actively chewing* at the bindings. Every blood ritual, every shrine they desecrate, the seal weakens by another thread."
+  scene.wait 60
+
+  scene.message "\\b\\PN\\b: ...So we're not stopping a breakout. We're racing a clock."
+  scene.message "\\bProf. Aldric\\b: A clock that has been ticking for three thousand years and is about to strike. Yes."
+  scene.message "\\bProf. Aldric\\b: Pass the trials. Bring me three shards. We'll forge a *new* seal — stronger, because this time the bearers know what they are."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 19.5 Addition: Letter to Mom (audit suggestion #5)
+# Trigger: Camp at the edge of the Eternal Forest. Player writes home for the
+#          first time. Reciprocates Mom & Marcus's letters from earlier chapters.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch20_letter_to_mom do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  # TODO: Event Sequence - Quiet Camp
+  # - Player sits apart from Lyra/Kael
+  # - Pulls out a folded sheet, ink, sits writing for a long time
+
+  scene.message "\\i[The fire was low. Lyra was asleep against Kael. Kael was pretending to read.]"
+  scene.message "\\i[You took out a sheet of paper. The first one you'd written on in months.]"
+  scene.wait 45
+
+  scene.message "\\b\\PN's Letter\\b: Mom. Dad. I should have written sooner."
+  scene.message "\\b\\PN's Letter\\b: I'm okay. I sleep maybe four hours a night and my pack weighs more than I do, but I'm okay."
+  scene.wait 30
+
+  scene.message "\\b\\PN's Letter\\b: Lyra is the bravest person I know. She laughs at things that should make her cry."
+  scene.message "\\b\\PN's Letter\\b: Kael is what people who say they hate everyone are actually like — he just hadn't been allowed to *not* hate everyone yet."
+  scene.message "\\b\\PN's Letter\\b: I love them both. In different ways. That part scares me a little."
+  scene.wait 45
+
+  scene.message "\\b\\PN's Letter\\b: Dad — thank you for the agents. We saw them. We always knew. We never had to feel alone, even when we were."
+  scene.message "\\b\\PN's Letter\\b: Mom — the Snorlax plushie. *please* don't give it away. I want to see it again."
+  scene.wait 30
+
+  scene.message "\\b\\PN's Letter\\b: I don't know if I'm coming home the same. I don't know if I'm coming home at all."
+  scene.message "\\b\\PN's Letter\\b: But I want you to know: whoever I am at the end of this, you made that person. Both of you."
+  scene.message "\\b\\PN's Letter\\b: I'll write again from the Forest's other side. — \\PN."
+  scene.wait 60
+
+  scene.message "\\bKael\\b: *without looking up from the book* You should sign it 'love'."
+  scene.message "\\b\\PN\\b: *startled* I thought you weren't reading."
+  scene.message "\\bKael\\b: I wasn't. Sign it 'love' anyway."
 end
 
 #===============================================================================
@@ -10995,7 +11415,7 @@ GameData::Cutscene.define :ch20_pokemon_watch do |scene|
   # TODO: Event Sequence - Narrative
   # - The Pokémon took turns keeping watch.
   # - Shadow's ears twitched at every sound.
-  # - Willow curled close to Mimi.
+  # - Willow curled close to her trainer.
   
   # TODO: Event Sequence - Narrative
   # - Your starter sat alert, guarding.
@@ -12051,9 +12471,6 @@ GameData::Cutscene.define :ch22_recovery_talk do |scene|
   scene.message "\\bLyra\\b: *looking at Kael* You stayed with me."
   scene.message "\\bLyra\\b: All night."
   
-  scene.message "\\bLyra\\b: *looking at Kael* You stayed with me."
-  scene.message "\\bLyra\\b: All night."
-  
   # TODO: Event Sequence - Kael Embarrassed
   # scene.message "Kael looked away, embarrassed."
   
@@ -12095,6 +12512,39 @@ GameData::Cutscene.define :ch22_forest_healed do |scene|
   # TODO: Event Sequence - Shard Pulse
   # scene.message "The Growth Shard pulsed with life."
   # scene.message "One shard secured. Two remained."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 22 Addition: Marcus's Second Letter (SC story-audit fix #4 — Marcus #2)
+# Trigger: After Xerneas Awakens; resting at camp before Yveltal's trial.
+# Purpose: Mid-game Marcus presence. He has heard about the Growth Shard.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch22_marcus_letter_midgame do |scene|
+  scene.play_bgm 'Pokemon XY - Cyllage City'
+
+  # TODO: Event Sequence - Pelipper #2
+  # - A different Pelipper, this time worn from a long flight
+  # - Drops a thicker letter, sealed with travel-mud
+
+  scene.message "\\i[A second Pelipper, this one mud-spattered, lands beside you and chirps insistently.]"
+  scene.wait 30
+
+  scene.message "\\bDad's Letter\\b: \\PN — word reached us. Xerneas. A guardian."
+  scene.message "\\bDad's Letter\\b: I knew it the moment you were born. I just hoped I was wrong."
+  scene.wait 30
+
+  scene.message "\\bDad's Letter\\b: When your mother and I faced Hoopa, all those years ago — we sealed it. We did not heal it."
+  scene.message "\\bDad's Letter\\b: Some chains were never meant to last forever."
+  scene.message "\\bDad's Letter\\b: Whatever you're walking toward, we walked there first. It is survivable."
+  scene.wait 30
+
+  scene.message "\\bDad's Letter\\b: Ragnar showed up on our doorstep three weeks ago. Said you sent him. I have him drilling with my old guard captains."
+  scene.message "\\bDad's Letter\\b: He's loud. He's cocky. He's also one of the best natural fighters I've ever trained. Be kind to him when you meet again. He carries more than he shows. — Dad."
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: Your dad fought Hoopa? Your dad?!"
+  scene.message "\\bKael\\b: ...That explains a great deal about you, \\PN."
+  scene.message "\\b\\PN\\b: *small smile* He never told me. Not once."
 end
 
 #===============================================================================
@@ -12822,7 +13272,7 @@ GameData::Cutscene.define :ch24_elm_death do |scene|
   scene.camera_flash 30
   scene.play_se 'Anim/Fire', 80
   
-  scene.set_switch SW::ELM_DIED, true
+  scene.set_switch SW::ALDRIC_DIED, true
   scene.wait 20
 end
 
@@ -14490,6 +14940,36 @@ GameData::Cutscene.define :ch25_5_ending do |scene|
   scene.message "\\i[Return to main story...]"
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 25 Addition: Lake Trio Whisper (SC story-audit fix #5)
+# Trigger: Walking out of the Trial of Death; quiet road, dusk.
+# Purpose: Lake Trio cameo (sets up Ch.27 vision) + second Nidhoggr foreshadow.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch25_lake_trio_whisper do |scene|
+  scene.play_bgm 'Pokemon DPPt - Lake'
+
+  # TODO: Event Sequence - Three Pinpoints of Light
+  # - Three small lights (yellow / pink / blue) drift across the path
+  # - Ripple effect, then they vanish
+
+  scene.message "\\i[Three pinpoints of light drift across the road. Yellow. Pink. Blue.]"
+  scene.message "\\i[They circle once and stop. Watching.]"
+  scene.wait 45
+
+  scene.message "\\bUxie\\b: \\i[Knowledge: the prison-thief was never the architect.]"
+  scene.message "\\bMesprit\\b: \\i[Feeling: a hunger older than the world's memory of pain.]"
+  scene.message "\\bAzelf\\b: \\i[Will: ours is failing. Yours must not.]"
+  scene.wait 60
+
+  scene.message "\\bKael\\b: The Lake Trio. They never leave their lakes."
+  scene.message "\\bLyra\\b: Then... whatever's coming has scared them up."
+  scene.wait 30
+
+  scene.message "\\bUxie\\b: \\i[When the three shards resonate, seek us. We will show you what was hidden.]"
+  scene.message "\\i[The lights faded into the gathering dusk.]"
+  scene.message "\\b\\PN\\b: ...Hoopa wasn't the architect. Then who was?"
+end
+
 #===============================================================================
 # Chapter 26: Yveltal Awakens - Kael's Acceptance
 #===============================================================================
@@ -15012,6 +15492,73 @@ GameData::Cutscene.define :ch26_evening_talk do |scene|
   # scene.message "And for a moment, everything felt possible."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 26 Addition: The Truth of the Orphanage (SC story-audit fix #6)
+# Trigger: After Yveltal awakens. Yveltal grants Kael one final truth.
+# Purpose: Resolve Kael's Ch.8.5 nightmare. The fire was sabotage, not accident.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch26_kael_truth_orphanage do |scene|
+  scene.play_bgm 'Pokemon XY - Sycamore Theme'
+
+  scene.message "\\bYveltal\\b: Kael. One thing more, before I am only a guardian again."
+  scene.message "\\bYveltal\\b: I am the cycle. I see what ends. I see how it ends."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: ...The orphanage."
+  scene.message "\\bKael\\b: I always knew. I just couldn't face it. The fire moved wrong. Children don't burn in straight lines."
+  scene.message "\\bYveltal\\b: Yes. The fire was not a fire. It was a hand."
+  scene.wait 30
+
+  scene.message "\\bYveltal\\b: Two children in that orphanage bore the old marks. The cult could not let them grow."
+  scene.message "\\bYveltal\\b: Your sister's last act was to put herself between the flame and you."
+  scene.message "\\bYveltal\\b: Carry that. Not as guilt — as proof. You were loved enough to be saved."
+  scene.wait 60
+
+  scene.message "\\bKael\\b: *quietly* ...They burned a building full of children. To kill me."
+  scene.message "\\bLyra\\b: Kael..."
+  scene.message "\\bKael\\b: I'm not going to break, Lyra. *exhales* I'm going to finish this."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: We're going to finish this."
+  scene.message "\\bYveltal\\b: Then carry the cycle forward, Chosen. The hand that lit the fire still moves."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 26 Addition 2: Shadow's Memento (audit suggestion #4)
+# Trigger: Late that night, Kael is alone by the fire. Shadow brings him
+#          something he's been hiding for years. No words.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch26_shadow_memento do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  # TODO: Event Sequence - Shadow Approach
+  # - Shadow trots over with something in his mouth
+  # - Drops a small singed cloth doll at Kael's feet
+
+  scene.message "\\i[Kael was alone with the fire. Lyra and \\PN had finally slept.]"
+  scene.message "\\i[Shadow padded out of the dark. Something was in his mouth.]"
+  scene.wait 45
+
+  scene.message "\\i[He set it down at Kael's feet. A small cloth doll. Singed at one edge.]"
+  scene.message "\\i[Faded thread spelled out a name on the front. \\bMIRA\\b.]"
+  scene.wait 60
+
+  scene.message "\\bKael\\b: ...You went back. The night you found me — you went *back* into the fire."
+  scene.message "\\bKael\\b: You've been carrying this for *years*."
+  scene.wait 30
+
+  scene.message "\\i[Shadow rested his head on Kael's knee.]"
+  scene.message "\\i[Kael picked up the doll. He did not cry. He held it against his chest like he was afraid it would crumble.]"
+  scene.wait 60
+
+  scene.message "\\bKael\\b: *whispered* ...Thank you."
+  scene.message "\\bKael\\b: I'm sorry I never saw what you'd done. I'm sorry it took me this long."
+  scene.wait 45
+
+  scene.message "\\i[He tucked the doll into the inner pocket of his coat. The one nearest his heart.]"
+  scene.message "\\i[Shadow stayed at his side until morning.]"
+end
+
 #===============================================================================
 # Chapter 27: Love Confession - The Night Before
 #===============================================================================
@@ -15465,6 +16012,105 @@ GameData::Cutscene.define :ch27_team_united do |scene|
   # TODO: Event Sequence - Enter Gateway
   # scene.message "Together, you faced the Gateway."
   # scene.message "Together, you stepped into destiny."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 27 Addition: The Divine Reckoning Vision (SC story-audit fix #7)
+# Trigger: When the three shards resonate together for the first time.
+# Purpose: Lake Trio payoff (they ARE the vision-givers) + Rayquaza glimpse +
+#          third and clearest Nidhoggr foreshadow.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch27_lake_trio_vision do |scene|
+  scene.play_bgm 'Pokemon DPPt - Spear Pillar'
+  scene.fade_out 30
+
+  scene.message "\\i[The three shards rose into the air between you. They began to spin.]"
+  scene.wait 45
+
+  scene.message "\\bUxie\\b: \\i[Knowledge.]"
+  scene.message "\\bMesprit\\b: \\i[Feeling.]"
+  scene.message "\\bAzelf\\b: \\i[Will. Now. See.]"
+  scene.wait 30
+
+  scene.fade_in 30
+  scene.message "\\i[The world fell away. You stood in a memory not your own.]"
+  scene.wait 45
+
+  # TODO: Event Sequence - Vision Imagery
+  # - Show four crowned figures (Zacian / Xerneas / Yveltal / Rayquaza silhouette)
+  # - Three crowns shatter; one withdraws into the clouds
+  # - Beneath the world, a vast coil of black scales stirs
+
+  scene.message "\\i[Four crowns. Four guardians. The sky-one watches the others — and ascends.]"
+  scene.message "\\i[Rayquaza coils into the clouds, hiding its crown where no mortal will ever climb.]"
+  scene.wait 45
+
+  scene.message "\\i[Below: a prison. Inside the prison: Hoopa, weeping.]"
+  scene.message "\\i[Below the prison: roots. Below the roots: a coil. Black scales without end.]"
+  scene.message "\\i[A single eye opens at the world's deep root. It is patient. It is hungry.]"
+  scene.wait 60
+
+  scene.message "\\bUxie\\b: \\i[Nidhoggr. The Gnawer. The thing the guardians were forged to keep down.]"
+  scene.message "\\bMesprit\\b: \\i[Hoopa was his hand. The cult is his mouth. He has never stopped chewing.]"
+  scene.message "\\bAzelf\\b: \\i[Three crowns will not be enough. Find the fourth. Or fall.]"
+  scene.wait 60
+
+  scene.fade_out 30
+  scene.message "\\i[The vision shattered. You came back to the firelight, three shards still spinning.]"
+  scene.fade_in 20
+
+  scene.message "\\bLyra\\b: ...Did you all see — "
+  scene.message "\\bKael\\b: A fourth crown. A fourth guardian. *and a name we shouldn't have heard.*"
+  scene.message "\\b\\PN\\b: Nidhoggr. *quietly* The thing that gnaws."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 27 Addition 2: Hoopa's Plea (audit suggestion #10)
+# Trigger: As they sleep, the prison itself reaches across distance. Hoopa
+#          contacts the player directly — not as villain, but as victim.
+# Purpose: Recontextualize the final battle. Hoopa is Nidhoggr's chained tool,
+#          not its ally. Player learns mercy is an option.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch27_hoopa_pov do |scene|
+  scene.play_bgm 'Pokemon XY - Hoopa Theme'
+  scene.fade_out 30
+
+  # TODO: Event Sequence - Dream Space
+  # - Player wakes in a dream
+  # - Standing in a hall of mirrors with no light
+  # - A small chained figure sits in the middle
+
+  scene.message "\\i[You slept. You did not dream of yourself.]"
+  scene.message "\\i[You stood in a hall with no walls. In the center, something small was chained.]"
+  scene.wait 45
+  scene.fade_in 30
+
+  scene.message "\\bHoopa\\b: *small voice* ...Chosen. You came close enough. I could finally reach."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: You're — you're the one we're trying to keep sealed."
+  scene.message "\\bHoopa\\b: Yes. And no. The seal does not hurt me. The thing *under* the seal does."
+  scene.message "\\bHoopa\\b: Three thousand years it has whispered through me. It uses my voice when it needs hands."
+  scene.wait 60
+
+  scene.message "\\bHoopa\\b: I was a guardian once. Of doorways. Of *welcome*. The Gnawer chewed that out of me and wore my face."
+  scene.message "\\bHoopa\\b: When you reach the gate, the cult will scream that I am their god. I am not. I am their *lock*."
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: ...What do you want from me?"
+  scene.message "\\bHoopa\\b: When you face me — because you will — do not destroy me. I am the only door Nidhoggr cannot close on its own."
+  scene.message "\\bHoopa\\b: *Re-seal* me. With the new lens. Let me sleep with the Gnawer beneath my feet, the way it should always have been."
+  scene.wait 60
+
+  scene.message "\\bHoopa\\b: I will not fight you well. I cannot. The Gnawer will move my hands. But underneath — I am asking."
+  scene.message "\\bHoopa\\b: Mercy, Chosen. For something old and tired and never asked."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *quietly* ...I'll try. I promise I'll try."
+  scene.message "\\bHoopa\\b: *small smile, distant* That is enough. That has always been enough."
+  scene.fade_out 30
+
+  scene.message "\\i[You woke before dawn. The fire was out. Your hand was clenched around something that was not there.]"
 end
 
 #===============================================================================
@@ -16050,6 +16696,167 @@ GameData::Cutscene.define :ch28_stepping_through do |scene|
   # scene.message "The final battle had begun."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 28 Addition: The Mask Remembers (audit fix — Ch3 Guardian Mask payoff)
+# Trigger: Quiet moment at the gate to Asgaheim. The Guardian Mask in your pack
+#          starts glowing of its own accord.
+# Purpose: Pay off the "I don't remember making that one" mask from Ch3. It was
+#          a relic of the original sealers, recognizing its bearer.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch28_mask_remembers do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  # TODO: Event Sequence - Mask Glows in Pack
+  # - The pack shifts, glows from within
+  # - Player pulls out the Guardian Mask from Ch3
+
+  scene.message "\\i[Something in your pack pulsed with warmth. You hadn't touched it in months.]"
+  scene.message "\\i[The Guardian Mask. The one the merchant said he didn't remember making.]"
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: That's the festival mask! It's *glowing* now?"
+  scene.message "\\bKael\\b: ...The carving on the inside. I never looked at it."
+  scene.wait 30
+
+  scene.message "\\i[Inside the mask, etched in the same hand as the Summit Temple murals: a name. \\bMARCUS\\b.]"
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: ...My father's name. He wore this mask."
+  scene.message "\\bKael\\b: When he and your mother sealed Hoopa. The merchant didn't make it — he *kept* it. Waiting for the next bearer."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: The whole festival town knew. They were *guarding* it for you."
+  scene.message "\\b\\PN\\b: *putting the mask on, briefly* ...It fits."
+  scene.message "\\bKael\\b: Of course it does. Half this region has been waiting for you to arrive."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 28 Addition 2: The Choice at the Gate (audit suggestion #15)
+# Trigger: The exact moment before Ragnar's sacrifice. Player IS offered a
+#          choice. The choice is illusory — either way Ragnar steps in — but
+#          the player will know they tried.
+# Purpose: Player agency at the most painful beat. No bad ending; same outcome,
+#          earned grief.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch28_choice_at_gate do |scene|
+  scene.play_bgm 'Pokemon XY - Final Battle Lysandre'
+  scene.camera_shake 6, 30
+
+  # TODO: Event Sequence - Choice Prompt
+  # - The collapsing arch above. Three seconds before it falls.
+  # - Player gets pbMessage choice: "Push Ragnar clear" / "Take his place" / "Freeze"
+  # - All three branches converge: Ragnar gets there first regardless.
+
+  scene.message "\\bRagnar\\b: \\PN! The arch — it's coming down!"
+  scene.message "\\b\\PN\\b: *thinking* ...There's no time."
+  scene.wait 30
+
+  # TODO: Replace with pbMessage choice when wiring this up:
+  # choice = pbMessage("What do you do?", [
+  #   "Push Ragnar clear of the arch.",
+  #   "Take his place. He has more to live for.",
+  #   "Freeze. You can't decide in time."
+  # ], 3)
+  scene.message "\\b\\PN\\b: \\i[Push him out. Take his place. Freeze. — every option arrives at the same instant.]"
+  scene.wait 45
+
+  scene.message "\\bRagnar\\b: *grin, half-broken* Don't you DARE, \\PN."
+  scene.message "\\bRagnar\\b: I trained six weeks with your dad for *exactly this.*"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Ragnar — NO!"
+  scene.message "\\bRagnar\\b: Tell my mom I made it count!"
+  scene.wait 30
+
+  scene.message "\\i[He shoved you, Lyra, and Kael through the arch with everything he had left.]"
+  scene.message "\\i[The stone came down behind you. The choice was never yours. Ragnar made it for all of you.]"
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 28 Addition 3: Vex's Final Stand (audit suggestion #6)
+# Trigger: Inside the gate, before Malachar. Vex is waiting. He kept his promise.
+# Purpose: Pay off :ch18_vex_returns. Vex is the gatekeeper of Asgaheim itself.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch28_vex_final do |scene|
+  scene.play_bgm 'Pokemon XY - Battle! Team Flare'
+
+  # TODO: Event Sequence - Vex Waiting
+  # - Inner gate. Vex stands alone, no cultists at his back
+  # - He has been waiting a long time
+
+  scene.message "\\i[Past the broken arch. Past the dust. One figure stood at the inner gate, alone.]"
+  scene.wait 45
+
+  scene.message "\\bVex\\b: I told you we would speak again at the gate."
+  scene.message "\\bVex\\b: I sent the others away. Shade was a tool. Dread was a fanatic. I am neither. This is between us."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: Then move aside. You've already lost."
+  scene.message "\\bVex\\b: I know. I've known since Ironvale. The marked ones always win in the stories."
+  scene.message "\\bVex\\b: But the stories never said *who* the marked ones were when they started. So I had to be sure."
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: ...You were *testing* us. The whole time."
+  scene.message "\\bVex\\b: Every ambush. Every general I let you defeat. I needed to know if the world had bearers worth dying for, or just three frightened children with marks."
+  scene.message "\\bVex\\b: I am pleased. I am also still loyal. Try not to take that personally."
+  scene.wait 30
+
+  scene.message "\\bVex\\b: Now. Last test. — Begin."
+
+  # TODO: scene.trainer_battle :SHATTEREDHAND, "Vex", 1   (his real team)
+  scene.message "\\i[Vex's last battle. Six Pokémon. He fought like a man who had decided this was a fitting place to die.]"
+  scene.wait 60
+
+  scene.message "\\bVex\\b: *kneeling, breathing hard* ...Worth it. Worth all of it."
+  scene.message "\\bVex\\b: Tell Malachar I went down upright. Don't tell him I was smiling."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Why a smile?"
+  scene.message "\\bVex\\b: Because *you*, Chosen, are exactly the bearer the world prayed for."
+  scene.message "\\bVex\\b: ...Even traitors get to die hopeful. Now go. *Go.*"
+  scene.wait 30
+
+  scene.message "\\i[He fell against the gate. He did not get up. The way to Malachar was open.]"
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 28 Addition 4: Ragnar's Team (audit suggestion #1)
+# Trigger: Right after Ragnar's sacrifice. His Pokémon arrive at the rubble.
+# Purpose: Resolve the off-screen question of his team. Player gains his Raichu.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch28_ragnars_team do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  # TODO: Event Sequence - Six Balls Roll Out
+  # - From the rubble, six Pokéballs roll free, intact
+  # - One opens on its own — Raichu, Ragnar's starter
+  # - Raichu sits on the stones, refusing to move
+
+  scene.message "\\i[Six Pokéballs rolled out from under the fallen arch. None of them were broken.]"
+  scene.message "\\i[One opened on its own. Ragnar's Raichu stepped out and sat down on the stones.]"
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: *kneeling beside it* Hey. Hey, big guy. He's not in there. I'm sorry."
+  scene.message "\\i[Raichu's cheeks crackled, then went dim. It did not move.]"
+  scene.wait 45
+
+  scene.message "\\bKael\\b: It won't leave the spot. It's waiting for him to come back."
+  scene.message "\\b\\PN\\b: *kneeling too* ...Raichu. He sent us through. He'd be furious if we left you here."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Come with us. Help us finish what he started. *He'd want that.*"
+  scene.wait 45
+
+  scene.message "\\i[Raichu looked up at you. Then at the rubble. Then at you again.]"
+  scene.message "\\i[It bumped its forehead, gently, against your hand. And nodded.]"
+  scene.wait 30
+
+  # TODO: pbAddPokemon(:RAICHU, level, item: :LIGHTBALL?)  with nickname "Bolt" or Ragnar's chosen name
+  scene.message "\\bLyra\\b: *picking up the other five balls carefully* The rest are sleeping. We'll find good homes for them. After."
+  scene.message "\\bKael\\b: After."
+  scene.message "\\b\\PN\\b: *to Raichu, quietly* You're with me now. We finish this for him. Together."
+end
+
 #===============================================================================
 # ACT 4: FINALE (Chapters 29-35)
 #===============================================================================
@@ -16457,6 +17264,45 @@ GameData::Cutscene.define :ch29_champion_orders do |scene|
   # TODO: Event Sequence - Run to Destiny
   # scene.message "You ran toward destiny."
   # scene.message "The final battle awaited."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 29 Addition: Fern Returns (audit suggestion #7)
+# Trigger: At the Championship grounds, before the final stretch. Three battered
+#          Gym Leaders arrive on stretchers and ride. They survived — barely.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch29_fern_returns do |scene|
+  scene.play_bgm 'Pokemon XY - Snowbelle City'
+
+  # TODO: Event Sequence - Wounded Leaders Arrive
+  # - A small caravan: 3 Gym Leaders, 2 walking, 1 on a stretcher
+  # - Fern is one of the walking ones, arm in a sling, half her hair burned off
+
+  scene.message "\\i[A caravan came up the road. Three figures. Two walking. One on a stretcher.]"
+  scene.message "\\i[The walking one had ash in her hair and a sling on her arm. Fern.]"
+  scene.wait 45
+
+  scene.message "\\bFern\\b: *managing a smile* I told you the forest was on your side, \\PN."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Fern! What happened in the deep wood —"
+  scene.message "\\bFern\\b: We found what was feeding the corruption. A nest of cult priests, drilling roots toward the Eternal Forest from below."
+  scene.message "\\bFern\\b: We collapsed the tunnels. *that's* the noise you heard three weeks ago. The whole region thought it was an earthquake."
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: *to the figure on the stretcher* And — ?"
+  scene.message "\\bFern\\b: Cyrus, Gym 5. He'll live. He'll never battle competitively again."
+  scene.message "\\bFern\\b: He told me to tell you it was worth it."
+  scene.wait 60
+
+  scene.message "\\bKael\\b: Three Leaders went in. Three came out. We didn't dare hope for that."
+  scene.message "\\bFern\\b: We were *lucky*. The next ones in won't be. Don't let there be next ones."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: We won't."
+  scene.message "\\bFern\\b: *handing over a small wrapped bundle* This was at the deepest point. We didn't open it. It felt like yours."
+  scene.message "\\i[Inside the wrapping: a single intact root from the World-Tree. Warm, like it remembered light.]"
+  scene.message "\\bFern\\b: Burn it on Nidhoggr's altar. The forest sends regards."
 end
 
 #===============================================================================
@@ -18289,6 +19135,45 @@ GameData::Cutscene.define :ch33_charge do |scene|
   # scene.message "The final battle had begun."
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 33 Addition: The Sky-Bound Watches (audit fix — Rayquaza payoff/closure)
+# Trigger: After the three guardians manifest. A shadow passes overhead. Rayquaza
+#          circles ONCE, never lands. Explains via mind-voice why it cannot.
+# Purpose: Pay off the Ch10 stele + Ch27 vision. Closes the 4th-guardian thread
+#          without forcing a Deus-ex-Machina rescue.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch33_rayquaza_overhead do |scene|
+  scene.play_bgm 'Pokemon ORAS - Sky Pillar'
+  scene.camera_shake 3, 30
+
+  # TODO: Event Sequence - Skybound Pass
+  # - A vast shadow sweeps the battlefield
+  # - Camera pans up: Rayquaza coils through the clouds, circling once
+  # - It does NOT descend
+
+  scene.message "\\i[A shadow vast enough to darken the whole field swept across the sky.]"
+  scene.message "\\i[Above the clouds, a coil of green and gold moved like a slow river.]"
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: ...That's *Rayquaza.* The fourth one."
+  scene.message "\\bXerneas\\b: \\i[Sister of the sky. She comes only this far. She will not land.]"
+  scene.wait 30
+
+  scene.message "\\bRayquaza\\b: \\i[Bearers. I greet you, but I do not join you.]"
+  scene.message "\\bRayquaza\\b: \\i[My crown is the only one Nidhoggr never touched. If I descend, the sky-roots have no shield.]"
+  scene.message "\\bRayquaza\\b: \\i[The Gnawer would climb — not down into the world, but up into the heavens. That cannot be allowed.]"
+  scene.wait 60
+
+  scene.message "\\bKael\\b: So Rayquaza is the lock on the *ceiling*."
+  scene.message "\\bRayquaza\\b: \\i[Yes. Three of you below. One of me above. This is how the world stays closed.]"
+  scene.message "\\bRayquaza\\b: \\i[I cannot fight your battle. But I can promise: nothing escapes upward while I breathe.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: That's enough. That's more than enough."
+  scene.message "\\bRayquaza\\b: \\i[Then end the Gnawer, Chosen. The sky will hold.]"
+  scene.message "\\i[The shadow lifted. The sky was empty again. But somehow no longer alone.]"
+end
+
 #===============================================================================
 # Chapter 33.5: Defeat Malachar - Stop the Ritual
 # Final confrontation with the cult leader before Nidhoggr fully manifests
@@ -18402,6 +19287,40 @@ GameData::Cutscene.define :ch33_5_malachar_absorbed do |scene|
   scene.message "\\bLyra\\b: That's what happens when you deal with monsters."
   
   scene.message "\\b\\PN\\b: Now we have to stop the monster itself."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 33.5 Addition: The Crystal Wakes (audit fix — Ch3 old woman crystal payoff)
+# Trigger: As Nidhoggr's roar shakes the chamber, the small crystal from Ch3
+#          activates on its own.
+# Purpose: Pay off the mystery gift from the old woman at Thornwood's gate. It is
+#          a focusing lens — lets the three shards resonate at full strength.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch33_5_crystal_wakes do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  # TODO: Event Sequence - Crystal Floats Out
+  # - The small crystal from the old woman drifts up out of player's pocket
+  # - It hovers between the three shards, refracting their light
+
+  scene.message "\\i[Something tugged at your pocket. The little crystal — the old woman's gift, all those months ago.]"
+  scene.message "\\i[It floated free on its own. Settled between the three shards. Began to spin.]"
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: It's *focusing* them! The shards are brighter when it's there!"
+  scene.message "\\bKael\\b: A lens. The whole time, it was a lens — to make a new seal possible without an Aldric in every generation."
+  scene.wait 45
+
+  scene.message "\\bOld Woman's Voice\\b: \\i[The path ahead is dark, but you carry light. I told you, child.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...Who *was* she?"
+  scene.message "\\bXerneas\\b: \\i[A bearer from a generation that did not need to fight. She kept the lens for the one who would.]"
+  scene.message "\\bYveltal\\b: \\i[A predecessor. Honor her by finishing what she could not.]"
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: We will. — Together. Now."
+  scene.message "\\i[The crystal pulsed once more, and the three shards locked into a triangle of pure light.]"
 end
 
 #===============================================================================
@@ -18879,7 +19798,7 @@ GameData::Cutscene.define :ch35_ragnar_goodbye do |scene|
   # scene.message "The one he never got to earn."
   
   scene.message "\\b\\PN\\b: I got this for you."
-  scene.message "\\b\\PN\\b: Champion of Verdania."
+  scene.message "\\b\\PN\\b: Champion of Asgheim."
   scene.message "\\b\\PN\\b: That's what you would've been."
   
   # TODO: Event Sequence - Wind
@@ -19119,10 +20038,83 @@ GameData::Cutscene.define :ch35_act4_end do |scene|
   scene.message "\\ts[]ONE YEAR LATER..."
   
   # TODO: Event Sequence - One Year Later
-  # scene.message "Peace had returned to Verdania."
+  # scene.message "Peace had returned to Asgheim."
   # scene.message "But some stories... are not yet finished."
   
   scene.fade_out
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 35 Addition: Lyra Alone with Elena (audit suggestion #3)
+# Trigger: After the public ceremony of remembrance. Lyra slips away alone.
+# Purpose: Companion piece to :ch32_elena_sacrifice. Public goodbye vs. private one.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch35_lyra_alone_with_elena do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - Memorial Garden
+  # - Lyra sits alone at Elena's marker
+  # - PN watches from a distance, doesn't interrupt
+
+  scene.message "\\i[Lyra slipped away from the ceremony. You followed at a distance. You did not interrupt.]"
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *softly, to the marker* I'm so mad at you, Elena."
+  scene.message "\\bLyra\\b: You said you'd watch *my* back. Not the other way around."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: I'm twenty years old and I have to figure out who I am without my big sister telling me when I'm being an idiot."
+  scene.message "\\bLyra\\b: I am going to be such an idiot. Constantly. You'd hate it."
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *quieter* I'm going to marry Kael. I think you knew before I did."
+  scene.message "\\bLyra\\b: I'll name the first one for you, if it's a girl. Even if it's a boy, honestly. He can deal."
+  scene.wait 60
+
+  scene.message "\\bLyra\\b: I'm not saying goodbye. I'm just... letting you put it down. You carried me my whole life."
+  scene.message "\\bLyra\\b: I've got it from here."
+  scene.wait 45
+
+  scene.message "\\i[She placed a small braided bracelet at the foot of the marker. The one Elena had given her at twelve.]"
+  scene.message "\\i[She walked back to you and Kael without looking back. She was crying. She was also smiling.]"
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 35 Addition 2: Parents at the Grave (audit suggestion #2)
+# Trigger: Sundown. Marcus and Mom visit Ragnar's grave alone.
+# Purpose: Marcus recognizes himself in Ragnar. A father's grief for someone
+#          else's son.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch35_parents_at_grave do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  # TODO: Event Sequence - Two Figures at Sunset
+  # - Marcus and Mom approach Ragnar's grave at last light
+  # - Marcus carries his old champion cloak, folded
+
+  scene.message "\\i[After everyone else had gone, two figures came up the path. Marcus and Mom.]"
+  scene.message "\\i[Marcus carried his old Champion's cloak, folded over one arm.]"
+  scene.wait 45
+
+  scene.message "\\bMarcus\\b: *crouching at the marker* Six weeks I had with you, kid."
+  scene.message "\\bMarcus\\b: You complained about everything. The drills. The early mornings. The 'old guard discipline'."
+  scene.message "\\bMarcus\\b: You showed up every single day at four in the morning anyway."
+  scene.wait 60
+
+  scene.message "\\bMarcus\\b: I was you, you know. Loud. Cocky. Couldn't shut up. Then I sealed something terrible and I learned to be quiet."
+  scene.message "\\bMarcus\\b: I always thought 'if I'd had someone teach me, before — I'd have been better.'"
+  scene.message "\\bMarcus\\b: I got to be that for you. Six weeks. *Thank you* for that."
+  scene.wait 60
+
+  scene.message "\\bMom\\b: *kneeling beside him* Your mother is going to want this back, sweetheart. But not yet."
+  scene.message "\\i[She laid a small kettle of fresh tea at the marker. The kind he'd liked from her kitchen.]"
+  scene.wait 45
+
+  scene.message "\\bMarcus\\b: *unfolding the cloak, draping it across the headstone* This was the Champion's. It's yours now. You earned it twice over."
+  scene.message "\\bMarcus\\b: *quietly* Goodnight, son."
+  scene.wait 60
+
+  scene.message "\\i[They sat with him until the stars came out. They didn't say much else. They didn't need to.]"
 end
 
 #===============================================================================
@@ -19175,7 +20167,7 @@ GameData::Cutscene.define :ch36_breakfast do |scene|
   # - Mom humming, Dad reading paper
   
   scene.message "\\bAurora\\b: There's my hero!"
-  scene.message "\\bMarcus\\b: *grinning* Champion of Verdania AND the world."
+  scene.message "\\bMarcus\\b: *grinning* Champion of Asgheim AND the world."
   
   scene.message "\\b\\PN\\b: Dad, please..."
   scene.message "\\bMarcus\\b: What? I'm proud!"
@@ -19537,7 +20529,7 @@ GameData::Cutscene.define :ch37_boarding do |scene|
   
   # TODO: Event Sequence - Setting Sail
   # - Set sail as sun sets behind them
-  # - Leaving Verdania, perhaps for the last time
+  # - Leaving Asgheim, perhaps for the last time
 end
 
 GameData::Cutscene.define :ch37_at_sea do |scene|
@@ -20666,6 +21658,44 @@ GameData::Cutscene.define :ch44_prison_reached do |scene|
   # - From within prison, Nidhoggr's eyes open
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 44 Addition: Nidhoggr's Echo (audit suggestion #13)
+# Trigger: Deepest point of the Distortion World. A whisper that should not be
+#          there. Explains the postgame fractures.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch44_nidhoggr_echo do |scene|
+  scene.play_bgm 'Pokemon DPPt - Distortion World'
+  scene.camera_shake 4, 30
+
+  # TODO: Event Sequence - Distortion Whisper
+  # - Reality flickers around the party
+  # - A voice from below the floor
+
+  scene.message "\\i[The Distortion World shuddered around you. Floors became ceilings. Ceilings remembered being floors.]"
+  scene.message "\\i[And underneath all of it, a voice you had hoped never to hear again.]"
+  scene.wait 45
+
+  scene.message "\\bNidhoggr's Echo\\b: \\i[...you killed my body. You did not kill my hunger.]"
+  scene.message "\\bNidhoggr's Echo\\b: \\i[Hunger does not need a body. Hunger only needs *somewhere to put itself*.]"
+  scene.wait 60
+
+  scene.message "\\bGiratina's Voice\\b: \\i[CHOSEN. THIS IS WHAT I WARNED YOU OF. THE DISTORTION WORLD HAS BEEN FEEDING ON HIS REMNANT FOR A YEAR.]"
+  scene.message "\\bGiratina's Voice\\b: \\i[THE FRACTURES IN ASTORIA ARE NOT NEW DAMAGE. THEY ARE *LEAK*.]"
+  scene.wait 45
+
+  scene.message "\\bKael\\b: ...The seal of the three shards bound his body. His *appetite* needed somewhere to spill."
+  scene.message "\\bLyra\\b: And it spilled here. Into the world *between* worlds."
+  scene.wait 30
+
+  scene.message "\\bNidhoggr's Echo\\b: \\i[Patient. Patient. The Crown of Unity will draw me back into a body. Then we begin again.]"
+  scene.message "\\bNidhoggr's Echo\\b: \\i[*All* of this was his plan. Even his death.]"
+  scene.wait 60
+
+  scene.message "\\b\\PN\\b: Then this time we don't bind him. We *unmake* him."
+  scene.message "\\bGiratina's Voice\\b: \\i[YES. NO MORE SEALS. AN UNMAKING. THE CROWN CAN DO THAT — ONCE.]"
+  scene.message "\\bGiratina's Voice\\b: \\i[CHOOSE WELL. THE WORLD GETS ONLY ONE.]"
+end
+
 #===============================================================================
 # Chapter 45: The Seal Breaks
 #===============================================================================
@@ -21076,7 +22106,7 @@ GameData::Cutscene.define :ch48_ship_home do |scene|
   scene.message "\\bCaptain Maren\\b: You had that look. The kind that doesn't quit."
   
   # TODO: Event Sequence - Setting Sail
-  # - Stormbreaker sets sail for Verdania
+  # - Stormbreaker sets sail for Asgheim
   # - Home at last
 end
 
@@ -21095,11 +22125,11 @@ GameData::Cutscene.define :ch48_voyage_home do |scene|
   scene.message "\\bLyra\\b: Now? We live."
 end
 
-GameData::Cutscene.define :ch48_verdania_sighted do |scene|
+GameData::Cutscene.define :ch48_Asgheim_sighted do |scene|
   scene.play_bgm 'Pokemon XY - Friends Theme'
   
-  # TODO: Event Sequence - Verdania Appears
-  # - On third day, Verdania appears
+  # TODO: Event Sequence - Asgheim Appears
+  # - On third day, Asgheim appears
   # - Green hills, familiar shores
   # - Home
   
@@ -21227,6 +22257,50 @@ GameData::Cutscene.define :ch49_guardians_reveal do |scene|
   # - Partners, not servants
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 49 Addition: Marcus at the Parade (SC story-audit fix #8 — Marcus #3)
+# Trigger: During the Heroes Welcome, after the formal honors.
+# Purpose: Pay off Marcus's two letters. Father and child reunion in the crowd.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch49_marcus_parade do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - Crowd Parts
+  # - Player walks down the parade route
+  # - Crowd parts to reveal Mom and Marcus standing together
+  # - Marcus is wearing his old Champion cloak, slightly faded
+
+  scene.message "\\i[The cheering parted around you like water around a stone.]"
+  scene.message "\\i[At the end of the road, two people were waiting.]"
+  scene.wait 45
+
+  scene.message "\\bMom\\b: *eyes shining* Look at you. Just... look at you."
+  scene.message "\\bMarcus\\b: *clears throat, fails to keep his voice steady* You did it, kid. You really did."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: You knew. From the start. You knew what was coming."
+  scene.message "\\bMarcus\\b: I hoped I was wrong. Every single day, I hoped."
+  scene.message "\\bMarcus\\b: When the letter came back about Xerneas, I knew the hoping was over."
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: Your mother and I sealed Hoopa. You and your friends finished what we started."
+  scene.message "\\bMarcus\\b: That's not a torch passed. That's a torch *carried further than we could carry it.*"
+  scene.wait 45
+
+  scene.message "\\bMom\\b: Come here, you stubborn child. Both of you, get over here."
+  scene.message "\\i[Marcus opened one arm. You stepped into it. Mom closed the circle.]"
+  scene.message "\\i[The crowd kept cheering. You barely heard them.]"
+  scene.wait 60
+
+  scene.message "\\bMarcus\\b: *quieter* ...I trained him for six weeks. He stood at that gate when it mattered."
+  scene.message "\\bMarcus\\b: Ragnar should be here. He should be the loudest one in this crowd."
+  scene.message "\\b\\PN\\b: He is. We just can't hear him."
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *to Kael, quietly* I'm not crying, you're crying."
+  scene.message "\\bKael\\b: *also quietly* I have something in my eye. It is my eye."
+end
+
 #===============================================================================
 # Chapter 50: New Beginnings
 #===============================================================================
@@ -21329,7 +22403,7 @@ GameData::Cutscene.define :ch50_sunset do |scene|
   
   scene.message "\\bLyra\\b: We did it, didn't we?"
   scene.message "\\bKael\\b: Saved the world. Sealed a god."
-  scene.message "\\b\\PN\\b: Not bad for a bunch of kids from Verdania."
+  scene.message "\\b\\PN\\b: Not bad for a bunch of kids from Asgheim."
   
   scene.message "\\bLyra\\b: *laughing* We're not kids anymore."
   scene.message "\\bKael\\b: No. We're not."
@@ -21677,6 +22751,108 @@ GameData::Cutscene.define :ch54_legacy do |scene|
   # - Because they never gave up
 end
 
+#-------------------------------------------------------------------------------
+# Chapter 50 Addition: The Old Woman's Diary (audit suggestion #12)
+# Trigger: Postgame, in Thornwood Town's library archive. A bound journal in a
+#          glass case, finally accessible to the bearer.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch50_old_woman_diary do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - Library Archive
+  # - Thornwood archivist unlocks a glass case
+  # - Hands the player a bound, age-foxed journal
+
+  scene.message "\\bArchivist\\b: We've been keeping this for fifty years, \\PN. The donor said only the next bearer was to read it."
+  scene.message "\\bArchivist\\b: I think that's you."
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: *opening the journal* ...This is the old woman from the festival. The one who gave me the lens."
+  scene.wait 30
+
+  scene.message "\\bDiary, Year 1\\b: I am twenty-three. The mark appeared on my wrist last spring. There has been no Hoopa to face. The seal holds."
+  scene.message "\\bDiary, Year 7\\b: I have learned to use the lens. The guardians do not call. I think this is a generation of *waiting*. I am to keep the tools sharp."
+  scene.wait 45
+
+  scene.message "\\bDiary, Year 22\\b: My partners both died of old age. We never fought a single battle. We were the keepers, not the warriors."
+  scene.message "\\bDiary, Year 22\\b: I am told I should grieve we 'never got to be heroes'. I do not. We were *peacekeepers*. The world had peace because we held it."
+  scene.wait 60
+
+  scene.message "\\bDiary, Year 41\\b: A child was born in Dawnhaven last month. I felt the mark from across the region. The next bearer is here."
+  scene.message "\\bDiary, Year 41\\b: I have begun to walk the road to Thornwood. I will give them the lens at the festival when they are old enough to need it."
+  scene.wait 30
+
+  scene.message "\\bDiary, Final Entry\\b: \\PN. If you are reading this, the war you walked through was the one I prayed I would never see."
+  scene.message "\\bDiary, Final Entry\\b: I am sorry it had to be you. I am also so, *so* proud it was."
+  scene.message "\\bDiary, Final Entry\\b: The next bearer will not need the lens. You and your friends *unmade* the thing that makes lenses necessary. Sleep well. — Mira-of-Thornwood."
+  scene.wait 60
+
+  scene.message "\\b\\PN\\b: ...Mira. Her name was Mira too."
+  scene.message "\\bArchivist\\b: A common name in this region, once. Always given to a child who was supposed to mean *peace*."
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 50 Addition 2: The True-Ending Keeper (audit suggestion #14)
+# Trigger: Postgame NPC in Valoria City, near the League hall. Explains how the
+#          true ending is unlocked so players have a clear path.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch50_true_ending_keeper do |scene|
+  scene.play_bgm 'Pokemon XY - Sycamore Theme'
+
+  # TODO: Event Sequence - Old Scholar
+  # - An old scholar approaches the player in Valoria's hall of records
+
+  scene.message "\\bScholar\\b: Champion \\PN. A moment, if you will. I am the keeper of the Final Records."
+  scene.wait 30
+
+  scene.message "\\bScholar\\b: There is one ending of this story not yet written. The Asgheim chronicles call it the True Cycle."
+  scene.message "\\bScholar\\b: It is sealed behind three things, and only three."
+  scene.wait 30
+
+  scene.message "\\bScholar\\b: \\bOne\\b: All four guardians must answer to your name. Xerneas, Yveltal, Zacian — and the one who never lands."
+  scene.message "\\bScholar\\b: \\bTwo\\b: All three temples of Astoria must be cleansed. Stars, Tides, Shadows."
+  scene.message "\\bScholar\\b: \\bThree\\b: You must find the Old Woman's diary in Thornwood. The lens-bearer's last words. *Read all of it.*"
+  scene.wait 60
+
+  scene.message "\\bScholar\\b: When all three are done, return here. I will know. The True Cycle will open to you."
+  scene.message "\\bScholar\\b: It is not a battle, Champion. It is a *blessing*. You have earned the right to give the world a future without bearers."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: A future without bearers..."
+  scene.message "\\bScholar\\b: A world that no longer needs heroes. The most dangerous gift a hero can give. Decide carefully if you want it."
+
+  # TODO: scene.set_switch SW::TRUE_ENDING_HINTED, true
+end
+
+#-------------------------------------------------------------------------------
+# Chapter 46.5 Addition: Lake Trio Trial (audit suggestion #9)
+# Trigger: Postgame after Crown is restored. The lake spirits offer themselves
+#          as a final test of the bearer who freed them.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch46_lake_trio_battle do |scene|
+  scene.play_bgm 'Pokemon DPPt - Lake'
+
+  # TODO: Event Sequence - Three Lakes Resonate
+  # - Player approaches a previously-locked shrine
+  # - Three lights drift in from each direction
+
+  scene.message "\\i[At the heart of Asgheim, three lakes met underground. You found the chamber where they did.]"
+  scene.message "\\i[Three lights waited there. Yellow. Pink. Blue. The same three from the road, years ago.]"
+  scene.wait 45
+
+  scene.message "\\bUxie\\b: \\i[Knowledge: you ended a god of hunger.]"
+  scene.message "\\bMesprit\\b: \\i[Feeling: you grieved every loss along the way.]"
+  scene.message "\\bAzelf\\b: \\i[Will: you chose mercy when you could have chosen ending.]"
+  scene.wait 45
+
+  scene.message "\\bUxie\\b: \\i[We three are released from our long watch. We owe you our freedom.]"
+  scene.message "\\bMesprit\\b: \\i[We offer ourselves. Not as gifts — as a final trial. Defeat us, and we will choose to walk with you.]"
+  scene.message "\\bAzelf\\b: \\i[Begin, Chosen. We have been waiting to play.]"
+
+  # TODO: scene.wild_battle :UXIE, level   then  :MESPRIT, level   then  :AZELF, level
+  # Three back-to-back catchable encounters; succeeding at all three unlocks an additional postgame area.
+end
+
 #===============================================================================
 # Chapter 55: True Ending - The Final Chapter
 #===============================================================================
@@ -21747,7 +22923,7 @@ GameData::Cutscene.define :ch55_final_sunset do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
   
   # TODO: Event Sequence - Final Sunset
-  # - Sun sets over Verdania
+  # - Sun sets over Asgheim
   # - Golden light on green hills
   # - World saved, beautiful and whole
   

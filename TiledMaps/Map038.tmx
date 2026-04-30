@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="2">
+  <properties>
+    <property name="tileset_id" value="14" />
+    <property name="source" value="Map038.rxdata" />
+    <property name="tileset_name" value="Gyms" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_14.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Gyms interior" tilewidth="32" tileheight="32" tilecount="1099" columns="8">
+    <image source="../Graphics/Tilesets/Gyms interior.png" width="256" height="4416" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+1400,1401,1402,1403,1404,1405,1406,1407,1440,1401,1442,384,384,384,384,384,384,384,384,384,
+1408,1409,1410,1411,1412,1413,1414,1415,1448,1409,1450,384,384,384,384,384,384,384,384,384,
+1416,1417,1418,1419,1420,1421,1422,1423,1456,1457,1458,384,384,384,384,384,384,384,384,384,
+1424,1425,1439,1427,1428,1429,1430,1431,1439,1465,1466,384,384,384,384,384,384,384,384,384,
+1424,1426,1447,1426,1436,1437,1438,1426,1447,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1455,1426,1426,1426,1426,1426,1455,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1439,1426,1444,1445,1446,1426,1439,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1447,1426,1452,1453,1454,1426,1447,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1455,1426,1460,1461,1462,1426,1455,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1439,1426,1426,1426,1426,1426,1439,1426,1474,384,384,384,384,384,384,384,384,384,
+1424,1426,1447,1426,1426,1426,1426,1426,1447,1426,1474,384,384,384,384,384,384,384,384,384,
+1432,1426,1455,1426,1426,1426,1426,1426,1455,1426,1482,384,384,384,384,384,384,384,384,384,
+384,384,384,384,1468,1426,1470,384,384,384,384,384,384,384,384,384,384,384,384,384,
+384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,
+384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384,384
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Hall of Fame autorun" type="Event" x="64" y="416" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Hall of Fame autorun","x":2,"y":13,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":108,"i":0,"p":["Set various switches and counters."]},{"c":408,"i":0,"p":["Also reset stationary Pok\u00E9mon that reappear each "]},{"c":408,"i":0,"p":["time the player defeats the Elite Four."]},{"c":121,"i":0,"p":[12,12,0]},{"c":122,"i":0,"p":[13,13,1,0,1]},{"c":355,"i":0,"p":["$stats.hall_of_fame_entry_count \u002B= 1"]},{"c":121,"i":0,"p":[56,56,0]},{"c":108,"i":0,"p":["Heal the player\u0027s party, and give the party Pok\u00E9mon "]},{"c":408,"i":0,"p":["ribbons for defeating the Elite Four."]},{"c":314,"i":0,"p":[0]},{"c":355,"i":0,"p":["$player.pokemon_party.each do |pkmn|"]},{"c":655,"i":0,"p":["  pkmn.giveRibbon(:CHAMPION)"]},{"c":655,"i":0,"p":["end"]},{"c":108,"i":0,"p":["Make the player walk up to the recording station, "]},{"c":408,"i":0,"p":["and fade to black."]},{"c":106,"i":0,"p":[8]},{"c":209,"i":0,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":19}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":210,"i":0,"p":[]},{"c":106,"i":0,"p":[8]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":108,"i":0,"p":["Record an entry in the Hall of Fame."]},{"c":355,"i":0,"p":["$stats.set_time_to_hall_of_fame"]},{"c":355,"i":0,"p":["pbHallOfFameEntry"]},{"c":108,"i":0,"p":["Play the credits."]},{"c":355,"i":0,"p":["$scene = Scene_Credits.new"]},{"c":106,"i":0,"p":[8]},{"c":108,"i":0,"p":["Return the player to the entrance of the League."]},{"c":201,"i":0,"p":[0,36,13,12,2,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

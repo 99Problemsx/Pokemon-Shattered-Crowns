@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="5">
+  <properties>
+    <property name="tileset_id" value="15" />
+    <property name="source" value="Map071.rxdata" />
+    <property name="tileset_name" value="Harbour" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_15.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Harbour interior" tilewidth="32" tileheight="32" tilecount="136" columns="8">
+    <image source="../Graphics/Tilesets/Harbour interior.png" width="256" height="544" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+384,385,385,385,385,385,385,385,385,385,385,385,385,385,385,385,391,421,421,421,
+392,393,393,395,393,395,394,396,397,398,393,395,393,395,393,393,399,421,421,421,
+400,401,401,401,401,401,402,404,405,406,401,401,401,401,401,401,407,421,421,421,
+408,418,418,418,418,418,418,418,418,418,418,418,418,418,418,418,415,421,421,421,
+409,409,409,409,409,411,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,418,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,418,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,409,421,421,421,
+421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,
+421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,
+421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421,421
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+449,449,449,449,449,434,0,0,0,0,0,432,449,449,449,449,449,0,0,0,
+68,68,68,68,84,442,0,0,0,0,0,440,82,68,68,68,68,0,0,0,
+48,48,48,48,72,443,449,436,0,435,449,444,64,48,48,48,48,0,0,0,
+48,48,48,48,50,68,68,68,457,68,68,68,49,48,48,48,48,0,0,0,
+48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,0,0,0,
+48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,0,0,0,
+48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,0,0,0,
+76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,499,500,501,502,503,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,507,508,509,510,511,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,515,516,517,518,519,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Door" type="Event" x="256" y="64" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":1,"name":"Door","x":8,"y":2,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":3,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,69,31,15,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":22,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":3,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":111,"i":0,"p":[12,"get_self.onEvent?"]},{"c":355,"i":1,"p":["Followers.hide_followers"]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}],"@code":44},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":true,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}],"@code":44}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":210,"i":1,"p":[]},{"c":355,"i":1,"p":["Followers.put_followers_on_player"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":355,"i":0,"p":["setTempSwitchOn(\u0022A\u0022)"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Sailor" type="Event" x="256" y="192" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Sailor","x":8,"y":6,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_SAILOR","character_hue":0,"pattern":0,"tile_id":0,"direction":8,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["hide_choice(2,"]},{"c":655,"i":0,"p":["  !$bag.has?(:AURORATICKET))"]},{"c":655,"i":0,"p":["hide_choice(3,"]},{"c":655,"i":0,"p":["  !$bag.has?(:OLDSEAMAP))"]},{"c":101,"i":0,"p":["\\bAhoy, there!\\nWhere do you want to sail?"]},{"c":102,"i":0,"p":[["Tiall Region","Berth Island","Faraday Island","Exit"],4]},{"c":402,"i":0,"p":[0,"Tiall Region"]},{"c":101,"i":1,"p":["\\bThe Tiall Region it is. All aboard!"]},{"c":209,"i":1,"p":[2,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":210,"i":1,"p":[]},{"c":250,"i":1,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":208,"i":1,"p":[0]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":1,"p":[8]},{"c":208,"i":1,"p":[1]},{"c":201,"i":1,"p":[0,75,17,11,2,1]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Berth Island"]},{"c":101,"i":1,"p":["\\bBerth Island it is. All aboard!"]},{"c":121,"i":1,"p":[51,51,0]},{"c":209,"i":1,"p":[2,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":210,"i":1,"p":[]},{"c":250,"i":1,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":208,"i":1,"p":[0]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":1,"p":[8]},{"c":208,"i":1,"p":[1]},{"c":201,"i":1,"p":[0,72,14,23,8,1]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Faraday Island"]},{"c":101,"i":1,"p":["\\bFaraday Island it is. All aboard!"]},{"c":121,"i":1,"p":[52,52,0]},{"c":209,"i":1,"p":[2,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":1},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":1}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":210,"i":1,"p":[]},{"c":250,"i":1,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":208,"i":1,"p":[0]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":1,"p":[8]},{"c":208,"i":1,"p":[1]},{"c":201,"i":1,"p":[0,73,14,23,8,1]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Exit"]},{"c":101,"i":1,"p":["\\bLet me know if you want to set sail."]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="Aurora Ticket NPC" type="Event" x="192" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Aurora Ticket NPC","x":6,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_SAILOR","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"$bag.has?(:AURORATICKET)"]},{"c":101,"i":1,"p":["\\bI\u0027ve already given you an Aurora Ticket. Have you "]},{"c":401,"i":1,"p":["gone to Berth Island yet?"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bHere, have this Aurora Ticket."]},{"c":111,"i":1,"p":[12,"pbReceiveItem(:AURORATICKET)"]},{"c":101,"i":2,"p":["\\bYou can use that to sail to Berth Island."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\bOh, you don\u0027t have any space in your Bag for it."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="Old Sea Map NPC" type="Event" x="320" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Old Sea Map NPC","x":10,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_SAILOR","character_hue":0,"pattern":0,"tile_id":0,"direction":4,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":111,"i":0,"p":[12,"$bag.has?(:OLDSEAMAP)"]},{"c":101,"i":1,"p":["\\bI\u0027ve already given you an Old Sea Map. Have you "]},{"c":401,"i":1,"p":["gone to Faraday Island yet?"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bHere, have this Old Sea Map."]},{"c":111,"i":1,"p":[12,"pbReceiveItem(:OLDSEAMAP)"]},{"c":101,"i":2,"p":["\\bYou can use that to sail to Faraday Island."]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["\\bOh, you don\u0027t have any space in your Bag for it."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

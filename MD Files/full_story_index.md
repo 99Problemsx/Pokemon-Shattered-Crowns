@@ -871,7 +871,7 @@ Auto-generated from source code.
 - [ ] `ch48_astoria_farewell`
 - [ ] `ch48_ship_home`
 - [ ] `ch48_voyage_home`
-- [ ] `ch48_verdania_sighted`
+- [ ] `ch48_Asgheim_sighted`
 - [ ] `ch48_port_arrival`
 - [ ] `ch48_family_reunion`
 

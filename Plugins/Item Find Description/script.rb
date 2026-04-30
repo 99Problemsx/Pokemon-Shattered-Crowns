@@ -25,8 +25,6 @@ end
 
 class PokemonItemFind_Scene
   def pbStartScene
-    echoln "[ITEM FIND] pbStartScene"
-
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
     @sprites = {}

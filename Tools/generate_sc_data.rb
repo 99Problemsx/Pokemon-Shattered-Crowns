@@ -7,7 +7,7 @@
 
 require 'fileutils'
 
-base = ARGV[0] || "."
+base = (ARGV[0] || ".").gsub("\\", "/")
 
 dirs = {
   "Plugins/[SC] Script System/Types"          => "Plugins/[SC] Script System/Types",

@@ -297,15 +297,19 @@ puts "[Advanced AI] Hotfixes loaded: Wonder Launcher, Item AI, Type Effectivenes
 #   made EVERY battler appear choice-locked → every move scored -1000 →
 #   "Terrible Moves" every turn → AI does nothing.
 #
-# NEW FIX: Monkey-patch NilClass to handle comparison operators safely.
+# NEW FIX: Monkey-patch NilClass for comparison operators.
 #   nil stays nil (falsy), so `if effects[ChoiceBand]` correctly tests false.
 #   But `nil > 0` returns false instead of crashing.
+#
+# SAFETY: We scope this to numeric comparisons only.  nil >= nil was
+#   returning true which could mask bugs in other code.  Now nil >= nil
+#   returns false (consistent with "nil is not a number").
 #===============================================================================
 class NilClass
   def >(other);  false; end
   def <(other);  false; end
-  def >=(other); other.nil?; end
-  def <=(other); other.nil?; end
+  def >=(other); false; end
+  def <=(other); false; end
 end
 
 #===============================================================================

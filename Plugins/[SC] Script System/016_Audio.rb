@@ -106,12 +106,12 @@ module SCScripts
     end
     
     #---------------------------------------------------------------------------
-    # Crossfade between tracks
+    # Crossfade between tracks. duration is in SECONDS.
     #---------------------------------------------------------------------------
-    def self.crossfade(new_track, duration = 40)
-      # Fade out current
+    def self.crossfade(new_track, duration = 1.0)
+      # Fade out current (pbBGMFade and pbWait both take seconds in PE v21.1)
       pbBGMFade(duration / 2.0)
-      (duration / 2).times { Graphics.update }
+      pbWait(duration / 2.0)
       # Play new
       play_bgm(new_track)
     end
@@ -152,6 +152,6 @@ def pbPlayJingle(preset)
   SCScripts::Audio.play_preset(preset)
 end
 
-def pbCrossfade(track, duration = 40)
+def pbCrossfade(track, duration = 1.0)
   SCScripts::Audio.crossfade(track, duration)
 end

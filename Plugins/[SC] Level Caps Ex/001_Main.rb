@@ -69,6 +69,11 @@ class Battle
       return
     end
     
+    # SC Fix: only clamp opponents when an actual cap mode is active.
+    # Obedience Cap is meant to LET enemies be overleveled; Off mode
+    # shouldn't clamp anything either. Only Hard/Soft caps clamp.
+    return unless LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?
+    
     # Apply level caps to opponent Pokemon only if bypass is OFF
     if opponent && opponent.is_a?(Array)
       opponent.each do |trainer|
@@ -369,7 +374,13 @@ module GameData
   end
 end
 
-class Pokemon_Trainer
+#-------------------------------------------------------------------------------
+# SC Fix: PE v21.1 uses `Trainer` (with `Player < Trainer`); the legacy
+# `Pokemon_Trainer` name from Essentials v18 doesn't exist anymore. Hooking
+# `Trainer#initialize` ensures the level-cap clamp actually runs whenever a
+# Trainer (including the player) is rebuilt from save data.
+#-------------------------------------------------------------------------------
+class Trainer
   alias __level_caps_initialize initialize unless method_defined?(:__level_caps_initialize)
   
   def initialize(*args)

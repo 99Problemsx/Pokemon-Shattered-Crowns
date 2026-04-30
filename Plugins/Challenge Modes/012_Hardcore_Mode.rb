@@ -41,22 +41,17 @@ EventHandlers.add(:on_wild_pokemon_created, :hardcore_ivs,
 # Hook into gifted/received Pokemon
 #===============================================================================
 EventHandlers.add(:on_pokemon_received, :hardcore_ivs,
-  proc { |sender, e|
-    pkmn = e[0]
-    next if !pkmn
+  proc { |pkmn|
+    next if !pkmn || !pkmn.is_a?(Pokemon)
     next if !ChallengeModes.on?(:HARDCORE_MODE)
-    
-    echoln ">>> Hardcore Mode: Setting perfect IVs for received #{pkmn.name}"
     # Set all IVs to 31 (perfect)
     GameData::Stat.each_main do |s|
       pkmn.iv[s.id] = 31
     end
-    
     # Zero out all EVs
     GameData::Stat.each_main do |s|
       pkmn.ev[s.id] = 0
     end
-    
     pkmn.calc_stats
   }
 )
@@ -136,15 +131,26 @@ end
 end
 
 # Block Pomeg Berry and other EV-reducing berries
-[:POMEGBERRY, :KELPSYBERRY, :QUALOTBERRY, :HONDEWBERRY, :GREPABERRY, :TAMATOMBERRY].each do |berry|
+# Save the original handler for each berry before replacing, so they
+# continue to work normally when Hardcore Mode is not active.
+{
+  :POMEGBERRY   => :HP,
+  :KELPSYBERRY  => :ATTACK,
+  :QUALOTBERRY  => :DEFENSE,
+  :HONDEWBERRY  => :SPECIAL_ATTACK,
+  :GREPABERRY   => :SPECIAL_DEFENSE,
+  :TAMATOMBERRY => :SPEED
+}.each do |berry, _stat|
   next unless GameData::Item.exists?(berry)
+  orig_handler = ItemHandlers::UseOnPokemon[berry]
   ItemHandlers::UseOnPokemon.add(berry, proc { |item, qty, pkmn, scene|
     if ChallengeModes.on?(:HARDCORE_MODE)
       scene.pbDisplay(_INTL("Hardcore Mode keeps all EVs at 0. This berry has no effect!"))
       next false
     end
-    # Allow normal usage outside hardcore mode
-    ItemHandlers.triggerUseOnPokemon(:EVREDUCEBERRY, item, qty, pkmn, scene) if ItemHandlers.hasUseOnPokemon(:EVREDUCEBERRY)
+    # Call original handler when Hardcore Mode is not active
+    next orig_handler.call(item, qty, pkmn, scene) if orig_handler
+    next false
   })
 end
 

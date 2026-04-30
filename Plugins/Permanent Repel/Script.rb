@@ -56,7 +56,7 @@ ItemHandlers::UseInField.add(:REPELCHARM, proc { |item|
 
 # Block encounters when permanent repel is active
 class PokemonEncounters  
-  alias original_allow_encounter allow_encounter?
+  alias original_allow_encounter allow_encounter? unless method_defined?(:original_allow_encounter)
   def allow_encounter?(enc_data, repel_active = false)
     # Return false (no encounter) if permanent repel is active
     return false if $PermanentRepel && $PermanentRepel[:active]

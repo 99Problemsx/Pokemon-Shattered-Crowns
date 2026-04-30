@@ -169,18 +169,23 @@ end
 # Battle hooks — apply stat boosts
 #===============================================================================
 
-# Stat modification hook
-EventHandlers.add(:on_pokemon_stat_calculated, :sc_rune_stat_boost,
-  proc { |pokemon, stat, value|
-    next value unless RuneSystem::ENABLED
-    mults = RuneManager.stat_multipliers(pokemon)
-    stat_key = stat.to_s.upcase.to_sym
-    if mults[stat_key]
-      next (value * mults[stat_key]).round
-    end
-    next value
-  }
-) if defined?(EventHandlers)
+# Stat modification via calc_stats alias — applies rune multipliers after base calc
+class Pokemon
+  alias __sc_rune__calc_stats calc_stats unless method_defined?(:__sc_rune__calc_stats)
+
+  def calc_stats
+    __sc_rune__calc_stats
+    return unless RuneSystem::ENABLED
+    mults = RuneManager.stat_multipliers(self)
+    return if mults.empty?
+    @totalhp = [(@totalhp * mults[:HP]).round, 1].max if mults[:HP]
+    @attack  = [(@attack  * mults[:ATTACK]).round, 1].max if mults[:ATTACK]
+    @defense = [(@defense * mults[:DEFENSE]).round, 1].max if mults[:DEFENSE]
+    @spatk   = [(@spatk   * mults[:SPECIAL_ATTACK]).round, 1].max if mults[:SPECIAL_ATTACK]
+    @spdef   = [(@spdef   * mults[:SPECIAL_DEFENSE]).round, 1].max if mults[:SPECIAL_DEFENSE]
+    @speed   = [(@speed   * mults[:SPEED]).round, 1].max if mults[:SPEED]
+  end
+end
 
 # End-of-turn effects (regen, status cure)
 EventHandlers.add(:on_battle_end_round, :sc_rune_turn_effects,

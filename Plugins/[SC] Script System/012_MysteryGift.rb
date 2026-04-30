@@ -36,6 +36,12 @@ module GameData
       
       case gift[:type]
       when :pokemon
+        # Refuse if party + box space exhausted (pbAddPokemonSilent will fail).
+        if $player && $player.party.length >= Settings::MAX_PARTY_SIZE &&
+           $PokemonStorage && $PokemonStorage.full?
+          pbMessage(_INTL("You have no room to receive this Pokemon!"))
+          return false
+        end
         pokemon = Pokemon.new(gift[:species], gift[:level])
         pokemon.form = gift[:form] if gift[:form]
         pokemon.item = gift[:item] if gift[:item]
@@ -44,9 +50,11 @@ module GameData
         pokemon.shiny = true if gift[:shiny]
         
         if pbAddPokemonSilent(pokemon)
-          pbMessage("You received #{pokemon.name}!")
+          pbMessage(_INTL("You received {1}!", pokemon.name))
           mark_claimed(id)
           return true
+        else
+          pbMessage(_INTL("Could not deliver the Pokemon. Try making room."))
         end
         
       when :item

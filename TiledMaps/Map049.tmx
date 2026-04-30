@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="34" height="29" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="18">
+  <properties>
+    <property name="tileset_id" value="6" />
+    <property name="source" value="Map049.rxdata" />
+    <property name="tileset_name" value="Caves" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_6.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Caves" tilewidth="32" tileheight="32" tilecount="293" columns="8">
+    <image source="../Graphics/Tilesets/Caves.png" width="256" height="1184" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="34" height="29">
+    <data encoding="csv">
+513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,
+513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,513,513,513,513,513,513,513,513,513,513,
+513,513,536,513,513,513,513,513,513,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,513,513,536,513,513,513,513,536,513,513,
+513,513,513,513,513,513,513,513,513,610,610,610,549,610,610,610,609,610,610,610,610,611,610,610,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,610,610,610,610,610,610,610,609,610,610,610,610,611,610,610,610,610,610,513,513,513,513,513,513,513,
+513,513,513,513,536,513,513,610,610,610,610,610,610,610,610,610,617,618,618,618,618,619,610,610,610,610,610,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,513,513,536,513,513,513,513,
+513,513,513,513,513,513,513,658,658,659,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,513,513,513,513,513,513,513,
+513,536,513,513,513,513,513,666,666,667,541,610,610,610,610,610,610,610,610,610,610,542,543,610,610,610,610,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,666,666,676,659,610,610,610,610,610,610,610,610,610,610,550,551,610,610,610,610,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,666,666,666,667,610,610,610,610,610,610,610,610,610,610,610,610,610,541,610,610,513,513,513,513,536,513,513,
+513,513,513,513,513,513,513,666,666,666,667,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,610,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,610,610,610,610,610,610,610,610,610,610,610,610,513,513,513,513,513,513,513,
+513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,658,658,659,610,610,610,513,513,513,513,513,513,513,536,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,666,666,667,610,610,610,513,513,513,513,513,513,536,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,666,666,676,659,610,610,513,536,513,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,666,666,667,610,610,513,513,513,513,513,513,513,513,513,513,536,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,666,666,676,658,658,513,513,513,513,513,513,536,513,513,513,513,513,513,
+536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,666,666,666,666,666,513,513,513,513,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,513,536,513,513,513,536,513,513,513,666,666,666,666,666,513,513,513,536,513,513,513,513,513,513,513,513,513,
+513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,
+513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,
+513,513,513,513,513,513,513,536,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,
+513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,513,536,513,513,513,513,513,513,513,513,513,513,513,513,536
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="34" height="29">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,510,521,521,521,521,521,521,521,521,521,521,521,521,521,521,521,511,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,514,510,521,521,521,521,521,521,521,521,521,521,521,521,521,511,512,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,514,514,565,557,0,0,557,504,601,602,602,602,602,603,506,512,512,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,510,522,514,566,0,0,0,0,512,0,0,0,0,455,0,514,512,520,521,521,511,0,0,0,0,0,0,
+0,0,0,0,0,0,510,522,565,514,559,0,0,0,0,512,0,0,0,0,0,0,514,520,521,521,511,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,510,521,522,567,0,0,0,0,512,0,0,0,0,0,0,514,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,514,557,0,0,0,0,0,447,520,521,521,539,521,521,521,522,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,514,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,514,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,514,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,447,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,514,565,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,514,518,505,505,505,507,508,509,505,506,0,0,557,557,0,0,0,0,0,0,512,512,0,0,0,0,0,0,
+0,0,0,0,0,0,518,505,505,505,528,505,505,505,506,514,0,0,0,557,504,505,505,528,505,505,519,512,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,514,0,0,0,0,512,504,505,505,505,505,505,519,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,514,0,0,0,0,512,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,518,506,0,0,0,512,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,518,506,514,0,0,0,515,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,514,0,0,0,512,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,514,0,0,0,512,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,514,518,505,505,505,519,512,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,518,505,505,505,505,505,519,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="34" height="29">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,558,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,433,434,435,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,441,442,443,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,516,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="NPC" type="Event" x="544" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="5" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":5,"name":"NPC","x":17,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"NPC 05","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["\\bCan you push that boulder onto the switch?"]},{"c":111,"i":0,"p":[2,"A",0]},{"c":101,"i":1,"p":["\\bOh! The boulder has been moved onto the switch!"]},{"c":101,"i":1,"p":["\\bWell done!"]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":101,"i":1,"p":["\\bOh. The boulder is not on the switch."]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="EV016" type="Event" x="576" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="16" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":16,"name":"EV016","x":18,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":108,"i":0,"p":["This event is empty, but prevents boulders from "]},{"c":408,"i":0,"p":["being pushed over it."]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="3" name="SmashRock" type="Event" x="640" y="448" width="32" height="32">
+      <properties>
+        <property name="event_id" value="11" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":11,"name":"SmashRock","x":20,"y":14,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"Object rock","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":209,"i":0,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":111,"i":0,"p":[12,"pbRockSmash"]},{"c":355,"i":1,"p":["pbSmashThisEvent"]},{"c":355,"i":1,"p":["pbRockSmashRandomEncounter"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="4" name="EV017" type="Event" x="512" y="512" width="32" height="32">
+      <properties>
+        <property name="event_id" value="17" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":17,"name":"EV017","x":16,"y":16,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"BW_124_Plasma_Sage_Gorm","character_hue":0,"pattern":0,"tile_id":0,"direction":6,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":355,"i":0,"p":["pbApplyShader(:cave)"]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="5" name="StrengthBoulder" type="Event" x="384" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="6" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":6,"name":"StrengthBoulder","x":12,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"Object boulder","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":2,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":355,"i":0,"p":["pbPushThisBoulder"]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":true,"switch1_id":57,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="6" name="Exit south" type="Event" x="384" y="480" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Exit south","x":12,"y":15,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":355,"i":0,"p":["pbCaveExit"]},{"c":201,"i":0,"p":[0,47,46,11,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="7" name="SmashRock" type="Event" x="448" y="288" width="32" height="32">
+      <properties>
+        <property name="event_id" value="12" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":12,"name":"SmashRock","x":14,"y":9,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"Object rock","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":209,"i":0,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":111,"i":0,"p":[12,"pbRockSmash"]},{"c":355,"i":1,"p":["pbSmashThisEvent"]},{"c":355,"i":1,"p":["pbRockSmashRandomEncounter"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="8" name="StrengthBoulder" type="Event" x="608" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="7" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":7,"name":"StrengthBoulder","x":19,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"Object boulder","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":2,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":355,"i":0,"p":["pbPushThisBoulder"]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"A"},"graphic":{"character_name":"Object boulder","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":2,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="9" name="Dungeon ladder" type="Event" x="768" y="448" width="32" height="32">
+      <properties>
+        <property name="event_id" value="13" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":13,"name":"Dungeon ladder","x":24,"y":14,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":108,"i":0,"p":["Set which dungeon parameters are to be used for the "]},{"c":408,"i":0,"p":["next dungeon map entered. These parameters are "]},{"c":408,"i":0,"p":["defined in the PBS file dungeon_parameters.txt"]},{"c":108,"i":0,"p":["You can set the following:"]},{"c":408,"i":0,"p":["$PokemonGlobal.dungeon_area = :forest"]},{"c":408,"i":0,"p":["$PokemonGlobal.dungeon_version = 42"]},{"c":355,"i":0,"p":["$PokemonGlobal.dungeon_area = :cave"]},{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,51,0,0,6,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="10" name="Exit right" type="Event" x="640" y="640" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":2,"name":"Exit right","x":20,"y":20,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":355,"i":0,"p":["pbCaveExit"]},{"c":201,"i":0,"p":[0,47,56,16,0,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="11" name="Boulder position checks" type="Event" x="192" y="160" width="32" height="32">
+      <properties>
+        <property name="event_id" value="8" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":8,"name":"Boulder position checks","x":6,"y":5,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":4,"list":[{"c":108,"i":0,"p":["Boulder to be pushed down hole is event 6."]},{"c":111,"i":0,"p":[2,"A",1]},{"c":122,"i":1,"p":[4,4,0,6,6,0]},{"c":122,"i":1,"p":[5,5,0,6,6,1]},{"c":111,"i":1,"p":[1,4,0,12,0]},{"c":111,"i":2,"p":[1,5,0,7,0]},{"c":108,"i":3,"p":["Is over hole."]},{"c":106,"i":3,"p":[8]},{"c":250,"i":3,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Battle throw","@pitch":100}]},{"c":121,"i":3,"p":[57,57,0]},{"c":123,"i":3,"p":["A",0]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":108,"i":0,"p":["Boulder to be pushed onto switch is event 7."]},{"c":108,"i":0,"p":["There is more to this one because the boulder can be "]},{"c":408,"i":0,"p":["pushed off the switch again."]},{"c":111,"i":0,"p":[2,"B",1]},{"c":122,"i":1,"p":[4,4,0,6,7,0]},{"c":122,"i":1,"p":[5,5,0,6,7,1]},{"c":111,"i":1,"p":[1,4,0,20,0]},{"c":111,"i":2,"p":[1,5,0,7,0]},{"c":108,"i":3,"p":["Is on switch."]},{"c":106,"i":3,"p":[8]},{"c":250,"i":3,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Battle ball drop","@pitch":100}]},{"c":355,"i":3,"p":["pbSetSelfSwitch(5, \u0022A\u0022, true)"]},{"c":123,"i":3,"p":["B",0]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":411,"i":0,"p":[]},{"c":122,"i":1,"p":[4,4,0,6,7,0]},{"c":122,"i":1,"p":[5,5,0,6,7,1]},{"c":111,"i":1,"p":[1,4,0,20,5]},{"c":108,"i":2,"p":["Boulder has been moved off the switch."]},{"c":355,"i":2,"p":["pbSetSelfSwitch(5, \u0022A\u0022, false)"]},{"c":123,"i":2,"p":["B",1]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":111,"i":2,"p":[1,5,0,7,5]},{"c":108,"i":3,"p":["Boulder has been moved off the switch."]},{"c":355,"i":3,"p":["pbSetSelfSwitch(5, \u0022A\u0022, false)"]},{"c":123,"i":3,"p":["B",1]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="12" name="Dungeon sign" type="Event" x="768" y="416" width="32" height="32">
+      <properties>
+        <property name="event_id" value="14" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":14,"name":"Dungeon sign","x":24,"y":13,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["This ladder leads to a random dungeon."]},{"c":101,"i":0,"p":["The levels of Pok\u00E9mon within are based on the levels "]},{"c":401,"i":0,"p":["of Pok\u00E9mon in the player\u0027s party."]},{"c":101,"i":0,"p":["This is because the dungeon map\u0027s metadata gives it "]},{"c":401,"i":0,"p":["the \u0022ScaleWildEncounterLevels\u0022 flag."]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="13" name="Ladder" type="Event" x="320" y="384" width="32" height="32">
+      <properties>
+        <property name="event_id" value="3" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":3,"name":"Ladder","x":10,"y":12,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":1,"list":[{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,50,11,12,6,1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="14" name="Sign" type="Event" x="448" y="320" width="32" height="32">
+      <properties>
+        <property name="event_id" value="9" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":9,"name":"Sign","x":14,"y":10,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["The positions of the boulders are checked by a "]},{"c":401,"i":0,"p":["Parallel Process event."]},{"c":101,"i":0,"p":["The hole event must have its \u0022Through\u0022 option set, to "]},{"c":401,"i":0,"p":["allow boulder events to be pushed onto it."]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="15" name="Tile puzzles" type="Event" x="768" y="256" width="32" height="32">
+      <properties>
+        <property name="event_id" value="15" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":15,"name":"Tile puzzles","x":24,"y":8,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":101,"i":0,"p":["Which tile puzzle do you want to play?"]},{"c":102,"i":0,"p":[["Alph","Alph Rotator","Mystic Square","Tile Swap"],0]},{"c":402,"i":0,"p":[0,"Alph"]},{"c":108,"i":1,"p":["A jigsaw puzzle. All tiles start in trays on either side "]},{"c":408,"i":1,"p":["of the grid."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(1, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Alph Rotator"]},{"c":108,"i":1,"p":["A jigsaw puzzle. All tiles start in trays on either side "]},{"c":408,"i":1,"p":["of the grid. Each tile can be rotated."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(2, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Mystic Square"]},{"c":108,"i":1,"p":["Also known as the 15 puzzle. All tiles (except for one) "]},{"c":408,"i":1,"p":["start in random places in the grid. Use the empty tile "]},{"c":408,"i":1,"p":["space to slide tiles around and rearrange them to "]},{"c":408,"i":1,"p":["create the picture. The missing tile is the bottom right "]},{"c":408,"i":1,"p":["one in the completed picture."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(3, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Tile Swap"]},{"c":108,"i":1,"p":["All tiles start in random places in the grid. By choosing "]},{"c":408,"i":1,"p":["and swapping pairs of adjacent tiles, unscramble the "]},{"c":408,"i":1,"p":["picture."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(4, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":102,"i":0,"p":[["Tile Swap Rotator","Rubik\u0027s Square","Star Rotator","Cancel"],4]},{"c":402,"i":0,"p":[0,"Tile Swap Rotator"]},{"c":108,"i":1,"p":["All tiles start in random places in the grid. By choosing "]},{"c":408,"i":1,"p":["and swapping pairs of adjacent tiles, unscramble the "]},{"c":408,"i":1,"p":["picture. Each tile can be rotated."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(5, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Rubik\u0027s Square"]},{"c":108,"i":1,"p":["All tiles start in random places in the grid. Slide a "]},{"c":408,"i":1,"p":["whole row of tiles left/right, or a whole column of tiles "]},{"c":408,"i":1,"p":["up/down at a time. The tile that falls off one side of "]},{"c":408,"i":1,"p":["the grid appears on the other side. Unscramble the "]},{"c":408,"i":1,"p":["picture."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(6, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Star Rotator"]},{"c":108,"i":1,"p":["All tiles start in their proper places in the grid, but are "]},{"c":408,"i":1,"p":["randomly rotated. When one tile is rotated, all tiles "]},{"c":408,"i":1,"p":["touching one of its sides are also rotated."]},{"c":111,"i":1,"p":[12,"pbTilePuzzle(7, \u0022Kabuto\u0022)"]},{"c":101,"i":2,"p":["Puzzle solved!"]},{"c":0,"i":2,"p":[]},{"c":411,"i":1,"p":[]},{"c":101,"i":2,"p":["Gave up..."]},{"c":0,"i":2,"p":[]},{"c":412,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Cancel"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="16" name="Hole" type="Event" x="384" y="224" width="32" height="32">
+      <properties>
+        <property name="event_id" value="4" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":4,"name":"Hole","x":12,"y":7,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":true,"always_on_top":false,"trigger":1,"list":[{"c":106,"i":0,"p":[4]},{"c":250,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Player fall","@pitch":100}]},{"c":208,"i":0,"p":[0]},{"c":106,"i":0,"p":[4]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":201,"i":0,"p":[0,50,12,7,0,1]},{"c":208,"i":0,"p":[1]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="17" name="SmashRock" type="Event" x="640" y="480" width="32" height="32">
+      <properties>
+        <property name="event_id" value="10" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":10,"name":"SmashRock","x":20,"y":15,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"Object rock","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":209,"i":0,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":0,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":16}]},{"c":111,"i":0,"p":[12,"pbRockSmash"]},{"c":355,"i":1,"p":["pbSmashThisEvent"]},{"c":355,"i":1,"p":["pbRockSmashRandomEncounter"]},{"c":0,"i":1,"p":[]},{"c":412,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

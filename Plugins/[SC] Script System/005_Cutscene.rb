@@ -774,6 +774,22 @@ module GameData
 end
 
 #===============================================================================
+# Reset cutscene history & save/load it with the player save
+#===============================================================================
+EventHandlers.add(:on_start_new_game, :sc_cutscene_reset_history,
+  proc {
+    SCScripts::Cutscene.clear_history if defined?(SCScripts::Cutscene)
+  }
+)
+
+SaveData.register(:sc_cutscene_history) do
+  ensure_class :Array
+  save_value { SCScripts::Cutscene.history.dup rescue [] }
+  load_value { |value| SCScripts::Cutscene.played_history = value if defined?(SCScripts::Cutscene) }
+  new_game_value { [] }
+end
+
+#===============================================================================
 # Short helper functions for event scripts (fits in RPG Maker script box)
 #===============================================================================
 def pbCutscene(name, **params)

@@ -148,11 +148,3 @@ if BattleSpeedControl::SHOW_IN_OPTIONS
     }
   })
 end
-
-#===============================================================================
-# Debug Info
-#===============================================================================
-puts "Battle Speed Control v1.1.0 loaded"
-puts "Available speeds: #{BattleSpeedControl::SPEED_STAGES.join(', ')}"
-puts "Default speed: x#{BattleSpeedControl::SPEED_STAGES[BattleSpeedControl::DEFAULT_SPEED]}"
-puts "Trigger key enabled: #{BattleSpeedControl::TRIGGER_KEY ? 'Yes' : 'No'}"

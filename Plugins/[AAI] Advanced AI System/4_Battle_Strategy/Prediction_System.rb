@@ -389,7 +389,7 @@ module AdvancedAI
       end
       
       # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
-      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, defender, effective_type, is_physical, effectiveness)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, defender, effective_type, is_physical, effectiveness, move)
       
       return damage.to_i
     end

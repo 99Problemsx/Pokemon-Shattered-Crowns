@@ -31,11 +31,18 @@ module AdvancedAI
     def self.magic_bounce_penalty(target, move)
       return 0 unless target && move
       return 0 unless target.respond_to?(:hasActiveAbility?) && MAGIC_BOUNCE_ABILITIES.any? { |a| target.hasActiveAbility?(a) }
-      return 0 unless move.statusMove? || MAGIC_BOUNCE_BLOCKED.include?(move.id)
-      # Magic Bounce reflects listed status moves and hazards
+      # Magic Bounce reflects most non-damaging moves that target the opponent.
+      # Check the explicit list first (known reflected moves), then fall back
+      # to a general status move check for anything else targeting them.
       if MAGIC_BOUNCE_BLOCKED.include?(move.id)
         AdvancedAI.log("#{move.name} blocked by Magic Bounce on #{target.name}", "Ability")
         return -500  # Effectively blocked — bounces back to us!
+      elsif move.statusMove?
+        # General catch: most status moves targeting opponents are reflected
+        # Exceptions: self-targeting (Swords Dance, etc.) or field moves (Rain Dance)
+        # We apply a smaller penalty since we can't be 100% sure it'll be reflected
+        AdvancedAI.log("#{move.name} likely reflected by Magic Bounce on #{target.name}", "Ability")
+        return -300
       end
       0
     end
@@ -75,15 +82,22 @@ module AdvancedAI
       when :DISGUISE, :ICEFACE
         bonus += 15  # Breaks form AND does damage
       when :WONDERGUARD
-        bonus += 50  # Can hit through Wonder Guard!
+        # Only matters for moves that aren't already super effective
+        type_mod = Effectiveness.calculate(move.type, *target.pbTypes(true)) rescue 0
+        bonus += 50 unless Effectiveness.super_effective?(type_mod)
       when :MAGICBOUNCE
         bonus += 10  # Not huge for damaging moves but still relevant
-      when :FLASHFIRE, :WATERABSORB, :VOLTABSORB, :LIGHTNINGROD,
-           :STORMDRAIN, :SAPSIPPER, :MOTORDRIVE, :DRYSKIN,
-           :WELLBAKEDBODY, :EARTHEATER
-        # Type-absorbing abilities bypassed — our move hits normally
-        bonus += 35
-        AdvancedAI.log("Mold Breaker bypasses #{target_ability}: +#{bonus} for #{move.name}", "Ability") if bonus > 0
+      when :FLASHFIRE, :WELLBAKEDBODY
+        # Only relevant if our move is Fire-type
+        bonus += 35 if move.type == :FIRE
+      when :WATERABSORB, :DRYSKIN, :STORMDRAIN
+        bonus += 35 if move.type == :WATER
+      when :VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE
+        bonus += 35 if move.type == :ELECTRIC
+      when :SAPSIPPER
+        bonus += 35 if move.type == :GRASS
+      when :EARTHEATER
+        bonus += 35 if move.type == :GROUND
       when :FURCOAT
         bonus += 15  # Full physical damage
       when :UNAWARE
@@ -713,7 +727,7 @@ module AdvancedAI
       return 0 unless target
 
       # Check if opponent is running stall
-      state = AdvancedAI::StrategicAwareness.battle_state(battle) rescue nil
+      state = AdvancedAI::StrategicAwareness.get_state(battle) rescue nil
       archetype = state ? state[:opponent_archetype] : nil
       return 0 unless archetype == :stall
 

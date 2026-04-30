@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="2">
+  <properties>
+    <property name="tileset_id" value="3" />
+    <property name="source" value="Map065.rxdata" />
+    <property name="tileset_name" value="Inside" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_3.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Interior general" tilewidth="32" tileheight="32" tilecount="1443" columns="8">
+    <image source="../Graphics/Tilesets/Interior general.png" width="256" height="5792" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+520,521,521,521,521,521,521,521,523,542,542,542,542,542,542,542,542,542,542,542,
+528,529,529,529,529,529,529,529,531,542,542,542,542,542,542,542,542,542,542,542,
+633,641,641,641,641,641,641,641,650,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+634,624,624,624,624,624,624,624,624,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,
+542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542,542
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,0,389,390,391,1788,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1794,1795,397,398,399,1796,1794,0,0,0,0,0,0,0,0,0,0,0,0,
+536,1802,1803,0,0,0,1804,1802,539,0,0,0,0,0,0,0,0,0,0,0,
+1808,1809,0,0,0,0,0,1789,1790,0,0,0,0,0,0,0,0,0,0,0,
+1816,1817,1818,0,0,0,0,1797,1798,0,0,0,0,0,0,0,0,0,0,0,
+1824,1825,1826,0,0,0,0,1805,1806,0,0,0,0,0,0,0,0,0,0,0,
+1784,1785,0,0,0,0,0,1784,1785,0,0,0,0,0,0,0,0,0,0,0,
+1792,1793,0,0,0,0,0,1792,1793,0,0,0,0,0,0,0,0,0,0,0,
+1800,1801,0,1245,1246,1247,0,1800,1801,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1253,1254,1255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Guide" type="Event" x="128" y="128" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="1" />
+        <property name="event_data" type="string">{"id":1,"name":"Guide","x":4,"y":4,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"trainer_SCIENTIST","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":101,"i":0,"p":["\\bThanks for competing.\\nLet me heal your party."]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":314,"i":0,"p":[0]},{"c":223,"i":0,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":106,"i":0,"p":[8]},{"c":118,"i":0,"p":["Choice Menu"]},{"c":355,"i":0,"p":["pbSet(1,"]},{"c":655,"i":0,"p":["  pbBattleChallenge.battleNumber"]},{"c":655,"i":0,"p":[")"]},{"c":108,"i":0,"p":["================================"]},{"c":355,"i":0,"p":["if $game_temp.last_battle_record.nil?"]},{"c":655,"i":0,"p":["  hide_choice(4)"]},{"c":655,"i":0,"p":["end"]},{"c":101,"i":0,"p":["\\bBattle number \\v[1] is next. Are you ready?"]},{"c":102,"i":0,"p":[["Go on","Rest","Retire","Record"],0]},{"c":402,"i":0,"p":[0,"Go on"]},{"c":355,"i":1,"p":["pbBattleChallenge.pbGoOn"]},{"c":355,"i":1,"p":["pbBattleChallenge.extra.pbPrepareSwaps"]},{"c":101,"i":1,"p":["\\bWould you like to swap a Pok\u00E9mon first?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":111,"i":2,"p":[12,"pbBattleChallenge.extra.pbChooseSwaps"]},{"c":101,"i":3,"p":["\\bOK, the Pok\u00E9mon swap is complete."]},{"c":0,"i":3,"p":[]},{"c":412,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":101,"i":1,"p":["\\bCome with me."]},{"c":209,"i":1,"p":[0,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":209,"i":1,"p":[-1,{"_class":"RPG::MoveRoute","@list":[{"_class":"RPG::MoveCommand","@parameters":[3],"@code":29},{"_class":"RPG::MoveCommand","@parameters":[],"@code":37},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[],"@code":4},{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42},{"_class":"RPG::MoveCommand","@parameters":[],"@code":38},{"_class":"RPG::MoveCommand","@parameters":[],"@code":0}],"@skippable":false,"@repeat":false}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[3],"@code":29}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":37}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":4}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[0],"@code":42}]},{"c":509,"i":1,"p":[{"_class":"RPG::MoveCommand","@parameters":[],"@code":38}]},{"c":210,"i":1,"p":[]},{"c":250,"i":1,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":1,"p":[8]},{"c":201,"i":1,"p":[0,64,2,9,0,1]},{"c":223,"i":1,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Rest"]},{"c":101,"i":1,"p":["\\bWould you like to save the game and continue "]},{"c":401,"i":1,"p":["later?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":355,"i":2,"p":["pbBattleChallenge.pbRest"]},{"c":101,"i":2,"p":["Your game has been saved."]},{"c":354,"i":2,"p":[]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":119,"i":2,"p":["Choice Menu"]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":119,"i":1,"p":["Choice Menu"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"Retire"]},{"c":101,"i":1,"p":["\\bAre you sure you want to quit your challenge?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":355,"i":2,"p":["pbBattleChallenge.setDecision(2)"]},{"c":250,"i":2,"p":[{"_class":"RPG::AudioFile","@volume":80,"@name":"Door exit","@pitch":100}]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAADgb8AAAAAAAOBvwAAAAAAA4G/AAAAAAAAAAAA="},6]},{"c":106,"i":2,"p":[8]},{"c":355,"i":2,"p":["pbBattleChallenge.pbGoToStart"]},{"c":223,"i":2,"p":[{"_userdef":"Tone","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="},6]},{"c":115,"i":2,"p":[]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":119,"i":2,"p":["Choice Menu"]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[3,"Record"]},{"c":101,"i":1,"p":["\\bWould you like to record your last battle?"]},{"c":102,"i":1,"p":[["Yes","No"],2]},{"c":402,"i":1,"p":[0,"Yes"]},{"c":355,"i":2,"p":["pbRecordLastBattle"]},{"c":101,"i":2,"p":["\\se[Pkmn exp full]The battle was recorded."]},{"c":0,"i":2,"p":[]},{"c":402,"i":1,"p":[1,"No"]},{"c":0,"i":2,"p":[]},{"c":404,"i":1,"p":[]},{"c":119,"i":1,"p":["Choice Menu"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

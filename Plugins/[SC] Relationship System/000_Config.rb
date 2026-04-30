@@ -135,4 +135,48 @@ module RelationshipSystem
     # Example: "lyra_confession" => { :LYRA => :BONDED },
     # Example: "kael_trust"      => { :KAEL => :FRIEND },
   }
+
+  #=============================================================================
+  # GIFT SYSTEM
+  #=============================================================================
+
+  # Cooldown between gifts to the same character (in player steps)
+  GIFT_COOLDOWN_STEPS = 600
+
+  # Default point gain when reaction is unlisted (treated as :NEUTRAL).
+  GIFT_POINTS = {
+    :LOVED    => 12,
+    :LIKED    => 6,
+    :NEUTRAL  => 1,
+    :DISLIKED => -4,
+    :HATED    => -10
+  }
+
+  # Per-character item preferences. Items not listed default to :NEUTRAL.
+  # Keys are item symbols (PE v21.1 Items PBS IDs).
+  GIFT_PREFERENCES = {
+    :LYRA => {
+      :LOVED    => [:SOOTHEBELL, :LUMBERRY, :MOOMOOMILK],
+      :LIKED    => [:ORANBERRY, :PECHABERRY, :HONEY],
+      :DISLIKED => [:REVIVE, :REPEL],
+      :HATED    => [:RAGECANDYBAR]
+    },
+    :KAEL => {
+      :LOVED    => [:BLACKGLASSES, :DREADPLATE, :SPELLTAG],
+      :LIKED    => [:STARDUST, :NUGGET],
+      :DISLIKED => [:SOOTHEBELL, :HONEY],
+      :HATED    => [:LIGHTBALL]
+    },
+    :ALDRIC => {
+      :LOVED    => [:RARECANDY, :TM01, :TM02],
+      :LIKED    => [:STARDUST, :PEARL, :NUGGET],
+      :DISLIKED => [:LAVACOOKIE]
+    },
+    :RAGNAR => {
+      :LOVED    => [:PROTEIN, :IRON, :MUSCLEBAND],
+      :LIKED    => [:CARBOS, :HPUP, :CALCIUM],
+      :DISLIKED => [:SWEETHEART],
+      :HATED    => [:LUCKYEGG]
+    }
+  }
 end

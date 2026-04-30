@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="3">
+  <properties>
+    <property name="tileset_id" value="4" />
+    <property name="source" value="Map001.rxdata" />
+    <property name="tileset_name" value="Poké Center" />
+  </properties>
+  <tileset firstgid="1" name="rpgmaker_autotiles" tilewidth="32" tileheight="32" tilecount="383" columns="8">
+    <image source="autotiles_4.png" width="256" height="1536" />
+  </tileset>
+  <tileset firstgid="384" name="Poke Centre interior" tilewidth="32" tileheight="32" tilecount="4" columns="8">
+    <image source="../Graphics/Tilesets/Poke Centre interior.png" width="256" height="32" />
+  </tileset>
+  <layer id="1" name="Layer 1" width="20" height="15">
+    <data encoding="csv">
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,
+387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387,387
+</data>
+  </layer>
+  <layer id="2" name="Layer 2" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <layer id="3" name="Layer 3" width="20" height="15">
+    <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+  </layer>
+  <objectgroup id="4" name="Events">
+    <object id="1" name="Intro" type="Event" x="32" y="448" width="32" height="32">
+      <properties>
+        <property name="event_id" value="1" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":1,"name":"Intro","x":1,"y":14,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":104,"i":0,"p":[1,1]},{"c":101,"i":0,"p":["\u003Cac\u003E\\c[8]\\l[3](Please refer to the\\nPok\u00E9mon "]},{"c":401,"i":0,"p":["Essentials Wiki\\nfor documentation.)"]},{"c":104,"i":0,"p":[2,0]},{"c":221,"i":0,"p":[]},{"c":231,"i":0,"p":[1,"introbg",0,0,0,0,100,100,255,0]},{"c":222,"i":0,"p":[""]},{"c":106,"i":0,"p":[18]},{"c":231,"i":0,"p":[2,"introbase",1,0,256,256,100,100,0,0]},{"c":231,"i":0,"p":[3,"introOak",1,0,256,172,100,100,0,0]},{"c":232,"i":0,"p":[2,15,1,0,256,256,100,100,255,0]},{"c":232,"i":0,"p":[3,15,1,0,256,172,100,100,255,0]},{"c":106,"i":0,"p":[18]},{"c":241,"i":0,"p":[{"_class":"RPG::AudioFile","@volume":100,"@name":"New Start","@pitch":100}]},{"c":101,"i":0,"p":["\\bHello! Sorry to keep you waiting!"]},{"c":101,"i":0,"p":["\\bWelcome to the world of Pok\u00E9mon."]},{"c":101,"i":0,"p":["\\bMy name is Oak."]},{"c":101,"i":0,"p":["\\bPeople call me the Pok\u00E9mon Professor."]},{"c":118,"i":0,"p":["Help Choices"]},{"c":101,"i":0,"p":["\\bIf you need help, I am certainly capable of giving it."]},{"c":102,"i":0,"p":[["Controls","Adventure","No info needed"],3]},{"c":402,"i":0,"p":[0,"Controls"]},{"c":355,"i":1,"p":["pbEventScreen(ButtonEventScene)"]},{"c":119,"i":1,"p":["Help Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Adventure"]},{"c":101,"i":1,"p":["\\bWell then, without further ado..."]},{"c":355,"i":1,"p":["pbToneChangeAll("]},{"c":655,"i":1,"p":["  Tone.new(-255, -255, -255, 0),"]},{"c":655,"i":1,"p":["  10)"]},{"c":106,"i":1,"p":[10]},{"c":231,"i":1,"p":[4,"helpadventurebg",0,0,0,0,100,100,0,0]},{"c":232,"i":1,"p":[4,10,0,0,0,0,100,100,255,0]},{"c":106,"i":1,"p":[10]},{"c":104,"i":1,"p":[1,1]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[3]You are about to enter a world\\nwhere "]},{"c":401,"i":1,"p":["you will embark on a grand\\nadventure of your very "]},{"c":401,"i":1,"p":["own."]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[5]Speak to people and check things\\n"]},{"c":401,"i":1,"p":["wherever you go, be it in towns,\\nroads or caves.\\n"]},{"c":401,"i":1,"p":["Gather information and hints from\\n"]},{"c":401,"i":1,"p":["every possible source."]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[3]New paths will open to you when\\n"]},{"c":401,"i":1,"p":["you help people in need, overcome\\n"]},{"c":401,"i":1,"p":["challenges, and solve mysteries."]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[7]At times, you will be challenged\\n"]},{"c":401,"i":1,"p":["by others to a battle.\\n"]},{"c":401,"i":1,"p":["At other times, wild creatures\\nmay stand in your way.\\n\\n"]},{"c":401,"i":1,"p":["By overcoming such hurdles,\\nyou will gain great power."]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[2]However, your adventure is not\\n"]},{"c":401,"i":1,"p":["solely about becoming powerful."]},{"c":101,"i":1,"p":["\u003Cac\u003E\\c[0]\\l[7]On your travels, we hope that\\n"]},{"c":401,"i":1,"p":["you will meet countless people\\n"]},{"c":401,"i":1,"p":["and, through them, achieve\\npersonal growth.\\n\\n"]},{"c":401,"i":1,"p":["This is the most important\\nobjective of this adventure."]},{"c":232,"i":1,"p":[4,10,0,0,0,0,100,100,0,0]},{"c":106,"i":1,"p":[10]},{"c":235,"i":1,"p":[4]},{"c":355,"i":1,"p":["pbToneChangeAll("]},{"c":655,"i":1,"p":["  Tone.new(0, 0, 0, 0),"]},{"c":655,"i":1,"p":["  10)"]},{"c":106,"i":1,"p":[10]},{"c":104,"i":1,"p":[2,0]},{"c":119,"i":1,"p":["Help Choices"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[2,"No info needed"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":106,"i":0,"p":[5]},{"c":232,"i":0,"p":[3,10,1,0,256,172,100,100,0,0]},{"c":106,"i":0,"p":[10]},{"c":235,"i":0,"p":[3]},{"c":231,"i":0,"p":[3,"introMarill",1,0,256,220,100,100,0,0]},{"c":232,"i":0,"p":[3,10,1,0,256,220,100,100,255,0]},{"c":106,"i":0,"p":[10]},{"c":101,"i":0,"p":["\\bThis world is inhabited by creatures we call "]},{"c":401,"i":0,"p":["Pok\u00E9mon."]},{"c":101,"i":0,"p":["\\bPeople and Pok\u00E9mon live together by supporting "]},{"c":401,"i":0,"p":["each other."]},{"c":101,"i":0,"p":["\\bSome people play with Pok\u00E9mon, some battle with "]},{"c":401,"i":0,"p":["them."]},{"c":106,"i":0,"p":[5]},{"c":232,"i":0,"p":[3,10,1,0,256,220,100,100,0,0]},{"c":106,"i":0,"p":[10]},{"c":235,"i":0,"p":[3]},{"c":231,"i":0,"p":[3,"introOak",1,0,256,172,100,100,0,0]},{"c":232,"i":0,"p":[3,10,1,0,256,172,100,100,255,0]},{"c":106,"i":0,"p":[10]},{"c":101,"i":0,"p":["\\bBut we don\u0027t know everything about Pok\u00E9mon yet."]},{"c":101,"i":0,"p":["\\bThere are still many mysteries to solve."]},{"c":101,"i":0,"p":["\\bThat\u0027s why I study Pok\u00E9mon every day."]},{"c":106,"i":0,"p":[5]},{"c":232,"i":0,"p":[2,10,1,0,256,256,100,100,0,0]},{"c":232,"i":0,"p":[3,10,1,0,256,172,100,100,0,0]},{"c":106,"i":0,"p":[10]},{"c":235,"i":0,"p":[3]},{"c":106,"i":0,"p":[15]},{"c":101,"i":0,"p":["\\bAre you a boy or a girl?"]},{"c":102,"i":0,"p":[["Boy","Girl"],0]},{"c":402,"i":0,"p":[0,"Boy"]},{"c":108,"i":1,"p":["Initializes player character 1."]},{"c":408,"i":1,"p":["[\u0022pbChangePlayer\u0022 takes a value from 1 upwards. To "]},{"c":408,"i":1,"p":["edit information about a player character, go to the "]},{"c":408,"i":1,"p":["Debug menu and choose \u0022PBS file editors...\u0022 \u003E \u0022Edit "]},{"c":408,"i":1,"p":["metadata.txt\u0022.]"]},{"c":355,"i":1,"p":["pbChangePlayer(1)"]},{"c":231,"i":1,"p":[3,"introBoy",1,0,256,178,100,100,0,0]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"Girl"]},{"c":108,"i":1,"p":["Initializes player character 2."]},{"c":355,"i":1,"p":["pbChangePlayer(2)"]},{"c":231,"i":1,"p":[3,"introGirl",1,0,256,178,100,100,0,0]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":232,"i":0,"p":[2,10,1,0,256,256,100,100,255,0]},{"c":232,"i":0,"p":[3,10,1,0,256,178,100,100,255,0]},{"c":106,"i":0,"p":[10]},{"c":101,"i":0,"p":["\\bNow what did you say your name was?"]},{"c":118,"i":0,"p":["Enter Name"]},{"c":108,"i":0,"p":["Opens the name entry screen and initializes the "]},{"c":408,"i":0,"p":["trainer object"]},{"c":355,"i":0,"p":["pbTrainerName"]},{"c":106,"i":0,"p":[5]},{"c":101,"i":0,"p":["\\bSo you\u0027re \\PN?"]},{"c":102,"i":0,"p":[["Yes","No"],2]},{"c":402,"i":0,"p":[0,"Yes"]},{"c":0,"i":1,"p":[]},{"c":402,"i":0,"p":[1,"No"]},{"c":101,"i":1,"p":["\\bWhat is your name?"]},{"c":119,"i":1,"p":["Enter Name"]},{"c":0,"i":1,"p":[]},{"c":404,"i":0,"p":[]},{"c":101,"i":0,"p":["\\b\\PN, are you ready?"]},{"c":101,"i":0,"p":["\\bYour very own Pok\u00E9mon story is about to unfold."]},{"c":101,"i":0,"p":["\\bYou\u0027ll face fun times and tough challenges."]},{"c":101,"i":0,"p":["\\bA world of dreams and adventures with Pok\u00E9mon "]},{"c":401,"i":0,"p":["awaits! Let\u0027s go!"]},{"c":101,"i":0,"p":["\\bEnjoy the Starter Kit. You should give credit when "]},{"c":401,"i":0,"p":["using it."]},{"c":242,"i":0,"p":[4]},{"c":123,"i":0,"p":["A",0]},{"c":355,"i":0,"p":["pbToneChangeAll("]},{"c":655,"i":0,"p":["  Tone.new(-255, -255, -255, 0),"]},{"c":655,"i":0,"p":["  10)"]},{"c":106,"i":0,"p":[10]},{"c":235,"i":0,"p":[1]},{"c":235,"i":0,"p":[2]},{"c":235,"i":0,"p":[3]},{"c":201,"i":0,"p":[0,3,25,6,2,0]},{"c":355,"i":0,"p":["pbToneChangeAll("]},{"c":655,"i":0,"p":["  Tone.new(0, 0, 0, 0),"]},{"c":655,"i":0,"p":["  10)"]},{"c":106,"i":0,"p":[10]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+    <object id="2" name="Quick start intro" type="Event" x="0" y="448" width="32" height="32">
+      <properties>
+        <property name="event_id" value="2" />
+        <property name="pages" value="2" />
+        <property name="event_data" type="string">{"id":2,"name":"Quick start intro","x":0,"y":14,"pages":[{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":false,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":3,"list":[{"c":108,"i":0,"p":["This is the Debug intro, used to quickly start a game. "]},{"c":408,"i":0,"p":["The player\u0027s name and trainer type are chosen "]},{"c":408,"i":0,"p":["automatically."]},{"c":355,"i":0,"p":["pbChangePlayer(1)"]},{"c":355,"i":0,"p":["pbTrainerName(\u0022Red\u0022)"]},{"c":123,"i":0,"p":["A",0]},{"c":355,"i":0,"p":["pbToneChangeAll("]},{"c":655,"i":0,"p":["  Tone.new(-255, -255, -255, 0),"]},{"c":655,"i":0,"p":["  0"]},{"c":655,"i":0,"p":[")"]},{"c":201,"i":0,"p":[0,3,25,6,2,1]},{"c":355,"i":0,"p":["pbToneChangeAll("]},{"c":655,"i":0,"p":["  Tone.new(0, 0, 0, 0),"]},{"c":655,"i":0,"p":["  10"]},{"c":655,"i":0,"p":[")"]},{"c":106,"i":0,"p":[10]},{"c":0,"i":0,"p":[]}]},{"condition":{"switch1_valid":false,"switch1_id":1,"switch2_valid":false,"switch2_id":1,"variable_valid":false,"variable_id":1,"variable_value":0,"self_switch_valid":true,"self_switch_ch":"A"},"graphic":{"character_name":"","character_hue":0,"pattern":0,"tile_id":0,"direction":2,"opacity":255,"blend_type":0},"move_type":0,"move_speed":3,"move_frequency":3,"move_route":{"repeat":true,"skippable":false,"list":[{"code":0,"parameters":[]}]},"walk_anime":true,"step_anime":false,"direction_fix":false,"through":false,"always_on_top":false,"trigger":0,"list":[{"c":0,"i":0,"p":[]}]}]}</property>
+      </properties>
+    </object>
+  </objectgroup>
+</map>

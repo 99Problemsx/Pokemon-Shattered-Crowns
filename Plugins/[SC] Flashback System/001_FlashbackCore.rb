@@ -164,14 +164,22 @@ end
 
 #===============================================================================
 # Menu restrictions during flashback
+# Wraps pause menu conditions to hide entries during active flashbacks.
 #===============================================================================
-
-EventHandlers.add(:on_open_pause_menu, :sc_flashback_menu_restrict,
-  proc { |menu_items|
-    next unless FlashbackManager.active?
-    menu_items.delete(:save) if FlashbackSystem::DISABLE_SAVE
-    menu_items.delete(:bag) if FlashbackSystem::DISABLE_BAG
-    menu_items.delete(:pokemon) if FlashbackSystem::DISABLE_POKEMON
-    menu_items.delete(:map) if FlashbackSystem::DISABLE_MAP
-  }
-)
+{
+  save:     FlashbackSystem::DISABLE_SAVE,
+  bag:      FlashbackSystem::DISABLE_BAG,
+  party:    FlashbackSystem::DISABLE_POKEMON,
+  town_map: FlashbackSystem::DISABLE_MAP,
+  pokegear: FlashbackSystem::DISABLE_MAP
+}.each do |menu_key, should_disable|
+  next unless should_disable
+  MenuHandlers.each(:pause_menu) do |option, hash|
+    next unless option == menu_key
+    original_cond = hash["condition"]
+    hash["condition"] = proc {
+      next false if FlashbackManager.active?
+      next(original_cond ? original_cond.call : true)
+    }
+  end
+end

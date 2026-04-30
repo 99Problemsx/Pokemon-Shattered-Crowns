@@ -262,10 +262,170 @@ class Battle::AI
     
     return multiplier
   end
+  
+  # ============================================================================
+  # GEN 9: Zero to Hero / Costar / Hospitality switch-in awareness
+  # Used by switch evaluators to bias bringing these mons in.
+  # ============================================================================
+  def gen9_switchin_bonus(pkmn)
+    return 0 unless pkmn
+    bonus = 0
+    begin
+      ab = pkmn.respond_to?(:ability_id) ? pkmn.ability_id : (pkmn.ability rescue nil)
+      ab = ab.id if ab.is_a?(GameData::Ability)
+      
+      case ab
+      when :ZEROTOHERO
+        # Palafin: switching out and back in flips to Hero form (huge stat boost).
+        # Massive value when this is its second switch-in.
+        bonus += 60
+      when :ORICHALCUMPULSE
+        bonus += 25  # Sets Sun + 1.33x physical
+      when :HADRONENGINE
+        bonus += 25  # Sets Electric Terrain + 1.33x special
+      when :PROTOSYNTHESIS, :QUARKDRIVE
+        # Booster Energy active = guaranteed boost on switch-in
+        if pkmn.respond_to?(:item_id) && pkmn.item_id == :BOOSTERENERGY
+          bonus += 30
+        end
+        # Auto-active via weather/terrain (no item needed)
+        if @battle
+          begin
+            wx      = (@battle.field.weather rescue :None)
+            terrain = (@battle.field.terrain rescue :None)
+            if (ab == :PROTOSYNTHESIS && wx == :Sun) ||
+               (ab == :QUARKDRIVE     && terrain == :Electric)
+              bonus += 20
+            end
+          rescue
+          end
+        end
+      when :GRIMNEIGH, :CHILLINGNEIGH
+        bonus += 5  # Ready to snowball if it KOs
+      when :REGENERATOR
+        bonus += 10  # Comes in healthier on subsequent switches
+      when :INTIMIDATE
+        bonus += 15  # Free -1 Atk on opponent
+      when :GOODASGOLD
+        bonus += 15  # Status immunity is hugely valuable defensively
+      when :PURIFYINGSALT
+        bonus += 15  # Status immunity + Ghost resistance
+      when :ICESCALES
+        bonus += 20  # Halves all special damage — premier special wall
+      when :FURCOAT
+        bonus += 18  # Halves all physical damage
+      when :THERMALEXCHANGE
+        bonus += 12  # Burn immunity + Atk boost on Fire hits
+      when :GUARDDOG
+        bonus += 10  # Intimidate immunity + can't be phazed
+      when :WINDPOWER
+        # Charge effect on wind hits — minor pre-emptive value
+        bonus += 5
+      when :CUDCHEW
+        # If holding a berry, will recycle it next turn → effectively two uses
+        if pkmn.respond_to?(:item_id) && pkmn.item_id
+          item_data = (GameData::Item.try_get(pkmn.item_id) rescue nil)
+          if item_data && item_data.is_berry?
+            bonus += 12
+          end
+        end
+      when :ARMORTAIL, :DAZZLING, :QUEENLYMAJESTY
+        bonus += 8  # Priority immunity (vs. Sucker Punch / Fake Out / etc.)
+      when :MIRRORARMOR
+        bonus += 8  # Reflects stat drops back (Intimidate / etc.)
+      when :EMBODYASPECT_TEAL, :EMBODYASPECT_HEARTHFLAME, :EMBODYASPECT_WELLSPRING, :EMBODYASPECT_CORNERSTONE
+        # Ogerpon masks: free +1 stat on switch-in (Speed/Atk/SpDef/Def respectively)
+        bonus += 20
+      when :SUPERSWEETSYRUP
+        # Dipplin/Hydrapple line: -1 evasion on opponents on first switch-in
+        bonus += 10
+      when :OPPORTUNIST
+        # Copies opponent boosts when they happen — minor switch bias if opponent has setup moves
+        bonus += 5
+      when :COSTAR
+        # Doubles-only: copies ally stat changes on switch-in
+        if @battle && @user
+          begin
+            user_side = @user.idxOwnSide rescue (@user.index & 1)
+            @battle.battlers.each do |a|
+              next unless a && !a.fainted?
+              a_side = a.idxOwnSide rescue (a.index & 1)
+              next if a_side != user_side
+              next if a.index == @user.index
+              total = 0
+              [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED, :ACCURACY, :EVASION].each do |st|
+                stage = (a.stages[st] rescue 0)
+                total += stage if stage > 0
+              end
+              bonus += total * 8  # Each copied positive stage ~ +8 score
+            end
+          rescue
+          end
+        else
+          bonus += 5
+        end
+      when :HOSPITALITY
+        # Doubles-only: heal ally 25% on switch-in
+        if @battle && @user
+          begin
+            user_side = @user.idxOwnSide rescue (@user.index & 1)
+            @battle.battlers.each do |a|
+              next unless a && !a.fainted?
+              a_side = a.idxOwnSide rescue (a.index & 1)
+              next if a_side != user_side
+              next if a.index == @user.index
+              hp_missing = 1.0 - (a.hp.to_f / [a.totalhp, 1].max)
+              bonus += (hp_missing * 30).to_i  # Up to +30 if ally is at 0%
+            end
+          rescue
+          end
+        else
+          bonus += 5
+        end
+      when :COMMANDER
+        # Tatsugiri: massive boosts when Dondozo is on field as ally
+        if @battle && @user
+          begin
+            user_side = @user.idxOwnSide rescue (@user.index & 1)
+            has_dondozo_ally = @battle.battlers.any? do |b|
+              next false unless b && !b.fainted?
+              b_side = b.idxOwnSide rescue (b.index & 1)
+              b_side == user_side && b.index != @user.index && b.isSpecies?(:DONDOZO)
+            end
+            bonus += 50 if has_dondozo_ally  # +2 to ALL stats on Dondozo is huge
+          rescue
+          end
+        end
+      end
+      
+      # === Iron Ball penalty: halves Speed + grounds the holder ===
+      # Bad on a fast attacker, neutral on a Trick-Room mon, situationally good
+      # if user wants to be grounded for Earthquake immunity reasons (rare).
+      if pkmn.respond_to?(:item_id) && pkmn.item_id == :IRONBALL
+        spd = (pkmn.respond_to?(:speed) ? pkmn.speed : (pkmn.calcStats[:SPEED] rescue 0))
+        if @battle && (@battle.field.effects[PBEffects::TrickRoom] > 0 rescue false)
+          bonus += 10  # Halved Speed is good in Trick Room
+        elsif spd >= 90
+          bonus -= 20  # Crippling on fast attackers
+        else
+          bonus -= 5   # Mild penalty otherwise
+        end
+        # Extra penalty if Flying-type / Levitate (Iron Ball negates immunity)
+        types = (pkmn.types rescue [])
+        ab = pkmn.respond_to?(:ability_id) ? pkmn.ability_id : nil
+        if types.include?(:FLYING) || ab == :LEVITATE
+          bonus -= 15  # Loses Ground immunity
+        end
+      end
+    rescue
+    end
+    return bonus
+  end
 end
 
 AdvancedAI.log("Advanced Abilities System loaded", "Core")
 AdvancedAI.log("  - Snowball detection (Moxie, Beast Boost)", "Abilities")
+AdvancedAI.log("  - Gen 9 switch-in awareness (Zero to Hero, Booster Energy paradoxes)", "Abilities")
 AdvancedAI.log("  - Reverse abilities (Contrary, Defiant, Competitive)", "Abilities")
 AdvancedAI.log("  - Speed shift (Unburden, Speed Boost)", "Abilities")
 AdvancedAI.log("  - Switch abilities (Regenerator, Natural Cure)", "Abilities")

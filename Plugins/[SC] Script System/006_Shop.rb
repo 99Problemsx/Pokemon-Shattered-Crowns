@@ -118,7 +118,8 @@ module GameData
     end
     
     #---------------------------------------------------------------------------
-    # Get available items based on conditions
+    # Get available items based on conditions.
+    # Returns array of hashes: [{ item:, price: }, ...]
     #---------------------------------------------------------------------------
     def get_available_items
       @items.select do |item_data|
@@ -126,8 +127,6 @@ module GameData
         next false if item_data[:badge_req] && $player.badge_count < item_data[:badge_req]
         next false if item_data[:stock] && item_data[:stock] <= 0
         true
-      end.map do |item_data|
-        [item_data[:item], item_data[:price]].compact
       end
     end
     
@@ -137,14 +136,24 @@ module GameData
     def open_shop
       pbMessage(@greeting) if @greeting
       
-      stock = get_available_items
+      stock_data = get_available_items
       
-      if stock.empty?
+      if stock_data.empty?
         pbMessage("Sorry, we're out of stock!")
         return
       end
       
-      pbPokemonMart(stock)
+      # PE v21.1 expects pbPokemonMart(stock) where stock is a flat array of
+      # item symbols. Custom prices are applied via $game_temp.mart_prices.
+      stock_ids = stock_data.map { |it| it[:item] }
+      $game_temp.mart_prices ||= {}
+      stock_data.each do |it|
+        next unless it[:price]
+        $game_temp.mart_prices[it[:item]] ||= [-1, -1]
+        $game_temp.mart_prices[it[:item]][0] = it[:price]
+      end
+      
+      pbPokemonMart(stock_ids)
       
       pbMessage(@farewell) if @farewell
     end

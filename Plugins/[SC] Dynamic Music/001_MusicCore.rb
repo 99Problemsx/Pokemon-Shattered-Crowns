@@ -111,14 +111,16 @@ module DynamicMusicEngine
     @original_bgm ||= $game_system.playing_bgm.name rescue nil
     @current_override = bgm_name
     pbBGMFade(DynamicMusic::FADE_DURATION / 1000.0)
-    pbWait(DynamicMusic::FADE_DURATION / 40) # Convert to frames (~40fps)
+    # PE v21.1: pbWait takes SECONDS, not frames
+    pbWait(DynamicMusic::FADE_DURATION / 1000.0)
     pbBGMPlay(bgm_name, DynamicMusic::VOLUME_NORMAL)
   end
 
   def self.restore_bgm
     return unless @original_bgm
     pbBGMFade(DynamicMusic::FADE_DURATION / 1000.0)
-    pbWait(DynamicMusic::FADE_DURATION / 40)
+    # PE v21.1: pbWait takes SECONDS, not frames
+    pbWait(DynamicMusic::FADE_DURATION / 1000.0)
     pbBGMPlay(@original_bgm, DynamicMusic::VOLUME_NORMAL)
     @current_override = nil
     @original_bgm     = nil

@@ -22,7 +22,6 @@ class PhenomenonInstance
   attr_accessor :timer, :x, :y, :type, :active, :drawing # number # symbol # bool # bool
 
   def initialize(types)
-    echoln("Initializing for map with types: #{types}")
     @x = nil
     @y = nil
     @types = types
@@ -44,11 +43,9 @@ class Phenomenon
   end
 
   def self.generate
-    echoln '## self.generate ##'
     ph = instance
     return unless ph
 
-    echoln("Generating phenomena...\n")
     phenomenon_tiles = [] # x, y, type
     # limit range to around the player
     x_range = [[$game_player.x - 16, 0].max, [$game_player.x + 16, $game_map.width].min]
@@ -83,7 +80,6 @@ class Phenomenon
       end
     end
     if phenomenon_tiles.length == 0
-      Kernel.echoln("A phenomenon is set up but no compatible tiles are available! Phenomena: #{@types}")
       cancel
     else
       selected_tile = phenomenon_tiles.random
@@ -97,7 +93,6 @@ class Phenomenon
 
   def self.activate
     ph = instance
-    Kernel.echoln("Activating phenomenon for #{ph.type}")
     item = nil
     chance = rand(10) # Different types have chance different effects, e.g. items in caves
     encounter = $PokemonEncounters.choose_wild_pokemon(ph.type)

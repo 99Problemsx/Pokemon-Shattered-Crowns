@@ -10,7 +10,7 @@ module AdvancedAI
     #===========================================================================
     
     OFFENSIVE_PIVOTS = [:UTURN, :VOLTSWITCH, :FLIPTURN]
-    DEFENSIVE_PIVOTS = [:PARTINGSHOT, :TELEPORT, :BATONPASS, :CHILLYRECEPTION]
+    DEFENSIVE_PIVOTS = [:PARTINGSHOT, :TELEPORT, :BATONPASS, :CHILLYRECEPTION, :SHEDTAIL]
     SLOW_PIVOTS = [:TELEPORT]  # Move last for safe switch
     
     ALL_PIVOTS = OFFENSIVE_PIVOTS + DEFENSIVE_PIVOTS
@@ -506,7 +506,7 @@ module AdvancedAI
       end
       
       # Ability damage modifiers (Fur Coat, Ice Scales, Multiscale, Tinted Lens, etc.)
-      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, target, effective_type, move.physicalMove?, type_mod)
+      damage *= AdvancedAI::CombatUtilities.ability_damage_modifier(attacker, target, effective_type, move.physicalMove?, type_mod, move)
       
       (damage / target.totalhp.to_f) * 100
     end

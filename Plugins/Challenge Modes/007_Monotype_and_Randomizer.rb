@@ -6,15 +6,14 @@
 # Monotype Mode - Block catching/receiving invalid Pokemon
 #-------------------------------------------------------------------------------
 EventHandlers.add(:on_pokemon_received, :monotype_check,
-  proc { |sender, e|
-    pokemon = e[0]
+  proc { |pkmn|
+    next if !pkmn || !pkmn.is_a?(Pokemon)
     next if !ChallengeModes.on?(:MONOTYPE_MODE)
-    next if ChallengeModes.valid_monotype_catch?(pokemon)
-    
+    next if ChallengeModes.valid_monotype_catch?(pkmn)
     type_name = GameData::Type.get($PokemonGlobal.challenge_monotype_type).name
-    species_name = pokemon.species_data.name
+    species_name = pkmn.species_data.name
     pbMessage(_INTL("The Monotype challenge prevents you from using {1}! You can only use {2}-type Pokémon.", species_name, type_name))
-    e[0] = nil  # Cancel the Pokemon reception
+    # NOTE: Actual blocking is handled by alias chains on pbAddPokemon
   }
 )
 
@@ -74,36 +73,23 @@ EventHandlers.add(:on_wild_species_chosen, :randomizer_wild,
 #-------------------------------------------------------------------------------
 alias __randomizer__pbAddPokemon pbAddPokemon unless defined?(__randomizer__pbAddPokemon)
 def pbAddPokemon(*args)
-  echoln "=== pbAddPokemon called ==="
-  echoln "  Species: #{args[0]}"
-  echoln "  Level: #{args[1]}"
-  echoln "  ChallengeModes.on?(:RANDOMIZER_MODE): #{ChallengeModes.on?(:RANDOMIZER_MODE)}"
-  echoln "  gift_pokemon setting: #{ChallengeModes::RANDOMIZER_SETTINGS[:gift_pokemon]}"
-  
   if ChallengeModes.on?(:RANDOMIZER_MODE) && ChallengeModes::RANDOMIZER_SETTINGS[:gift_pokemon]
-    echoln "  >>> Randomizing gift Pokemon <<<"
     pkmn = args[0]
     level = args[1] || 1
-    
+
     if pkmn.is_a?(Symbol) || pkmn.is_a?(String)
-      # It's a species symbol/string, randomize it
       original_species = pkmn
       species_data = GameData::Species.get(original_species)
       is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
       randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, level)
-      echoln "  Original: #{original_species} => Randomized: #{randomized_species}"
       args[0] = randomized_species
     elsif pkmn.is_a?(Pokemon)
-      # It's already a Pokemon object, randomize its species
       original_species = pkmn.species
       species_data = pkmn.species_data
       is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
       randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, pkmn.level)
-      
-      echoln "  Original Pokemon object: #{original_species} => Randomized: #{randomized_species}"
-      
+
       if randomized_species != original_species
-        # Create new Pokemon with randomized species but keep other properties
         new_pokemon = Pokemon.new(randomized_species, pkmn.level)
         new_pokemon.form = pkmn.form if new_pokemon.species_data.forms.length > pkmn.form
         new_pokemon.shiny = pkmn.shiny?
@@ -117,11 +103,8 @@ def pbAddPokemon(*args)
         args[0] = new_pokemon
       end
     end
-  else
-    echoln "  >>> NOT randomizing (conditions not met) <<<"
   end
-  echoln "=========================="
-  
+
   return __randomizer__pbAddPokemon(*args)
 end
 
@@ -131,39 +114,25 @@ end
 #-------------------------------------------------------------------------------
 alias __randomizer__pbLoadTrainer pbLoadTrainer unless defined?(__randomizer__pbLoadTrainer)
 def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
-  echoln "=== pbLoadTrainer called ==="
-  echoln "  Trainer: #{tr_type} - #{tr_name} (version #{tr_version})"
-  echoln "  ChallengeModes.on?(:RANDOMIZER_MODE): #{ChallengeModes.on?(:RANDOMIZER_MODE)}"
-  echoln "  trainer_pokemon setting: #{ChallengeModes::RANDOMIZER_SETTINGS[:trainer_pokemon]}"
-  
   trainer = __randomizer__pbLoadTrainer(tr_type, tr_name, tr_version)
-  
+
   if ChallengeModes.on?(:RANDOMIZER_MODE) && ChallengeModes::RANDOMIZER_SETTINGS[:trainer_pokemon]
-    echoln "  >>> Randomizing trainer Pokemon <<<"
-    trainer.party.each_with_index do |pokemon, idx|
+    trainer.party.each do |pokemon|
       original_species = pokemon.species
       species_data = pokemon.species_data
       is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
       randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, pokemon.level)
-      
-      echoln "    [#{idx}] #{original_species} Lv.#{pokemon.level} => #{randomized_species}"
-      
+
       if randomized_species != original_species
-        original_level = pokemon.level  # Save level BEFORE species change
+        original_level = pokemon.level
         pokemon.species = randomized_species
-        pokemon.level = original_level  # Restore level (species= nils @level, causing growth-rate mismatch)
+        pokemon.level = original_level
         pokemon.calc_stats
         pokemon.reset_moves
-        echoln "      ✓ Randomized successfully (Lv.#{pokemon.level})"
-      else
-        echoln "      = No change"
       end
     end
-  else
-    echoln "  >>> NOT randomizing (conditions not met) <<<"
   end
-  echoln "=============================="
-  
+
   return trainer
 end
 

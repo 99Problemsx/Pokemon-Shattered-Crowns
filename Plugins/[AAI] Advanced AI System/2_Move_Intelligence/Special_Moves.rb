@@ -115,7 +115,7 @@ class Battle::AI
     
     party.each do |pkmn|
       next if !pkmn || pkmn.fainted? || pkmn.egg?
-      next if pkmn == user.battler.pokemon  # Skip self
+      next if pkmn == user.pokemon  # Skip self
       
       hp_percent = pkmn.hp.to_f / pkmn.totalhp
       

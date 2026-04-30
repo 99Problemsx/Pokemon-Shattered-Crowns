@@ -79,6 +79,7 @@ class PokemonPauseMenu_Scene
     end
     
     @opacities["challengeOverlay"] = 255 if @opacities
+    @sprites["challengeOverlay"].opacity = 0 if @opacities
   end
   
   def map_has_encounters?

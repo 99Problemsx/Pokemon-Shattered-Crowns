@@ -273,10 +273,22 @@ class Battle::AI
       score += 50
       AdvancedAI.log("  Knock Off defensive item: +50", "Disruption")
       
-      # Eviolite on NFE Pokemon is CRITICAL
+      # Eviolite on NFE Pokemon is CRITICAL — only active if target can still evolve
       if item_id == :EVIOLITE
-        score += 30
-        AdvancedAI.log("  Eviolite removal: +30 (cuts bulk)", "Disruption")
+        nfe = false
+        begin
+          evos = target.pokemon&.species_data&.get_evolutions(true)
+          nfe = evos && !evos.empty?
+        rescue
+          nfe = true  # Conservative: assume active if we can't tell
+        end
+        if nfe
+          score += 30
+          AdvancedAI.log("  Eviolite removal: +30 (cuts bulk on NFE)", "Disruption")
+        else
+          # Fully evolved holder — Eviolite is inert; no extra bonus
+          AdvancedAI.log("  Eviolite removal: no NFE bonus (fully evolved holder)", "Disruption")
+        end
       end
       
       # Heavy-Duty Boots if hazards are up

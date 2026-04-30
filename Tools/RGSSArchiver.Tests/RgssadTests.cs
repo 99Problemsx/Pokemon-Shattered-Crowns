@@ -985,3 +985,169 @@ public class RgssadIntegrationTests
         }
     }
 }
+
+// =============================================================================
+// ScriptProtector tests — RC4 stream cipher for preload scripts
+// =============================================================================
+public class ScriptProtectorTests
+{
+    [Fact]
+    public void ScriptProtect_RoundTrip_PreservesData()
+    {
+        var inputFile = Path.GetTempFileName();
+        var encrypted = Path.ChangeExtension(inputFile, ".scscr");
+        var decrypted = Path.ChangeExtension(inputFile, ".dec.rb");
+        try
+        {
+            byte[] original = System.Text.Encoding.UTF8.GetBytes("puts 'Hello from ScriptProtector!'");
+            File.WriteAllBytes(inputFile, original);
+            byte[] key = new byte[32];
+            Random.Shared.NextBytes(key);
+
+            ScriptProtector.Encrypt(inputFile, encrypted, key);
+            ScriptProtector.Decrypt(encrypted, decrypted, key);
+
+            Assert.Equal(original, File.ReadAllBytes(decrypted));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(encrypted)) File.Delete(encrypted);
+            if (File.Exists(decrypted)) File.Delete(decrypted);
+        }
+    }
+
+    [Fact]
+    public void ScriptProtect_LargeFile_RoundTrip()
+    {
+        var inputFile = Path.GetTempFileName();
+        var encrypted = Path.ChangeExtension(inputFile, ".scscr");
+        var decrypted = Path.ChangeExtension(inputFile, ".dec.rb");
+        try
+        {
+            // Simulate a large script (~100KB)
+            byte[] original = new byte[100_000];
+            Random.Shared.NextBytes(original);
+            File.WriteAllBytes(inputFile, original);
+            byte[] key = new byte[32];
+            Random.Shared.NextBytes(key);
+
+            ScriptProtector.Encrypt(inputFile, encrypted, key);
+            ScriptProtector.Decrypt(encrypted, decrypted, key);
+
+            Assert.Equal(original, File.ReadAllBytes(decrypted));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(encrypted)) File.Delete(encrypted);
+            if (File.Exists(decrypted)) File.Delete(decrypted);
+        }
+    }
+
+    [Fact]
+    public void ScriptProtect_HasCorrectSignature()
+    {
+        var inputFile = Path.GetTempFileName();
+        var encrypted = Path.ChangeExtension(inputFile, ".scscr");
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[32]);
+            byte[] key = new byte[32];
+            Random.Shared.NextBytes(key);
+
+            ScriptProtector.Encrypt(inputFile, encrypted, key);
+
+            byte[] data = File.ReadAllBytes(encrypted);
+            // "SCSCR" + version byte
+            Assert.Equal((byte)'S', data[0]);
+            Assert.Equal((byte)'C', data[1]);
+            Assert.Equal((byte)'S', data[2]);
+            Assert.Equal((byte)'C', data[3]);
+            Assert.Equal((byte)'R', data[4]);
+            Assert.Equal(1, data[5]); // version
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(encrypted)) File.Delete(encrypted);
+        }
+    }
+
+    [Fact]
+    public void ScriptProtect_WrongKey_ProducesDifferentOutput()
+    {
+        var inputFile = Path.GetTempFileName();
+        var encrypted = Path.ChangeExtension(inputFile, ".scscr");
+        var decrypted = Path.ChangeExtension(inputFile, ".dec.rb");
+        try
+        {
+            byte[] original = System.Text.Encoding.UTF8.GetBytes("secret script content");
+            File.WriteAllBytes(inputFile, original);
+
+            byte[] correctKey = new byte[32];
+            byte[] wrongKey = new byte[32];
+            Random.Shared.NextBytes(correctKey);
+            Random.Shared.NextBytes(wrongKey);
+
+            ScriptProtector.Encrypt(inputFile, encrypted, correctKey);
+            ScriptProtector.Decrypt(encrypted, decrypted, wrongKey);
+
+            // Decrypting with wrong key produces garbage, not original
+            Assert.NotEqual(original, File.ReadAllBytes(decrypted));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(encrypted)) File.Delete(encrypted);
+            if (File.Exists(decrypted)) File.Delete(decrypted);
+        }
+    }
+
+    [Fact]
+    public void ScriptProtect_IsScriptFile_DetectsFormat()
+    {
+        var inputFile = Path.GetTempFileName();
+        var encrypted = Path.ChangeExtension(inputFile, ".scscr");
+        try
+        {
+            File.WriteAllBytes(inputFile, new byte[32]);
+            byte[] key = new byte[32];
+            Random.Shared.NextBytes(key);
+
+            ScriptProtector.Encrypt(inputFile, encrypted, key);
+
+            Assert.True(ScriptProtector.IsScriptFile(encrypted));
+            Assert.False(ScriptProtector.IsScriptFile(inputFile));
+        }
+        finally
+        {
+            File.Delete(inputFile);
+            if (File.Exists(encrypted)) File.Delete(encrypted);
+        }
+    }
+
+    [Fact]
+    public void ScriptProtect_ParseHexKey_Works()
+    {
+        byte[] key = ScriptProtector.ParseHexKey("0xA73BF258C19D4E068AD3651FB472E930A73BF258C19D4E068AD3651FB472E930");
+        Assert.Equal(32, key.Length);
+        Assert.Equal(0xA7, key[0]);
+        Assert.Equal(0x3B, key[1]);
+        Assert.Equal(0x30, key[31]);
+    }
+
+    [Fact]
+    public void ScriptProtect_RC4_IsSymmetric()
+    {
+        byte[] key = new byte[32];
+        Random.Shared.NextBytes(key);
+        byte[] plaintext = System.Text.Encoding.UTF8.GetBytes("RC4 is a symmetric stream cipher");
+
+        byte[] encrypted = ScriptProtector.RC4(key, plaintext);
+        byte[] decrypted = ScriptProtector.RC4(key, encrypted);
+
+        Assert.Equal(plaintext, decrypted);
+        Assert.NotEqual(plaintext, encrypted);
+    }
+}

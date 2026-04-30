@@ -106,13 +106,16 @@ class Battle
 end
 
 #===============================================================================
-# Block trading for duplicate species
+# Notify on duplicate species sent via battle storage
+# SC Fix: PE v21.1 uses `class Battle::Peer` (NOT `module Battle::BattlePeer`)
+# and pbStorePokemon takes (player, pkmn). Old code raised NameError at load.
 #===============================================================================
-module Battle::BattlePeer
+class Battle::Peer
   alias __challengemodes_speciesclause__pbStorePokemon pbStorePokemon unless method_defined?(:__challengemodes_speciesclause__pbStorePokemon)
   
-  def pbStorePokemon(pkmn)
-    # Check if caught Pokémon violates species clause
+  def pbStorePokemon(player, pkmn)
+    # Check if caught Pokémon violates species clause (notify only — actual
+    # blocking happens in pbThrowPokeBall above, this is just a fallback msg)
     if ChallengeModes.species_clause? && ChallengeModes.species_in_party?(pkmn.species_data.species)
       species_name = pkmn.species_data.name
       pbMessage(_INTL("You already have a {1} in your party!", species_name))
@@ -120,7 +123,7 @@ module Battle::BattlePeer
     end
     
     # Normal storage (will send to PC if party full or duplicate)
-    return __challengemodes_speciesclause__pbStorePokemon(pkmn)
+    return __challengemodes_speciesclause__pbStorePokemon(player, pkmn)
   end
 end
 

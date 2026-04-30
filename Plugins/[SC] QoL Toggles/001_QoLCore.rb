@@ -104,7 +104,7 @@ end
 # AUTO-RUN hook
 #===============================================================================
 
-EventHandlers.add(:on_player_step_taken_can_transfer, :sc_qol_auto_run,
+EventHandlers.add(:on_player_step_taken, :sc_qol_auto_run,
   proc {
     if qolEnabled?(:AUTO_RUN)
       $game_player.move_speed = 4.5 if $game_player

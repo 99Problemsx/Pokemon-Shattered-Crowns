@@ -10,7 +10,9 @@ class CodexScene
     @category_index = 0
     @entry_index = 0
     @categories = LoreCodex::CATEGORIES.keys
-    @mode = :category  # :category or :entry
+    @mode = :category  # :category, :entry, :search_results
+    @search_query = nil
+    @search_results = []
   end
 
   def pbStartScene
@@ -60,7 +62,7 @@ class CodexScene
 
     # Instructions
     pbDrawTextPositions(overlay, [
-      [_INTL("Z: Open   X: Back"), Graphics.width / 2, Graphics.height - 30, 2,
+      [_INTL("Z: Open   X: Back   S: Search"), Graphics.width / 2, Graphics.height - 30, 2,
        LoreCodex::TEXT_LOCKED, LoreCodex::TEXT_SHADOW]
     ])
   end
@@ -135,6 +137,8 @@ class CodexScene
           @entry_index = 0
           pbPlayDecisionSE
           draw_entries
+        elsif Input.triggerex?(:S)
+          open_search_prompt
         elsif Input.trigger?(Input::BACK)
           pbPlayCancelSE
           break
@@ -149,6 +153,24 @@ class CodexScene
           @entry_index = (@entry_index - 1) % entries.length
           pbPlayCursorSE
           draw_entries
+        elsif Input.triggerex?(:S)
+          open_search_prompt
+        elsif Input.trigger?(Input::BACK)
+          @mode = :category
+          pbPlayCancelSE
+          draw_categories
+        end
+      when :search_results
+        if Input.trigger?(Input::DOWN) && !@search_results.empty?
+          @entry_index = (@entry_index + 1) % @search_results.length
+          pbPlayCursorSE
+          draw_search_results
+        elsif Input.trigger?(Input::UP) && !@search_results.empty?
+          @entry_index = (@entry_index - 1) % @search_results.length
+          pbPlayCursorSE
+          draw_search_results
+        elsif Input.triggerex?(:S)
+          open_search_prompt
         elsif Input.trigger?(Input::BACK)
           @mode = :category
           pbPlayCancelSE
@@ -161,6 +183,72 @@ class CodexScene
   def pbEndScene
     pbDisposeSpriteHash(@sprites)
     @viewport.dispose
+  end
+
+  # ---------------------------------------------------------------------------
+  # Search support
+  # ---------------------------------------------------------------------------
+  def open_search_prompt
+    query = pbMessageFreeText(_INTL("Search the Codex:"), @search_query.to_s, false, 32) rescue nil
+    return if query.nil? || query.strip.empty?
+    @search_query = query.strip
+    rebuild_search_results
+    @mode = :search_results
+    @entry_index = 0
+    draw_search_results
+  end
+
+  def rebuild_search_results
+    needle = @search_query.downcase
+    results = []
+    @categories.each do |cat_id|
+      CodexRegistry.by_category(cat_id).each_value do |entry|
+        next unless pbCodex.discovered?(entry.id)
+        haystack = "#{entry.title} #{entry.text}".downcase
+        results << entry if haystack.include?(needle)
+      end
+    end
+    @search_results = results
+  end
+
+  def draw_search_results
+    overlay = @sprites["overlay"].bitmap
+    overlay.clear
+    pbDrawTextPositions(overlay, [
+      [_INTL("Search: {1}", @search_query.to_s), Graphics.width / 2, 8, 2,
+       LoreCodex::TEXT_TITLE, LoreCodex::TEXT_SHADOW],
+      [_INTL("{1} match(es)", @search_results.length), Graphics.width / 2, 38, 2,
+       LoreCodex::TEXT_BASE, LoreCodex::TEXT_SHADOW]
+    ])
+
+    if @search_results.empty?
+      pbDrawTextPositions(overlay, [
+        [_INTL("No discovered entries match."), Graphics.width / 2, 120, 2,
+         LoreCodex::TEXT_LOCKED, LoreCodex::TEXT_SHADOW]
+      ])
+      return
+    end
+
+    start_idx = [0, @entry_index - 4].max
+    end_idx = [@search_results.length - 1, start_idx + 9].min
+    y = 76
+    (start_idx..end_idx).each do |i|
+      entry = @search_results[i]
+      color = i == @entry_index ? LoreCodex::TEXT_TITLE : LoreCodex::TEXT_BASE
+      pbDrawTextPositions(overlay, [
+        [i == @entry_index ? "\u25b8 " : "  ", 20, y, 0, color, LoreCodex::TEXT_SHADOW],
+        [entry.title, 50, y, 0, color, LoreCodex::TEXT_SHADOW]
+      ])
+      y += 28
+    end
+
+    entry = @search_results[@entry_index]
+    if entry
+      box_y = Graphics.height - 120
+      overlay.fill_rect(10, box_y, Graphics.width - 20, 110, Color.new(0, 0, 0, 160))
+      drawTextEx(overlay, 20, box_y + 8, Graphics.width - 40, 4,
+                 entry.text, LoreCodex::TEXT_BASE, LoreCodex::TEXT_SHADOW)
+    end
   end
 end
 
