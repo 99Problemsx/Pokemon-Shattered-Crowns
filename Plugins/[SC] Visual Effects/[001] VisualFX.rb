@@ -149,14 +149,39 @@ end
 #---------------------------------------
 module SCVisualFX
   PRESETS = [
+    # Original presets
     :sepia, :grayscale, :night, :sunset, :horror,
     :underwater, :dream, :toxic, :frozen, :rage,
     :fireflies, :cave, :volcano, :forest, :rain,
     :storm, :haunted, :fog, :distortion, :bloom,
     :windrain, :water, :lava, :embers,
+    # Atmospheric / Norse / Spirit batch
     :aurora, :wisps, :runes, :glitch, :snow,
     :petals, :dust, :bubbles, :chromatic,
-    :lightning_flash, :heat_shimmer
+    :lightning_flash, :heat_shimmer,
+    # Weather / atmosphere
+    :sandstorm, :blizzard, :rolling_fog, :ash_fall,
+    :hail, :acid_rain, :ground_mist, :steam,
+    # Time of day / light
+    :godrays, :moonbeams, :golden_hour, :blue_hour,
+    :eclipse, :blood_moon, :stained_glass,
+    # Magic / Norse
+    :bifrost, :yggdrasil, :ghost_trail, :cursed,
+    :holy_light, :starfield, :blue_fire, :soul_fire, :ravens,
+    # Battle / action (most are trigger-driven)
+    :critical_zoom, :damage_flash, :slowmo, :ko_fade,
+    :tera_burst, :mega_evolution, :type_flash, :move_impact,
+    # Water / liquid
+    :caustics, :reflection, :rapids, :rain_on_lens,
+    :mirage, :frost_creep,
+    # Stylistic / artistic
+    :watercolor, :pencil_sketch, :cel_shade, :ink_wash,
+    :halftone, :vhs, :old_film, :mosaic,
+    # Transitions (trigger-driven)
+    :iris_wipe, :ripple_wipe, :pixel_dissolve, :slash_wipe, :burst,
+    # Environmental detail
+    :falling_leaves, :moss_overgrowth, :cracked_screen,
+    :scorched, :vines_creeping, :spider_webs
   ]
 
   WATER_TAGS = [:DeepWater, :StillWater, :Water, :Waterfall, :WaterfallCrest]
