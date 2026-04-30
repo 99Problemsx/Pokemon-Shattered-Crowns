@@ -28,5 +28,3 @@ class Battle
     raid_hp_reset_pbEndOfBattle
   end
 end
-
-puts "[Raid Hotfix] Boss HP Reset After Capture loaded"

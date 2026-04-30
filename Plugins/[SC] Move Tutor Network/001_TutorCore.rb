@@ -148,7 +148,8 @@ module TutorNetworkManager
     pkmn = $player.party[pkmn_index]
     return false unless pkmn
 
-    move_data = GameData::Move.get(move_id)
+    move_data = GameData::Move.try_get(move_id)
+    return false unless move_data
 
     if pkmn.hasMove?(move_id)
       pbMessage(_INTL("{1} already knows {2}.", pkmn.name, move_data.name))

@@ -101,12 +101,13 @@ module CraftingManager
     recipe[:materials].each { |mat_item, mat_qty| $bag.remove(mat_item, mat_qty) }
 
     # Grant result
-    result_item = GameData::Item.get(recipe[:result])
+    result_item = GameData::Item.try_get(recipe[:result])
     $bag.add(recipe[:result], recipe[:amount])
     data.record_craft(recipe_key)
 
     pbSEPlay(CraftingSystem::SE_CRAFT)
-    pbMessage(_INTL("You crafted {1} x{2}!", result_item.name, recipe[:amount]))
+    result_name = result_item ? result_item.name : recipe[:result].to_s
+    pbMessage(_INTL("You crafted {1} x{2}!", result_name, recipe[:amount]))
     true
   end
 
