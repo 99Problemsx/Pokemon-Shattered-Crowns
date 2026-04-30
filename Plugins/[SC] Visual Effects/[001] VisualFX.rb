@@ -153,7 +153,10 @@ module SCVisualFX
     :underwater, :dream, :toxic, :frozen, :rage,
     :fireflies, :cave, :volcano, :forest, :rain,
     :storm, :haunted, :fog, :distortion, :bloom,
-    :windrain, :water, :lava, :embers
+    :windrain, :water, :lava, :embers,
+    :aurora, :wisps, :runes, :glitch, :snow,
+    :petals, :dust, :bubbles, :chromatic,
+    :lightning_flash, :heat_shimmer
   ]
 
   WATER_TAGS = [:DeepWater, :StillWater, :Water, :Waterfall, :WaterfallCrest]
