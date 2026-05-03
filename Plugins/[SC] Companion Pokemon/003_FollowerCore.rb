@@ -565,7 +565,7 @@ module CompanionFollower
     pokename = get_pokemon&.name
     message = _INTL("{1} seems to be holding something...") if nil_or_empty?(message)
     pbMessage(_INTL(message, pokename))
-    item = GameData::Item.get(item)
+    item = GameData::Item.try_get(item)
     return false if !item || quantity < 1
     itemname = (quantity > 1) ? item.name_plural : item.name
     pocket = item.pocket
@@ -577,7 +577,7 @@ module CompanionFollower
       elsif item == :DNASPLICERS
         pbMessage(_INTL("\\me[{1}]{3} found \\c[1]{2}\\c[0]!\\wtnp[30]", meName, itemname, pokename))
       elsif item.is_machine?
-        pbMessage(_INTL("\\me[{1}]{4} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", meName, itemname, GameData::Move.get(move).name, pokename))
+        pbMessage(_INTL("\\me[{1}]{4} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", meName, itemname, (GameData::Move.try_get(move)&.name || "????"), pokename))
       elsif quantity > 1
         pbMessage(_INTL("\\me[{1}]{4} found {2} \\c[1]{3}\\c[0]!\\wtnp[30]", meName, quantity, itemname, pokename))
       elsif itemname.starts_with_vowel?
@@ -597,7 +597,7 @@ module CompanionFollower
     elsif item == :DNASPLICERS
       pbMessage(_INTL("{1} found \\c[1]{2}\\c[0]!\\wtnp[30]", pokename, itemname))
     elsif item.is_machine?
-      pbMessage(_INTL("{1} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", pokename, itemname, GameData::Move.get(move).name))
+      pbMessage(_INTL("{1} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", pokename, itemname, (GameData::Move.try_get(move)&.name || "????")))
     elsif quantity > 1
       pbMessage(_INTL("{1} found {2} \\c[1]{3}\\c[0]!\\wtnp[30]", pokename, quantity, itemname))
     elsif itemname.starts_with_vowel?

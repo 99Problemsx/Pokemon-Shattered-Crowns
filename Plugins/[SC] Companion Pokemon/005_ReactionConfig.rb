@@ -7,7 +7,7 @@
 
 module CompanionPokemon
   ENABLED    = true
-  DEBUG_MODE = true
+  DEBUG_MODE = false
 
   #=============================================================================
   # REACTION CHECK — how often to evaluate environmental reactions
