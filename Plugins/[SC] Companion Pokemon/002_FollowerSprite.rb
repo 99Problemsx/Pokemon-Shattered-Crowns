@@ -369,7 +369,7 @@ class Game_FollowingPkmn < Game_Follower
         @ice_prev_tile = [behind_x, behind_y]
         @ice_last_leader = [leader.x, leader.y]
         @direction = leader.direction
-        echoln "[SC] ICE-INIT: follower(#{behind_x},#{behind_y}) leader(#{leader.x},#{leader.y}) dir=#{leader.direction}"
+        echoln "[SC] ICE-INIT: follower(#{behind_x},#{behind_y}) leader(#{leader.x},#{leader.y}) dir=#{leader.direction}" if CompanionPokemon::DEBUG_MODE
       end
       cur_leader = [leader.x, leader.y]
       if cur_leader != @ice_last_leader
@@ -377,7 +377,7 @@ class Game_FollowingPkmn < Game_Follower
         @ice_prev_tile = @ice_last_leader.dup
         @ice_last_leader = cur_leader.dup
         echoln "[SC] ICE-STEP: leader moved to (#{leader.x},#{leader.y}) dir=#{leader.direction} " \
-               "follower target: (#{old_prev[0]},#{old_prev[1]}) -> (#{@ice_prev_tile[0]},#{@ice_prev_tile[1]})"
+               "follower target: (#{old_prev[0]},#{old_prev[1]}) -> (#{@ice_prev_tile[0]},#{@ice_prev_tile[1]})" if CompanionPokemon::DEBUG_MODE
       end
       _apply_forced_position(@ice_prev_tile, leader)
       return

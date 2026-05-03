@@ -149,11 +149,39 @@ end
 #---------------------------------------
 module SCVisualFX
   PRESETS = [
+    # Original presets
     :sepia, :grayscale, :night, :sunset, :horror,
     :underwater, :dream, :toxic, :frozen, :rage,
     :fireflies, :cave, :volcano, :forest, :rain,
     :storm, :haunted, :fog, :distortion, :bloom,
-    :windrain, :water, :lava
+    :windrain, :water, :lava, :embers,
+    # Atmospheric / Norse / Spirit batch
+    :aurora, :wisps, :runes, :glitch, :snow,
+    :petals, :dust, :bubbles, :chromatic,
+    :lightning_flash, :heat_shimmer,
+    # Weather / atmosphere
+    :sandstorm, :blizzard, :rolling_fog, :ash_fall,
+    :hail, :acid_rain, :ground_mist, :steam,
+    # Time of day / light
+    :godrays, :moonbeams, :golden_hour, :blue_hour,
+    :eclipse, :blood_moon, :stained_glass,
+    # Magic / Norse
+    :bifrost, :yggdrasil, :ghost_trail, :cursed,
+    :holy_light, :starfield, :blue_fire, :soul_fire, :ravens,
+    # Battle / action (most are trigger-driven)
+    :critical_zoom, :damage_flash, :slowmo, :ko_fade,
+    :tera_burst, :mega_evolution, :type_flash, :move_impact,
+    # Water / liquid
+    :caustics, :reflection, :rapids, :rain_on_lens,
+    :mirage, :frost_creep,
+    # Stylistic / artistic
+    :watercolor, :pencil_sketch, :cel_shade, :ink_wash,
+    :halftone, :vhs, :old_film, :mosaic,
+    # Transitions (trigger-driven)
+    :iris_wipe, :ripple_wipe, :pixel_dissolve, :slash_wipe, :burst,
+    # Environmental detail
+    :falling_leaves, :moss_overgrowth, :cracked_screen,
+    :scorched, :vines_creeping, :spider_webs
   ]
 
   WATER_TAGS = [:DeepWater, :StillWater, :Water, :Waterfall, :WaterfallCrest]
@@ -334,6 +362,52 @@ module SCVisualFX
   end
 
   #---------------------------------------------------------------------------
+  # Fire a trigger-driven shader (one-shot animations like critical_zoom,
+  # tera_burst, iris_wipe, lightning_flash, etc).
+  #
+  # Applies the shader if it isn't active yet, then sets `triggerTime` to the
+  # current time so the shader's animation plays out and stops on its own.
+  # Any extra properties are forwarded to the shader (e.g. color, duration,
+  # focus, source).
+  #
+  #   pbFireShader(:critical_zoom)
+  #   pbFireShader(:damage_flash, color: [1.0, 0.2, 0.2])
+  #   pbFireShader(:type_flash,   color: [1.0, 0.5, 0.0])  # fire-type
+  #   pbFireShader(:iris_wipe,    duration: 0.8)
+  #---------------------------------------------------------------------------
+  def self.fire_shader(key, **properties)
+    vp = Spriteset_Map.viewport
+    return false unless vp
+
+    shader = vp.get_shader(key)
+    if shader.nil? || shader.disposed?
+      vp.add_shader(key, properties)
+      shader = vp.get_shader(key)
+      disable_sun
+    else
+      # Update any caller-provided uniforms before firing
+      properties.each do |name, value|
+        values = Array(value)
+        case values.count
+        when 1
+          if values.first.is_a?(Bitmap)
+            shader.set_bitmap(name.to_s, values.first) rescue nil
+          else
+            shader.set_float(name.to_s, values.first.to_f) rescue nil
+          end
+        when 2 then shader.set_vec2(name.to_s, *values) rescue nil
+        when 3 then shader.set_vec3(name.to_s, *values) rescue nil
+        when 4 then shader.set_vec4(name.to_s, *values) rescue nil
+        end
+      end
+    end
+    return false unless shader
+
+    shader.set_float('triggerTime', Graphics.frame_count / 60.0) rescue nil
+    true
+  end
+
+  #---------------------------------------------------------------------------
   # Per-frame update: time + water scroll offset
   #---------------------------------------------------------------------------
   def self.update_shaders
@@ -380,6 +454,10 @@ end
 
 def pbRemoveWater
   SCVisualFX.remove_water
+end
+
+def pbFireShader(key, **properties)
+  SCVisualFX.fire_shader(key, **properties)
 end
 
 def pbInvertPlayer(enabled)

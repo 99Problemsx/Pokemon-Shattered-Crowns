@@ -23,7 +23,7 @@ module CompanionReactionEngine
     return unless CompanionPokemon::ENABLED
 
     pkmn = CompanionFollower.get_pokemon
-    return unless pkmn && !pkmn.egg?
+    return unless pkmn && !pkmn.egg? && pkmn.respond_to?(:affection_level)
 
     # Affection gain from following — always active, even if follower hidden
     track_follow_affection(pkmn)
@@ -72,6 +72,7 @@ module CompanionReactionEngine
   #=============================================================================
 
   def self.track_follow_affection(pkmn)
+    return unless pkmn.respond_to?(:add_affection)
     @affection_steps = (@affection_steps || 0) + 1
     if @affection_steps >= CompanionPokemon::FOLLOW_AFFECTION_STEPS
       @affection_steps = 0
@@ -366,7 +367,13 @@ module CompanionReactionEngine
     base_msgs = (CompanionPokemon::TALK_REACTIONS[level] || []).dup
     ctx_entries = []   # [{msg: String, emote: Symbol, move: Symbol}]
     CompanionPokemon::REACTIONS.each_value do |data|
-      next unless data[:condition]&.call(pkmn)
+      triggered = false
+      begin
+        triggered = data[:condition]&.call(pkmn)
+      rescue
+        triggered = false
+      end
+      next unless triggered
       found = pick_message_list_for_level(data[:messages], level)
       next if !found || found.empty?
       ctx_emote = pick_for_level(data[:emote], level) if data[:emote]
@@ -414,7 +421,7 @@ module CompanionReactionEngine
     pkmn.play_cry rescue nil if level == :MAX || level == :HIGH
 
     # Grant affection for interacting
-    pkmn.add_affection(CompanionPokemon::TALK_AFFECTION_GAIN)
+    pkmn.add_affection(CompanionPokemon::TALK_AFFECTION_GAIN) if pkmn.respond_to?(:add_affection)
 
     pbMessage(_INTL(msg, pkmn.name))
     true

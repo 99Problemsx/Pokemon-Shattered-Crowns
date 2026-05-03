@@ -411,7 +411,7 @@ class Battle
     if @opponent && !wildBattle? && AdvancedAI::ENABLE_LEAD_SELECTION
       @opponent.each_with_index do |trainer, idxTrainer|
         next unless trainer
-        skill = trainer.skill || 100
+        skill = (trainer.respond_to?(:skill_level) ? trainer.skill_level : nil) || 100
         next unless AdvancedAI.qualifies_for_advanced_ai?(skill)
         # Respect UsePokemonInOrder — don't reorder party
         next if trainer.flags&.include?("UsePokemonInOrder")

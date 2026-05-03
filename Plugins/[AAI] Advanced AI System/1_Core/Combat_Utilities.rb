@@ -372,7 +372,11 @@ module AdvancedAI
         mod *= 1.5 if effective_type == :STEEL && attacker.hasActiveAbility?(:STEELWORKER)
         # Supreme Overlord: +10% per fainted ally (max +50%)
         if attacker.hasActiveAbility?(:SUPREMEOVERLORD)
-          fainted = (attacker.effects[PBEffects::SupremeOverlord] rescue 0) || 0
+          fainted = if defined?(PBEffects::SupremeOverlord)
+                      (attacker.effects[PBEffects::SupremeOverlord] rescue 0) || 0
+                    else
+                      0
+                    end
           mod *= (1.0 + fainted * 0.1) if fainted > 0
         end
       else

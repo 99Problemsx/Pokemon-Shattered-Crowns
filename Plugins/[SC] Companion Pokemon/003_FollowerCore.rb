@@ -45,12 +45,6 @@ class Game_Temp
   attr_accessor :starting_over
   attr_accessor :no_follower_field_move
   attr_writer   :pokecenter_following_pkmn
-  attr_accessor :status_pulse
-
-  def status_pulse
-    @status_pulse = [50.0, 50.0, 150.0, (100 / (Graphics.frame_rate * 2.0))] if !@status_pulse
-    return @status_pulse
-  end
 
   def pokecenter_following_pkmn
     @pokecenter_following_pkmn = 0 if !@pokecenter_following_pkmn
@@ -457,24 +451,10 @@ module CompanionFollower
   end
 
   #=============================================================================
-  # Status tone overlay (used by reaction system)
+  # Status tone overlay
+  # Implemented in 008_FollowerVisuals.rb via Sprite_Character#update —
+  # uses proper RGB sprite tone with pulse animation, like Following Pokemon EX.
   #=============================================================================
-
-  def self.apply_status_tone(pkmn)
-    return unless APPLY_STATUS_TONES
-    event = get_event
-    return unless event
-    status = pkmn.status
-    tone_data = CompanionPokemon::STATUS_TONES[status] rescue nil
-    if tone_data && status != :NONE
-      r, g, b = tone_data
-      if r != 0 || g != 0 || b != 0
-        event.character_hue = ((r + g + b) / 3.0).to_i rescue 0
-      end
-    else
-      event.character_hue = 0 rescue nil
-    end
-  end
 
   #=============================================================================
   # Airborne / Waterborne checks
@@ -565,7 +545,7 @@ module CompanionFollower
     pokename = get_pokemon&.name
     message = _INTL("{1} seems to be holding something...") if nil_or_empty?(message)
     pbMessage(_INTL(message, pokename))
-    item = GameData::Item.get(item)
+    item = GameData::Item.try_get(item)
     return false if !item || quantity < 1
     itemname = (quantity > 1) ? item.name_plural : item.name
     pocket = item.pocket
@@ -577,7 +557,7 @@ module CompanionFollower
       elsif item == :DNASPLICERS
         pbMessage(_INTL("\\me[{1}]{3} found \\c[1]{2}\\c[0]!\\wtnp[30]", meName, itemname, pokename))
       elsif item.is_machine?
-        pbMessage(_INTL("\\me[{1}]{4} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", meName, itemname, GameData::Move.get(move).name, pokename))
+        pbMessage(_INTL("\\me[{1}]{4} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", meName, itemname, (GameData::Move.try_get(move)&.name || "????"), pokename))
       elsif quantity > 1
         pbMessage(_INTL("\\me[{1}]{4} found {2} \\c[1]{3}\\c[0]!\\wtnp[30]", meName, quantity, itemname, pokename))
       elsif itemname.starts_with_vowel?
@@ -597,7 +577,7 @@ module CompanionFollower
     elsif item == :DNASPLICERS
       pbMessage(_INTL("{1} found \\c[1]{2}\\c[0]!\\wtnp[30]", pokename, itemname))
     elsif item.is_machine?
-      pbMessage(_INTL("{1} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", pokename, itemname, GameData::Move.get(move).name))
+      pbMessage(_INTL("{1} found \\c[1]{2} {3}\\c[0]!\\wtnp[30]", pokename, itemname, (GameData::Move.try_get(move)&.name || "????")))
     elsif quantity > 1
       pbMessage(_INTL("{1} found {2} \\c[1]{3}\\c[0]!\\wtnp[30]", pokename, quantity, itemname))
     elsif itemname.starts_with_vowel?

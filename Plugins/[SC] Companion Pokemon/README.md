@@ -390,7 +390,7 @@ Triggered after healing at a Pokemon Center:
 ## Cross-Plugin Integration
 
 - **CompanionFollower** -- Standalone abstraction layer for follower access, animations, and move routes via Essentials' native follower system
-- **Pokemon Affection** -- Reads `affection_level`, calls `add_affection` for passive gains
+- **Pokemon Affection** -- _Optional_. When installed, reaction tiers use the affection scale and passive `add_affection` gains kick in. When absent, the shim in `000_AffectionShim.rb` derives tiers from the vanilla `happiness` value instead, and passive gains are no-ops.
 - **Memory Lane** -- Records first companion walk
 - **Event Hooks Used** -- `:on_player_step_taken`, `:on_game_load`, `:on_enter_map`, `:on_end_battle`, `:on_pokemon_level_up`, `:on_pokemon_evolved`, `:on_faint`, `:on_wild_pokemon_caught`, `:on_pokemon_center_heal`
 

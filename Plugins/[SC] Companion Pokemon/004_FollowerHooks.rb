@@ -129,12 +129,26 @@ end
 
 alias __sc_follower__pbPokeCenterPC pbPokeCenterPC unless defined?(__sc_follower__pbPokeCenterPC)
 def pbPokeCenterPC(*args)
-  $game_temp.pokecenter_following_pkmn = 0
-  if CompanionFollower.active?
-    $game_temp.pokecenter_following_pkmn = 1
-    $game_temp.pokecenter_following_pkmn = 2 if CompanionFollower::SHOW_POKECENTER_ANIMATION
+  active_before = CompanionFollower.active?
+  show_anim     = active_before && CompanionFollower::SHOW_POKECENTER_ANIMATION
+  $game_temp.pokecenter_following_pkmn = active_before ? (show_anim ? 2 : 1) : 0
+
+  # Pre-heal: pull the follower back into its Poke Ball with a flash animation
+  if show_anim
+    CompanionFollower.animation(CompanionFollower::ANIMATION_COME_IN)
+    pbWait(0.45)
+    CompanionFollower.toggle_off(false)
   end
+
   ret = __sc_follower__pbPokeCenterPC(*args)
+
+  # Post-heal: pop the follower back out
+  if show_anim
+    CompanionFollower.toggle_on(false)
+    CompanionFollower.animation(CompanionFollower::ANIMATION_COME_OUT)
+    pbWait(0.45)
+  end
+
   CompanionFollower.refresh(false)
   return ret
 end

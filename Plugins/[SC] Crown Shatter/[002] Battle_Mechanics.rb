@@ -125,7 +125,7 @@ class Battle
   #=============================================================================
   def pbCrownShatter(idxBattler)
     battler = @battlers[idxBattler]
-    return if !battler || battler.fainted?
+    return if !battler || battler.fainted? || !battler.pokemon
     shatter_type = battler.pokemon.types[0]  # Primary type
     shatter_type = :NORMAL if !shatter_type || !CrownShatter::SHATTER_FIELDS[shatter_type]
     field_data = CrownShatter::SHATTER_FIELDS[shatter_type]

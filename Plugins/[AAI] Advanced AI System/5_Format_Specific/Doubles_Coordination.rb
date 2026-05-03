@@ -1012,7 +1012,7 @@ module AdvancedAI
         end
         
         # Don't spam (becomes predictable)
-        if attacker.effects[PBEffects::AllySwitch]
+        if defined?(PBEffects::AllySwitch) && attacker.effects[PBEffects::AllySwitch]
           score -= 40
         end
         

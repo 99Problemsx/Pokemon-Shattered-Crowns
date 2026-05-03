@@ -237,11 +237,11 @@ class Battle::AI
     end
     
     item_id = target.item_id
-    
+
     # Check if item is unlosable (Mega Stones, Z-Crystals, etc.)
     # Knock Off CANNOT remove unlosable items!
-    item_data = GameData::Item.get(item_id)
-    if item_data.unlosable?(target.species, target.ability)
+    item_data = GameData::Item.try_get(item_id)
+    if item_data && item_data.unlosable?(target.species, target.ability)
       AdvancedAI.log("  Knock Off: Item is unlosable (damage boost only)", "Disruption")
       return 20  # 1.5x damage boost still applies
     end
@@ -321,7 +321,7 @@ class Battle::AI
     end
     
     # LOW VALUE: Berries
-    if GameData::Item.get(item_id).is_berry?
+    if GameData::Item.try_get(item_id)&.is_berry?
       score += 25
       AdvancedAI.log("  Knock Off Berry: +25", "Disruption")
     end
