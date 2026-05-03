@@ -19,10 +19,13 @@
   `defined?(PBEffects::X)` first.
 
 - **Crash-safe `GameData` lookups** in scoring code. `GameData::Item.get`
-  (Disruption_Moves.rb:243, 324) and `GameData::Ability.get`
-  (Advanced_Abilities.rb:93) raised on item/ability IDs that no longer
-  exist (after PBS edits or third-party plugin uninstalls). Switched to
-  `try_get` with nil-safe chaining.
+  (Disruption_Moves.rb:243, 324), `GameData::Ability.get`
+  (Advanced_Abilities.rb:93), and `GameData::Species.get`
+  (Battle_Personalities.rb:104, Win_Conditions.rb:364/365/375/376) raised
+  on item/ability/species IDs that no longer exist (after PBS edits,
+  save-file leftovers, or third-party plugin uninstalls). Switched to
+  `try_get` with nil-safe chaining and sensible fallbacks (default 100
+  base speed, skip personality scoring for unknown species).
 
 - **Production debug noise**. `DEBUG_MODE = true` in `0_Settings.rb` and
   two unconditional `echoln` lines at the bottom of `Debug_Menu.rb`

@@ -359,21 +359,24 @@ module AdvancedAI
         score += 40
       end
       
+      # Helper: base SPEED with fallback for unknown/removed species (default 100 = neutral)
+      base_speed = ->(m) { GameData::Species.try_get(m.species)&.base_stats&.[](:SPEED) || 100 }
+
       if battle.field.effects[PBEffects::TrickRoom] && battle.field.effects[PBEffects::TrickRoom] > 0
         # Check if we benefit from TR (use base stats for reliable thresholds)
-        our_slow = our_side.count { |m| m && !m.fainted? && GameData::Species.get(m.species).base_stats[:SPEED] < 80 }
-        opp_slow = opp_side.count { |m| m && !m.fainted? && GameData::Species.get(m.species).base_stats[:SPEED] < 80 }
-        
+        our_slow = our_side.count { |m| m && !m.fainted? && base_speed.call(m) < 80 }
+        opp_slow = opp_side.count { |m| m && !m.fainted? && base_speed.call(m) < 80 }
+
         if our_slow > opp_slow
           score += 35
         else
           score -= 20
         end
       end
-      
+
       # Natural speed advantage (use base stats for reliable thresholds)
-      our_fast = our_side.count { |m| m && !m.fainted? && GameData::Species.get(m.species).base_stats[:SPEED] >= 100 }
-      opp_fast = opp_side.count { |m| m && !m.fainted? && GameData::Species.get(m.species).base_stats[:SPEED] >= 100 }
+      our_fast = our_side.count { |m| m && !m.fainted? && base_speed.call(m) >= 100 }
+      opp_fast = opp_side.count { |m| m && !m.fainted? && base_speed.call(m) >= 100 }
       
       if our_fast > opp_fast
         score += (our_fast - opp_fast) * 15

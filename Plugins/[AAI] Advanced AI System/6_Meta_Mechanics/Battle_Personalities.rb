@@ -101,7 +101,9 @@ module AdvancedAI
         next if !pokemon || pokemon.egg?
         
         # Heuristic role detection from base stats (no active battler needed)
-        base = GameData::Species.get(pokemon.species).base_stats
+        species_data = GameData::Species.try_get(pokemon.species)
+        next unless species_data
+        base = species_data.base_stats
         spd = base[:SPEED]
         atk = [base[:ATTACK], base[:SPECIAL_ATTACK]].max
         def_ = [base[:DEFENSE], base[:SPECIAL_DEFENSE]].min
