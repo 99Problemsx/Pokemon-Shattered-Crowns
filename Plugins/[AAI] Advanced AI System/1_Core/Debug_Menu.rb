@@ -301,6 +301,8 @@ class Battle::Battler
 end
 
 # Initialization complete
-echoln "[AAI Debug] Debug Menu & Move Explanations loaded ✅"
-echoln "[AAI Debug] Note: AI explanation integration will be loaded after Move_Scorer"
+if defined?(AdvancedAI) && AdvancedAI::DEBUG_MODE
+  echoln "[AAI Debug] Debug Menu & Move Explanations loaded"
+  echoln "[AAI Debug] Note: AI explanation integration will be loaded after Move_Scorer"
+end
 

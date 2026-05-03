@@ -18,7 +18,7 @@ module AdvancedAI
   MIN_SKILL_FOR_AUTO_ACTIVATION = 70
   
   # Debug mode - detailed logging in console
-  DEBUG_MODE = true
+  DEBUG_MODE = false
   
   # Debug switch intelligence specifically (verbose logging)
   DEBUG_SWITCH_INTELLIGENCE = false

@@ -90,7 +90,7 @@ class Battle::AI
     ability_name = ""
     AdvancedAI::SNOWBALL_ABILITIES.each do |ab, _|
       if target.hasActiveAbility?(ab)
-        ability_name = GameData::Ability.get(ab).name
+        ability_name = GameData::Ability.try_get(ab)&.name || ab.to_s
         break
       end
     end
