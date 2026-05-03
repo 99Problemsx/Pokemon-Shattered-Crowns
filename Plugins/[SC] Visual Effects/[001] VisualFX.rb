@@ -362,6 +362,52 @@ module SCVisualFX
   end
 
   #---------------------------------------------------------------------------
+  # Fire a trigger-driven shader (one-shot animations like critical_zoom,
+  # tera_burst, iris_wipe, lightning_flash, etc).
+  #
+  # Applies the shader if it isn't active yet, then sets `triggerTime` to the
+  # current time so the shader's animation plays out and stops on its own.
+  # Any extra properties are forwarded to the shader (e.g. color, duration,
+  # focus, source).
+  #
+  #   pbFireShader(:critical_zoom)
+  #   pbFireShader(:damage_flash, color: [1.0, 0.2, 0.2])
+  #   pbFireShader(:type_flash,   color: [1.0, 0.5, 0.0])  # fire-type
+  #   pbFireShader(:iris_wipe,    duration: 0.8)
+  #---------------------------------------------------------------------------
+  def self.fire_shader(key, **properties)
+    vp = Spriteset_Map.viewport
+    return false unless vp
+
+    shader = vp.get_shader(key)
+    if shader.nil? || shader.disposed?
+      vp.add_shader(key, properties)
+      shader = vp.get_shader(key)
+      disable_sun
+    else
+      # Update any caller-provided uniforms before firing
+      properties.each do |name, value|
+        values = Array(value)
+        case values.count
+        when 1
+          if values.first.is_a?(Bitmap)
+            shader.set_bitmap(name.to_s, values.first) rescue nil
+          else
+            shader.set_float(name.to_s, values.first.to_f) rescue nil
+          end
+        when 2 then shader.set_vec2(name.to_s, *values) rescue nil
+        when 3 then shader.set_vec3(name.to_s, *values) rescue nil
+        when 4 then shader.set_vec4(name.to_s, *values) rescue nil
+        end
+      end
+    end
+    return false unless shader
+
+    shader.set_float('triggerTime', Graphics.frame_count / 60.0) rescue nil
+    true
+  end
+
+  #---------------------------------------------------------------------------
   # Per-frame update: time + water scroll offset
   #---------------------------------------------------------------------------
   def self.update_shaders
@@ -408,6 +454,10 @@ end
 
 def pbRemoveWater
   SCVisualFX.remove_water
+end
+
+def pbFireShader(key, **properties)
+  SCVisualFX.fire_shader(key, **properties)
 end
 
 def pbInvertPlayer(enabled)
