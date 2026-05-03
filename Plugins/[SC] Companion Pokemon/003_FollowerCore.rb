@@ -45,12 +45,6 @@ class Game_Temp
   attr_accessor :starting_over
   attr_accessor :no_follower_field_move
   attr_writer   :pokecenter_following_pkmn
-  attr_accessor :status_pulse
-
-  def status_pulse
-    @status_pulse = [50.0, 50.0, 150.0, (100 / (Graphics.frame_rate * 2.0))] if !@status_pulse
-    return @status_pulse
-  end
 
   def pokecenter_following_pkmn
     @pokecenter_following_pkmn = 0 if !@pokecenter_following_pkmn
@@ -457,24 +451,10 @@ module CompanionFollower
   end
 
   #=============================================================================
-  # Status tone overlay (used by reaction system)
+  # Status tone overlay
+  # Implemented in 008_FollowerVisuals.rb via Sprite_Character#update —
+  # uses proper RGB sprite tone with pulse animation, like Following Pokemon EX.
   #=============================================================================
-
-  def self.apply_status_tone(pkmn)
-    return unless APPLY_STATUS_TONES
-    event = get_event
-    return unless event
-    status = pkmn.status
-    tone_data = CompanionPokemon::STATUS_TONES[status] rescue nil
-    if tone_data && status != :NONE
-      r, g, b = tone_data
-      if r != 0 || g != 0 || b != 0
-        event.character_hue = ((r + g + b) / 3.0).to_i rescue 0
-      end
-    else
-      event.character_hue = 0 rescue nil
-    end
-  end
 
   #=============================================================================
   # Airborne / Waterborne checks
