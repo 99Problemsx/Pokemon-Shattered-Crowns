@@ -1,7 +1,8 @@
 #===============================================================================
-# [SC] Level Caps Ex - Main (v2.4.0)
+# [SC] Level Caps Ex - Main (v2.5.1)
 # Shattered Crowns fork of Level Caps EX v2.3.2
-# Key fix: nil guards for $game_switches/$game_variables during early init
+# Fixes: nil guards for early init; soft cap no longer clamps level
+# (mode 2 now correctly allows overlevel with reduced EXP, per docs).
 #===============================================================================
 
 #-------------------------------------------------------------------------------
@@ -22,9 +23,15 @@ class Pokemon
     
     # Additional check for level caps - but respect bypass switch
     # SC Fix: Guard against $game_switches being nil during early initialization
-    # Note: Obedience cap does NOT clamp level — it allows overlevel but causes disobedience
+    # Mode behaviour:
+    #   * Hard Cap (1) — clamp level at the cap. EXP is also blocked elsewhere.
+    #   * Soft / EXP Cap (2) — DON'T clamp; the player can cross the cap, EXP
+    #     gain past it is just heavily reduced (see pbGainExpOne below). The
+    #     previous build clamped here too, which made mode 2 indistinguishable
+    #     from mode 1 in practice.
+    #   * Obedience Cap (3) — don't clamp; overlevel triggers disobedience.
     if $game_switches && !$game_switches[LevelCapsEX::LEVEL_CAP_BYPASS_SWITCH]
-      if (LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?) && value > LevelCapsEX.level_cap
+      if LevelCapsEX.hard_cap? && value > LevelCapsEX.level_cap
         value = LevelCapsEX.level_cap
       end
     end
@@ -89,49 +96,47 @@ class Battle
     end
   end
 
-  # Fallback protection: Override pbGainExp to filter Pokemon before they reach pbGainExpOne
-  # This ensures level cap checks work even if another plugin overrides pbGainExpOne
-  alias __level_caps_pbGainExp pbGainExp unless method_defined?(:__level_caps_pbGainExp)
-  
-  def pbGainExp
-    
-    # Filter out Pokemon that shouldn't gain EXP due to hard cap BEFORE calling pbGainExpOne
-    if LevelCapsEX.hard_cap?
-      p1 = pbParty(0)
-      @battlers.each do |b|
-        next unless b&.opposes?
-        next if b.participants.length == 0
-        next unless b.fainted? || b.captured
-        
-        # Remove participants that are at/above level cap
-        b.participants.delete_if do |partic|
-          pkmn = p1[partic]
-          if pkmn && pkmn.level >= LevelCapsEX.level_cap
-            true
-          else
-            false
-          end
-        end
-      end
-    end
-    
-    # Call original method
-    __level_caps_pbGainExp
-  end
+  # NOTE: An earlier "fallback protection" override of pbGainExp removed
+  # at-cap Pokemon from `b.participants` before calling the original. That
+  # caused two problems:
+  #
+  #   1. If the lead was the only participant and was at the cap, the
+  #      participants list became empty. Essentials' pbGainExp then hit
+  #      `next if b.participants.length == 0` and skipped that defeated
+  #      battler entirely — so Exp Share / Exp All recipients (including
+  #      benched Pokemon below the cap) got nothing.
+  #
+  #   2. Permanently mutating `b.participants` leaked into other systems
+  #      that read the same list (EVs, friendship, captured-Pokemon stats).
+  #
+  # The per-recipient block in pbGainExpOne below is sufficient — it fires
+  # for participants, Exp Share holders, and Exp All recipients alike with
+  # no list mutation needed.
 
   alias __level_caps_pbGainExpOne pbGainExpOne unless method_defined?(:__level_caps_pbGainExpOne)
   
   def pbGainExpOne(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
     pkmn = pbParty(0)[idxParty]   # The Pokémon gaining Exp from defeatedBattler
     growth_rate = pkmn.growth_rate
-    
-    # Hard level cap check - completely block exp gain
+
+    # Hard level cap — completely block EXP gain for at-cap Pokemon, and bank
+    # what they would have earned so it can be paid out when the cap rises.
     if LevelCapsEX.hard_cap? && pkmn.level >= LevelCapsEX.level_cap
-      # Store blocked EXP if storage is enabled (awarded when cap increases)
       if LevelCapsEX::EXP_STORAGE_ENABLED
         LevelCapsEX.store_blocked_exp(pkmn, idxParty, defeatedBattler, numPartic, expShare, expAll)
       end
       return
+    end
+
+    # Soft / Obedience cap — by default, at-cap Pokemon should NOT pick up
+    # passive Exp Share / Exp All gains. Direct participation still leaks
+    # through (and goes through the soft cap's reduction curve below).
+    # Toggle via SHARED_EXP_RESPECTS_CAP.
+    if LevelCapsEX::SHARED_EXP_RESPECTS_CAP &&
+       (LevelCapsEX.soft_cap? || LevelCapsEX.obedience_cap?) &&
+       pkmn.level >= LevelCapsEX.level_cap
+      is_partic = defeatedBattler.participants.include?(idxParty)
+      return if !is_partic   # benched recipient via Exp Share / Exp All
     end
     
     # Don't bother calculating if gainer is already at max Exp
@@ -302,9 +307,15 @@ class Battle::Battler
     ret = __level_cap__pbObedienceCheck?(*args)
     db = @disobeyed
     @disobeyed = false
-    return ret if ret || db
-    # Level Cap Disobedience checks
-    return true if !LevelCapsEX.obedience_cap?
+    # If the base check already triggered disobedience this turn, respect it.
+    return ret if db
+    # If the base check decided to disobey (returned false), respect that too.
+    return ret unless ret
+    # Otherwise the base check said "obey" — but the player might have all
+    # badges, which short-circuits Essentials' obedience entirely. We still
+    # want our level-cap obedience to fire for overlevelled Pokemon, so the
+    # check below runs regardless of the base result.
+    return true unless LevelCapsEX.obedience_cap?
     lv_diff = @level - LevelCapsEX.level_cap
     return true if lv_diff <= 0
     lv_diff = 5 if lv_diff > 5
