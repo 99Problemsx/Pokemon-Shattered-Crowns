@@ -46,7 +46,7 @@ end
 # ===============================================================================
 
 # Override pbGetTileset to support night variants
-alias night_pbGetTileset pbGetTileset
+alias night_pbGetTileset pbGetTileset unless defined?(night_pbGetTileset)
 def pbGetTileset(name, hue = 0)
   # Check for night variant
   if PBDayNight.isNight? && NightTilesetHelper.night_tileset_enabled?
@@ -69,7 +69,7 @@ def pbGetTileset(name, hue = 0)
 end
 
 # Override pbGetAutotile to support night variants
-alias night_pbGetAutotile pbGetAutotile
+alias night_pbGetAutotile pbGetAutotile unless defined?(night_pbGetAutotile)
 def pbGetAutotile(name, hue = 0)
   # Check for night variant
   if PBDayNight.isNight? && NightTilesetHelper.night_tileset_enabled?
@@ -92,7 +92,7 @@ def pbGetAutotile(name, hue = 0)
 end
 
 # Override pbGetTileBitmap to support night variants
-alias night_pbGetTileBitmap pbGetTileBitmap
+alias night_pbGetTileBitmap pbGetTileBitmap unless defined?(night_pbGetTileBitmap)
 def pbGetTileBitmap(filename, tile_id, hue, width = 1, height = 1)
   # Check for night variant
   if PBDayNight.isNight? && NightTilesetHelper.night_tileset_enabled?
@@ -191,7 +191,7 @@ EventHandlers.add(:on_enter_map, :night_tileset_reset,
 # ===============================================================================
 
 class Game_Event
-  alias night_tileset_character_name character_name
+  alias night_tileset_character_name character_name unless method_defined?(:night_tileset_character_name)
   
   def character_name
     original_name = night_tileset_character_name
