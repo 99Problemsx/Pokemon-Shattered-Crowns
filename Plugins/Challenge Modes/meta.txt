@@ -1,4 +1,4 @@
 Name       = Challenge Modes
-Version    = 2.2.1
-Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
-Credits    = Nononever, Golisopod User, Luka S.J. 
+Version    = 2.3.0
+Website    = https://github.com/99Problemsx/Pokemon-Shattered-Crowns
+Credits    = Nononever, Golisopod User, Luka S.J., Shattered Crowns Team

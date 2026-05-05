@@ -204,7 +204,7 @@ ItemHandlers::UseOnPokemon.add(:MACHOBRACE, proc { |item, qty, pkmn, scene|
     end
     pkmn.item = item
     scene.pbRefresh
-    scene.pbDisplay(_INTL("{1} is now holding {2}.", pkmn.name, GameData::Item.get(item).name))
+    scene.pbDisplay(_INTL("{1} is now holding {2}.", pkmn.name, (GameData::Item.try_get(item)&.name || item.to_s)))
     next true
   })
 end

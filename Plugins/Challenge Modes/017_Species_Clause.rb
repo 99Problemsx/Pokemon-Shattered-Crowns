@@ -11,15 +11,22 @@ module ChallengeModes
   
   # Check if species already exists in party
   def self.species_in_party?(species)
-    species_data = species.is_a?(Symbol) ? species : GameData::Species.get(species).species
-    
+    species_data =
+      if species.is_a?(Symbol)
+        species
+      else
+        resolved = GameData::Species.try_get(species)
+        resolved ? resolved.species : nil
+      end
+    return false unless species_data
+
     $player.party.each do |pokemon|
       next if !pokemon
       # Check base species (not form)
       party_species = pokemon.species_data.species
       return true if party_species == species_data
     end
-    
+
     return false
   end
   
@@ -50,12 +57,14 @@ def pbAddPokemon(*args)
       pokemon = species
       species_data = pokemon.species_data.species
     else
-      species_data = GameData::Species.get(species).species
+      resolved = GameData::Species.try_get(species)
+      species_data = resolved ? resolved.species : nil
     end
-    
+
     # Check if species already in party
-    if ChallengeModes.species_in_party?(species_data)
-      species_name = GameData::Species.get(species_data).name
+    if species_data && ChallengeModes.species_in_party?(species_data)
+      species_name_data = GameData::Species.try_get(species_data)
+      species_name = species_name_data ? species_name_data.name : species_data.to_s
       pbMessage(_INTL("You already have a {1} in your party!", species_name))
       pbMessage(_INTL("Species Clause: Only one of each species allowed!"))
       
@@ -145,7 +154,8 @@ def pbCheckPartySpecies
   
   text = "Party Species:\\n"
   species_list.each_with_index do |species, i|
-    species_name = GameData::Species.get(species).name
+    data = GameData::Species.try_get(species)
+    species_name = data ? data.name : species.to_s
     text += "#{i + 1}. #{species_name}\\n"
   end
   
@@ -153,11 +163,8 @@ def pbCheckPartySpecies
 end
 
 #===============================================================================
-# Console logging for debugging
+# (Removed: load-time `puts` block. It was gated on ChallengeModes.running?,
+# which is always false at file-load time — the rule wasn't selected yet —
+# so the block was effectively dead code that also used `puts` instead of
+# the standard `echoln` helper. Use the rule's own gameplay messages.)
 #===============================================================================
-if ChallengeModes.running?
-  puts "Challenge Modes: Species Clause rule loaded"
-  puts "  - Blocks duplicate species in party"
-  puts "  - Checks base species (ignores forms)"
-  puts "  - Sends duplicates to PC automatically"
-end

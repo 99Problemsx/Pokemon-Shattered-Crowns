@@ -54,7 +54,7 @@ end
 
 ItemHandlers::CanUseInBattle.remove(:poke_balls)
 ItemHandlers::CanUseInBattle.addIf(:poke_balls,
-  proc { |item| GameData::Item.get(item).is_poke_ball? },
+  proc { |item| GameData::Item.try_get(item)&.is_poke_ball? },
   proc { |item, pokemon, battler, move, firstAction, battle, scene, showMessages|
     if battle.pbPlayer.party_full? && $PokemonStorage.full?
       scene.pbDisplay(_INTL("There is no room left in the PC!")) if showMessages
@@ -79,7 +79,7 @@ ItemHandlers::CanUseInBattle.addIf(:poke_balls,
     #       than one unfainted opposing Pokémon. (Snag Balls can be thrown in
     #       this case, but only in trainer battles, and the trainer will deflect
     #       them if they are trying to catch a non-Shadow Pokémon.)
-    if battle.pbOpposingBattlerCount > 1 && !(GameData::Item.get(item).is_snag_ball? && battle.trainerBattle?)
+    if battle.pbOpposingBattlerCount > 1 && !(GameData::Item.try_get(item)&.is_snag_ball? && battle.trainerBattle?)
       if battle.pbOpposingBattlerCount == 2
         scene.pbDisplay(_INTL("It's no good! It's impossible to aim when there are two Pokémon!")) if showMessages
       elsif showMessages
@@ -101,7 +101,8 @@ ItemHandlers::CanUseInBattle.addIf(:poke_balls,
     # Disable Pokeball throwing for invalid Monotype Pokemon
     if ChallengeModes.on?(:MONOTYPE_MODE) && !ChallengeModes.valid_monotype_catch?(target.pokemon)
       if showMessages
-        type_name = GameData::Type.get($PokemonGlobal.challenge_monotype_type).name
+        type_data = GameData::Type.try_get($PokemonGlobal.challenge_monotype_type)
+        type_name = type_data ? type_data.name : $PokemonGlobal.challenge_monotype_type.to_s
         pbSEStop
         pbMessage(_INTL("The Monotype challenge prevents you from catching {1}! You can only use {2}-type Pokémon.", target.pokemon.species_data.name, type_name))
       end

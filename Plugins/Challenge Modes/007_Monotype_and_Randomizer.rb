@@ -10,7 +10,8 @@ EventHandlers.add(:on_pokemon_received, :monotype_check,
     next if !pkmn || !pkmn.is_a?(Pokemon)
     next if !ChallengeModes.on?(:MONOTYPE_MODE)
     next if ChallengeModes.valid_monotype_catch?(pkmn)
-    type_name = GameData::Type.get($PokemonGlobal.challenge_monotype_type).name
+    type_data = GameData::Type.try_get($PokemonGlobal.challenge_monotype_type)
+    type_name = type_data ? type_data.name : $PokemonGlobal.challenge_monotype_type.to_s
     species_name = pkmn.species_data.name
     pbMessage(_INTL("The Monotype challenge prevents you from using {1}! You can only use {2}-type Pokémon.", species_name, type_name))
     # NOTE: Actual blocking is handled by alias chains on pbAddPokemon
@@ -46,15 +47,12 @@ EventHandlers.add(:on_wild_species_chosen, :randomizer_wild,
     original_species = encounter[0]
     level = encounter[1] || 1
     
-    # The encounter[0] should be a species symbol, but let's handle both cases
-    begin
-      species_data = GameData::Species.get(original_species)
-    rescue
-      # If it fails, it might be an integer ID that we need to convert
-      Console.echo_warn("Randomizer: Received unexpected species format: #{original_species.class} - #{original_species}")
+    species_data = GameData::Species.try_get(original_species)
+    if !species_data
+      Console.echo_warn("Randomizer: Unknown species format: #{original_species.class} - #{original_species}") if defined?(Console)
       next
     end
-    
+
     is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
     
     randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, level)
@@ -79,10 +77,12 @@ def pbAddPokemon(*args)
 
     if pkmn.is_a?(Symbol) || pkmn.is_a?(String)
       original_species = pkmn
-      species_data = GameData::Species.get(original_species)
-      is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
-      randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, level)
-      args[0] = randomized_species
+      species_data = GameData::Species.try_get(original_species)
+      if species_data
+        is_legendary = species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
+        randomized_species = ChallengeModes.get_randomized_species(original_species, is_legendary, level)
+        args[0] = randomized_species
+      end
     elsif pkmn.is_a?(Pokemon)
       original_species = pkmn.species
       species_data = pkmn.species_data
