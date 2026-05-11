@@ -411,7 +411,9 @@ class Lighting
             :intensity => 0.4,
             :stop_anim => true
           })
-          effect = GameData::LightEffect.try_get(id) || GameData::LightEffect.get(id)
+          # try_get returns nil if missing; falling back to .get would raise
+          # (defeating the purpose). Just use try_get.
+          effect = GameData::LightEffect.try_get(id)
           @effects[id] = effect if effect
           break  # One door light per event
         end
@@ -1312,10 +1314,21 @@ class Lighting
       currently_active = should_update?(effect)
       was_active = effect._was_active
       if was_active != nil  # Skip first frame (no previous state)
-        if currently_active && !was_active && effect.on_activate
-          effect.on_activate.call(effect)
-        elsif !currently_active && was_active && effect.on_deactivate
-          effect.on_deactivate.call(effect)
+        # User-supplied procs — wrap in rescue so a buggy callback doesn't
+        # take down the whole lighting update. We use is_a?(Proc) defensively
+        # in case someone assigned a non-Proc to the attr.
+        if currently_active && !was_active && effect.on_activate.is_a?(Proc)
+          begin
+            effect.on_activate.call(effect)
+          rescue => e
+            echoln "[Lighting] on_activate proc raised for #{effect.id}: #{e.message}" if $DEBUG
+          end
+        elsif !currently_active && was_active && effect.on_deactivate.is_a?(Proc)
+          begin
+            effect.on_deactivate.call(effect)
+          rescue => e
+            echoln "[Lighting] on_deactivate proc raised for #{effect.id}: #{e.message}" if $DEBUG
+          end
         end
       end
       effect._was_active = currently_active

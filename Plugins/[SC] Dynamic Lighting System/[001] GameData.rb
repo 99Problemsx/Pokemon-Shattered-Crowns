@@ -245,7 +245,10 @@ module GameData
       return (Graphics.frame_count - @created_at) >= @lifespan
     end
 
-    # Serialize to a hash for save/load persistence
+    # Serialize to a hash for save/load persistence.
+    # NOTE: Procs (@on_activate, @on_deactivate) are intentionally excluded —
+    # they can't be Marshal'd. Callers that rely on them must re-attach the
+    # procs after load (e.g. via map setup events).
     def to_save_hash
       h = {
         :id => @id, :type => @type, :map_x => @map_x, :map_y => @map_y,
@@ -261,7 +264,14 @@ module GameData
         :flame_sprite => @flame_sprite, :color_bleed => @color_bleed,
         :follow_target => @follow_target, :follow_range => @follow_range,
         :cull_distance => @cull_distance, :chain_to => @chain_to,
-        :seasonal => @seasonal
+        :seasonal => @seasonal,
+        # Previously missing — these silently disappeared on save/load:
+        :bitmap        => @bitmap_path,
+        :sound         => @sound,
+        :sound_range   => @sound_range,
+        :heat_shimmer  => @heat_shimmer,
+        :shadows       => @shadows,
+        :blend         => @blend
       }
       h[:color] = [@color.red, @color.green, @color.blue] if @color
       h[:tone] = [@tone.red, @tone.green, @tone.blue, @tone.gray] if @tone
