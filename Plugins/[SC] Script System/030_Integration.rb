@@ -104,7 +104,7 @@ module SCScripts
       
       DynamicLighting.remove_event_light(event_id)
       true
-    rescue
+    rescue StandardError
       false
     end
     

@@ -5,7 +5,7 @@
 
 class Battle::Battler
   # Fix level validation to prevent nil errors
-  alias hotfix_level level
+  alias hotfix_level level unless method_defined?(:hotfix_level)
   def level
     base_level = hotfix_level
     return base_level if base_level && base_level > 0

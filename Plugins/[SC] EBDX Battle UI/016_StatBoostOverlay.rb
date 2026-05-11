@@ -17,7 +17,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  Hook into sprite creation — add stat overlay sprites after DataBox setup
   #-----------------------------------------------------------------------------
-  alias ebdx_stat_overlay_create ebdx_db_create_sprites
+  alias ebdx_stat_overlay_create ebdx_db_create_sprites unless method_defined?(:ebdx_stat_overlay_create)
   def ebdx_db_create_sprites(viewport, sideSize)
     ebdx_stat_overlay_create(viewport, sideSize)
     return unless @ebdx_db_available
@@ -97,7 +97,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  Extend update — refresh stat boost sprites each frame
   #-----------------------------------------------------------------------------
-  alias ebdx_stat_boost_update update
+  alias ebdx_stat_boost_update update unless method_defined?(:ebdx_stat_boost_update)
   def update
     ebdx_stat_boost_update
     return unless @ebdx_boost_sprites && @ebdx_db_available && @ebdx_db_loaded
@@ -140,7 +140,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  Extend dispose — clean up boost sprites
   #-----------------------------------------------------------------------------
-  alias ebdx_stat_boost_dispose dispose
+  alias ebdx_stat_boost_dispose dispose unless method_defined?(:ebdx_stat_boost_dispose)
   def dispose
     @ebdx_boost_sprites&.each { |spr| spr&.dispose }
     ebdx_stat_boost_dispose

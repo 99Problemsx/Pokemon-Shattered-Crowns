@@ -211,6 +211,7 @@ class QuestJournalScene
 end
 
 def pbOpenQuestJournal
+  return unless QuestJournal::ENABLED   # SC FIX (review C3)
   scene = QuestJournalScene.new
   scene.pbStartScene
   scene.pbMain

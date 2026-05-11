@@ -8,7 +8,7 @@
 class Battle::DamageState
   attr_accessor :boss_overflow
 
-  alias boss_reset reset
+  alias boss_reset reset unless method_defined?(:boss_reset)
   def reset
     boss_reset
     @boss_overflow = 0
@@ -20,7 +20,7 @@ end
 # Chains after DBK's dx_pbReduceDamage (at Damage Calc Refactor.rb:352).
 #===============================================================================
 class Battle::Move
-  alias boss_pbReduceDamage pbReduceDamage
+  alias boss_pbReduceDamage pbReduceDamage unless method_defined?(:boss_pbReduceDamage)
   def pbReduceDamage(user, target)
     boss_pbReduceDamage(user, target)
     return if !target.isBoss?

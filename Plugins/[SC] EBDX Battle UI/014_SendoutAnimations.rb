@@ -187,7 +187,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Override pbSendOutBattlers — full EBDX-style sendout
   #-----------------------------------------------------------------------------
-  alias ebdx_sendout_anim_pbSendOutBattlers pbSendOutBattlers
+  alias ebdx_sendout_anim_pbSendOutBattlers pbSendOutBattlers unless method_defined?(:ebdx_sendout_anim_pbSendOutBattlers)
   def pbSendOutBattlers(sendOuts, startBattle = false)
     return if sendOuts.empty?
     # Hide lineups
@@ -575,7 +575,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Override pbRecall — EBDX-style with ball burst
   #-----------------------------------------------------------------------------
-  alias ebdx_recall_anim_pbRecall pbRecall
+  alias ebdx_recall_anim_pbRecall pbRecall unless method_defined?(:ebdx_recall_anim_pbRecall)
   def pbRecall(idxBattler)
     return if @battle.battlers[idxBattler].fainted?
     poke = @sprites["pokemon_#{idxBattler}"]

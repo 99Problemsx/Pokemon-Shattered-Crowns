@@ -10,15 +10,19 @@ module Input
 end
 
 # Zeige Map-Koordinaten bei Tastendruck
-EventHandlers.add(:on_frame_update, :lighting_debug,
-  proc {
-    if Input.press?(Input::CTRL) && Input.trigger?(Input::USE)
-      x = $game_player.x
-      y = $game_player.y
-      pbMessage("Position: X=#{x}, Y=#{y}\\nMap ID: #{$game_map.map_id}")
-    end
-  }
-)
+# SC FIX (review C4): only register debug frame-handler in $DEBUG builds.
+# Otherwise it runs Input.press? checks 60×/s for every player in release.
+if $DEBUG
+  EventHandlers.add(:on_frame_update, :lighting_debug,
+    proc {
+      if Input.press?(Input::CTRL) && Input.trigger?(Input::USE)
+        x = $game_player.x
+        y = $game_player.y
+        pbMessage("Position: X=#{x}, Y=#{y}\\nMap ID: #{$game_map.map_id}")
+      end
+    }
+  )
+end
 
 # Debug-Menü für Lighting
 MenuHandlers.add(:debug_menu, :lighting_system, {
@@ -212,10 +216,12 @@ MenuHandlers.add(:debug_menu, :lighting_system, {
 })
 
 # Schnellbefehl: Strg+L = Lighting Info
-EventHandlers.add(:on_frame_update, :quick_add_light,
-  proc {
-    next if !$DEBUG
-    if Input.press?(Input::CTRL) && Input.trigger?(Input::L)
+# SC FIX (review C4): registered only in $DEBUG; the previous inline
+# `next if !$DEBUG` guard still ran 60×/s for every player in release.
+if $DEBUG
+  EventHandlers.add(:on_frame_update, :quick_add_light,
+    proc {
+      if Input.press?(Input::CTRL) && Input.trigger?(Input::L)
       if $scene.is_a?(Scene_Map) && $scene.instance_variable_get(:@spritesetGlobal)
         lighting = $scene.instance_variable_get(:@spritesetGlobal).lighting
         if lighting
@@ -256,3 +262,4 @@ EventHandlers.add(:on_frame_update, :quick_add_light,
     end
   }
 )
+end

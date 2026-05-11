@@ -33,7 +33,7 @@ class Battle::Scene::PokemonDataBox
   # Alias draw_plugin_elements to add boss shield tick marks and count.
   # Chains after raid_draw_plugin_elements (from Raid Battles plugin).
   #-----------------------------------------------------------------------------
-  alias boss_draw_plugin_elements draw_plugin_elements
+  alias boss_draw_plugin_elements draw_plugin_elements unless method_defined?(:boss_draw_plugin_elements)
   def draw_plugin_elements
     boss_draw_plugin_elements
     return if !@battler.isBoss?
@@ -103,7 +103,7 @@ class Battle::Scene::PokemonDataBox
   # Override draw_style_text for Boss foe: level positioned dynamically beside
   # the name based on measured text width, adapting to long/short names.
   #-----------------------------------------------------------------------------
-  alias boss_draw_style_text draw_style_text
+  alias boss_draw_style_text draw_style_text unless method_defined?(:boss_draw_style_text)
   def draw_style_text
     if @style&.id == :Boss && @battler.index.odd?
       _draw_boss_foe_text
@@ -114,7 +114,7 @@ class Battle::Scene::PokemonDataBox
 
   # Suppress the Lv graphic drawn at fixed text_offsets[2] for Boss foe, since
   # _draw_boss_foe_text will place it dynamically instead.
-  alias boss_draw_style_icons draw_style_icons
+  alias boss_draw_style_icons draw_style_icons unless method_defined?(:boss_draw_style_icons)
   def draw_style_icons
     if @style&.id == :Boss && @battler.index.odd?
       offsets = @displayPos&.[](:text_offsets)

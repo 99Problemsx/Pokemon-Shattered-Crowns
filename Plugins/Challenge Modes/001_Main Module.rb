@@ -199,53 +199,67 @@ module ChallengeModes
   #-----------------------------------------------------------------------------
   def select_monotype_type
     type_names = []
-    MONOTYPE_TYPES.each { |type| type_names.push(GameData::Type.get(type).name) }
+    MONOTYPE_TYPES.each do |type|
+      data = GameData::Type.try_get(type)
+      type_names.push(data ? data.name : type.to_s)
+    end
     type_names.push(_INTL("Cancel"))
-    
+
     selected = pbMessage(_INTL("Choose your Monotype:"), type_names)
     if selected >= 0 && selected < MONOTYPE_TYPES.length
       $PokemonGlobal.challenge_monotype_type = MONOTYPE_TYPES[selected]
-      type_name = GameData::Type.get($PokemonGlobal.challenge_monotype_type).name
+      type_data = GameData::Type.try_get($PokemonGlobal.challenge_monotype_type)
+      type_name = type_data ? type_data.name : $PokemonGlobal.challenge_monotype_type.to_s
       pbMessage(_INTL("You have chosen {1}-type Pokémon for your Monotype challenge!", type_name))
     else
       return false
     end
     return true
   end
-  
+
   def valid_monotype_battle?(pokemon)
     return true if !on?(:MONOTYPE_MODE)
     return false if !$PokemonGlobal.challenge_monotype_type
-    
+
     chosen_type = $PokemonGlobal.challenge_monotype_type
-    species_data = pokemon.is_a?(Pokemon) ? pokemon.species_data : GameData::Species.get(pokemon)
-    
+    species_data = pokemon.is_a?(Pokemon) ? pokemon.species_data : GameData::Species.try_get(pokemon)
+    return false unless species_data
+
     return species_data.types.include?(chosen_type)
   end
 
   def valid_monotype_catch?(pokemon)
     return true if !on?(:MONOTYPE_MODE)
     return false if !$PokemonGlobal.challenge_monotype_type
-    
+
     chosen_type = $PokemonGlobal.challenge_monotype_type
-    species_id = pokemon.is_a?(Pokemon) ? pokemon.species : (pokemon.is_a?(Symbol) ? pokemon : GameData::Species.get(pokemon).species)
-    
+    species_id =
+      if pokemon.is_a?(Pokemon)
+        pokemon.species
+      elsif pokemon.is_a?(Symbol)
+        pokemon
+      else
+        GameData::Species.try_get(pokemon)&.species
+      end
+    return false unless species_id
+
     return check_monotype_recursive(species_id, chosen_type, [])
   end
 
   def check_monotype_recursive(species_id, type, checked)
     return false if checked.include?(species_id)
     checked.push(species_id)
-    
-    species_data = GameData::Species.get(species_id)
+
+    species_data = GameData::Species.try_get(species_id)
+    return false unless species_data
     return true if species_data.types.include?(type)
-    
+
     species_data.evolutions.each do |evo|
       # evo is [species, method, param]
       next_species = evo[0]
       return true if check_monotype_recursive(next_species, type, checked)
     end
-    
+
     return false
   end
   
@@ -287,8 +301,11 @@ module ChallengeModes
       # Try to match similar strength levels
       if RANDOMIZER_SETTINGS[:similar_strength] && level > 1
         species_bst = species.base_stats.values.sum
-        original_bst = GameData::Species.get(original_species).base_stats.values.sum
-        next if (species_bst - original_bst).abs > 100  # BST difference threshold
+        original_data = GameData::Species.try_get(original_species)
+        if original_data
+          original_bst = original_data.base_stats.values.sum
+          next if (species_bst - original_bst).abs > 100  # BST difference threshold
+        end
       end
       
       if regional_dex_list

@@ -63,7 +63,7 @@ module OverworldAnimation
     #---------------------------------------------------------------------------
     def load_graphic(path)
       RPG::Cache.load_bitmap("Graphics/#{path}")
-    rescue
+    rescue StandardError
       nil
     end
   end

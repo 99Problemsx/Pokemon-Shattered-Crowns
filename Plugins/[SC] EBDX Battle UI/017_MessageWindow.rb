@@ -15,7 +15,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Hook into pbInitSprites to replace the message box after PE creates it
   #-----------------------------------------------------------------------------
-  alias ebdx_msgwin_pbInitSprites pbInitSprites
+  alias ebdx_msgwin_pbInitSprites pbInitSprites unless method_defined?(:ebdx_msgwin_pbInitSprites)
   def pbInitSprites
     ebdx_msgwin_pbInitSprites
     ebdx_replace_message_box
@@ -91,7 +91,7 @@ class Battle::Scene
   #  Override pbShowWindow: show dark bar for COMMAND_BOX and FIGHT_BOX too
   #  (PE standard only shows messageBox for MESSAGE_BOX)
   #-----------------------------------------------------------------------------
-  alias ebdx_msgwin_pbShowWindow pbShowWindow
+  alias ebdx_msgwin_pbShowWindow pbShowWindow unless method_defined?(:ebdx_msgwin_pbShowWindow)
   def pbShowWindow(windowType)
     ebdx_msgwin_pbShowWindow(windowType)
     return unless @ebdx_msgbox_active

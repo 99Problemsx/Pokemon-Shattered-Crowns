@@ -17,9 +17,14 @@ module NPCScheduleEngine
   # Throttle: only re-check schedules when the hour changes
   @last_checked_hour = -1
   @initialized = false
+  # SC FIX (review C4): per-frame throttle for the patrol updater. The hot
+  # path used to call pbGetTimeNow.hour (Time allocation) every frame — at
+  # 60 fps that's 60 Time objects/sec of GC pressure.
+  @frame_skip = 0
+  PATROL_FRAME_INTERVAL = 6  # process patrols ~10× per second instead of 60
 
   class << self
-    attr_accessor :last_checked_hour, :initialized
+    attr_accessor :last_checked_hour, :initialized, :frame_skip
   end
 
   #=============================================================================
@@ -28,6 +33,11 @@ module NPCScheduleEngine
   def self.update
     return unless $game_map && $PokemonGlobal
     return unless NPCScheduleData.any?
+
+    # Throttle expensive work to every Nth frame
+    @frame_skip += 1
+    return if @frame_skip < PATROL_FRAME_INTERVAL
+    @frame_skip = 0
 
     current_hour = pbGetTimeNow.hour
 
@@ -38,8 +48,8 @@ module NPCScheduleEngine
       $PokemonGlobal.npc_last_applied_hour = current_hour
     end
 
-    # Update patrol routes every frame for NPCs that have them
-    update_patrol_routes
+    # Update patrol routes (now also throttled)
+    update_patrol_routes(current_hour)
   end
 
   #=============================================================================
@@ -163,12 +173,17 @@ module NPCScheduleEngine
   #=============================================================================
   @patrol_states = {}  # { npc_key => { index: 0, wait: 0 } }
 
-  def self.update_patrol_routes
+  def self.update_patrol_routes(hour = nil)
     return unless $game_map
-    hour = pbGetTimeNow.hour
+    hour ||= pbGetTimeNow.hour    # SC FIX (review C4): receive hour from caller to avoid double Time-alloc
     map_id = $game_map.map_id
 
-    NPCScheduleData.npcs_on_map(map_id).each do |npc_key|
+    # SC FIX (review C4): early-out before the per-NPC loop when nothing on
+    # this map is patrolling — avoids the loop allocation overhead entirely.
+    npcs = NPCScheduleData.npcs_on_map(map_id)
+    return if npcs.empty?
+
+    npcs.each do |npc_key|
       next if npc_locked?(npc_key)
       entry = NPCScheduleData.active_entry(npc_key, hour)
       next unless entry && entry.route && entry.visible != false

@@ -44,8 +44,8 @@
 class Shader
   class ShaderError < StandardError; end
 
-  alias initialize_core initialize
-  alias dispose_core dispose
+  alias initialize_core initialize unless method_defined?(:initialize_core)
+  alias dispose_core dispose unless method_defined?(:dispose_core)
 
   attr_reader :key
 
@@ -471,7 +471,7 @@ end
 # Frame update hook for animated shaders
 #---------------------------------------
 class Spriteset_Map
-  alias update_sc_visualfx update
+  alias update_sc_visualfx update unless method_defined?(:update_sc_visualfx)
   def update
     update_sc_visualfx
     SCVisualFX.update_shaders

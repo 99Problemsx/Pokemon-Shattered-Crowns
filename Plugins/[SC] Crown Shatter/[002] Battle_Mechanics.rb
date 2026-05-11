@@ -33,7 +33,7 @@ end
 # Initialize effects in Battle::ActiveField
 #===============================================================================
 class Battle::ActiveField
-  alias shatter_initialize initialize
+  alias shatter_initialize initialize unless method_defined?(:shatter_initialize)
   def initialize
     shatter_initialize
     @effects[PBEffects::ShatterField]     = 0
@@ -45,7 +45,7 @@ end
 # Initialize effects in Battle::ActiveSide
 #===============================================================================
 class Battle::ActiveSide
-  alias shatter_initialize initialize
+  alias shatter_initialize initialize unless method_defined?(:shatter_initialize)
   def initialize
     shatter_initialize
     @effects[PBEffects::ShatterUsed] = false
@@ -61,7 +61,7 @@ class Battle
   #=============================================================================
   # Initialize
   #=============================================================================
-  alias shatter_initialize initialize
+  alias shatter_initialize initialize unless method_defined?(:shatter_initialize)
   def initialize(*args)
     shatter_initialize(*args)
     @crown_shatter = [
@@ -260,7 +260,7 @@ class Battle
   #=============================================================================
   # End-of-Round: Shatter Field Countdown & Per-Turn Effects
   #=============================================================================
-  alias shatter_pbEndOfRoundPhase pbEndOfRoundPhase
+  alias shatter_pbEndOfRoundPhase pbEndOfRoundPhase unless method_defined?(:shatter_pbEndOfRoundPhase)
   def pbEndOfRoundPhase
     ret = shatter_pbEndOfRoundPhase
     pbShatterEndOfRound if @field.effects[PBEffects::ShatterField] > 0

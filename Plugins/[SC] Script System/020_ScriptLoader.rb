@@ -127,7 +127,7 @@ module SCScripts
           @sc_data = load_data("Data/sc_data.rxdata")
           total = @sc_data.values.sum { |v| v.size }
           SCScripts.log("SC data bundle loaded (#{@sc_data.size} directories, #{total} files)")
-        rescue
+        rescue StandardError
           @sc_data = nil
         end
       end

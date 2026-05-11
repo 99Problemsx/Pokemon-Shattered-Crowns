@@ -103,7 +103,6 @@ module ChallengeModes
     def reset
       __limitheal__reset
       reset_healing_counter
-      puts "Challenge Modes: Healing counter reset"
     end
   end
 end

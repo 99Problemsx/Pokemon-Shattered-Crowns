@@ -9,7 +9,7 @@ class Battle
   #=============================================================================
   # Initialize tracking
   #=============================================================================
-  alias shatter_pbInitializeSpecialActions pbInitializeSpecialActions
+  alias shatter_pbInitializeSpecialActions pbInitializeSpecialActions unless method_defined?(:shatter_pbInitializeSpecialActions)
   def pbInitializeSpecialActions(idxTrainer)
     shatter_pbInitializeSpecialActions(idxTrainer)
     return if !@crown_shatter
@@ -41,7 +41,7 @@ class Battle
   # Crown Shatter has LOWEST priority — other gimmicks take precedence.
   # If you have Tera/Dynamax/Z-Move/Mega available, those come first.
   #=============================================================================
-  alias shatter_pbGetEligibleBattleMechanic pbGetEligibleBattleMechanic
+  alias shatter_pbGetEligibleBattleMechanic pbGetEligibleBattleMechanic unless method_defined?(:shatter_pbGetEligibleBattleMechanic)
   def pbGetEligibleBattleMechanic(idxBattler)
     other = shatter_pbGetEligibleBattleMechanic(idxBattler)
     return other if other
@@ -52,7 +52,7 @@ class Battle
   #=============================================================================
   # Unregister
   #=============================================================================
-  alias shatter_pbUnregisterAllSpecialActions pbUnregisterAllSpecialActions
+  alias shatter_pbUnregisterAllSpecialActions pbUnregisterAllSpecialActions unless method_defined?(:shatter_pbUnregisterAllSpecialActions)
   def pbUnregisterAllSpecialActions(idxBattler)
     shatter_pbUnregisterAllSpecialActions(idxBattler)
     pbUnregisterShatter(idxBattler) if @crown_shatter
@@ -61,7 +61,7 @@ class Battle
   #=============================================================================
   # Toggle
   #=============================================================================
-  alias shatter_pbToggleSpecialActions pbToggleSpecialActions
+  alias shatter_pbToggleSpecialActions pbToggleSpecialActions unless method_defined?(:shatter_pbToggleSpecialActions)
   def pbToggleSpecialActions(idxBattler, cmd)
     shatter_pbToggleSpecialActions(idxBattler, cmd)
     pbToggleRegisteredShatter(idxBattler) if cmd == :shatter
@@ -82,7 +82,7 @@ class Battle
   #=============================================================================
   # Action commands — reset per round (not needed; Shatter is once per battle)
   #=============================================================================
-  alias shatter_pbActionCommands pbActionCommands
+  alias shatter_pbActionCommands pbActionCommands unless method_defined?(:shatter_pbActionCommands)
   def pbActionCommands(side)
     shatter_pbActionCommands(side)
     # No per-round reset needed — Shatter used flag is permanent
@@ -91,7 +91,7 @@ class Battle
   #=============================================================================
   # Attack phase — execute Shatter BEFORE moves (phase 3)
   #=============================================================================
-  alias shatter_pbAttackPhaseSpecialActions3 pbAttackPhaseSpecialActions3
+  alias shatter_pbAttackPhaseSpecialActions3 pbAttackPhaseSpecialActions3 unless method_defined?(:shatter_pbAttackPhaseSpecialActions3)
   def pbAttackPhaseSpecialActions3
     shatter_pbAttackPhaseSpecialActions3
     pbPriority.each do |b|
@@ -105,7 +105,7 @@ class Battle
   #=============================================================================
   # Pursuit special actions
   #=============================================================================
-  alias shatter_pbPursuitSpecialActions pbPursuitSpecialActions
+  alias shatter_pbPursuitSpecialActions pbPursuitSpecialActions unless method_defined?(:shatter_pbPursuitSpecialActions)
   def pbPursuitSpecialActions(battler, owner)
     shatter_pbPursuitSpecialActions(battler, owner)
     # Don't auto-trigger Shatter on Pursuit — player must choose deliberately
@@ -114,7 +114,7 @@ class Battle
   #=============================================================================
   # End of battle — reset
   #=============================================================================
-  alias shatter_pbEndOfBattle pbEndOfBattle
+  alias shatter_pbEndOfBattle pbEndOfBattle unless method_defined?(:shatter_pbEndOfBattle)
   def pbEndOfBattle
     # Clear Shatter field if still active
     if @field.effects[PBEffects::ShatterField] > 0

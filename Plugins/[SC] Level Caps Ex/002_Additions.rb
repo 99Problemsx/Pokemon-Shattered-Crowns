@@ -1,8 +1,7 @@
 #===============================================================================
-# [SC] Level Caps Ex - Additions (v2.5.1)
+# [SC] Level Caps Ex - Additions (v2.4.0)
 # Shattered Crowns fork of Level Caps EX v2.3.2
-# Item handler overrides for Rare Candy, EXP Candies, Game Variable logging,
-# auto-award of stored EXP whenever the cap variable increases (any source).
+# Item handler overrides for Rare Candy, EXP Candies, Game Variable logging
 #===============================================================================
 
 #-------------------------------------------------------------------------------
@@ -220,16 +219,6 @@ class Game_Variables
       if variable_id == LevelCapsEX::LEVEL_CAP_VARIABLE && value > 0 && old_value > 0
         LevelCapsEX.notify_cap_change(old_value, value)
       end
-      # Award banked EXP whenever the cap increases — applies whether the
-      # cap was raised by the badge auto-cap, a debug menu set, or a plain
-      # `$game_variables[LEVEL_CAP_VARIABLE] = N` in an event script. Before,
-      # banked EXP was only awarded via the badge path, so story-driven cap
-      # raises silently swallowed the piggy bank until the next badge.
-      if variable_id == LevelCapsEX::LEVEL_CAP_VARIABLE &&
-         value > old_value && LevelCapsEX::EXP_STORAGE_ENABLED &&
-         $player&.party
-        LevelCapsEX.award_stored_exp
-      end
     end
     return ret
   end
@@ -364,9 +353,9 @@ if LevelCapsEX::BADGE_AUTO_CAP
       return if !cap
       current = $game_variables[LEVEL_CAP_VARIABLE]
       if cap > current
-        # Game_Variables#[]= handles award_stored_exp on increase, so we don't
-        # need to call it explicitly here — assigning the new cap triggers it.
         $game_variables[LEVEL_CAP_VARIABLE] = cap
+        # Award any stored EXP from the piggy bank
+        award_stored_exp if EXP_STORAGE_ENABLED
       end
     end
   end

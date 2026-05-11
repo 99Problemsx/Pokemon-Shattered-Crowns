@@ -212,24 +212,28 @@ end
 # Debug Commands
 # ===============================================================================
 
-EventHandlers.add(:on_frame_update, :night_tileset_debug,
-  proc {
-    # Ctrl+Shift+N = Toggle Night Tileset Debug Info
-    if Input.press?(Input::CTRL) && Input.press?(Input::SHIFT) && Input.trigger?(Input::N)
-      night_state = PBDayNight.isNight? ? "NIGHT" : "DAY"
-      metadata = GameData::MapMetadata.try_get($game_map.map_id)
-      disabled = metadata&.disable_night_tileset ? "YES" : "NO"
-      
-      msg = "Night Tileset System\\n"
-      msg += "Map ID: #{$game_map.map_id}\\n"
-      msg += "Time State: #{night_state}\\n"
-      msg += "Disabled: #{disabled}\\n"
-      msg += "\\nPlace _n variants of tilesets in:\\n"
-      msg += "Graphics/Tilesets/\\n"
-      msg += "Graphics/Autotiles/\\n"
-      msg += "Graphics/Characters/"
-      
-      pbMessage(msg)
-    end
-  }
-)
+# SC FIX (review C4): debug-only frame handler — register only in $DEBUG so
+# release builds don't poll input every frame.
+if $DEBUG
+  EventHandlers.add(:on_frame_update, :night_tileset_debug,
+    proc {
+      # Ctrl+Shift+N = Toggle Night Tileset Debug Info
+      if Input.press?(Input::CTRL) && Input.press?(Input::SHIFT) && Input.trigger?(Input::N)
+        night_state = PBDayNight.isNight? ? "NIGHT" : "DAY"
+        metadata = GameData::MapMetadata.try_get($game_map.map_id)
+        disabled = metadata&.disable_night_tileset ? "YES" : "NO"
+        
+        msg = "Night Tileset System\\n"
+        msg += "Map ID: #{$game_map.map_id}\\n"
+        msg += "Time State: #{night_state}\\n"
+        msg += "Disabled: #{disabled}\\n"
+        msg += "\\nPlace _n variants of tilesets in:\\n"
+        msg += "Graphics/Tilesets/\\n"
+        msg += "Graphics/Autotiles/\\n"
+        msg += "Graphics/Characters/"
+        
+        pbMessage(msg)
+      end
+    }
+  )
+end

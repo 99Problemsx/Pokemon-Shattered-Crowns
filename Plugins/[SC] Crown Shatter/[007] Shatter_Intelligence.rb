@@ -307,8 +307,18 @@ class Battle::AI
     if defined?(AdvancedAI::ShatterIntelligence)
       battler = @battle.battlers[idxBattler]
       skill = 0
-      if defined?($game_variables) && $game_variables
+      # SC FIX (review H2): previously read the hardcoded variable
+      # $game_variables[100] which is fragile (any settings change broke it).
+      # Use the Dynamic Difficulty API directly when available; fall back to
+      # the variable only as last resort for save-compat.
+      if defined?(DynamicDifficulty) && DynamicDifficulty.respond_to?(:current_tier)
+        skill = DynamicDifficulty.current_tier rescue 0
+      elsif defined?(DynamicDifficulty::TierEngine) && DynamicDifficulty::TierEngine.respond_to?(:effective_tier)
+        skill = DynamicDifficulty::TierEngine.effective_tier rescue 0
+      elsif defined?($game_variables) && $game_variables
         skill = $game_variables[100] rescue 0
+      end
+      if defined?($game_variables) && $game_variables
         # Convert DDS tier variable to skill level
         case skill
         when 1 then skill = 20   # Beginner

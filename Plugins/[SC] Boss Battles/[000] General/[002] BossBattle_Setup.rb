@@ -6,7 +6,7 @@
 # Battle Rules.
 #===============================================================================
 class Game_Temp
-  alias boss_add_battle_rule add_battle_rule
+  alias boss_add_battle_rule add_battle_rule unless method_defined?(:boss_add_battle_rule)
   def add_battle_rule(rule, var = nil)
     rules = self.battle_rules
     case rule.to_s.downcase
@@ -17,7 +17,7 @@ class Game_Temp
   end
 end
 
-alias boss_additionalRules additionalRules
+alias boss_additionalRules additionalRules unless defined?(boss_additionalRules)
 def additionalRules
   rules = boss_additionalRules
   rules.push("bossbattle")

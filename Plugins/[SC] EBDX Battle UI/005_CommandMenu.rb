@@ -18,7 +18,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  Initialize — create EBDX sprites alongside standard ones
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_init initialize
+  alias ebdx_cmd_init initialize unless method_defined?(:ebdx_cmd_init)
   def initialize(viewport, z)
     ebdx_cmd_init(viewport, z)
     @ebdx_cmd_available = false
@@ -151,7 +151,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  setTexts — intercept to build EBDX buttons
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_setTexts setTexts
+  alias ebdx_cmd_setTexts setTexts unless method_defined?(:ebdx_cmd_setTexts)
   def setTexts(value)
     ebdx_cmd_setTexts(value)
     return unless @ebdx_cmd_available
@@ -161,7 +161,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshButtons — EBDX visuals
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_refreshButtons refreshButtons
+  alias ebdx_cmd_refreshButtons refreshButtons unless method_defined?(:ebdx_cmd_refreshButtons)
   def refreshButtons
     return ebdx_cmd_refreshButtons unless @ebdx_cmd_available
     ebdx_cmd_hide_std
@@ -241,7 +241,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  update — selector animation + button bounce + slide
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_upd update
+  alias ebdx_cmd_upd update unless method_defined?(:ebdx_cmd_upd)
   def update
     ebdx_cmd_upd
     return unless @ebdx_cmd_available
@@ -256,7 +256,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  dispose — clean up EBDX sprites (cache-loaded bitmaps are NOT disposed)
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_disp dispose
+  alias ebdx_cmd_disp dispose unless method_defined?(:ebdx_cmd_disp)
   def dispose
     # NOTE: @ebdxCmdBtnBmp and @ebdxCmdEmpBmp are loaded via pbBitmap (RPG::Cache)
     # and must NOT be disposed here — the cache manages their lifecycle.

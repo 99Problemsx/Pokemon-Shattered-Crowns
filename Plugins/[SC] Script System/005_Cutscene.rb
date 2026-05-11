@@ -139,12 +139,12 @@ module GameData
     # Debug: List all cutscenes in console
     #---------------------------------------------------------------------------
     def self.debug_list
-      puts "=== REGISTERED CUTSCENES (#{count}) ==="
+      echoln "=== REGISTERED CUTSCENES (#{count}) ==="
       list_all.each_with_index do |name, i|
         played_marker = played?(name) ? "[✓]" : "[ ]"
-        puts "#{i+1}. #{played_marker} #{name}"
+        echoln "#{i+1}. #{played_marker} #{name}"
       end
-      puts "==================================="
+      echoln "==================================="
     end
   end
 

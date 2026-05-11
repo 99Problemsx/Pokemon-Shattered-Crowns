@@ -12,7 +12,7 @@ if defined?(GameStats)
   class GameStats
     attr_accessor :shatter_count
 
-    alias shatter_initialize initialize
+    alias shatter_initialize initialize unless method_defined?(:shatter_initialize)
     def initialize
       shatter_initialize
       @shatter_count = 0
@@ -25,7 +25,7 @@ end
 #===============================================================================
 if defined?(Game_Temp)
   class Game_Temp
-    alias shatter_add_battle_rule add_battle_rule
+    alias shatter_add_battle_rule add_battle_rule unless method_defined?(:shatter_add_battle_rule)
     def add_battle_rule(rule, var = nil)
       case rule.downcase
       when "nocrownshatter"
@@ -44,7 +44,7 @@ end
 #===============================================================================
 if defined?(Battle) && Battle.method_defined?(:additionalRules)
   class Battle
-    alias shatter_additionalRules additionalRules
+    alias shatter_additionalRules additionalRules unless method_defined?(:shatter_additionalRules)
     def additionalRules
       rules = shatter_additionalRules || []
       rules.push("nocrownshatter")
@@ -133,7 +133,7 @@ class Battle::AI
   #=============================================================================
   # Register AI's Shatter intent
   #=============================================================================
-  alias shatter_pbRegisterEnemySpecialAction pbRegisterEnemySpecialAction
+  alias shatter_pbRegisterEnemySpecialAction pbRegisterEnemySpecialAction unless method_defined?(:shatter_pbRegisterEnemySpecialAction)
   def pbRegisterEnemySpecialAction(idxBattler)
     # Check if Shatter is available and AI wants to use it
     if @battle.pbCanShatter?(idxBattler) && should_ai_shatter?(idxBattler)

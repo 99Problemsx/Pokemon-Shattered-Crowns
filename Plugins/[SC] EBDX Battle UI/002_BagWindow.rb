@@ -179,7 +179,7 @@ class BagWindowEBDX
     pockets = nil
     begin
       pockets = $bag.pockets
-    rescue
+    rescue StandardError
       pockets = $bag.instance_variable_get(:@pockets) rescue nil
     end
     return if pockets.nil?
@@ -198,7 +198,7 @@ class BagWindowEBDX
           end
           next unless id.is_a?(Symbol) || id.is_a?(String)
           @mergedPockets.push(item)
-        rescue
+        rescue StandardError
           next
         end
       end
@@ -528,7 +528,7 @@ class BagWindowEBDX
     else
       begin
         @index = 0 if @index == 4 && (@lastUsed == 0 || !@lastUsed.is_a?(Symbol) || EBDXBag_Helpers.getItemIndex(GameData::Item.get(@lastUsed).id) == 0)
-      rescue
+      rescue StandardError
         @index = 0 if @index == 4
       end
       return true
@@ -541,14 +541,14 @@ class BagWindowEBDX
   def refresh(skip = false)
     begin
       last = (@lastUsed != 0 && @lastUsed.is_a?(Symbol)) ? EBDXBag_Helpers.getItemIndex(GameData::Item.get(@lastUsed).id) : 0
-    rescue
+    rescue StandardError
       last = 0
     end
     i    = last > 0 ? 1 : 0
     name = ""
     begin
       name = GameData::Item.get(@lastUsed).name if last > 0
-    rescue
+    rescue StandardError
     end
     text = ["", name]
     bmp  = pbBitmap(@path + @lastImg)
@@ -604,7 +604,7 @@ class BagWindowEBDX
   def updateMain
     begin
       last = (@lastUsed != 0 && @lastUsed.is_a?(Symbol)) ? EBDXBag_Helpers.getItemIndex(GameData::Item.get(@lastUsed).id) : 0
-    rescue
+    rescue StandardError
       last = 0
     end
     if Input.trigger?(Input::LEFT)
@@ -671,7 +671,7 @@ class BagWindowEBDX
       @ret = @lastUsed
       begin
         @lastUsed = 0 if !(@lastUsed.is_a?(Symbol) && $bag.quantity(@lastUsed) > 1)
-      rescue
+      rescue StandardError
         @lastUsed = 0
       end
     end

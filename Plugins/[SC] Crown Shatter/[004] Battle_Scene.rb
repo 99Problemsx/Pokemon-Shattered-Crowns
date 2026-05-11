@@ -12,7 +12,7 @@ class Battle::Scene
   #=============================================================================
   # Set special action modes for Shatter
   #=============================================================================
-  alias shatter_pbSetSpecialActionModes pbSetSpecialActionModes
+  alias shatter_pbSetSpecialActionModes pbSetSpecialActionModes unless method_defined?(:shatter_pbSetSpecialActionModes)
   def pbSetSpecialActionModes(idxBattler, specialAction, cw)
     shatter_pbSetSpecialActionModes(idxBattler, specialAction, cw)
     if specialAction == :shatter
@@ -24,7 +24,7 @@ class Battle::Scene
   #=============================================================================
   # Fight menu — Action key (toggle Shatter)
   #=============================================================================
-  alias shatter_pbFightMenu_Action pbFightMenu_Action
+  alias shatter_pbFightMenu_Action pbFightMenu_Action unless method_defined?(:shatter_pbFightMenu_Action)
   def pbFightMenu_Action(battler, specialAction, cw)
     if specialAction == :shatter
       cw.shatterToggle = !cw.shatterToggle if cw.respond_to?(:shatterToggle=)
@@ -38,7 +38,7 @@ class Battle::Scene
   #=============================================================================
   # Fight menu — Confirm
   #=============================================================================
-  alias shatter_pbFightMenu_Confirm pbFightMenu_Confirm
+  alias shatter_pbFightMenu_Confirm pbFightMenu_Confirm unless method_defined?(:shatter_pbFightMenu_Confirm)
   def pbFightMenu_Confirm(battler, specialAction, cw)
     if specialAction == :shatter && cw.respond_to?(:shatterToggle) && cw.shatterToggle
       # Shatter is toggled on — will be registered when move is confirmed
@@ -49,7 +49,7 @@ class Battle::Scene
   #=============================================================================
   # Fight menu — Cancel
   #=============================================================================
-  alias shatter_pbFightMenu_Cancel pbFightMenu_Cancel
+  alias shatter_pbFightMenu_Cancel pbFightMenu_Cancel unless method_defined?(:shatter_pbFightMenu_Cancel)
   def pbFightMenu_Cancel(battler, specialAction, cw)
     if specialAction == :shatter && cw.respond_to?(:shatterToggle)
       cw.shatterToggle = false
@@ -60,7 +60,7 @@ class Battle::Scene
   #=============================================================================
   # Fight menu — End
   #=============================================================================
-  alias shatter_pbFightMenu_End pbFightMenu_End
+  alias shatter_pbFightMenu_End pbFightMenu_End unless method_defined?(:shatter_pbFightMenu_End)
   def pbFightMenu_End(battler, specialAction, cw)
     if specialAction == :shatter && cw.respond_to?(:shatterToggle)
       cw.shatterToggle = false
@@ -79,7 +79,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #=============================================================================
   # Reset toggles
   #=============================================================================
-  alias shatter_resetMenuToggles resetMenuToggles
+  alias shatter_resetMenuToggles resetMenuToggles unless method_defined?(:shatter_resetMenuToggles)
   def resetMenuToggles
     shatter_resetMenuToggles
     @shatterToggle = false
@@ -88,7 +88,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #=============================================================================
   # Add Shatter button bitmap
   #=============================================================================
-  alias shatter_addSpecialActionButtons addSpecialActionButtons
+  alias shatter_addSpecialActionButtons addSpecialActionButtons unless method_defined?(:shatter_addSpecialActionButtons)
   def addSpecialActionButtons(path)
     shatter_addSpecialActionButtons(path)
     shatter_path = Settings::SHATTER_GRAPHICS_PATH rescue path
@@ -107,7 +107,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   # Returns [frame_count, frame_index]
   # Uses 2 frames: 0 = inactive, 1 = active/toggled
   #=============================================================================
-  alias shatter_getButtonSettings getButtonSettings
+  alias shatter_getButtonSettings getButtonSettings unless method_defined?(:shatter_getButtonSettings)
   def getButtonSettings
     if @chosenButton == :shatter
       return 2, (@shatterToggle ? 1 : 0)
@@ -121,7 +121,7 @@ end
 #===============================================================================
 if defined?(Battle::Scene::PokemonDataBox)
   class Battle::Scene::PokemonDataBox
-    alias shatter_draw_special_form_icon draw_special_form_icon
+    alias shatter_draw_special_form_icon draw_special_form_icon unless method_defined?(:shatter_draw_special_form_icon)
     def draw_special_form_icon
       shatter_draw_special_form_icon
       # Could draw a crown shard icon when Shatter field is active
