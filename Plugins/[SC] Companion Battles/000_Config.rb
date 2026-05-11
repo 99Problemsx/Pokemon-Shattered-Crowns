@@ -12,6 +12,14 @@ module CompanionBattles
   # COMPANION DEFINITIONS
   # Each companion has a trainer type, name, and AI behavior profile.
   # AI behaviors: :offensive, :defensive, :support, :balanced
+  #
+  # Canon (full_story_index.md):
+  # - Lyra (Xerneas Chosen) and Kael (Yveltal Chosen) are the player's two
+  #   travelling companions through the entire main story.
+  # - Ragnar is the RIVAL — see PBS/trainers.txt:RIVAL_RAGNAR. He dies in
+  #   chapter 28 (ch28_ragnar_sacrifice/death). Not a co-op companion.
+  # - Aldric is the PROFESSOR who dies in chapter 24 (ch24_funeral). Not
+  #   a battler.
   #=============================================================================
 
   COMPANIONS = {
@@ -30,22 +38,6 @@ module CompanionBattles
       :pre_battle_line  => "Stand back and watch me work.",
       :victory_line     => "Hmph. That was nothing.",
       :defeat_line      => "Tch... I underestimated them.",
-    },
-    :ALDRIC => {
-      :trainer_type => :POKEMONTRAINER_Aldric,
-      :display_name => "Aldric",
-      :ai_behavior  => :defensive,
-      :pre_battle_line  => "I'll protect our flank. Focus on attacking!",
-      :victory_line     => "A solid defense wins wars.",
-      :defeat_line      => "My shield wasn't enough this time...",
-    },
-    :RAGNAR => {
-      :trainer_type => :POKEMONTRAINER_Ragnar,
-      :display_name => "Ragnar",
-      :ai_behavior  => :balanced,
-      :pre_battle_line  => "Together, we are the Chosen!",
-      :victory_line     => "The Crowns won't be shattered while we stand!",
-      :defeat_line      => "We must regroup...",
     },
   }
 

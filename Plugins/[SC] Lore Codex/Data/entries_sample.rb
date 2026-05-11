@@ -10,7 +10,10 @@ CodexRegistry.add(:NIDHOGGR_ORIGIN,
   category: :MYTHOLOGY,
   text:     "Before the crowns were forged, before the first light touched Asgheim, " \
             "there was only the Void — and within it, Nidhoggr. The primordial beast " \
-            "existed before time itself, a hunger that consumed all it touched."
+            "existed before time itself, a hunger that consumed all it touched. " \
+            "In this age it has no body of its own; to act upon the world it must " \
+            "wear a vessel. The Eternatus dragon — the so-called endless one — is " \
+            "the form it has chosen for the final breaking of the seal."
 )
 
 CodexRegistry.add(:THE_THREE_CHOSEN,
@@ -57,11 +60,15 @@ CodexRegistry.add(:KAEL_PROFILE,
 )
 
 CodexRegistry.add(:RAGNAR_PROFILE,
-  title:    "Ragnar — The Broken King",
+  title:    "Ragnar — The Rival",
   category: :CHARACTERS,
-  text:     "Once a hero of Asgheim, Ragnar fell when he lost his daughter. " \
-            "His quest to resurrect her led him to the Cult of the Void — " \
-            "and to betray everything he once stood for."
+  text:     "The brash, golden-haired youth from Dawnhaven who took the opposite " \
+            "starter and never let it go. From the village fields to every gym in " \
+            "the league, Ragnar always stood one step ahead — taunting, pushing, " \
+            "challenging. When the marks of the Chosen appeared, he refused to be " \
+            "left behind. In the end, he gave his life to buy the Chosen a single " \
+            "moment in the Gateway of Generals. His grave overlooks the league " \
+            "road he never finished walking."
 )
 
 CodexRegistry.add(:ALDRIC_PROFILE,
@@ -69,7 +76,20 @@ CodexRegistry.add(:ALDRIC_PROFILE,
   category: :CHARACTERS,
   text:     "Mentor, guide, and the one who first recognized the marks of the " \
             "Chosen. Aldric spent his life studying the ancient seals, knowing " \
-            "that one day the world would need the Chosen again."
+            "that one day the world would need the Chosen again. He fell at his " \
+            "own lab when the Shattered Hand came for his research — but the " \
+            "knowledge he left behind charted every step that followed."
+)
+
+CodexRegistry.add(:MALACHAR_PROFILE,
+  title:    "Malachar — Hand of the Void",
+  category: :CHARACTERS,
+  text:     "Leader of the Shattered Hand. A mortal — not a guardian, not a god, " \
+            "not Nidhoggr itself. Malachar believes that only a world consumed and " \
+            "remade can be free of suffering, and he has spent decades laying the " \
+            "ritual that would crack the Eternal Seal and let Nidhoggr through. " \
+            "Where his three Generals — Shade, Dread, and Ruin — were instruments, " \
+            "Malachar is the hand that wields them."
 )
 
 # ─── Locations ───────────────────────────────────────────────────────────────
@@ -92,12 +112,16 @@ CodexRegistry.add(:ASTORIA_OVERVIEW,
 
 # ─── History ─────────────────────────────────────────────────────────────────
 
-CodexRegistry.add(:CULT_OF_VOID,
-  title:    "The Cult of the Void",
+CodexRegistry.add(:THE_SHATTERED_HAND,
+  title:    "The Shattered Hand",
   category: :HISTORY,
-  text:     "A shadow organization dedicated to freeing Nidhoggr. They believe " \
-            "the world must end so a new one can be born. Led by those who have " \
-            "lost everything, they are as tragic as they are dangerous."
+  text:     "A shadow organization dedicated to freeing Nidhoggr from the " \
+            "Eternal Seal. They take their name from the broken hand-mark seared " \
+            "into the wrist of every initiate — a wound that mirrors the cracks " \
+            "they intend to drive into the Seal itself. Led by Malachar and his " \
+            "three Generals (Shade, Dread, Ruin), they believe the world must end " \
+            "so a new one can be born. Tragic at their roots, devastating at " \
+            "their edge."
 )
 
 CodexRegistry.add(:FIRST_CHOSEN,

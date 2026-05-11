@@ -52,97 +52,113 @@ if defined?(MidbattleScripts)
     }
 
     #===========================================================================
-    # BOSS EVENT 2: Malachar Final Boss
-    # Darkrai is his ace — terrifying boss with Dark Void + shields.
-    # Phase 1: Bad Dreams passive. Phase 2: At half HP, shields regenerate
-    # and passive changes to Pressure for PP drain.
+    # BOSS EVENT 2: Malachar — Hand of the Void (Chapter 31-32 fight)
+    # Malachar himself, leader of the Shattered Hand. His ace is Hydreigon
+    # (per PBS/trainers.txt). His full team is six dark/ghost specialists
+    # ending in Darkrai or Eternatus depending on trainer entry. The fight
+    # is mortal — Malachar IS the cult leader, NOT Nidhoggr. Nidhoggr only
+    # manifests later, through Eternatus, after Hoopa is consumed (ch32).
+    #
+    # Hydreigon = the ace shield-fight. Final-team Pokemon get a passive
+    # boost when they switch in to keep the late-game pressure on.
     #
     # Event Script:
     #   setBattleRule("midbattleScript", :BOSS_MALACHAR_FINAL)
     #   setBattleRule("databoxStyle", :Boss)
     #   setBattleRule("battleBGM", "Battle Malachar")
     #   setBattleRule("canLose")
-    #   TrainerBattle.start(:MALACHAR, "Malachar")
+    #   TrainerBattle.start(:CULT_LEADER, "Malachar")
     #===========================================================================
     BOSS_MALACHAR_FINAL = {
-      # Darkrai becomes a boss on send out
-      "AfterSendOut_DARKRAI_foe" => {
-        "makeBoss" => { shields: 4, passive: :BADDREAMS, hp_boost: 5 }
+      # Hydreigon — Malachar's ace, becomes the shield-fight boss
+      "AfterSendOut_HYDREIGON_foe" => {
+        "makeBoss" => { shields: 4, passive: :DARKAURA, hp_boost: 5 }
       },
-      "AfterSwitchIn_DARKRAI_foe" => {
-        "makeBoss" => { shields: 4, passive: :BADDREAMS, hp_boost: 5 }
+      "AfterSwitchIn_HYDREIGON_foe" => {
+        "makeBoss" => { shields: 4, passive: :DARKAURA, hp_boost: 5 }
       },
-      # Turn 1 — Malachar monologue
+      # Turn 1 — Malachar opens
       "RoundStartCommand_1_foe" => {
-        "speech" => "The fragments of the Shattered Crown cry out...\nDarkrai will consume your hope!"
+        "speech" => "You came all this way only to break against the Hand.\nThe Shattered Crowns are mine to wield!"
       },
-      # Shield breaks — escalating dialogue
-      "BossShieldBroken_DARKRAI_foe" => {
-        "speech" => "A crack in the darkness... but it only grows deeper!"
+      # Shield break — escalating dialogue
+      "BossShieldBroken_HYDREIGON_foe" => {
+        "speech" => "A single crack is nothing — the seal still trembles!"
       },
-      # Phase 2 — half HP triggers shield regen + new passive
-      "TargetHPHalf_DARKRAI_foe" => {
-        "speech"       => "Enough! The nightmare realm bends to MY will!",
-        "bossPassive"  => :PRESSURE,
-        "bossShields"  => 3,
-        "battlerStats" => [:SPEED, 2, :SPECIAL_ATTACK, 1]
+      # Phase 2 — half HP, Hydreigon enrages
+      "TargetHPHalf_HYDREIGON_foe" => {
+        "speech"       => "Hydreigon, end them! Buy me the moment I need!",
+        "bossPassive"  => :BEASTBOOST,
+        "bossShields"  => 2,
+        "battlerStats" => [:SPECIAL_ATTACK, 1, :SPEED, 1]
       },
       # Low HP — desperation
-      "TargetHPLow_DARKRAI_foe" => {
+      "TargetHPLow_HYDREIGON_foe" => {
         "speech" => "No... the fragments... they can't reject me! NOT NOW!"
       },
-      # Fainted
-      "BattlerFainted_DARKRAI_foe" => {
-        "speech" => "The darkness... recedes..."
-      }
+      # Late-team finishers get a stat boost on switch-in
+      "AfterSwitchIn_TYRANITAR_foe"  => { "battlerStats" => [:ATTACK, 1, :DEFENSE, 1] },
+      "AfterSwitchIn_CHANDELURE_foe" => { "battlerStats" => [:SPECIAL_ATTACK, 1] },
+      "AfterSwitchIn_AEGISLASH_foe"  => { "battlerStats" => [:SPECIAL_ATTACK, 1, :DEFENSE, 1] },
+      "AfterSwitchIn_GRIMMSNARL_foe" => { "battlerStats" => [:ATTACK, 1, :SPECIAL_DEFENSE, 1] }
     }
 
     #===========================================================================
-    # BOSS EVENT 3: Malachar Reborn — Eternamax Eternatus
-    # Post-game ultimate boss. Eternatus is the only Pokemon and is a
-    # massive boss with 5 shields, huge HP, and phase transitions.
-    # Phase 1: Pressure. Phase 2 (half HP): Shields restore + Beast Boost.
-    # Phase 3 (low HP): Final shield restore + stat surge.
+    # BOSS EVENT 3: Nidhoggr — Eternatus Vessel (Chapter 34 final battle)
+    # Per Chapter 34 (full_story_index.md), Nidhoggr — the primordial Void
+    # entity — manifests by possessing Eternatus after Hoopa is consumed.
+    # Malachar is NOT the speaker here; Nidhoggr addresses the Chosen
+    # directly. Two phases mirror the chapter beats:
+    #
+    #   Phase 1 — ch34_first_clash / ch34_first_form_defeated
+    #   Phase 2 — ch34_eternamax (Eternamax form, shields restored)
+    #   Defeat — ch34_nidhoggr_sealed / ch34_eternatus_freed
     #
     # Event Script:
-    #   setBattleRule("midbattleScript", :BOSS_MALACHAR_REBORN)
+    #   setBattleRule("midbattleScript", :BOSS_NIDHOGGR_FINAL)
     #   setBattleRule("databoxStyle", :Boss)
-    #   setBattleRule("battleBGM", "Battle Malachar Reborn")
+    #   setBattleRule("battleBGM", "Battle Nidhoggr")
     #   setBattleRule("canLose")
     #   TrainerBattle.start(:CULT_LEADER, "Malachar Reborn")
+    #
+    # Legacy alias :BOSS_MALACHAR_REBORN is kept below for any event that
+    # already references the old name — it points to the same data.
     #===========================================================================
-    BOSS_MALACHAR_REBORN = {
-      # Eternatus becomes the ultimate boss
+    BOSS_NIDHOGGR_FINAL = {
+      # Eternatus becomes Nidhoggr's vessel
       "AfterSendOut_ETERNATUS_foe" => {
         "makeBoss" => { shields: 5, passive: :PRESSURE, hp_boost: 8 }
       },
-      # Opening monologue
+      # Opening — Nidhoggr addresses the Chosen
       "RoundStartCommand_1_foe" => {
-        "speech" => "I have transcended mortality!\nNidhoggr and I are ONE!"
+        "speech" => "Little Chosen. You wear borrowed crowns and call them yours.\nI have waited since before your gods had names."
       },
-      # Shield breaks — escalating power
+      # Shield breaks — escalating menace
       "BossShieldBroken_ETERNATUS_foe" => {
-        "speech"       => "Each shattered shield only makes us STRONGER!",
+        "speech"       => "Every crown shatters. Every seal frays.\nYou only quicken what was always coming.",
         "battlerStats" => [:ATTACK, 1, :SPECIAL_ATTACK, 1]
       },
-      # Phase 2 — half HP
+      # Phase 2 — Eternamax transformation at half HP
       "TargetHPHalf_ETERNATUS_foe" => {
-        "speech"       => "You think you can destroy a GOD?\nThe cycle begins anew!",
+        "speech"       => "Then witness the form your seal could never contain.",
         "bossPassive"  => :BEASTBOOST,
         "bossShields"  => 3,
         "battlerStats" => [:SPEED, 2]
       },
-      # Phase 3 — low HP, final stand
+      # Phase 3 — last stand
       "TargetHPLow_ETERNATUS_foe" => {
-        "speech"       => "I WILL NOT FALL! THE CROWN'S POWER IS ETERNAL!",
+        "speech"       => "No mortal hand has ever held me. None ever will.",
         "bossShields"  => 2,
         "battlerStats" => [:DEFENSE, 2, :SPECIAL_DEFENSE, 2]
       },
-      # Defeat
+      # Defeat — Nidhoggr is sealed, Eternatus is freed
       "BattlerFainted_ETERNATUS_foe" => {
-        "speech" => "Even in failure... I showed the world its flaws..."
+        "speech" => "...the dark drains away. The dragon's eyes are its own again."
       }
     }
+
+    # Legacy alias — kept so existing event scripts don't break.
+    BOSS_MALACHAR_REBORN = BOSS_NIDHOGGR_FINAL
 
   end
 end

@@ -36,9 +36,9 @@ module ReputationSystem
       :start => 0,
       :color => Color.new(100, 150, 255)
     },
-    :VOID_RESISTANCE => {
-      :name  => "Void Resistance",
-      :desc  => "Underground fighters opposing the Cult of the Void.",
+    :HAND_RESISTANCE => {
+      :name  => "Hand Resistance",
+      :desc  => "Underground fighters opposing the Shattered Hand.",
       :start => 0,
       :color => Color.new(200, 100, 255)
     },

@@ -76,7 +76,7 @@ All settings are in `000_Config.rb` inside the `ReputationSystem` module.
 ```ruby
 FACTIONS = {
   ASGHEIM_GUARD:    { name: "Asgheim Guard",    start: 0   },
-  VOID_RESISTANCE:  { name: "Void Resistance",  start: 0   },
+  HAND_RESISTANCE:  { name: "Hand Resistance", start: 0   },
   MERCHANT_GUILD:   { name: "Merchant Guild",   start: 0   },
   SCHOLARS_CIRCLE:  { name: "Scholar's Circle", start: 10  },
   ASTORIA_REMNANTS: { name: "Astoria Remnants", start: -20 },
@@ -100,8 +100,8 @@ FACTIONS = {
 # Player helped the Asgheim Guard
 ReputationSystem.shift(:ASGHEIM_GUARD, 15)
 
-# That angered the Void Resistance
-ReputationSystem.shift(:VOID_RESISTANCE, -10)
+# That angered the Hand Resistance
+ReputationSystem.shift(:HAND_RESISTANCE, -10)
 ```
 
 ### Step 2: Gate Content by Standing
@@ -136,7 +136,7 @@ ReputationSystem.open_faction_shop(:MERCHANT_GUILD)
 ReputationSystem.points(:ASGHEIM_GUARD)       # => 45
 
 # Get reputation tier
-ReputationSystem.tier(:VOID_RESISTANCE)        # => :FRIENDLY
+ReputationSystem.tier(:HAND_RESISTANCE)        # => :FRIENDLY
 
 # Shift reputation
 ReputationSystem.shift(:SCHOLARS_CIRCLE, 10)
