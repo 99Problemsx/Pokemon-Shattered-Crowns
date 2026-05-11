@@ -60,10 +60,15 @@ Place a **Comment** on an event to mark a secret base entrance:
 
 | Method | Description |
 |--------|-------------|
-| `pbEnterSecretBase` | Teleport to the player's base |
-| `pbHasSecretBase?` | Check if player has a base |
-| `pbPlaceDecoration(id)` | Add a decoration |
-| `pbInviteNPC(npc_id)` | Invite an NPC to the base |
+| `pbEstablishBase(location_key)` | Claim a base at one of the `BASE_LOCATIONS` keys |
+| `pbEnterBase` | Teleport to the player's base interior |
+| `pbLeaveBase` | Return to the world-map base entrance |
+| `pbBaseEstablished?` | True if the player has claimed a base |
+| `pbBaseHasEffect?(effect)` | Check if a decoration providing `effect` is placed |
+| `pbBuyDecoration(deco_id)` | Purchase + place a decoration from `DECORATIONS` |
+
+NPC invitation hooks are not implemented in 1.0 — the `INVITABLE_NPCS` table
+defines the rosters but the visiting routine is reserved for a future update.
 
 ---
 
@@ -71,7 +76,7 @@ Place a **Comment** on an event to mark a secret base entrance:
 
 ```
 [SC] Secret Base/
-  meta.txt              - Plugin metadata
-  000_Config.rb         - Locations, decorations, NPC definitions
-  001_SecretBaseCore.rb - Base management, decoration effects, invitations
+  meta.txt        - Plugin metadata
+  000_Config.rb   - Locations, decorations, NPC definitions
+  001_BaseCore.rb - Base management, decoration effects, helper methods
 ```

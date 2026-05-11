@@ -80,9 +80,12 @@ Aerodactyl, Relicanth, Archen, Tirtouga, Cranidos, Shieldon
 
 | Method | Description |
 |--------|-------------|
-| `pbTimeTravel(direction)` | Travel to past or present |
-| `pbCurrentEra` | Get current era |
-| `pbInPast?` | Check if player is in the past |
+| `pbTimeTravel` | Toggle between Past and Present (auto-detects current era; handles transition FX) |
+| `pbCurrentEra` | Returns the current era symbol (`:PRESENT` or `:PAST`) |
+| `pbInPast?` / `pbInPresent?` | Boolean check for the current era |
+| `pbUnlockTimeTravel(present_map_id)` | Mark a Yggdrasil root as unlocked for the player |
+| `pbTimeTravelCount` | Number of times the player has travelled (for codex / trainer card stats) |
+| `pbTimeTravelStatus` | Debug helper — prints all unlocked roots and current era |
 
 ---
 

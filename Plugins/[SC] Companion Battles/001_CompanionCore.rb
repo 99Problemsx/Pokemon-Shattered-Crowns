@@ -19,6 +19,17 @@ module CompanionBattleManager
       return 2
     end
 
+    # Guard: the companion's trainer_type must actually exist in PBS/trainers.
+    # Without this guard pbDoubleTrainerBattle would crash with a NameError
+    # when an event author wires up a companion before the trainer is defined
+    # (common during early story authoring).
+    unless GameData::TrainerType.exists?(config[:trainer_type])
+      pbMessage(_INTL("(\\c[6]Companion Battle skipped: trainer {1} is not defined yet.\\c[0])",
+                       config[:trainer_type])) if $DEBUG
+      Console.echoln("[SC] Companion Battles: missing trainer_type #{config[:trainer_type]} for #{companion_key}") if CompanionBattles::DEBUG_MODE
+      return 2
+    end
+
     # Pre-battle dialogue
     if CompanionBattles::SHOW_DIALOGUE
       pbMessage(_INTL("{1}: \"{2}\"", config[:display_name], config[:pre_battle_line]))

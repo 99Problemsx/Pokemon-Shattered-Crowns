@@ -60,11 +60,16 @@ Place a **Comment** on portal events:
 
 | Method | Description |
 |--------|-------------|
-| `pbEnterSpiritRealm(portal_id)` | Enter the Spirit Realm through a portal |
+| `pbEnterSpiritRealm(portal_key)` | Enter the Spirit Realm through a portal |
 | `pbExitSpiritRealm` | Leave the Spirit Realm |
-| `pbInSpiritRealm?` | Check if player is in the Spirit Realm |
-| `pbCorruptionLevel` | Get current corruption value |
-| `pbPurifyPokemon(pokemon)` | Begin/check purification progress |
+| `pbClearSpiritRealm` | Mark the current realm as cleared |
+| `pbInSpiritRealm?` | True if player is currently in the Spirit Realm |
+| `pbPortalDiscovered?(portal_key)` | True if the portal has been discovered |
+| `pbRealmCleared?(portal_key)` | True if the realm at portal_key has been cleared |
+| `pbCorruptionLevel` | Current corruption (0..`CORRUPTION_MAX`, 0 outside the realm) |
+| `pbMarkShadow(pkmn)` | Mark a Pokemon as shadow (call on catch in the realm) |
+| `pbIsShadowPokemon?(pkmn)` | True if the Pokemon is currently shadow |
+| `pbPurifyPokemon(pkmn, item = nil)` | Returns steps remaining; pass `PURIFICATION_ITEM` to instant-purify |
 
 ---
 
@@ -80,8 +85,9 @@ Place a **Comment** on portal events:
 
 ```
 [SC] Spirit Realm/
-  meta.txt              - Plugin metadata
-  000_Config.rb         - Portal definitions, corruption settings, shadow config
-  001_SpiritCore.rb     - Save data, portal logic, corruption engine
-  002_ShadowSystem.rb   - Shadow Pokemon creation, purification tracking
+  meta.txt        - Plugin metadata
+  000_Config.rb   - Portal definitions, corruption settings, shadow config,
+                    SHADOW_AMBUSH_SPECIES list
+  001_RealmCore.rb - Save data, portal logic, corruption engine, shadow
+                     marking + step-based purification, event helpers
 ```

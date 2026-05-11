@@ -3601,15 +3601,7 @@ class Lighting
     end
     
     return if !@map_settings
-    # Follower light removed by user request
-    # update_follower_light 
-
     refresh_all
-  end
-
-  # Follower light feature removed
-  def update_follower_light
-    return 
   end
 
   def refresh_all(force_new_setup = false)
@@ -3629,7 +3621,6 @@ class Lighting
     update_paths
     refresh_tone
     refresh_attached
-    # update_follower_light
     update_light_sprites
     update_water_reflections
     update_ember_particles

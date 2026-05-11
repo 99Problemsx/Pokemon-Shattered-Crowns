@@ -399,7 +399,7 @@ end
 #-------------------------------------------------------------------------------
 class Trainer
   alias __level_caps_initialize initialize unless method_defined?(:__level_caps_initialize)
-  
+
   def initialize(*args)
     __level_caps_initialize(*args)
     enforce_level_cap
@@ -410,7 +410,13 @@ class Trainer
     return if !$game_switches
     return if $game_switches[LevelCapsEX::LEVEL_CAP_BYPASS_SWITCH]
     return unless LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?
-    
+    # Skip if we've already clamped this instance — Trainer objects may be
+    # Marshalled (raid partners, AI clones) and unmarshalled trainers re-enter
+    # initialize. Without this guard, the clamp would compound with other
+    # plugins' party mutations (e.g. Trainer Scaling).
+    return if @_level_cap_enforced
+    @_level_cap_enforced = true
+
     cap = LevelCapsEX.level_cap
     @party&.each do |pkmn|
       next if !pkmn

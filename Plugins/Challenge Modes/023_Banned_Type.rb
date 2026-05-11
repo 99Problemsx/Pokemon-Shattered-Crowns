@@ -62,7 +62,7 @@ end
 #===============================================================================
 module ChallengeModes
   class << self
-    alias __banned_type__begin_challenge begin_challenge
+    alias __banned_type__begin_challenge begin_challenge unless method_defined?(:__banned_type__begin_challenge)
   end
 
   def self.begin_challenge
@@ -80,7 +80,11 @@ alias __cm_banned_type__pbAddPokemon pbAddPokemon unless defined?(__cm_banned_ty
 def pbAddPokemon(*args)
   if ChallengeModes.banned_type?
     pkmn = args[0]
-    target = pkmn.is_a?(Pokemon) ? pkmn : pkmn
+    target = case pkmn
+             when Pokemon then pkmn
+             when Symbol, String then (Pokemon.new(pkmn, 1) rescue nil)
+             else nil
+             end
     if target && ChallengeModes.has_banned_type?(target)
       type_data = GameData::Type.try_get(ChallengeModes.banned_type)
       type_name = type_data ? type_data.name : ChallengeModes.banned_type.to_s

@@ -47,8 +47,9 @@ Module: `WantedBoard`
 | Method | Description |
 |--------|-------------|
 | `pbOpenWantedBoard` | Open the bounty board UI |
-| `pbActiveBounties` | Get list of active bounties |
-| `pbBountyComplete?(bounty_id)` | Check if a bounty is done |
+| `pbBountyActive?(bounty_key)` | True if the player has the bounty in their active list |
+| `pbBountyCompleted?(bounty_key)` | True if the bounty has been completed (any time) |
+| `pbTotalBountiesCompleted` | Total count of bounties the player has ever completed |
 
 ---
 
@@ -64,7 +65,7 @@ Module: `WantedBoard`
 
 ```
 [SC] Wanted Board/
-  meta.txt              - Plugin metadata
-  000_Config.rb         - Bounty definitions, board settings
-  001_WantedCore.rb     - Board management, auto-tracking, reward distribution
+  meta.txt        - Plugin metadata
+  000_Config.rb   - Bounty definitions, board settings
+  001_BoardCore.rb - Board management, auto-tracking, reward distribution
 ```

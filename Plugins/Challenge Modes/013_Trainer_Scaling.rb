@@ -61,6 +61,11 @@ class Battle
 
     echoln "[Challenge Modes] Scaling trainer: #{trainer.name}" if debug
 
+    # Deep-copy the party so scaling does not mutate cached Trainer objects
+    # (e.g. Rematch / NPCTrainer cache). Without this, every battle compounds
+    # +level_boost levels, +IV bumps and extra Pokemon onto the same objects.
+    trainer.party.replace(Marshal.load(Marshal.dump(trainer.party)))
+
     scaled_party = []
     trainer.party.each do |pkmn|
       next unless pkmn

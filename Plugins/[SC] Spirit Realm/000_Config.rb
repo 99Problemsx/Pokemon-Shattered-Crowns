@@ -71,6 +71,10 @@ module SpiritRealm
   SHADOW_STAT_BOOST   = 10   # % stat boost on shadow Pokemon
   SHADOW_ENCOUNTER_RATE = 30 # % chance an encounter is a shadow variant
 
+  # Species that can spawn from the WILD_AMBUSH corruption effect. Picked
+  # at random, weighted equally. Level is the current corruption / 2.
+  SHADOW_AMBUSH_SPECIES = [:GENGAR, :HAUNTER, :MISDREAVUS, :SHUPPET, :YAMASK]
+
   #=============================================================================
   # PURIFICATION
   # After catching shadow Pokemon, they can be purified

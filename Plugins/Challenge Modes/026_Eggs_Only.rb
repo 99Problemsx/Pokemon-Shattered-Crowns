@@ -17,9 +17,26 @@ module ChallengeModes
   }
 
   EGGS_ONLY_BST_TOLERANCE = 60   # ± points around the original's BST
+  EGGS_ONLY_BST_BUCKET    = 20   # bucket width for candidate memo
 
   def self.eggs_only?
     return on?(:EGGS_ONLY)
+  end
+
+  # Build a {bucket => [species, ...]} table once. ~900 species iterated
+  # in total instead of per-catch — Wonder Trade picks become O(1) lookup.
+  def self.eggs_only_candidate_pool
+    return @eggs_only_pool if @eggs_only_pool
+    @eggs_only_pool = {}
+    GameData::Species.each do |sp|
+      next if sp.form != 0
+      next if sp.mega_stone || sp.mega_move
+      next if sp.has_flag?("Legendary") || sp.has_flag?("Mythical")
+      bst = sp.base_stats.values.sum
+      bucket = bst / EGGS_ONLY_BST_BUCKET
+      (@eggs_only_pool[bucket] ||= []) << sp.species
+    end
+    @eggs_only_pool
   end
 
   #-----------------------------------------------------------------------------
@@ -34,17 +51,13 @@ module ChallengeModes
     return unless original_data
 
     target_bst = original_data.base_stats.values.sum
+    pool = eggs_only_candidate_pool
+    # Pull candidates from buckets that fall within tolerance.
+    min_b = (target_bst - EGGS_ONLY_BST_TOLERANCE) / EGGS_ONLY_BST_BUCKET
+    max_b = (target_bst + EGGS_ONLY_BST_TOLERANCE) / EGGS_ONLY_BST_BUCKET
     candidates = []
-
-    GameData::Species.each do |sp|
-      next if sp.form != 0                             # base forms only
-      next if sp.mega_stone || sp.mega_move            # no megas
-      next if sp.has_flag?("Legendary") || sp.has_flag?("Mythical")
-      next if sp.species == original_species
-      bst = sp.base_stats.values.sum
-      next if (bst - target_bst).abs > EGGS_ONLY_BST_TOLERANCE
-      candidates << sp.species
-    end
+    (min_b..max_b).each { |b| candidates.concat(pool[b]) if pool[b] }
+    candidates.delete(original_species)
 
     return if candidates.empty?
     new_species = candidates.sample
@@ -64,6 +77,19 @@ end
 # Wonder-trade everything that enters the player's collection.
 # We hook Battle::Peer.pbStorePokemon (post-catch) and the global pbAddPokemon
 # (gift / event Pokemon).
+#
+# Note on rule-interaction: Eggs Only is loaded last (026) so its alias is the
+# outermost wrapper around pbStorePokemon — wonder_trade! runs BEFORE 017
+# Species Clause's storage-time notification, 022 Cage Match's party-cap
+# routing, and 025 Solo Run's PC redirect. So downstream rules see the
+# wonder-traded species (correct for Wonderlocke).
+#
+# Species Clause's actual block fires in pbThrowPokeBall, which runs BEFORE
+# pbStorePokemon — so the catch-time block sees the ORIGINAL species. Combined
+# with Wonderlocke this means: "you can't catch a duplicate of what's in your
+# party; but if you catch a new species, it may turn into something you
+# already have". Treat that as intentional Wonderlocke flavour; if you want
+# post-trade clause enforcement, hoist wonder_trade! into pbThrowPokeBall.
 #===============================================================================
 class Battle::Peer
   alias __cm_eggs_only__pbStorePokemon pbStorePokemon unless method_defined?(:__cm_eggs_only__pbStorePokemon)

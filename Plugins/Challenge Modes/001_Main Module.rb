@@ -315,10 +315,10 @@ module ChallengeModes
       possible_species.push(species.species)
     end
     
-    # Select random species using seeded randomization
-    srand($PokemonGlobal.challenge_randomizer_seed + original_species.to_s.hash)
-    randomized_species = possible_species.sample || original_species
-    srand()  # Reset random seed
+    # Select random species using a local PRNG seeded per-species, so the
+    # global RNG used by DDS / raid seeds / replays is not clobbered.
+    rng = Random.new($PokemonGlobal.challenge_randomizer_seed + original_species.to_s.hash)
+    randomized_species = possible_species.sample(random: rng) || original_species
     
     # Store the mapping for consistency
     $PokemonGlobal.challenge_randomizer_map[key] = randomized_species

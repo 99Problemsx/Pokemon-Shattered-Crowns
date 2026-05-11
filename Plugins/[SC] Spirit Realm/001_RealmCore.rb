@@ -204,7 +204,10 @@ module SpiritRealmManager
       pbMessage(_INTL("The corruption saps your team's strength!"))
     when :WILD_AMBUSH
       pbMessage(_INTL("A shadow creature attacks!"))
-      pbWildBattle(:GENGAR, 50)  # Placeholder — configure as needed
+      pool = SpiritRealm::SHADOW_AMBUSH_SPECIES.select { |s| GameData::Species.exists?(s) }
+      species = pool.sample || :GENGAR
+      level = [data.corruption / 2, 5].max.clamp(5, 100)
+      pbWildBattle(species, level)
     when :FORCED_EXIT
       exit_realm(true)
     end
@@ -277,4 +280,40 @@ end
 
 def pbIsShadowPokemon?(pkmn)
   $PokemonGlobal.spirit_realm_data.is_shadow?(pkmn)
+end
+
+#===============================================================================
+# Mark a Pokemon as shadow (typically called on catch in the realm).
+#===============================================================================
+def pbMarkShadow(pkmn)
+  return false unless pkmn.is_a?(Pokemon)
+  $PokemonGlobal.spirit_realm_data.mark_shadow(pkmn)
+  true
+end
+
+#===============================================================================
+# Current corruption level (0 .. SpiritRealm::CORRUPTION_MAX). Returns 0
+# outside the realm.
+#===============================================================================
+def pbCorruptionLevel
+  $PokemonGlobal.spirit_realm_data.corruption
+end
+
+#===============================================================================
+# Begin/check purification on a specific Pokemon. With no item argument this
+# returns the steps remaining (nil if not shadow). With an item that matches
+# SpiritRealm::PURIFICATION_ITEM, it instantly purifies the Pokemon and
+# returns true on success.
+#===============================================================================
+def pbPurifyPokemon(pkmn, item = nil)
+  data = $PokemonGlobal.spirit_realm_data
+  return nil unless pkmn.is_a?(Pokemon)
+  return nil unless data.is_shadow?(pkmn)
+  if item && SpiritRealm::PURIFICATION_ITEM && item == SpiritRealm::PURIFICATION_ITEM
+    data.shadow_pokemon.delete(pkmn.personalID)
+    pbMessage(_INTL("{1} has been purified!", pkmn.name))
+    pbSEPlay("Pkmn move learnt")
+    return true
+  end
+  data.shadow_pokemon[pkmn.personalID]
 end

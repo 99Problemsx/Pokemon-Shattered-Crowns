@@ -53,10 +53,11 @@ Module: `BattleArena`
 
 | Method | Description |
 |--------|-------------|
-| `pbStartArena` | Enter the battle arena |
-| `pbArenaStreak` | Get current streak |
-| `pbArenaBestStreak` | Get all-time best streak |
-| `pbArenaFloor` | Get current floor |
+| `pbStartArena` | Begin a run from floor 1 |
+| `pbArenaStatus` | Print the current run's progress + streak to the message log |
+| `pbArenaHighestFloor` | Highest floor ever reached (across all runs) |
+| `pbArenaBestStreak` | All-time best consecutive win streak |
+| `pbArenaFloorCleared?(floor_num)` | True if `floor_num` has been cleared at least once |
 
 ---
 

@@ -142,11 +142,14 @@ module MoralityManager
     tier_order = [:PURE_DARK, :DARK, :NEUTRAL, :LIGHT, :PURE_LIGHT]
     min_idx = tier_order.index(config[:min_tier]) || 0
     cur_idx = tier_order.index(data.current_tier) || 2
-    # For dark endings, lower is "better"; for light, higher
+    # For dark endings, lower is "better"; for light, higher.
+    # Balance is reserved for players who stayed close to Neutral —
+    # within ±1 tier so committed Light/Dark runs can't fall back to it.
     case ending_key
     when :DOMINATION then cur_idx <= min_idx
     when :REDEMPTION then cur_idx >= min_idx
-    else true # BALANCE is available for neutral
+    when :BALANCE    then (cur_idx - 2).abs <= 1
+    else cur_idx == 2
     end
   end
 end

@@ -69,9 +69,9 @@ end
 
 ```
 [SC] Quest Journal/
-  meta.txt              - Plugin metadata
-  000_Config.rb         - Configuration constants
-  001_QuestCore.rb      - Save data, state management, event helpers
-  002_QuestScene.rb     - QuestJournalScene UI
-  Data/                 - Quest definitions
+  meta.txt        - Plugin metadata
+  000_Config.rb   - Configuration constants
+  001_QuestData.rb - Save data, state management, event helpers
+  002_UI.rb       - QuestJournalScene UI
+  Data/           - Quest definitions
 ```

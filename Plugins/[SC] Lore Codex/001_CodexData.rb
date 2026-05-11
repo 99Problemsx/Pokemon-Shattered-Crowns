@@ -54,9 +54,12 @@ class CodexSaveData
 
   def discover(entry_id)
     return false if @discovered.include?(entry_id)
-    @discovered.push(entry_id)
     entry = CodexRegistry.get(entry_id)
-    if entry && LoreCodex::ENABLED
+    # Don't pollute @discovered with unknown IDs (e.g. MoralityCore fires
+    # codexDiscover(:MORALITY_LIGHT) but no such entry may be registered).
+    return false unless entry
+    @discovered.push(entry_id)
+    if LoreCodex::ENABLED
       pbSEPlay(LoreCodex::SE_DISCOVER)
       pbMessage(_INTL("\\se[]Lore discovered: \\c[1]{1}\\c[0]!", entry.title))
       check_category_completion(entry.category)

@@ -34,9 +34,10 @@ Module: `MoveTutorNetwork`
 
 | Method | Description |
 |--------|-------------|
-| `pbDiscoverTutor(tutor_id)` | Mark a tutor as discovered |
-| `pbTutorDiscovered?(tutor_id)` | Check if tutor has been found |
-| `pbOpenTutorMenu(tutor_id)` | Open the move teaching interface |
+| `pbMoveTutor(tutor_key)` | Open the tutor's teach interface (auto-discovers if not yet known) |
+| `pbDiscoverTutor(tutor_key)` | Mark a tutor as discovered without opening the menu |
+| `pbTutorDiscovered?(tutor_key)` | Check if a tutor has been found |
+| `pbShowTutorNetwork` | Show the discovery overview screen (all 5 tutors, locations, status) |
 
 ---
 

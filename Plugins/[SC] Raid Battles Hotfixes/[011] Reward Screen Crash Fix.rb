@@ -103,18 +103,11 @@ end
 alias original_pbRaidRewardsScreen pbRaidRewardsScreen rescue nil
 
 def pbRaidRewardsScreen(outcome, rules = nil, pkmn = nil)
-  echoln "[RAID DEN DEBUG] Global pbRaidRewardsScreen called - looking for RaidScene instance"
-  
-  # Try to find the current RaidScene instance
-  # Check if $scene is a RaidScene
   if $scene && $scene.is_a?(RaidScene)
-    echoln "[RAID DEN DEBUG] Found RaidScene instance in $scene"
     return $scene.pbRaidRewardsScreen(outcome)
   end
-  
-  # If no scene found, try the original global function if it exists
+
   if defined?(original_pbRaidRewardsScreen)
-    echoln "[RAID DEN DEBUG] Calling original global function"
     return original_pbRaidRewardsScreen(outcome, rules, pkmn)
   end
   

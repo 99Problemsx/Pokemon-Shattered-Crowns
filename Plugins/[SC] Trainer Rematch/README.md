@@ -65,8 +65,11 @@ The trainer becomes rematchable after the player has enough badges. Each subsequ
 
 | Method | Description |
 |--------|-------------|
-| `pbRematchReady?(event_id)` | Check if trainer is ready for rematch |
-| `pbRematchTier(event_id)` | Get current rematch tier |
+| `rematchAvailable?(trainer_key)` | True if the trainer has been defeated and is eligible for rematch |
+| `rematchTier(trainer_key)` | Current rematch tier (0 = first encounter, 1+ = nth rematch) |
+| `rematchDefeat(trainer_key)` | Record a rematch victory (bumps the tier counter) |
+| `pbRematchBattle(trainer_type, trainer_name, trainer_key = nil)` | Start a rematch battle with auto-scaled party |
+| `pbRematch` | Convenience wrapper for events — picks up data from the calling trainer event |
 
 ---
 

@@ -30,19 +30,10 @@ module CompanionPokemon
     :COME_IN  => CompanionFollower::ANIM_COME_IN,       # 29 — Pokeball return
   }
 
-  #=============================================================================
-  # STATUS TONE OVERLAYS — colored tints applied to the follower sprite
-  # when it has a status condition.
-  # Format: [Red, Green, Blue] (0-255)
-  #=============================================================================
-  APPLY_STATUS_TONES = true
-  STATUS_TONES = {
-    :BURN      => [206, 73, 43],     # Orange-red
-    :POISON    => [109, 55, 130],    # Purple
-    :PARALYSIS => [204, 152, 44],    # Yellow-orange
-    :FROZEN    => [56, 160, 193],    # Cyan-blue
-    :SLEEP     => [0, 0, 0],         # No overlay
-  }
+  # Status tone overlays live in 001_FollowerConfig.rb (APPLY_STATUS_TONES +
+  # TONE_BURN / TONE_POISON / TONE_PARALYSIS / TONE_FROZEN / TONE_SLEEP).
+  # 008_FollowerVisuals.rb reads those directly — keep this file focused on
+  # reaction routes only.
 
   #=============================================================================
   # MOVE ROUTE PATTERNS — cute movements played with the emote

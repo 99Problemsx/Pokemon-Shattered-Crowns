@@ -110,7 +110,8 @@ module SCScripts
   #=============================================================================
   # Debug & Logging
   #=============================================================================
-  DEBUG = true
+  # Toggle plugin-internal verbose logging. Independent of engine $DEBUG.
+  DEBUG = $DEBUG
   LOG_LEVEL = :info  # :debug, :info, :warn, :error
   
   # Log levels
