@@ -47,11 +47,19 @@ end
 
 #===============================================================================
 # 4. :on_pokemon_center_heal - when party is healed at a Pokecenter
+#
+# Plugins like Challenge Modes' NO_POKEMON_CENTER and LIMITED_HEALING wrap
+# pbPokeCenterPC and short-circuit with `return false` when the heal is
+# blocked. We respect that — only trigger :on_pokemon_center_heal if the
+# inner call didn't explicitly say "blocked". Otherwise downstream listeners
+# (Affection happiness gain, Companion reaction, etc.) would think a heal
+# happened when none did.
 #===============================================================================
 alias sc_bridge_pbPokeCenterPC pbPokeCenterPC unless defined?(sc_bridge_pbPokeCenterPC)
-def pbPokeCenterPC
-  sc_bridge_pbPokeCenterPC
-  EventHandlers.trigger(:on_pokemon_center_heal)
+def pbPokeCenterPC(*args)
+  ret = sc_bridge_pbPokeCenterPC(*args)
+  EventHandlers.trigger(:on_pokemon_center_heal) unless ret == false
+  return ret
 end
 
 #===============================================================================

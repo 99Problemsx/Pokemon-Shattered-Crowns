@@ -33,8 +33,9 @@ module ChallengeModes
   # Check if item is allowed
   def self.can_use_item?(item_id)
     return true if !item_restrictions?
-    
-    item_data = GameData::Item.get(item_id)
+
+    item_data = GameData::Item.try_get(item_id)
+    return true unless item_data
     item_symbol = item_data.id
     
     # Check if item is banned
@@ -55,8 +56,9 @@ module ChallengeModes
   # Get remaining uses for limited item
   def self.remaining_uses(item_id)
     return -1 if !item_restrictions?
-    
-    item_data = GameData::Item.get(item_id)
+
+    item_data = GameData::Item.try_get(item_id)
+    return -1 unless item_data
     item_symbol = item_data.id
     
     return -1 if !ITEM_RESTRICTIONS_CONFIG[:limited_items].include?(item_symbol)
@@ -72,46 +74,42 @@ end
 #===============================================================================
 class Battle
   alias __challengemodes_itemrestrict__pbUseItemOnPokemon pbUseItemOnPokemon unless method_defined?(:__challengemodes_itemrestrict__pbUseItemOnPokemon)
-  
-  def pbUseItemOnPokemon(item, battler, scene)
-    # Check if Item Restrictions rule is active
+
+  # Signature must match Essentials v21.1: (item, idxParty, userBattler).
+  # Earlier versions of this file used (item, battler, scene) and crashed
+  # on the first item use in battle because userBattler.pbDisplay doesn't
+  # exist. Display messages now go through self.pbDisplay (Battle's own).
+  def pbUseItemOnPokemon(item, idxParty, userBattler)
     if ChallengeModes.item_restrictions?
-      item_data = GameData::Item.get(item)
-      item_symbol = item_data.id
-      
-      # Check if item is allowed
-      if !ChallengeModes.can_use_item?(item_symbol)
-        # Check if banned
+      item_data = GameData::Item.try_get(item)
+      if item_data
+        item_symbol = item_data.id
+
+        # Banned items
         if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:banned_items].include?(item_symbol)
-          scene.pbDisplay(_INTL("{1} is banned in Challenge Mode!", item_data.name))
+          pbDisplay(_INTL("{1} is banned in Challenge Mode!", item_data.name))
           return false
         end
-        
-        # Check if limit reached
+
+        # Limited items: enforce limit, then increment + announce
         if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].include?(item_symbol)
           limit = ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:item_limits][item_symbol] || 3
-          scene.pbDisplay(_INTL("You've already used {1} this battle!", item_data.name))
-          scene.pbDisplay(_INTL("Limit: {1} per battle", limit))
-          return false
-        end
-      end
-      
-      # Track usage for limited items
-      if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].include?(item_symbol)
-        ChallengeModes.increment_item_usage(item_symbol)
-        
-        # Show remaining uses
-        remaining = ChallengeModes.remaining_uses(item_symbol)
-        if remaining == 0
-          scene.pbDisplay(_INTL("(That was your last {1} for this battle)", item_data.name))
-        elsif remaining > 0
-          scene.pbDisplay(_INTL("({1} {2} remaining this battle)", remaining, item_data.name))
+          if !ChallengeModes.can_use_item?(item_symbol)
+            pbDisplay(_INTL("You've already used {1} {2} this battle!", limit, item_data.name))
+            return false
+          end
+          ChallengeModes.increment_item_usage(item_symbol)
+          remaining = ChallengeModes.remaining_uses(item_symbol)
+          if remaining == 0
+            pbDisplay(_INTL("(That was your last {1} for this battle)", item_data.name))
+          elsif remaining > 0
+            pbDisplay(_INTL("({1} {2} remaining this battle)", remaining, item_data.name))
+          end
         end
       end
     end
-    
-    # Normal item usage
-    return __challengemodes_itemrestrict__pbUseItemOnPokemon(item, battler, scene)
+
+    return __challengemodes_itemrestrict__pbUseItemOnPokemon(item, idxParty, userBattler)
   end
   
   # Reset item counter at battle start
@@ -124,50 +122,53 @@ class Battle
 end
 
 #===============================================================================
-# Block banned items in ItemHandlers
+# Block banned items in ItemHandlers — wraps existing handlers via add_if so
+# we don't clobber Permafaint's CanUseInBattle handlers for REVIVE/MAXREVIVE
+# (which guard against reviving permafainted Pokemon). When this rule is off
+# the inner handler runs unmodified; when it's on we additionally enforce
+# the ban / per-battle limit.
+#
+# ItemHandlers::CanUseInBattle has no `add_if`, so we read whatever handler
+# is currently registered, build a wrapper that defers to it, and re-register.
 #===============================================================================
-ItemHandlers::CanUseInBattle.add(:battle_items,
-  proc { |item, pokemon, battler, move, firstAction, battle, scene, showMessages|
-    next true if !ChallengeModes.item_restrictions?
-    
-    item_data = GameData::Item.get(item)
-    item_symbol = item_data.id
-    
-    # Check if item is banned
-    if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:banned_items].include?(item_symbol)
-      scene.pbDisplay(_INTL("{1} is banned in Challenge Mode!", item_data.name)) if showMessages
-      next false
-    end
-    
-    # Check if item limit reached
-    if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].include?(item_symbol)
-      if !ChallengeModes.can_use_item?(item_symbol)
-        limit = ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:item_limits][item_symbol] || 3
-        scene.pbDisplay(_INTL("You've already used {1} {2} this battle!", limit, item_data.name)) if showMessages
-        next false
+[
+  :XATTACK,    :XDEFEND,    :XSPATK, :XSPDEF, :XSPEED,
+  :XACCURACY,  :DIREHIT,    :GUARDSPEC,
+  :XATTACK2,   :XDEFEND2,   :XSPATK2, :XSPDEF2, :XSPEED2, :XACCURACY2,
+  :XATTACK3,   :XDEFEND3,   :XSPATK3, :XSPDEF3, :XSPEED3, :XACCURACY3,
+  :XATTACK6,   :XDEFEND6,   :XSPATK6, :XSPDEF6, :XSPEED6, :XACCURACY6,
+  :REVIVE,     :MAXREVIVE,  :FULLRESTORE
+].each do |item_id|
+  next unless GameData::Item.exists?(item_id)
+  inner = ItemHandlers::CanUseInBattle[item_id]
+  ItemHandlers::CanUseInBattle.add(item_id,
+    proc { |item, pokemon, battler, move, firstAction, battle, scene, showMessages|
+      if ChallengeModes.item_restrictions?
+        item_data = GameData::Item.try_get(item)
+        if item_data
+          item_symbol = item_data.id
+
+          if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:banned_items].include?(item_symbol)
+            battle.pbDisplay(_INTL("{1} is banned in Challenge Mode!", item_data.name)) if showMessages && battle
+            next false
+          end
+
+          if ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].include?(item_symbol) &&
+             !ChallengeModes.can_use_item?(item_symbol)
+            limit = ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:item_limits][item_symbol] || 3
+            battle.pbDisplay(_INTL("You've already used {1} {2} this battle!", limit, item_data.name)) if showMessages && battle
+            next false
+          end
+        end
       end
-    end
-    
-    next true
-  }
-)
 
-#===============================================================================
-# Block X-Items specifically (Battle stat boosters)
-#===============================================================================
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XATTACK)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XDEFEND)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XSPATK)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XSPDEF)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XSPEED)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :XACCURACY)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :DIREHIT)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :GUARDSPEC)
-
-# Revives and Full Restores
-ItemHandlers::CanUseInBattle.copy(:battle_items, :REVIVE)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :MAXREVIVE)
-ItemHandlers::CanUseInBattle.copy(:battle_items, :FULLRESTORE)
+      # Defer to the previously registered handler so e.g. Permafaint's
+      # "can't revive perma-fainted" check still runs.
+      next true unless inner
+      next inner.call(item, pokemon, battler, move, firstAction, battle, scene, showMessages)
+    }
+  )
+end
 
 #===============================================================================
 # Script command to check item usage
@@ -184,7 +185,8 @@ def pbCheckItemUsage
   ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].each do |item_symbol|
     usage = ChallengeModes.get_item_usage(item_symbol)
     if usage > 0
-      item_name = GameData::Item.get(item_symbol).name
+      data = GameData::Item.try_get(item_symbol)
+      item_name = data ? data.name : item_symbol.to_s
       limit = ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:item_limits][item_symbol] || 3
       text += "#{item_name}: #{usage}/#{limit}\\n"
       used_any = true
@@ -199,11 +201,6 @@ def pbCheckItemUsage
 end
 
 #===============================================================================
-# Console logging for debugging
+# (Removed: load-time `puts` block. Same reason as in 017_Species_Clause —
+# gated on ChallengeModes.running? which is false at file-load time.)
 #===============================================================================
-if ChallengeModes.running?
-  puts "Challenge Modes: Item Restrictions rule loaded"
-  puts "  - Banned items: #{ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:banned_items].join(', ')}"
-  puts "  - Limited items: #{ChallengeModes::ITEM_RESTRICTIONS_CONFIG[:limited_items].join(', ')}"
-  puts "  - Tracks usage per battle"
-end

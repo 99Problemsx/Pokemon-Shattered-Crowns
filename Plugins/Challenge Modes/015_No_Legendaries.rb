@@ -6,7 +6,8 @@
 module ChallengeModes
   # Check if a Pokémon is legendary or mythical
   def self.is_legendary?(pokemon)
-    species_data = pokemon.is_a?(Pokemon) ? pokemon.species_data : GameData::Species.get(pokemon)
+    species_data = pokemon.is_a?(Pokemon) ? pokemon.species_data : GameData::Species.try_get(pokemon)
+    return false unless species_data
     return species_data.has_flag?("Legendary") || species_data.has_flag?("Mythical")
   end
   
@@ -97,10 +98,13 @@ def pbAddPokemon(*args)
   if ChallengeModes.no_legendaries?
     # Get species from first argument
     species = args[0]
-    species = GameData::Species.get(species) if !species.is_a?(Pokemon)
-    
-    # Block if legendary
-    if ChallengeModes.is_legendary?(species)
+    if !species.is_a?(Pokemon)
+      resolved = GameData::Species.try_get(species)
+      species = resolved if resolved
+    end
+
+    # Block if legendary (unknown species pass through; let original handler decide)
+    if species && ChallengeModes.is_legendary?(species)
       pbMessage(_INTL("Legendary and Mythical Pokémon cannot be obtained in Challenge Mode!"))
       return false
     end

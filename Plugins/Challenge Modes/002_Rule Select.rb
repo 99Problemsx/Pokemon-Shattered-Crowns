@@ -66,7 +66,12 @@ module ChallengeModes
   def select_custom_rules
     selected_rules = []
     catch_clauses  = [:SHINY_CLAUSE, :DUPS_CLAUSE, :GIFT_CLAUSE]
-    special_modes  = [:MONOTYPE_MODE, :RANDOMIZER_MODE, :HARDCORE_MODE, :METAMORPH_CHALLENGE]
+    special_modes  = [
+      :MONOTYPE_MODE, :RANDOMIZER_MODE, :HARDCORE_MODE, :METAMORPH_CHALLENGE,
+      # Newer playstyle modes — share the same "no auto white-out" semantics
+      :NO_EXP, :NO_ITEMS, :CAGE_MATCH, :BANNED_TYPE, :NO_BUY,
+      :SOLO_RUN, :EGGS_ONLY
+    ]
     # Rules that don't automatically trigger GAME_OVER_WHITEOUT
     # These are "casual" challenge rules that can be played without stakes
     no_stake_rules = special_modes + [:ONE_CAPTURE, :TRAINER_SCALING] + catch_clauses

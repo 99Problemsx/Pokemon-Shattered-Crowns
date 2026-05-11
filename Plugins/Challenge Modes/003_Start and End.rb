@@ -26,7 +26,9 @@ class PokemonBag
   def add(*args)
     ret = __challenge__add(*args)
     item = args[0]
-    return ret if !$PokemonGlobal || !$PokemonGlobal.challenge_qued || !GameData::Item.get(item).is_poke_ball?
+    return ret if !$PokemonGlobal || !$PokemonGlobal.challenge_qued
+    item_data = GameData::Item.try_get(item)
+    return ret if !item_data || !item_data.is_poke_ball?
     ChallengeModes.begin_challenge
     pbMessage(_INTL("Your Challenge has begun! Good Luck!"))
     return ret

@@ -8,21 +8,25 @@ module ChallengeModes
   TRAINER_SCALING = {
     # Level boost when challenge modes are active
     :level_boost => 2,
-    
+
     # Chance to add extra Pokemon to trainer parties (0-100)
     :extra_pokemon_chance => 40,
-    
+
     # Chance to upgrade Pokemon to evolved forms (0-100)
     :evolution_upgrade_chance => 30,
-    
+
     # Give trainers better items
     :better_items => true,
-    
+
     # Improve IVs for trainer Pokemon
     :improved_ivs => true,
-    
+
     # Add held items to trainer Pokemon
-    :held_items => true
+    :held_items => true,
+
+    # Print scaling info to the console (every trainer battle).
+    # Off by default — only useful while debugging this file.
+    :debug_log => false
   }
 end
 
@@ -53,28 +57,29 @@ class Battle
   
   def scale_trainer_party(trainer)
     return unless trainer
-    
-    echoln "[Challenge Modes] Scaling trainer: #{trainer.name}"
-    
+    debug = ChallengeModes::TRAINER_SCALING[:debug_log]
+
+    echoln "[Challenge Modes] Scaling trainer: #{trainer.name}" if debug
+
     scaled_party = []
     trainer.party.each do |pkmn|
       next unless pkmn
-      
+
       # Apply level boost
       if ChallengeModes::TRAINER_SCALING[:level_boost] > 0
         old_level = pkmn.level
         new_level = (old_level + ChallengeModes::TRAINER_SCALING[:level_boost]).clamp(1, 100)
         pkmn.level = new_level
         pkmn.calc_stats
-        echoln "[Challenge Modes]   #{pkmn.name}: Lv.#{old_level} -> Lv.#{new_level}"
+        echoln "[Challenge Modes]   #{pkmn.name}: Lv.#{old_level} -> Lv.#{new_level}" if debug
       end
-      
+
       # Try to evolve Pokemon
       if rand(100) < ChallengeModes::TRAINER_SCALING[:evolution_upgrade_chance]
         evolved = try_evolve_trainer_pokemon(pkmn)
-        echoln "[Challenge Modes]   #{pkmn.name} evolved to #{evolved.name}" if evolved != pkmn
+        echoln "[Challenge Modes]   #{pkmn.name} evolved to #{evolved.name}" if debug && evolved != pkmn
       end
-      
+
       # Improve IVs
       if ChallengeModes::TRAINER_SCALING[:improved_ivs]
         GameData::Stat.each_main do |s|
@@ -82,29 +87,34 @@ class Battle
         end
         pkmn.calc_stats
       end
-      
+
       # Add held item if none
       if ChallengeModes::TRAINER_SCALING[:held_items] && !pkmn.item
         item = suggest_held_item_for_pokemon(pkmn)
-        pkmn.item = item if item
-        echoln "[Challenge Modes]   #{pkmn.name} given #{GameData::Item.get(item).name}" if item
+        if item
+          pkmn.item = item
+          if debug
+            data = GameData::Item.try_get(item)
+            echoln "[Challenge Modes]   #{pkmn.name} given #{data ? data.name : item}"
+          end
+        end
       end
-      
+
       scaled_party << pkmn
     end
-    
+
     # Chance to add extra Pokemon
     if scaled_party.length < 6 && rand(100) < ChallengeModes::TRAINER_SCALING[:extra_pokemon_chance]
       extra_pkmn = generate_extra_trainer_pokemon(scaled_party)
       if extra_pkmn
         scaled_party << extra_pkmn
-        echoln "[Challenge Modes]   Added extra Pokemon: #{extra_pkmn.name} Lv.#{extra_pkmn.level}"
+        echoln "[Challenge Modes]   Added extra Pokemon: #{extra_pkmn.name} Lv.#{extra_pkmn.level}" if debug
       end
     end
-    
+
     # Assign the scaled party back to the trainer
     trainer.party.replace(scaled_party)
-    
+
     # Better items for trainer
     if ChallengeModes::TRAINER_SCALING[:better_items]
       upgrade_trainer_items(trainer)
@@ -112,7 +122,8 @@ class Battle
   end
   
   def try_evolve_trainer_pokemon(pkmn)
-    species_data = GameData::Species.get(pkmn.species)
+    species_data = GameData::Species.try_get(pkmn.species)
+    return pkmn unless species_data
     evolutions = species_data.get_evolutions
     return pkmn if evolutions.empty?
     
@@ -134,8 +145,9 @@ class Battle
   end
   
   def suggest_held_item_for_pokemon(pkmn)
-    species_data = GameData::Species.get(pkmn.species)
-    
+    species_data = GameData::Species.try_get(pkmn.species)
+    return :SITRUSBERRY unless species_data
+
     # Type-based items
     case species_data.types.first
     when :FIRE then :CHARCOAL
@@ -167,7 +179,8 @@ class Battle
     return nil unless strongest
     
     # Get a similar species (same type preferred)
-    species_data = GameData::Species.get(strongest.species)
+    species_data = GameData::Species.try_get(strongest.species)
+    return nil unless species_data
     possible_species = []
     
     GameData::Species.each do |sp|
@@ -217,6 +230,6 @@ class Battle
     upgraded_items << :FULLRESTORE if upgraded_items.length < 2
     
     trainer.items = upgraded_items
-    echoln "[Challenge Modes]   Upgraded trainer items: #{upgraded_items.inspect}"
+    echoln "[Challenge Modes]   Upgraded trainer items: #{upgraded_items.inspect}" if ChallengeModes::TRAINER_SCALING[:debug_log]
   end
 end
