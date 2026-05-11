@@ -173,7 +173,7 @@ module CompanionReactionEngine
       triggered = false
       begin
         triggered = context[:condition].call(pkmn)
-      rescue
+      rescue StandardError
         triggered = false
       end
       next unless triggered
@@ -201,7 +201,7 @@ module CompanionReactionEngine
         triggered = false
         begin
           triggered = env_context[:condition].call(pkmn)
-        rescue
+        rescue StandardError
           triggered = false
         end
         next unless triggered
@@ -320,7 +320,7 @@ module CompanionReactionEngine
           table_key = key
           break
         end
-      rescue
+      rescue StandardError
         next
       end
     end
@@ -370,7 +370,7 @@ module CompanionReactionEngine
       triggered = false
       begin
         triggered = data[:condition]&.call(pkmn)
-      rescue
+      rescue StandardError
         triggered = false
       end
       next unless triggered

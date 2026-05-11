@@ -19,7 +19,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  Initialize — create EBDX sprites after PE/DBK init
   #-----------------------------------------------------------------------------
-  alias ebdx_db_init initialize
+  alias ebdx_db_init initialize unless method_defined?(:ebdx_db_init)
   def initialize(battler, sideSize, viewport = nil)
     @ebdx_db_available = false
     @ebdx_db_loaded    = false
@@ -173,7 +173,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #  Override draw_background — prevent PE/DBK from re-drawing the standard
   #  databox bitmap when EBDX is active
   #-----------------------------------------------------------------------------
-  alias ebdx_db_draw_background draw_background
+  alias ebdx_db_draw_background draw_background unless method_defined?(:ebdx_db_draw_background)
   def draw_background
     return if @ebdx_db_available
     ebdx_db_draw_background
@@ -252,7 +252,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  refresh — EBDX name, icons, bars
   #-----------------------------------------------------------------------------
-  alias ebdx_db_refresh refresh
+  alias ebdx_db_refresh refresh unless method_defined?(:ebdx_db_refresh)
   def refresh
     return ebdx_db_refresh unless @ebdx_db_available && @ebdx_db_loaded
     ebdx_db_hide_standard
@@ -317,7 +317,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  refresh_hp — EBDX barColors + zoom_x HP bar
   #-----------------------------------------------------------------------------
-  alias ebdx_db_refresh_hp refresh_hp
+  alias ebdx_db_refresh_hp refresh_hp unless method_defined?(:ebdx_db_refresh_hp)
   def refresh_hp
     return ebdx_db_refresh_hp unless @ebdx_db_available && @ebdx_db_loaded
     return if !@battler.pokemon
@@ -341,7 +341,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  refresh_exp — EBDX zoom_x EXP bar
   #-----------------------------------------------------------------------------
-  alias ebdx_db_refresh_exp refresh_exp
+  alias ebdx_db_refresh_exp refresh_exp unless method_defined?(:ebdx_db_refresh_exp)
   def refresh_exp
     return ebdx_db_refresh_exp unless @ebdx_db_available && @ebdx_db_loaded
     @ebdx_expSprite.zoom_x = @ebdx_db_showexp ? exp_fraction * @ebdx_expBarWidth : 0
@@ -350,7 +350,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  update — hide standard + status icon + tint fade
   #-----------------------------------------------------------------------------
-  alias ebdx_db_update update
+  alias ebdx_db_update update unless method_defined?(:ebdx_db_update)
   def update
     ebdx_db_update
     return unless @ebdx_db_available && @ebdx_db_loaded
@@ -378,7 +378,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   #-----------------------------------------------------------------------------
   #  dispose — clean up manually-created bitmaps
   #-----------------------------------------------------------------------------
-  alias ebdx_db_dispose dispose
+  alias ebdx_db_dispose dispose unless method_defined?(:ebdx_db_dispose)
   def dispose
     if @ebdx_db_available
       @ebdx_hpSprite&.bitmap&.dispose

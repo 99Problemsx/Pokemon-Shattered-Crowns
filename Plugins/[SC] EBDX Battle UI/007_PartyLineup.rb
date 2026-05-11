@@ -122,7 +122,7 @@ class PartyLineupEBDX
     return false if pkmn.nil?
     begin
       return GameData::Status.get(pkmn.status).icon_position > 0
-    rescue
+    rescue StandardError
       return pkmn.status != :NONE rescue false
     end
   end

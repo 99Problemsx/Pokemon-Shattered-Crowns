@@ -754,7 +754,7 @@ end
 class PokemonSystem
   attr_writer :dynamic_difficulty
 
-  alias dds_initialize initialize
+  alias dds_initialize initialize unless method_defined?(:dds_initialize)
   def initialize
     dds_initialize
     @dynamic_difficulty = 1  # Default ON (0 = Off, 1 = On)

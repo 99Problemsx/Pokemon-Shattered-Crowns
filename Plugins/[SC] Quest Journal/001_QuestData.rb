@@ -148,28 +148,38 @@ end
 
 #===============================================================================
 # Event helpers
+#
+# SC FIX (review C3): the QuestJournal::ENABLED toggle in Config wasn't checked
+# anywhere — setting it to false had no effect. Each entry point now bails
+# early if the system is disabled, matching the README's "Master toggle".
 #===============================================================================
 
 def questStart(quest_id)
+  return unless QuestJournal::ENABLED
   pbQuests.start(quest_id)
 end
 
 def questComplete(quest_id)
+  return unless QuestJournal::ENABLED
   pbQuests.complete(quest_id)
 end
 
 def questObjective(quest_id, obj_index)
+  return unless QuestJournal::ENABLED
   pbQuests.complete_objective(quest_id, obj_index)
 end
 
 def questActive?(quest_id)
+  return false unless QuestJournal::ENABLED
   pbQuests.active?(quest_id)
 end
 
 def questDone?(quest_id)
+  return false unless QuestJournal::ENABLED
   pbQuests.complete?(quest_id)
 end
 
 def questFail(quest_id)
+  return unless QuestJournal::ENABLED
   pbQuests.fail(quest_id)
 end

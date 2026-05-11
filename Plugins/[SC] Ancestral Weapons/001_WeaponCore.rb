@@ -175,7 +175,7 @@ EventHandlers.add(:on_end_battle, :sc_ancestral_weapon_kos,
 #===============================================================================
 
 class Battle::Move
-  alias sc_ancestral_pbCalcDamageMultipliers pbCalcDamageMultipliers
+  alias sc_ancestral_pbCalcDamageMultipliers pbCalcDamageMultipliers unless method_defined?(:sc_ancestral_pbCalcDamageMultipliers)
   def pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
     sc_ancestral_pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
     return unless AncestralWeapons::ENABLED
@@ -206,7 +206,7 @@ end
 #===============================================================================
 
 class Battle::Battler
-  alias sc_ancestral_pbSpeed pbSpeed
+  alias sc_ancestral_pbSpeed pbSpeed unless method_defined?(:sc_ancestral_pbSpeed)
   def pbSpeed
     ret = sc_ancestral_pbSpeed
     return ret unless AncestralWeapons::ENABLED
@@ -229,7 +229,7 @@ end
 #===============================================================================
 
 class Battle::Move
-  alias sc_ancestral_pbCalcCrit pbIsCritical?
+  alias sc_ancestral_pbCalcCrit pbIsCritical? unless method_defined?(:sc_ancestral_pbCalcCrit)
   def pbIsCritical?(user, target)
     # Check for Zacian CRIT_BOOST before normal calc
     if AncestralWeapons::ENABLED && user.pbOwnedByPlayer?
@@ -251,7 +251,7 @@ end
 #===============================================================================
 
 class Battle::Move
-  alias sc_ancestral_pbAdditionalEffect pbAdditionalEffect
+  alias sc_ancestral_pbAdditionalEffect pbAdditionalEffect unless method_defined?(:sc_ancestral_pbAdditionalEffect)
   def pbAdditionalEffect(user, target)
     sc_ancestral_pbAdditionalEffect(user, target)
     return unless AncestralWeapons::ENABLED
@@ -275,7 +275,7 @@ end
 #===============================================================================
 
 class Battle::Move
-  alias sc_ancestral_pbEffectAgainstTarget pbEffectAgainstTarget
+  alias sc_ancestral_pbEffectAgainstTarget pbEffectAgainstTarget unless method_defined?(:sc_ancestral_pbEffectAgainstTarget)
   def pbEffectAgainstTarget(user, target)
     sc_ancestral_pbEffectAgainstTarget(user, target)
     return unless AncestralWeapons::ENABLED

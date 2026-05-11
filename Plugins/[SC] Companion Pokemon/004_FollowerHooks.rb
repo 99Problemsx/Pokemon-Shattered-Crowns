@@ -177,6 +177,16 @@ class PokemonEvolutionScene
   end
 end
 
+# SC FIX (review C1): EBDX Battle UI loads AFTER Companion Pokemon and
+# replaces PokemonEvolutionScene#pbEndScreen entirely without alias-chaining,
+# which silently wipes the alias above. EBDX has been patched to fire
+# :on_evolution_scene_end; we listen here as a robust fallback so the
+# follower refresh works regardless of load order or which evolution scene
+# implementation is active.
+EventHandlers.add(:on_evolution_scene_end, :sc_follower_evo_refresh, proc { |_pkmn|
+  CompanionFollower.refresh(false) rescue nil
+})
+
 #===============================================================================
 # Refresh after Trade
 #===============================================================================

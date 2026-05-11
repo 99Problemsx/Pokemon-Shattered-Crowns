@@ -69,7 +69,7 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
     return boss_pbFailsAgainstTarget?(user, target, show_message)
   end
 
-  alias boss_pbFixedDamage pbFixedDamage
+  alias boss_pbFixedDamage pbFixedDamage unless method_defined?(:boss_pbFixedDamage)
   def pbFixedDamage(user, target)
     # For boss targets, calculate standard damage using 250 BP
     if target.isBoss? && !target.isRaidBoss?
@@ -108,7 +108,7 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
     return boss_pbFixedDamage(user, target)
   end
 
-  alias boss_pbHitEffectivenessMessages pbHitEffectivenessMessages
+  alias boss_pbHitEffectivenessMessages pbHitEffectivenessMessages unless method_defined?(:boss_pbHitEffectivenessMessages)
   def pbHitEffectivenessMessages(user, target, numTargets = 1)
     if target.isBoss? && !target.isRaidBoss?
       # Don't display "It's a one-hit KO!" for boss targets

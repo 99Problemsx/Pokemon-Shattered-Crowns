@@ -148,17 +148,24 @@ end
 
 #===============================================================================
 # Event helpers
+#
+# SC FIX (review C3): the FlashbackSystem::ENABLED toggle from Config wasn't
+# checked anywhere — setting it to false had no effect. Each entry point now
+# bails early if the system is disabled.
 #===============================================================================
 
 def pbStartFlashback(flashback_id)
+  return unless FlashbackSystem::ENABLED
   FlashbackManager.start(flashback_id)
 end
 
 def pbEndFlashback
+  return unless FlashbackSystem::ENABLED
   FlashbackManager.finish
 end
 
 def pbInFlashback?
+  return false unless FlashbackSystem::ENABLED
   FlashbackManager.active?
 end
 

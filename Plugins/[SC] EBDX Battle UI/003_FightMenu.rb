@@ -19,7 +19,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  Initialize — create EBDX sprites alongside standard DBK ones
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_init initialize
+  alias ebdx_fight_init initialize unless method_defined?(:ebdx_fight_init)
   def initialize(viewport, z)
     ebdx_fight_init(viewport, z)
     @ebdx_vp         = viewport
@@ -146,7 +146,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
         md  = GameData::Move.get(moves[i].id)
         tp  = GameData::Type.get(moves[i].display_type(@battler)).icon_position
         cat = md.physical? ? 0 : (md.special? ? 1 : 2)
-      rescue
+      rescue StandardError
         tp = 0; cat = 2
       end
       # Composite bitmap: [selected half | unselected half]
@@ -201,7 +201,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshSelection — EBDX visuals
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_rsel refreshSelection
+  alias ebdx_fight_rsel refreshSelection unless method_defined?(:ebdx_fight_rsel)
   def refreshSelection
     return ebdx_fight_rsel unless @ebdx_available
     ebdx_hide_std
@@ -227,7 +227,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshButtonNames — regenerate only when moves change
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_rbn refreshButtonNames
+  alias ebdx_fight_rbn refreshButtonNames unless method_defined?(:ebdx_fight_rbn)
   def refreshButtonNames
     return ebdx_fight_rbn unless @ebdx_available
     return unless @battler
@@ -243,7 +243,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshMoveData — EBDX shows PP on buttons, no separate display
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_rmd refreshMoveData
+  alias ebdx_fight_rmd refreshMoveData unless method_defined?(:ebdx_fight_rmd)
   def refreshMoveData(move)
     return ebdx_fight_rmd(move) unless @ebdx_available
     @infoOverlay&.bitmap&.clear
@@ -253,7 +253,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshSpecialActionButton — reposition for EBDX layout
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_rsab refreshSpecialActionButton
+  alias ebdx_fight_rsab refreshSpecialActionButton unless method_defined?(:ebdx_fight_rsab)
   def refreshSpecialActionButton
     ebdx_fight_rsab
     return unless @ebdx_available && @actionButton
@@ -267,7 +267,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshShiftButton — reposition for EBDX layout
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_rsb refreshShiftButton
+  alias ebdx_fight_rsb refreshShiftButton unless method_defined?(:ebdx_fight_rsb)
   def refreshShiftButton
     ebdx_fight_rsb
     return unless @ebdx_available && @shiftButton
@@ -334,7 +334,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  update — selector animation + button bounce + slide
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_upd update
+  alias ebdx_fight_upd update unless method_defined?(:ebdx_fight_upd)
   def update
     ebdx_fight_upd
     return unless @ebdx_available
@@ -349,7 +349,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  dispose — clean up EBDX sprites (cache-loaded bitmaps are NOT disposed)
   #-----------------------------------------------------------------------------
-  alias ebdx_fight_disp dispose
+  alias ebdx_fight_disp dispose unless method_defined?(:ebdx_fight_disp)
   def dispose
     # NOTE: @ebdxBtnBmp, @ebdxCatBmp, @ebdxTypBmp are loaded via pbBitmap
     # (RPG::Cache) and must NOT be disposed here.

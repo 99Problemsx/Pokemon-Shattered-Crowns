@@ -12,7 +12,7 @@ class Battle::Scene
   #  Shrinks pokemon sprite via src_rect, fades opacity, slides databox out.
   #  Plays cry + "Pkmn faint" SE.
   #=============================================================================
-  alias ebdx_faint_anim_pbFaintBattler pbFaintBattler
+  alias ebdx_faint_anim_pbFaintBattler pbFaintBattler unless method_defined?(:ebdx_faint_anim_pbFaintBattler)
   def pbFaintBattler(battler)
     return if !battler
     @briefMessage = false
@@ -144,7 +144,7 @@ class Battle::Scene
   #  Replaces PE's pbHitAndHPLossAnimation with EBDX's cinematic damage flash,
   #  effectiveness-based SE, and HP bar animation.
   #=============================================================================
-  alias ebdx_damage_anim_pbHitAndHPLossAnimation pbHitAndHPLossAnimation
+  alias ebdx_damage_anim_pbHitAndHPLossAnimation pbHitAndHPLossAnimation unless method_defined?(:ebdx_damage_anim_pbHitAndHPLossAnimation)
   def pbHitAndHPLossAnimation(targets)
     return ebdx_damage_anim_pbHitAndHPLossAnimation(targets) unless targets && !targets.empty?
     waiter = EbdxWaiter.new
@@ -223,7 +223,7 @@ class Battle::Scene
   #  Full throw arc, ball spin, capture ball burst, pokémon shrink,
   #  ball drop + bounce, shake, break-out/catch with star particles.
   #=============================================================================
-  alias ebdx_capture_anim_pbThrow pbThrow
+  alias ebdx_capture_anim_pbThrow pbThrow unless method_defined?(:ebdx_capture_anim_pbThrow)
   def pbThrow(ball, shakes, critical, targetBattler = nil, showPlayer = false)
     # Get target battler
     target = targetBattler
@@ -514,13 +514,13 @@ class Battle::Scene
   #=============================================================================
   #  THROW SUCCESS — ME playback and cleanup after successful capture
   #=============================================================================
-  alias ebdx_capture_anim_pbThrowSuccess pbThrowSuccess
+  alias ebdx_capture_anim_pbThrowSuccess pbThrowSuccess unless method_defined?(:ebdx_capture_anim_pbThrowSuccess)
   def pbThrowSuccess
     # Play capture ME
     me_file = "EBDX/Capture Success"
     begin
       pbMEPlay(me_file)
-    rescue
+    rescue StandardError
       # Fallback to PE's default capture ME
       ebdx_capture_anim_pbThrowSuccess
       return
@@ -544,7 +544,7 @@ class Battle::Scene
   #=============================================================================
   #  Override pbThrowAndDeflect — empty (EBDX replaces it with pbThrow)
   #=============================================================================
-  alias ebdx_capture_anim_pbThrowAndDeflect pbThrowAndDeflect
+  alias ebdx_capture_anim_pbThrowAndDeflect pbThrowAndDeflect unless method_defined?(:ebdx_capture_anim_pbThrowAndDeflect)
   def pbThrowAndDeflect(ball, targetBattler)
     # Handled by pbThrow with shakes=0
     pbThrow(ball, 0, false, targetBattler)
@@ -553,7 +553,7 @@ class Battle::Scene
   #=============================================================================
   #  Override pbHideCaptureBall — empty (ball disposal is handled in pbThrow)
   #=============================================================================
-  alias ebdx_capture_anim_pbHideCaptureBall pbHideCaptureBall
+  alias ebdx_capture_anim_pbHideCaptureBall pbHideCaptureBall unless method_defined?(:ebdx_capture_anim_pbHideCaptureBall)
   def pbHideCaptureBall
     # No-op — EBDX handles ball lifecycle in pbThrow
   end

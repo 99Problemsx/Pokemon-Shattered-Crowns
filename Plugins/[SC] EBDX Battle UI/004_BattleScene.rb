@@ -8,7 +8,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Create the EBDX bag window + party lineups (called during scene setup)
   #-----------------------------------------------------------------------------
-  alias ebdx_bag_pbInitSprites pbInitSprites
+  alias ebdx_bag_pbInitSprites pbInitSprites unless method_defined?(:ebdx_bag_pbInitSprites)
   def pbInitSprites
     ebdx_bag_pbInitSprites
     @bagWindowEBDX = BagWindowEBDX.new(self, @viewport)
@@ -23,7 +23,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Dispose the EBDX bag window + party lineups
   #-----------------------------------------------------------------------------
-  alias ebdx_bag_pbDisposeSprites pbDisposeSprites
+  alias ebdx_bag_pbDisposeSprites pbDisposeSprites unless method_defined?(:ebdx_bag_pbDisposeSprites)
   def pbDisposeSprites
     @bagWindowEBDX.dispose if @bagWindowEBDX && !@bagWindowEBDX.disposed?
     @ebdxPlayerLineup&.dispose
@@ -35,7 +35,7 @@ class Battle::Scene
   #  Hook into pbFrameUpdate so EBDX lineups animate every frame.
   #  This drives the asynchronous slide-in started by pbShowPartyLineup.
   #-----------------------------------------------------------------------------
-  alias ebdx_lineup_pbFrameUpdate pbFrameUpdate
+  alias ebdx_lineup_pbFrameUpdate pbFrameUpdate unless method_defined?(:ebdx_lineup_pbFrameUpdate)
   def pbFrameUpdate(cw = nil)
     ebdx_lineup_pbFrameUpdate(cw)
     @ebdxPlayerLineup&.update   if @ebdxPlayerLineup && !@ebdxPlayerLineup.disposed?
@@ -48,7 +48,7 @@ class Battle::Scene
   #                  pbFrameUpdate so both lineups slide in simultaneously.
   #  fullAnim=false: mid-battle refresh — block until animation complete.
   #-----------------------------------------------------------------------------
-  alias ebdx_lineup_pbShowPartyLineup pbShowPartyLineup
+  alias ebdx_lineup_pbShowPartyLineup pbShowPartyLineup unless method_defined?(:ebdx_lineup_pbShowPartyLineup)
   def pbShowPartyLineup(side, fullAnim = false)
     lineup = (side % 2 == 0) ? @ebdxPlayerLineup : @ebdxOpponentLineup
     if lineup && !lineup.disposed? && lineup.available
@@ -70,7 +70,7 @@ class Battle::Scene
   #  Override pbSendOutBattlers to hide EBDX lineup before send-out animations
   #  PE's TrainerFade/PlayerFade only affect PE's partyBar_* sprites, not ours.
   #-----------------------------------------------------------------------------
-  alias ebdx_lineup_pbSendOutBattlers pbSendOutBattlers
+  alias ebdx_lineup_pbSendOutBattlers pbSendOutBattlers unless method_defined?(:ebdx_lineup_pbSendOutBattlers)
   def pbSendOutBattlers(sendOuts, startBattle = false)
     # Hide EBDX lineups with fade-out animation
     [@ebdxPlayerLineup, @ebdxOpponentLineup].each do |lineup|
@@ -98,7 +98,7 @@ class Battle::Scene
   #  Without this, only Fight/Bag (top row 0/1) are reachable via LEFT/RIGHT.
   #  Also integrates DBK's JUMPDOWN (Poké Ball picker) and JUMPUP (Battle Info).
   #-----------------------------------------------------------------------------
-  alias ebdx_cmd_pbCommandMenuEx pbCommandMenuEx
+  alias ebdx_cmd_pbCommandMenuEx pbCommandMenuEx unless method_defined?(:ebdx_cmd_pbCommandMenuEx)
   def pbCommandMenuEx(idxBattler, texts, mode = 0)
     # Set @orgPos on first command menu open (for camera drift compensation)
     ebdx_set_org_pos if respond_to?(:ebdx_set_org_pos)
@@ -157,7 +157,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Override pbShowCommands to use EBDX choice window
   #-----------------------------------------------------------------------------
-  alias ebdx_choice_pbShowCommands pbShowCommands
+  alias ebdx_choice_pbShowCommands pbShowCommands unless method_defined?(:ebdx_choice_pbShowCommands)
   def pbShowCommands(msg, commands, defaultValue)
     if !pbResolveBitmap(EBDXBattleUI::GRAPHICS_PATH + "btnEmpty")
       return ebdx_choice_pbShowCommands(msg, commands, defaultValue)
@@ -198,7 +198,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Item menu functionality handler — EBDX style
   #-----------------------------------------------------------------------------
-  alias ebdx_bag_pbItemMenu pbItemMenu
+  alias ebdx_bag_pbItemMenu pbItemMenu unless method_defined?(:ebdx_bag_pbItemMenu)
   def pbItemMenu(idxBattler, firstAction)
     ret      = 0
     retindex = -1
@@ -304,7 +304,7 @@ class Battle::Scene
       else
         $lastUsed = nil
       end
-    rescue
+    rescue StandardError
       $lastUsed = nil
     end
   end

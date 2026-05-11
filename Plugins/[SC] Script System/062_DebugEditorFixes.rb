@@ -63,7 +63,7 @@ if defined?(TrainerBattleLister)
         else
           @sprite.setBitmap(nil)
         end
-      rescue
+      rescue StandardError
         @sprite.setBitmap(nil)
       end
       if @sprite.bitmap
@@ -79,7 +79,7 @@ if defined?(TrainerBattleLister)
             sp_name = "???"
             begin
               sp_name = GameData::Species.get(pkmn[:species]).real_name
-            rescue
+            rescue StandardError
               sp_name = pkmn[:species].to_s
             end
             text += sprintf("%s Lv.%d", sp_name, pkmn[:level] || 1)

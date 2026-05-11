@@ -38,7 +38,7 @@ class TrainerCardExSaveData
         if config[:condition].call
           @earned_badges.push(key)
         end
-      rescue
+      rescue StandardError
         # Condition failed — skip
       end
     end

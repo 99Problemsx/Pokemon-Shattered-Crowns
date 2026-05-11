@@ -596,7 +596,7 @@ end
 # Hook into Game.save to auto-persist lights before marshaling
 module Game
   class << self
-    alias _lighting_save save
+    alias _lighting_save save unless method_defined?(:_lighting_save)
     def save(save_file = SaveData::FILE_PATH, safe: false)
       pbSaveLights
       _lighting_save(save_file, safe: safe)

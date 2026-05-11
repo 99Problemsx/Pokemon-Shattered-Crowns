@@ -463,7 +463,7 @@ class EBDXBattleRoom
       s = @scene.sprites[key]
       s.tone = tone if s
     end
-  rescue
+  rescue StandardError
     # PBDayNight may not exist in all setups
   end
 end
@@ -994,7 +994,7 @@ class Battle::Scene
   #=============================================================================
   #  Initialize EBDX animation objects alongside scene
   #=============================================================================
-  alias ebdx_anim_core_pbInitSprites pbInitSprites
+  alias ebdx_anim_core_pbInitSprites pbInitSprites unless method_defined?(:ebdx_anim_core_pbInitSprites)
   def pbInitSprites
     ebdx_anim_core_pbInitSprites
     # Vector — used by move animations for camera during anims only
@@ -1186,7 +1186,7 @@ class Battle::Scene
   #=============================================================================
   #  EBDX move animation dispatch
   #=============================================================================
-  alias ebdx_anim_dispatch_pbAnimation pbAnimation
+  alias ebdx_anim_dispatch_pbAnimation pbAnimation unless method_defined?(:ebdx_anim_dispatch_pbAnimation)
   def pbAnimation(moveid, user, targets, hitnum = 0)
     return if !moveid
     species = (@battle.battlers[user.index].species rescue nil)
@@ -1256,7 +1256,7 @@ class Battle::Scene
   #=============================================================================
   #  EBDX common animation dispatch
   #=============================================================================
-  alias ebdx_anim_dispatch_pbCommonAnimation pbCommonAnimation
+  alias ebdx_anim_dispatch_pbCommonAnimation pbCommonAnimation unless method_defined?(:ebdx_anim_dispatch_pbCommonAnimation)
   def pbCommonAnimation(animname, user = nil, targets = nil)
     return false if ["Rain", "HeavyRain", "Hail", "Sandstorm", "Sun", "HarshSun",
                      "StrongWinds", "ShadowSky", "HealthDown"].include?(animname)
@@ -1599,12 +1599,12 @@ EBDX_ANIM_PATH = "Graphics/EBDX/Animations/Moves/"
 #===============================================================================
 def ebdxPlaySE(name, vol = 80, pitch = 100)
   pbSEPlay(name, vol, pitch)
-rescue
+rescue StandardError
   # If the exact name fails, try without "EBDX/" prefix or with standard Anim/ prefix
   begin
     alt = name.sub("EBDX/Anim/", "Anim/")
     pbSEPlay(alt, vol, pitch) if alt != name
-  rescue
+  rescue StandardError
   end
 end
 

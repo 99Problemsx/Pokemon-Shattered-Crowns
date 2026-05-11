@@ -6,7 +6,7 @@
 #===============================================================================
 
 class Battle
-  alias sc_consume_mega_stone_pbMegaEvolve pbMegaEvolve
+  alias sc_consume_mega_stone_pbMegaEvolve pbMegaEvolve unless method_defined?(:sc_consume_mega_stone_pbMegaEvolve)
   def pbMegaEvolve(idxBattler)
     battler = @battlers[idxBattler]
     # Remember if the battler had a mega stone before evolving

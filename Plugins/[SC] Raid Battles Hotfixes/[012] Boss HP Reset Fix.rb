@@ -8,7 +8,7 @@
 #===============================================================================
 
 class Battle
-  alias raid_hp_reset_pbEndOfBattle pbEndOfBattle
+  alias raid_hp_reset_pbEndOfBattle pbEndOfBattle unless method_defined?(:raid_hp_reset_pbEndOfBattle)
   
   def pbEndOfBattle
     # If this was a raid battle and we captured the boss, reset its HP

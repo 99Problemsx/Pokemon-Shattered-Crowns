@@ -59,13 +59,17 @@ class Game_Character
   alias __sc_follower__passable? passable? unless method_defined?(:__sc_follower__passable?)
   def passable?(x, y, d, strict = false)
     ret = __sc_follower__passable?(x, y, d, strict)
-    return ret if !CompanionFollower.active? || !CompanionFollower::IMPASSABLE_FOLLOWER
-    if ret && self != $game_player && !self.is_a?(Game_FollowingPkmn)
-      new_x = x + (d == 6 ? 1 : d == 4 ? -1 : 0)
-      new_y = y + (d == 2 ? 1 : d == 8 ? -1 : 0)
-      $game_temp.followers.each_follower do |e, _|
-        return false if e.at_coordinate?(new_x, new_y) && !e.through
-      end
+    # SC FIX (review H5): passable? is on the pathfinding hot path — every
+    # event move attempt calls this. Bail BEFORE evaluating the deep
+    # checks/each_follower iteration whenever possible.
+    return ret unless ret
+    return ret unless CompanionFollower::IMPASSABLE_FOLLOWER
+    return ret if self == $game_player || self.is_a?(Game_FollowingPkmn)
+    return ret unless CompanionFollower.active?
+    new_x = x + (d == 6 ? 1 : d == 4 ? -1 : 0)
+    new_y = y + (d == 2 ? 1 : d == 8 ? -1 : 0)
+    $game_temp.followers.each_follower do |e, _|
+      return false if e.at_coordinate?(new_x, new_y) && !e.through
     end
     return ret
   end

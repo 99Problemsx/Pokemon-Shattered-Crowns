@@ -49,7 +49,7 @@ end
 # We explicitly fire triggers for the passive ability as well.
 #===============================================================================
 class Battle::Move
-  alias boss_pbCalcDamageMults_Abilities pbCalcDamageMults_Abilities
+  alias boss_pbCalcDamageMults_Abilities pbCalcDamageMults_Abilities unless method_defined?(:boss_pbCalcDamageMults_Abilities)
   def pbCalcDamageMults_Abilities(user, target, numTargets, type, baseDmg, multipliers)
     boss_pbCalcDamageMults_Abilities(user, target, numTargets, type, baseDmg, multipliers)
     # Trigger passive ability effects for the user (if boss attacker)

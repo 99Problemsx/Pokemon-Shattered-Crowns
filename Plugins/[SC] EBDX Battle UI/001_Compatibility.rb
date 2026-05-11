@@ -21,7 +21,7 @@ unless defined?(pbBitmap)
       dir  = name.split("/")[0...-1].join("/") + "/"
       file = name.split("/")[-1]
       bmp  = RPG::Cache.load_bitmap(dir, file)
-    rescue
+    rescue StandardError
       bmp = Bitmap.new(2, 2)
     end
     return bmp
@@ -241,7 +241,7 @@ module EBDXBag_Helpers
       data = GameData::Item.try_get(item_id)
       rid = data.id if data
       return rid if rid.is_a?(Symbol)
-    rescue
+    rescue StandardError
     end
     nil
   end
@@ -253,7 +253,7 @@ module EBDXBag_Helpers
     return false if item.nil?
     begin
       return GameData::Item.exists?(item)
-    rescue
+    rescue StandardError
       return false
     end
   end
@@ -266,7 +266,7 @@ module EBDXBag_Helpers
     begin
       data = GameData::Item.get(item)
       return data
-    rescue
+    rescue StandardError
       return nil
     end
   end
@@ -279,7 +279,7 @@ module EBDXBag_Helpers
       return true if ItemHandlers.hasUseInBattle(item)
       return true if ItemHandlers.hasBattleUseOnPokemon(item)
       return true if ItemHandlers.hasBattleUseOnBattler(item)
-    rescue
+    rescue StandardError
     end
     # 2. Check SC battle_use value directly (covers items that only
     #    have a battle_use Symbol but no PE handler registered)
@@ -351,7 +351,7 @@ module EBDXBag_Helpers
           break
         end
       end
-    rescue
+    rescue StandardError
     end
     return idx
   end
@@ -466,7 +466,7 @@ class Battle::Scene
       _ebdx_anim_log("  EXCEPTION in pbCommonAnimation: #{e.class}: #{e.message}\n  #{e.backtrace&.first(5)&.join("\n  ")}")
     end
 
-    alias _ebdx_diag_pbAnimation pbAnimation
+    alias _ebdx_diag_pbAnimation pbAnimation unless method_defined?(:_ebdx_diag_pbAnimation)
     def pbAnimation(moveID, user, targets, hitNum = 0)
       _ebdx_anim_log("pbAnimation: moveID=#{moveID.inspect}, user=#{user&.name rescue user.inspect}, showAnims=#{@battle&.showAnims rescue 'N/A'}")
       begin
@@ -494,6 +494,6 @@ class Battle::Scene
     return if @_ebdx_anim_log_count > 300
     @_ebdx_anim_log_count += 1
     File.open("animlog.txt", "a") { |f| f.puts("[#{Time.now.strftime('%H:%M:%S')}] #{msg}") }
-  rescue
+  rescue StandardError
   end
 end

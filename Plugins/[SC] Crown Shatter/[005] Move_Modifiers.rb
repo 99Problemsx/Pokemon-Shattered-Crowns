@@ -12,7 +12,7 @@ class Battle::Move
   #=============================================================================
   # Type effectiveness overrides
   #=============================================================================
-  alias shatter_pbCalcTypeModSingle pbCalcTypeModSingle
+  alias shatter_pbCalcTypeModSingle pbCalcTypeModSingle unless method_defined?(:shatter_pbCalcTypeModSingle)
   def pbCalcTypeModSingle(moveType, defType, user, target)
     ret = shatter_pbCalcTypeModSingle(moveType, defType, user, target)
     # Ghost: Spirit Field — Normal/Fighting hit Ghost types (neutrally)
@@ -30,7 +30,7 @@ class Battle::Move
   #=============================================================================
   # Base damage modifiers
   #=============================================================================
-  alias shatter_pbBaseDamage pbBaseDamage
+  alias shatter_pbBaseDamage pbBaseDamage unless method_defined?(:shatter_pbBaseDamage)
   def pbBaseDamage(baseDmg, user, target)
     baseDmg = shatter_pbBaseDamage(baseDmg, user, target)
     return baseDmg unless @battle.shatterFieldActive?
@@ -83,7 +83,7 @@ class Battle::Move
   #=============================================================================
   # Accuracy modifiers
   #=============================================================================
-  alias shatter_pbBaseAccuracy pbBaseAccuracy
+  alias shatter_pbBaseAccuracy pbBaseAccuracy unless method_defined?(:shatter_pbBaseAccuracy)
   def pbBaseAccuracy(user, target)
     acc = shatter_pbBaseAccuracy(user, target)
     return acc unless @battle.shatterFieldActive?
@@ -153,7 +153,7 @@ class Battle::Move
   #=============================================================================
   # Additional hit count (Bug: Swarm Field — always max hits)
   #=============================================================================
-  alias shatter_pbNumHits pbNumHits
+  alias shatter_pbNumHits pbNumHits unless method_defined?(:shatter_pbNumHits)
   def pbNumHits(user, targets)
     hits = shatter_pbNumHits(user, targets)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :BUG
@@ -173,7 +173,7 @@ class Battle::Move
   #=============================================================================
   # Critical hit rate (Dragon: Primordial Field — +1 crit stage)
   #=============================================================================
-  alias shatter_crit_stage_bonuses crit_stage_bonuses
+  alias shatter_crit_stage_bonuses crit_stage_bonuses unless method_defined?(:shatter_crit_stage_bonuses)
   def crit_stage_bonuses(user)
     bonus = shatter_crit_stage_bonuses(user)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :DRAGON
@@ -186,7 +186,7 @@ class Battle::Move
   #=============================================================================
   # Flinch chance (Ground: Quake Field — +10% flinch)
   #=============================================================================
-  alias shatter_pbFlinchChance pbFlinchChance
+  alias shatter_pbFlinchChance pbFlinchChance unless method_defined?(:shatter_pbFlinchChance)
   def pbFlinchChance(user, target)
     ret = shatter_pbFlinchChance(user, target)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :GROUND
@@ -203,7 +203,7 @@ end
 # Battle::Battler — Contact Paralysis (Electric: Charged Field)
 #===============================================================================
 class Battle::Battler
-  alias shatter_pbEffectsOnMakingHit pbEffectsOnMakingHit
+  alias shatter_pbEffectsOnMakingHit pbEffectsOnMakingHit unless method_defined?(:shatter_pbEffectsOnMakingHit)
   def pbEffectsOnMakingHit(move, user, target)
     shatter_pbEffectsOnMakingHit(move, user, target)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :ELECTRIC
@@ -219,7 +219,7 @@ class Battle::Battler
   #=============================================================================
   # Stat drop inversion (Fairy: Enchanted Field)
   #=============================================================================
-  alias shatter_pbLowerStatStage pbLowerStatStage
+  alias shatter_pbLowerStatStage pbLowerStatStage unless method_defined?(:shatter_pbLowerStatStage)
   def pbLowerStatStage(stat, increment, user, showAnim = true, ignoreContrary = false)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :FAIRY
       effects = (CrownShatter::SHATTER_FIELDS[:FAIRY] || {})[:effects] || {}
@@ -274,7 +274,7 @@ end
 # Battle — Entry Hazard Modifier (Bug: Swarm Field — double hazard damage)
 #===============================================================================
 class Battle
-  alias shatter_pbEntryHazards pbEntryHazards
+  alias shatter_pbEntryHazards pbEntryHazards unless method_defined?(:shatter_pbEntryHazards)
   def pbEntryHazards(battler)
     # Before processing, check for double hazards
     if shatterFieldActive? && shatterFieldType == :BUG
@@ -292,7 +292,7 @@ class Battle
   #=============================================================================
   # Poison on entry (Poison: Toxic Field)
   #=============================================================================
-  alias shatter_pbOnBattlerEnteringBattle pbOnBattlerEnteringBattle
+  alias shatter_pbOnBattlerEnteringBattle pbOnBattlerEnteringBattle unless method_defined?(:shatter_pbOnBattlerEnteringBattle)
   def pbOnBattlerEnteringBattle(idxBattler, sendOUT = false)
     shatter_pbOnBattlerEnteringBattle(idxBattler, sendOUT)
     if shatterFieldActive? && shatterFieldType == :POISON
@@ -315,7 +315,7 @@ class Battle
 end
 
 class Battle::Move
-  alias shatter_pbCalcType pbCalcType
+  alias shatter_pbCalcType pbCalcType unless method_defined?(:shatter_pbCalcType)
   def pbCalcType(user)
     ret = shatter_pbCalcType(user)
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :NORMAL
@@ -332,7 +332,7 @@ end
 # Speed halving (Water: Flooded Field)
 #===============================================================================
 class Battle::Battler
-  alias shatter_pbSpeed pbSpeed
+  alias shatter_pbSpeed pbSpeed unless method_defined?(:shatter_pbSpeed)
   def pbSpeed
     speed = shatter_pbSpeed
     if @battle.shatterFieldActive? && @battle.shatterFieldType == :WATER

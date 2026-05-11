@@ -13,7 +13,7 @@
 # This prevents the error when Ditto (or transformed Pokemon) uses moves
 #===============================================================================
 class Battle::Battler
-  alias ditto_raid_setRaidShieldHP setRaidShieldHP
+  alias ditto_raid_setRaidShieldHP setRaidShieldHP unless method_defined?(:ditto_raid_setRaidShieldHP)
   
   def setRaidShieldHP(amt, user = nil)
     return if !hasRaidShield?
@@ -98,7 +98,7 @@ end
 # This prevents Pokemon like Ditto from having empty movesets in raids
 #===============================================================================
 class Pokemon
-  alias failsafe_setRaidBossAttributes setRaidBossAttributes
+  alias failsafe_setRaidBossAttributes setRaidBossAttributes unless method_defined?(:failsafe_setRaidBossAttributes)
   
   def setRaidBossAttributes(rules)
     failsafe_setRaidBossAttributes(rules)
@@ -152,4 +152,4 @@ class Pokemon
   end
 end
 
-puts "Ditto Raid Fix loaded - Shield calculation + Moveset failsafe"
+echoln "Ditto Raid Fix loaded - Shield calculation + Moveset failsafe"

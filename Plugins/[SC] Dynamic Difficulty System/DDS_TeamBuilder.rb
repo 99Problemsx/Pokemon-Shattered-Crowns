@@ -95,15 +95,16 @@ module DynamicDifficulty
 
       return if new_party.empty?
 
-      # Replace the opponent's party
+      # SC FIX (review M9): use Array#replace for an in-place swap, and avoid
+      # double-clearing when both arrays already share the same backing store
+      # (which they often do, depending on Essentials internals).
       opp_party = battle.pbParty(1)
-      opp_party.clear
-      new_party.each { |p| opp_party.push(p) }
+      opp_party.replace(new_party)
 
-      # Also update NPCTrainer's party reference so it stays in sync
-      if trainer_obj.respond_to?(:party)
-        trainer_obj.party.clear
-        new_party.each { |p| trainer_obj.party.push(p) }
+      # Also update NPCTrainer's party reference so it stays in sync, but only
+      # if it's a different array — otherwise we'd just clobber what we just set.
+      if trainer_obj.respond_to?(:party) && !trainer_obj.party.equal?(opp_party)
+        trainer_obj.party.replace(new_party)
       end
 
       DynamicDifficulty.log(

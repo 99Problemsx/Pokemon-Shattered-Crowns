@@ -61,4 +61,4 @@ def pbLoadLiveRaidData
   LiveRaidDataFix.pbLoadLiveRaidData
 end
 
-puts "[Raid Hotfix] Online Raid IV/EV Loading Fix loaded"
+echoln "[Raid Hotfix] Online Raid IV/EV Loading Fix loaded"

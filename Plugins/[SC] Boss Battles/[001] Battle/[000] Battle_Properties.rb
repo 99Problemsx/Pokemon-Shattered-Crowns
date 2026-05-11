@@ -8,7 +8,7 @@
 class Battle
   attr_accessor :bossRules
 
-  alias boss_initialize initialize
+  alias boss_initialize initialize unless method_defined?(:boss_initialize)
   def initialize(*args)
     boss_initialize(*args)
     @bossRules = {}
@@ -27,7 +27,7 @@ class Battle::Battler
   #-----------------------------------------------------------------------------
   # Initialize boss effects.
   #-----------------------------------------------------------------------------
-  alias boss_pbInitEffects pbInitEffects
+  alias boss_pbInitEffects pbInitEffects unless method_defined?(:boss_pbInitEffects)
   def pbInitEffects(batonPass)
     boss_pbInitEffects(batonPass)
     @effects[PBEffects::BossShieldMax]      = 0

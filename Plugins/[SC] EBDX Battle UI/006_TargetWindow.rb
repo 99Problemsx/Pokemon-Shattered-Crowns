@@ -19,7 +19,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  Initialize — create EBDX sprites alongside standard ones
   #-----------------------------------------------------------------------------
-  alias ebdx_tgt_init initialize
+  alias ebdx_tgt_init initialize unless method_defined?(:ebdx_tgt_init)
   def initialize(viewport, z, sideSizes)
     ebdx_tgt_init(viewport, z, sideSizes)
     @ebdx_tgt_available = false
@@ -102,7 +102,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
             btn.bitmap.blt(ix, iy, icon, Rect.new(0, 0, icon.width / 2, [bh - 4 - iy, icon.height].min), 216)
           end
           # NOTE: icon is loaded via pbBitmap (RPG::Cache) — do NOT dispose it
-        rescue
+        rescue StandardError
         end
         btn.opacity = 255
       else
@@ -137,7 +137,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  setDetails — intercept to build EBDX buttons
   #-----------------------------------------------------------------------------
-  alias ebdx_tgt_setDetails setDetails
+  alias ebdx_tgt_setDetails setDetails unless method_defined?(:ebdx_tgt_setDetails)
   def setDetails(texts, mode)
     ebdx_tgt_setDetails(texts, mode)
     return unless @ebdx_tgt_available
@@ -148,7 +148,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  refreshButtons — EBDX visuals
   #-----------------------------------------------------------------------------
-  alias ebdx_tgt_refreshButtons refreshButtons
+  alias ebdx_tgt_refreshButtons refreshButtons unless method_defined?(:ebdx_tgt_refreshButtons)
   def refreshButtons
     return ebdx_tgt_refreshButtons unless @ebdx_tgt_available
     ebdx_tgt_hide_std
@@ -231,7 +231,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  update — selector animation + button bounce + slide
   #-----------------------------------------------------------------------------
-  alias ebdx_tgt_upd update
+  alias ebdx_tgt_upd update unless method_defined?(:ebdx_tgt_upd)
   def update
     ebdx_tgt_upd
     return unless @ebdx_tgt_available
@@ -246,7 +246,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
   #-----------------------------------------------------------------------------
   #  dispose — clean up EBDX sprites (cache-loaded bitmaps are NOT disposed)
   #-----------------------------------------------------------------------------
-  alias ebdx_tgt_disp dispose
+  alias ebdx_tgt_disp dispose unless method_defined?(:ebdx_tgt_disp)
   def dispose
     # NOTE: @ebdxTgtBtnBmp is loaded via pbBitmap (RPG::Cache)
     # and must NOT be disposed here.

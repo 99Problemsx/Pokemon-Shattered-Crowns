@@ -111,7 +111,7 @@ end
 #===============================================================================
 
 class Battle
-  alias dds_pbEndOfBattle pbEndOfBattle
+  alias dds_pbEndOfBattle pbEndOfBattle unless method_defined?(:dds_pbEndOfBattle)
   def pbEndOfBattle
     ret = dds_pbEndOfBattle
     # Record performance and clear DDS override after battle ends
@@ -127,7 +127,7 @@ end
 #===============================================================================
 
 class Battle
-  alias dds_pbStartBattle pbStartBattle
+  alias dds_pbStartBattle pbStartBattle unless method_defined?(:dds_pbStartBattle)
   def pbStartBattle
     DynamicDifficulty::BattleHooks.before_battle(self)
     dds_pbStartBattle

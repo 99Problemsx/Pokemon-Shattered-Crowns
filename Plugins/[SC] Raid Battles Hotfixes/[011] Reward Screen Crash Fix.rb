@@ -17,7 +17,7 @@ $raid_reward_screen_data = nil
 # Hook into WildBattle to preserve rules through the whole battle
 class WildBattle
   class << self
-    alias raid_crash_fix_start_core start_core
+    alias raid_crash_fix_start_core start_core unless method_defined?(:raid_crash_fix_start_core)
     
     def start_core(*args)
       # Check if this is a raid battle by checking battle_rules
@@ -56,7 +56,7 @@ end
 
 # Fix for Raid Den reward screen - @rules[:rank] nil error
 class RaidScene
-  alias raid_den_hotfix_pbRaidRewardsScreen pbRaidRewardsScreen
+  alias raid_den_hotfix_pbRaidRewardsScreen pbRaidRewardsScreen unless method_defined?(:raid_den_hotfix_pbRaidRewardsScreen)
   
   def pbRaidRewardsScreen(outcome)
     # If @rules is nil, try to get from global storage
@@ -85,7 +85,7 @@ end
 
 # Also hook into RaidScene to set battle_rules before raid den battle
 class RaidScene
-  alias raid_den_battle_setup_pbRaidEntry pbRaidEntry
+  alias raid_den_battle_setup_pbRaidEntry pbRaidEntry unless method_defined?(:raid_den_battle_setup_pbRaidEntry)
   
   def pbRaidEntry
     # Set battle_rules before battle starts

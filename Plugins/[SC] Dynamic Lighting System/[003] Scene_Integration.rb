@@ -3,7 +3,7 @@
 # ===============================================================================
 
 class Scene_Map
-  alias lighting_createSpritesets createSpritesets
+  alias lighting_createSpritesets createSpritesets unless method_defined?(:lighting_createSpritesets)
   def createSpritesets
     lighting_createSpritesets
     # Get viewport from Spriteset_Map class (@@viewport1)
@@ -14,7 +14,7 @@ class Scene_Map
     @spritesetGlobal.lighting = Lighting.new($game_map, viewport) if @spritesetGlobal && viewport
   end
   
-  alias lighting_transfer_player transfer_player
+  alias lighting_transfer_player transfer_player unless method_defined?(:lighting_transfer_player)
   def transfer_player(cancelVehicles = true)
     lighting_transfer_player(cancelVehicles)
     # Note: createSpritesets (called internally) already builds a fresh
@@ -25,13 +25,13 @@ end
 class Spriteset_Global
   attr_accessor :lighting
   
-  alias lighting_update update
+  alias lighting_update update unless method_defined?(:lighting_update)
   def update
     lighting_update
     @lighting&.update
   end
   
-  alias lighting_dispose dispose
+  alias lighting_dispose dispose unless method_defined?(:lighting_dispose)
   def dispose
     @lighting&.dispose
     lighting_dispose

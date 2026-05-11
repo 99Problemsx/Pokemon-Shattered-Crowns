@@ -1,8 +1,8 @@
 # Level Caps Ex
 
-**Version:** 2.5.1 (Shattered Crowns Fork — based on Level Caps EX v2.3.2)
-**Essentials:** v21.1
-**Author:** Nononever, Shattered Crowns Team
+**Version:** 2.3.2 (Shattered Crowns Fork)  
+**Essentials:** v21.1  
+**Author:** Nononever
 
 Flexible level cap system with 3 modes, badge-based auto-caps, smooth EXP scaling, and an EXP storage piggy bank.
 
@@ -31,8 +31,7 @@ Module: `LevelCapsEX`
 | `LOG_LEVEL_CAP_CHANGES` | `true` | Console logging in debug builds |
 | `BADGE_AUTO_CAP` | `true` | Auto-update cap on badge earn |
 | `SOFT_CAP_SCALED` | `true` | Use smooth EXP curve for mode 2 |
-| `EXP_STORAGE_ENABLED` | `true` | Bank blocked EXP, auto-award on any cap rise |
-| `SHARED_EXP_RESPECTS_CAP` | `true` | Block Exp Share / Exp All for at-cap Pokemon in modes 2 & 3 |
+| `EXP_STORAGE_ENABLED` | `true` | Bank blocked EXP and award later |
 
 ---
 
@@ -55,13 +54,11 @@ Module: `LevelCapsEX`
 
 ## Cap Modes
 
-| Mode | Level past cap? | EXP behaviour | Side effect |
-|------|-----------------|---------------|-------------|
-| 1 — Hard Cap | ❌ blocked at cap | Blocked entirely; banked to piggy bank if `EXP_STORAGE_ENABLED` | Cap-raise auto-awards the bank |
-| 2 — Soft / EXP Cap | ✅ allowed | Reduced (50% per level over with smooth curve, or flat 1/10) | None |
-| 3 — Obedience Cap | ✅ allowed | Normal | Pokemon disobeys above cap |
-
-> **Note:** versions before 2.5.1 also clamped the level under mode 2, which made the soft cap behave identically to the hard cap. Mode 2 now correctly allows overlevel as documented.
+| Mode | Behavior |
+|------|----------|
+| 1 -- Hard Cap | Pokemon cannot gain any EXP past the cap |
+| 2 -- EXP Cap | Reduced EXP gain (smooth curve when SOFT_CAP_SCALED is true) |
+| 3 -- Obedience Cap | Pokemon disobeys when over the cap level |
 
 ---
 

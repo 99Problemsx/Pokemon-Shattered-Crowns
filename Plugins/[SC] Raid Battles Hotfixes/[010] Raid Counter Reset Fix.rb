@@ -11,7 +11,7 @@
 # Fix 1: Clear entire raid hash when battle ends
 #===============================================================================
 class Battle
-  alias raid_counter_pbEndOfBattle pbEndOfBattle
+  alias raid_counter_pbEndOfBattle pbEndOfBattle unless method_defined?(:raid_counter_pbEndOfBattle)
   
   def pbEndOfBattle
     # Always clear raid state when any raid battle ends (win or lose)

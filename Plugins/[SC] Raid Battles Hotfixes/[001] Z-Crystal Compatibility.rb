@@ -25,5 +25,5 @@ if !z_power_installed
     end
   end
   
-  puts "[Raid Hotfix] Z-Crystal compatibility stubs loaded (Z-Power not installed)"
+  echoln "[Raid Hotfix] Z-Crystal compatibility stubs loaded (Z-Power not installed)"
 end

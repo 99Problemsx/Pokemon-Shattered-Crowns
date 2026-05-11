@@ -17,7 +17,7 @@ class PokemonEvolutionScene
     end
   end
 
-  alias pbUpdate update
+  alias pbUpdate update unless method_defined?(:pbUpdate)
 
   #---------------------------------------------------------------------------
   #  Background scrolling line particles
@@ -241,6 +241,12 @@ class PokemonEvolutionScene
     pbDisposeSpriteHash(@sprites)
     16.times { @viewport.color.alpha -= 16; waiter.graphics_update }
     @viewport.dispose
+    # SC FIX (review C1): EBDX replaces PokemonEvolutionScene#pbEndScreen
+    # entirely (no alias chain). Plugins like Companion Pokemon used to hook
+    # pbEndScreen directly to refresh after evolution; their alias is now
+    # silently wiped. We expose an event trigger here so plugins can subscribe
+    # via EventHandlers regardless of load order.
+    EventHandlers.trigger(:on_evolution_scene_end, @pokemon) rescue nil
   end
 
   #---------------------------------------------------------------------------
