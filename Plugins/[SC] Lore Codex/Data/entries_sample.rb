@@ -245,3 +245,228 @@ CodexRegistry.add(:SUBJECT_ZERO,
             "away into the wilds and was not seen again — except, occasionally, " \
             "by Lyra in dreams that she insists are not nightmares."
 )
+
+# ─── v3-AUDIT: Guardian personalities ────────────────────────────────────────
+
+CodexRegistry.add(:ZACIAN_PERSONALITY,
+  title:    "Zacian — The Steady Blade",
+  category: :MYTHOLOGY,
+  text:     "Zacian speaks like a master-at-arms instructing a squire. Formal. " \
+            "Brief. Habitually understated. Where Xerneas comforts and Yveltal " \
+            "warns, Zacian positions — telling its Chosen where to stand, " \
+            "what to refuse, when to wait. It has a dry sense of humour it lets " \
+            "slip exactly once per major battle. \\Player's first hint of " \
+            "Zacian's affection is a single word at a hard moment: 'Steady.'"
+)
+
+CodexRegistry.add(:XERNEAS_PERSONALITY,
+  title:    "Xerneas — The Warm Listener",
+  category: :MYTHOLOGY,
+  text:     "Xerneas's voice is low, warm, and carries the cadence of a " \
+            "grandmother who has buried more than she has lost. It rarely " \
+            "instructs; instead it asks. Most of Xerneas's conversations " \
+            "with Lyra are questions — what do you feel, what do you fear, " \
+            "what are you willing to give. The questions are not tests. They " \
+            "are the shape Xerneas's love takes."
+)
+
+CodexRegistry.add(:YVELTAL_PERSONALITY,
+  title:    "Yveltal — The Patient Cycle",
+  category: :MYTHOLOGY,
+  text:     "Yveltal is old in a way none of the other Guardians are. It does " \
+            "not console. It does not encourage. It tells Kael the truth as " \
+            "it sees it — including the parts Kael does not want — and then " \
+            "waits while Kael decides what to do with the information. " \
+            "Yveltal is not cruel. It simply has nothing to prove and no time " \
+            "to waste being gentle. Kael, of all the Chosen, finds this " \
+            "restful."
+)
+
+# ─── v3-AUDIT: The 8 Gym Leaders of Asgheim ──────────────────────────────────
+
+CodexRegistry.add(:GYM1_FERN,
+  title:    "Fern — Verdantia Gym (Grass)",
+  category: :CHARACTERS,
+  text:     "Fern is in her early twenties, the youngest gym leader on the " \
+            "circuit. She has run the Verdantia greenhouse since she was " \
+            "sixteen. She is the one who first looks at the Chosen's marks " \
+            "and knows — she has seen the same shape in old botanical books " \
+            "on Astoria-line crops. She doesn't tell anyone. She does start " \
+            "writing letters to Aldric about it. She is the first ally the " \
+            "Chosen have, and they never quite realize it."
+)
+
+CodexRegistry.add(:GYM2_KAREL,
+  title:    "Karel — Ashbury Gym (Electric)",
+  category: :CHARACTERS,
+  text:     "Karel runs Ashbury's power grid and the city's gym out of the " \
+            "same building. Loud, theatrical, hides a brilliant analytical " \
+            "mind behind stage tricks. Comments after his gym battle that " \
+            "the Chosen's starter has the same step-pattern as a Pokémon " \
+            "he once saw belonging to Champion Marcus. He doesn't connect " \
+            "the dots out loud."
+)
+
+CodexRegistry.add(:GYM3_KESTRA,
+  title:    "Kestra — Ironpeak Gym (Steel)",
+  category: :CHARACTERS,
+  text:     "Kestra was an Asgheim Guard sergeant before she retired into " \
+            "the gym circuit, which means she knew Captain Theo Hara — the " \
+            "man who became General Dread. She loved him like a brother. " \
+            "When her gym battle is over and the Chosen pass, she gives them " \
+            "a folded note: 'If you fight a man with my brother's eyes, " \
+            "remember he was loved.' She is the only person who tries to " \
+            "make Dread's death feel like a loss to the wider world."
+)
+
+CodexRegistry.add(:GYM4_SOREN,
+  title:    "Sören — Frostfall Gym (Ice)",
+  category: :CHARACTERS,
+  text:     "Sören is sixty-four, walks with a cane, and uses a Mamoswine " \
+            "team that has been with him for thirty years. The Hand has been " \
+            "trying to recruit him for a decade — they offered him his " \
+            "knees back. He told them where to put their offer. After his " \
+            "gym battle he warns the Chosen that the next two gym leaders " \
+            "did take similar offers, and that one of them is going to " \
+            "betray them."
+)
+
+CodexRegistry.add(:GYM5_INES,
+  title:    "Inés — Corona City Gym (Fire)",
+  category: :CHARACTERS,
+  text:     "Inés is Sören's prediction-fulfiller. She runs Corona's most " \
+            "popular gym, has a Charizard with a perfect record, and has " \
+            "been quietly feeding the Hand information about every trainer " \
+            "who shows the marks. She loses to the Chosen, hands over the " \
+            "badge, and walks straight to a Hand contact afterwards to " \
+            "report. The Chosen learn about her betrayal in Ch20 — by then " \
+            "she has already disappeared."
+)
+
+CodexRegistry.add(:GYM6_PETRA,
+  title:    "Petra — Ashvale Gym (Ground)",
+  category: :CHARACTERS,
+  text:     "Petra is a descendant of the Astoria line on her mother's side " \
+            "— one of the seven Captain Lior mentioned. She knows what the " \
+            "marks mean. She does not say so during her gym battle; she " \
+            "tests the Chosen's strength because she has to know if they " \
+            "can carry what's coming. After the badge, she gives \\Player " \
+            "a small ground-type stone whose use will not be clear until " \
+            "Astoria."
+)
+
+CodexRegistry.add(:GYM7_TARQUIN,
+  title:    "Tarquin — Grimholt Fortress (Dragon)",
+  category: :CHARACTERS,
+  text:     "Tarquin commands the Grimholt Fortress and a Dragon team that " \
+            "remembers the old myths. He warned the Chosen in Ch19 that " \
+            "death hunts in that forest. He turns out to have known the " \
+            "exact rite the Hand was performing — he had read it in a book " \
+            "he was not supposed to have. He pretends to be ignorant " \
+            "because he is afraid of what knowing aloud would cost him. " \
+            "He redeems himself in Ch31 by sending half his Dragon Riders " \
+            "to escort the Chosen to the Gateway."
+)
+
+CodexRegistry.add(:GYM8_VALA,
+  title:    "Vala — Evershade Grove (Ghost)",
+  category: :CHARACTERS,
+  text:     "Vala is the league's spookiest gym leader and also the only " \
+            "one who has met General Shade — they grew up in the same " \
+            "town, in the same generation. She remembers him as Aldrin Vest, " \
+            "Mara's husband, before the funeral. After her gym battle she " \
+            "gives the Chosen a single piece of advice: 'When you fight " \
+            "Shade, fight Aldrin first. The cult will fall off him like an " \
+            "old coat.' Lyra finds this advice useful. Kael ignores it. " \
+            "Both reactions turn out to be correct in different ways."
+)
+
+# ─── v3-AUDIT: Pokémon character codex (the team are people too) ─────────────
+
+CodexRegistry.add(:STARTER_BOND,
+  title:    "Your Partner",
+  category: :CHARACTERS,
+  text:     "The first Pokémon your father raised himself. The egg's mother " \
+            "was Marcus's old league partner. The hatchling chose you the " \
+            "morning you turned ten — climbing out of the box he had set up " \
+            "in the back room and refusing every other family member for " \
+            "three weeks until you came home. \\\\nThey are quieter than " \
+            "Lyra's Willow, less wary than Kael's Shadow, and have a habit " \
+            "of putting themselves bodily between you and danger that has " \
+            "twice nearly killed them. They survive. They always survive. " \
+            "They will survive you, in the end, and that is the cost of " \
+            "loving a Pokémon: you go first."
+)
+
+CodexRegistry.add(:WILLOW,
+  title:    "Willow — Lyra's Eevee",
+  category: :CHARACTERS,
+  text:     "Willow was an injured wild Eevee Lyra found behind the " \
+            "Sunrise Farm woodshed when she was twelve. Lyra hand-fed her " \
+            "for six weeks. Willow does not technically belong to Lyra — " \
+            "the family never registered the pokeball — but every Pokémon " \
+            "in the world understands that Willow is hers. Evolves into " \
+            "Sylveon during Ch27 from the sheer weight of love at the " \
+            "campfire. Has subsequently appointed herself the team's " \
+            "official emotional support cleric."
+)
+
+CodexRegistry.add(:SHADOW,
+  title:    "Shadow — Kael's Zorua",
+  category: :CHARACTERS,
+  text:     "Shadow chose Kael the year of Mira's death. Kael never " \
+            "remembers anyone choosing him; he assumes Shadow followed him " \
+            "home because there was no one else with a worse week. Shadow " \
+            "does not like other humans, tolerates Lyra grudgingly, and " \
+            "thinks of \\Player as 'the bright one's brother.' Evolves into " \
+            "Zoroark during Ch26 — and again into a hisuian variant during " \
+            "Ch41 when Kael accepts the Astoria-line truth. Shadow is " \
+            "older than Kael in the ways that matter."
+)
+
+CodexRegistry.add(:ZACIAN_AS_PARTNER,
+  title:    "Zacian as Partner",
+  category: :CHARACTERS,
+  text:     "Bonded to \\Player at Ch11. Zacian does not appear physically " \
+            "until Ch30, but its voice arrives weeks earlier in dreams " \
+            "and pre-battle moments. Communicates with \\Player through " \
+            "positioning — telling the Chosen where to stand on the " \
+            "field, what range to refuse, when to switch. \\\\nUnlike " \
+            "Xerneas and Yveltal, Zacian is comfortable with silence. " \
+            "Most of its instruction is what it does not say."
+)
+
+CodexRegistry.add(:XERNEAS_AS_PARTNER,
+  title:    "Xerneas as Partner",
+  category: :CHARACTERS,
+  text:     "Bonded to Lyra at Ch14. Xerneas's bond to Lyra is the oldest " \
+            "of the three — the deer-god remembered her before the marks " \
+            "appeared, having watched her tend the wounded Eevee at age " \
+            "twelve. Communicates through warmth: Lyra knows Xerneas is " \
+            "near when the air around her smells like crushed pine needles."
+)
+
+CodexRegistry.add(:YVELTAL_AS_PARTNER,
+  title:    "Yveltal as Partner",
+  category: :CHARACTERS,
+  text:     "Bonded to Kael at Ch16. Their bond is reciprocal in a way " \
+            "Lyra's and \\Player's are not — Yveltal needs Kael as much " \
+            "as Kael needs Yveltal. Death needs witness; without a " \
+            "Chosen of Cycles, Yveltal cannot remember why the cycle " \
+            "matters. Kael, who has been holding Mira's memory alone for " \
+            "years, is the perfect witness. They suit each other."
+)
+
+CodexRegistry.add(:MARCUS_RETIRED,
+  title:    "Marcus — Champion Emeritus",
+  category: :CHARACTERS,
+  text:     "Asgheim Champion 22 years before the events of Shattered " \
+            "Crowns. Retired after the binding of Hoopa cost him both " \
+            "knees and most of his hearing in the left ear. His team " \
+            "during his Championship run was Charizard, Garchomp, " \
+            "Salamence, Tyranitar, Metagross, and a Dragonite gifted by " \
+            "Aurora before they were married. Most of the team is still " \
+            "with him; the Dragonite is in semi-retirement at the family " \
+            "ranch. He says he will not battle again. He is lying."
+)
+
