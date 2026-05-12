@@ -127,7 +127,121 @@ CodexRegistry.add(:THE_SHATTERED_HAND,
 CodexRegistry.add(:FIRST_CHOSEN,
   title:    "The First Chosen",
   category: :HISTORY,
-  text:     "Legends speak of three warriors who first bound the guardians and " \
-            "sealed Nidhoggr away. Their names have been lost to time, but " \
-            "their sacrifice echoes through every generation of Chosen."
+  text:     "Three warriors of Astoria forged the original Eternal Seal. Their " \
+            "names were stricken from history to protect their bloodlines, but " \
+            "fragments survive: the Chosen of Valor, of Tides, and of Cycles. " \
+            "Captain Lior of the ferry to Astoria descends from the line of Tides. " \
+            "Elder Vera, Keeper of Shadows, is the last of her line. The third " \
+            "line — Cycles — was thought extinct until a child was smuggled out " \
+            "of Astoria one stormy night, raised in an orphanage in Asgheim, and " \
+            "given a quiet name: Kael."
+)
+
+#-------------------------------------------------------------------------------
+# v2-AUDIT: The Calling — answers \"why these three?\"
+#-------------------------------------------------------------------------------
+CodexRegistry.add(:THE_CALLING,
+  title:    "The Calling",
+  category: :MYTHOLOGY,
+  text:     "The Guardians do not pick at random. The mark of a Chosen settles " \
+            "where three forces converge: bloodline (a thread from one of the " \
+            "First Chosen), grief (a wound deep enough to make a person reach " \
+            "outside themselves), and grace (an act of mercy that the world " \
+            "happens to be watching). " \
+            "\\Player carries the Valor line through their parents — both former " \
+            "Chosen — and the grace of a Dawnhaven childhood spent helping " \
+            "neighbours. Lyra's grief is the death of her older sister Elena, " \
+            "yet to come; the world prepared her early. Kael's grief is the " \
+            "death of his foster-sister Mira, and his line — Cycles — is the " \
+            "rarest. The Calling does not promise success. Only that you will " \
+            "be asked."
+)
+
+#-------------------------------------------------------------------------------
+# v2-AUDIT: The Four Generals — distinct motivations replace 'interchangeable'
+#-------------------------------------------------------------------------------
+CodexRegistry.add(:GENERAL_VEX,
+  title:    "Vex — The Fourth Sealer",
+  category: :CHARACTERS,
+  text:     "Once a member of the original sealing party that bound Hoopa, Vex " \
+            "was caught in the binding-flash and presumed dead. He survived. " \
+            "What returned to Asgheim was not what entered the temple — Hoopa " \
+            "had shown him the cycle of Nidhoggr breaking the seal again, and " \
+            "again, and again, until the heat-death of the world. He concluded " \
+            "the seal was a stalling tactic, and that 'ending it now, on our " \
+            "terms' would be a mercy. Marcus and Aurora covered up his " \
+            "disappearance because they couldn't prove what he had become."
+)
+
+CodexRegistry.add(:GENERAL_SHADE,
+  title:    "Shade — The Widower",
+  category: :CHARACTERS,
+  text:     "Shade was a Hand-aligned trainer named Aldrin Vest before he " \
+            "lost his wife Mara to a cult purge gone wrong — friendly fire, " \
+            "decades ago. Malachar told him the world was the kind of place " \
+            "where the wrong people died, and that the cure was to end the " \
+            "world. He believed it because he wanted to. His ace Spiritomb " \
+            "was Mara's last living gift to him. When he speaks of Spiritomb " \
+            "'feeding on suffering,' he means his own."
+)
+
+CodexRegistry.add(:GENERAL_DREAD,
+  title:    "Dread — The Betrayed",
+  category: :CHARACTERS,
+  text:     "Dread was an Asgheim Guard captain — Captain Theo Hara — who " \
+            "spent twelve years investigating the disappearance of children " \
+            "near Astoria-line bloodlines, only for the League to bury his " \
+            "case file when it became politically inconvenient. The Hand " \
+            "gave him what the League denied him: the truth, and an enemy " \
+            "to put it on. He hates the Chosen less than he hates the " \
+            "institutions that produced them. His final words — 'You will " \
+            "be betrayed too, the way I was' — are a curse meant to land " \
+            "years later."
+)
+
+CodexRegistry.add(:GENERAL_RUIN,
+  title:    "Ruin — The True Believer",
+  category: :CHARACTERS,
+  text:     "Of the four Generals, only Ruin came to the Hand whole. She " \
+            "studied void-cosmology at the Asgheim University, concluded " \
+            "that existence is suffering by mathematical necessity, and " \
+            "walked into the nearest Hand cell at age twenty-three asking " \
+            "for a job. She is the most dangerous of the four because she " \
+            "has nothing to mourn — and therefore nothing to bargain with. " \
+            "Her dying line, 'Vex? Shade? Dread? *Children.* Only I chose " \
+            "this freely,' is not boasting. It is grief that no one else " \
+            "in her cause was ever as committed as she was."
+)
+
+#-------------------------------------------------------------------------------
+# v2-AUDIT: Hoopa — the gentle prisoner
+#-------------------------------------------------------------------------------
+CodexRegistry.add(:HOOPA_PROFILE,
+  title:    "Hoopa — The Gentle Prisoner",
+  category: :CHARACTERS,
+  text:     "Of all the legendary Pokémon caught in the binding of Nidhoggr, " \
+            "Hoopa is the only one who never had a choice. The portal-trickster " \
+            "of myth was unbound and curious when Marcus, Aurora and Vex sealed " \
+            "the first crack — and was caught in the binding because its " \
+            "portal-power was the very mechanism that locked Nidhoggr away. " \
+            "For decades it has been sleeping inside its own seal, dreaming. " \
+            "The Hand wants it not for itself but for what it carries: the only " \
+            "doorway large enough to release Nidhoggr fully. " \
+            "After the second seal, Arceus restores Hoopa personally. The " \
+            "trickster's first words on returning are an apology to Lyra."
+)
+
+#-------------------------------------------------------------------------------
+# v2-AUDIT: Subject Zero — the weapon that asked to be unmade
+#-------------------------------------------------------------------------------
+CodexRegistry.add(:SUBJECT_ZERO,
+  title:    "Subject Zero",
+  category: :CHARACTERS,
+  text:     "A Mewtwo restructured by the Hand's research arm to break a " \
+            "Chosen's bond with their Guardian. Discovered in a hidden lab " \
+            "beneath the Eternal Forest. The Chosen had a choice: destroy it, " \
+            "or duel it on equal terms so it could choose its own ending. " \
+            "Defeated cleanly, the conditioning broke. Subject Zero teleported " \
+            "away into the wilds and was not seen again — except, occasionally, " \
+            "by Lyra in dreams that she insists are not nightmares."
 )
