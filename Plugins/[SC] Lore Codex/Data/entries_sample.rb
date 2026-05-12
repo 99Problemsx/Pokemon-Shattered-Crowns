@@ -457,16 +457,110 @@ CodexRegistry.add(:YVELTAL_AS_PARTNER,
             "years, is the perfect witness. They suit each other."
 )
 
+# ─── v4-AUDIT: Logic-fix codex entries ───────────────────────────────────────
+
+CodexRegistry.add(:MASK_OF_HEIRLOOM,
+  title:    "The Heirloom Mask",
+  category: :HISTORY,
+  text:     "The Guardian Mask offered at the Thornwood Festival was carved " \
+            "twenty-two years ago by Aurora, the player's mother, during her " \
+            "pregnancy. She was the unofficial fourth member of the original " \
+            "Hoopa-sealing party; with the binding too dangerous for her " \
+            "condition, she stayed at the circle's edge and carved a " \
+            "protective ward into birchwood instead. The carving 'MARCUS' " \
+            "inside the mask is the only name she put on it — for her " \
+            "husband, not for the future child. The mask waited at the " \
+            "festival town for two decades. The merchant did not make it. " \
+            "He kept it. He did not remember because he was not meant to."
+)
+
+CodexRegistry.add(:VIKTOR_ALDERMARSH,
+  title:    "Viktor Aldermarsh — Champion",
+  category: :CHARACTERS,
+  text:     "Born to a quiet Ashbury family, Viktor completed the eight-gym " \
+            "circuit at seventeen and finished seventh-ranked qualifier. He " \
+            "had no expectation of the title — Champion Sennes Wolffe was " \
+            "young and respected. \\\\nThe Hand killed Wolffe in the " \
+            "Stormwatch courthouse attack of Ch24 era. Viktor, the highest " \
+            "qualifier willing to take the seat in wartime, challenged for " \
+            "the empty title and won the seven-day league trial. He is the " \
+            "youngest Asgheim Champion in over forty years. \\\\nHe still " \
+            "remembers losing to \\Player in Ravenwatch and *will* mention " \
+            "it before their Ch29 fight."
+)
+
+CodexRegistry.add(:TIMELINE_ANCHOR,
+  title:    "The Years That Pass",
+  category: :HISTORY,
+  text:     "\\Player begins the Shattered Crowns story at sixteen — the " \
+            "legal age for an Asgheim trainer's licence. The main story " \
+            "spans roughly eighteen months: Acts 1-2 are the first eight " \
+            "months, Act 3 the next six, Act 4 the final four. \\\\n" \
+            "Chapter 36 jumps one year forward; Acts 5 covers the next " \
+            "two-and-a-half years culminating in Lyra and Kael's wedding " \
+            "when \\Player is roughly twenty-one. The optional postgame " \
+            "Champion Marcus battles assume the player is at least " \
+            "nineteen."
+)
+
+CodexRegistry.add(:EAGLES_WATCH,
+  title:    "Eagle's Watch",
+  category: :HISTORY,
+  text:     "Champion Marcus's private response force, formed quietly in " \
+            "the months following Aldric's death (Ch24). Roughly eighty " \
+            "operatives in the field at any one time, with ex-Champion " \
+            "advisors and a wing of Tarquin's Dragon Riders attached. " \
+            "They do not engage the Generals — that work belongs to the " \
+            "Chosen — but they evacuate civilians, intercept Hand " \
+            "convoys, and keep the roads passable. Distinguished by " \
+            "slate-grey cloaks and a small bronze eagle pin worn over " \
+            "the heart. \\\\nLed in the field by Operative Vesper, a " \
+            "former Asgheim Guard sergeant who served under Captain Hara " \
+            "before he became General Dread."
+)
+
+CodexRegistry.add(:CIVILIAN_WITNESSES,
+  title:    "Those Who Watched",
+  category: :HISTORY,
+  text:     "The Hand's war was lost in pieces no Chosen ever saw: the " \
+            "shopkeeper in Verdantia who hung a steel-blue ribbon in her " \
+            "broken window and stayed open the next morning. The mother " \
+            "from Stormwatch who told her daughter that her Furfrou would " \
+            "be the bravest one in every story. The children at the parade " \
+            "who asked their mother if they could be a Chosen too. \\\\n" \
+            "The Chosen broke the seal. The civilians chose not to let the " \
+            "Hand break the country. Both were necessary. Only the first " \
+            "was ever in the history books."
+)
+
+CodexRegistry.add(:HAND_DEFECTORS,
+  title:    "Hand Defectors",
+  category: :HISTORY,
+  text:     "Roughly one in twelve Hand recruits left the cult of their " \
+            "own accord during the war years. Most stories were not " \
+            "dramatic: a recruit who was promised their family's safety " \
+            "learned the family was killed anyway and walked away the " \
+            "next morning. Some were welcomed back by their home towns. " \
+            "Many were not. \\\\nTelmer — the defector who brought a " \
+            "stolen Hand ledger to the Chosen's camp in Ch22 — went on " \
+            "to run a survivor's network in Astoria after the war. He " \
+            "is the godfather of Lyra and Kael's first child."
+)
+
+
 CodexRegistry.add(:MARCUS_RETIRED,
   title:    "Marcus — Champion Emeritus",
   category: :CHARACTERS,
   text:     "Asgheim Champion 22 years before the events of Shattered " \
-            "Crowns. Retired after the binding of Hoopa cost him both " \
-            "knees and most of his hearing in the left ear. His team " \
-            "during his Championship run was Charizard, Garchomp, " \
-            "Salamence, Tyranitar, Metagross, and a Dragonite gifted by " \
-            "Aurora before they were married. Most of the team is still " \
-            "with him; the Dragonite is in semi-retirement at the family " \
-            "ranch. He says he will not battle again. He is lying."
+            "Crowns. Retired after the binding of Hoopa — not from injury, " \
+            "as the public was told, but because the binding-flash showed " \
+            "him the futures Hoopa was being shown by Vex, and he came back " \
+            "unable to sleep without seeing them. He recovered. He could " \
+            "have come out of retirement years before he did. He chose to " \
+            "raise a family instead. His team during his Championship run " \
+            "was Charizard, Garchomp, Salamence, Tyranitar, Metagross, and " \
+            "a Dragonite gifted by Aurora before they were married. All " \
+            "six are still with him. He says he will not battle again. " \
+            "He is lying."
 )
 
