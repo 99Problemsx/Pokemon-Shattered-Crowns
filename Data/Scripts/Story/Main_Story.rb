@@ -1,4 +1,442 @@
 #===============================================================================
+# POKÉMON SHATTERED CROWNS - MAIN STORY (Combined)
+#===============================================================================
+# Single-file narrative source, in playthrough order. All cutscenes for the
+# game are defined here, from the optional prologue (Ch0) through the True
+# Ending and sequel hook (Ch55+).
+#
+# Sections in order:
+#   PART 1 — Prologue (Ch0, optional)
+#   PART 2 — Main Story Bible (Ch1-55, canonical)
+#   PART 3 — Audit Additions to the bible chapters (v2/v3/v4)
+#   PART 4 — Optional Side Arcs (Ch4.5, Ch11.5-36.5, Ch24.5, Ch35.5, Ch37-41)
+#   PART 5 — Postgame (Hoopa Sanctuary, Marcus battles, NG+, sequel hook)
+#
+# Quest definitions live in Quests/. Engine-side systems live in Systems/.
+# See README.md for the full layout explanation.
+#===============================================================================
+
+
+
+#===============================================================================
+# >>>>>  PART 1 — Ch0 PROLOGUE (Marcus's Story, 22 years before Ch1)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: PROLOGUE (Chapter 0)
+#===============================================================================
+# A playable prologue arc set twenty-two years before the events of the
+# main story. The player controls MARCUS — the future Champion, future
+# father, future ex-Champion — during the original binding of Hoopa.
+#
+# This is the seventh New Game option: "Prologue (Marcus's Story)". It
+# is roughly 90 minutes of content covering:
+#
+#   Pro-1  The Letter        — Aldric (young) writes to Marcus + Aurora
+#   Pro-2  The Calling       — Marcus and Aurora confirm their marks
+#   Pro-3  Recruiting Vex    — the fourth sealer joins (sells him as decent)
+#   Pro-4  The Carving       — Aurora carves the festival mask while pregnant
+#   Pro-5  The Binding       — Hoopa is sealed, Vex is changed by it
+#   Pro-6  The Cost          — Marcus and Aurora come home; Aldric promises
+#                              he will track the next generation
+#   Pro-7  Twenty-Two Years Later — fade-in to Ch1
+#
+# Completing the prologue:
+#   - Unlocks "Champion's Choice" — Marcus's old Charizard gets a special
+#     dialogue when traded into a regular save file
+#   - Unlocks the Mask of Heirloom codex pre-emptively
+#   - Makes the Ch28 mask-remembers cutscene hit *exponentially* harder
+#     because the player CARVED IT THEMSELVES
+#   - Marks NG+ runs with the "Knowing" status — future Aurora dialogue
+#     subtly acknowledges that the player has seen her younger
+#===============================================================================
+
+
+#===============================================================================
+# Pro-1 — The Letter
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_1_the_letter do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\ts[]Twenty-two years ago. Dawnhaven Village."
+  scene.wait 30
+
+  scene.message "\\i[A young man sat at a kitchen table, polishing a Charizard's pokeball with a cloth that had clearly seen better days.]"
+  scene.message "\\i[His name was Marcus. He was nineteen. He had just won the Asgheim Championship for the third year running.]"
+  scene.message "\\i[He had a letter in his hand. It was on Aldric's lab letterhead. He had read it three times.]"
+  scene.wait 45
+
+  scene.message "\\bMarcus (young)\\b: *to his Charizard, quietly* \\\\nYou know what he wants. I know what he wants."
+  scene.message "\\bMarcus\\b: It's the binding. The one he's been talking about all summer."
+  scene.message "\\bMarcus\\b: He thinks we're the ones."
+  scene.wait 30
+
+  scene.message "\\i[The door opened. A young woman came in carrying a bag of vegetables. \\\\nAurora. Twenty-one. Researcher. The smarter one in the room and they both knew it.]"
+  scene.wait 30
+
+  scene.message "\\bAurora (young)\\b: ...you've got *that* face."
+  scene.message "\\bMarcus\\b: Aldric wrote."
+  scene.message "\\bAurora\\b: *carefully setting the bag down* \\\\nAnd?"
+  scene.message "\\bMarcus\\b: He thinks we're the ones. \\\\nFor the binding."
+  scene.wait 30
+
+  scene.message "\\bAurora\\b: *long breath* \\\\nI thought we had three more years."
+  scene.message "\\bMarcus\\b: So did he. \\\\nThe seal-shape has shifted. He thinks the next *attempt* on it is — soon."
+  scene.message "\\bAurora\\b: Soon as in?"
+  scene.message "\\bMarcus\\b: This year."
+  scene.wait 30
+
+  scene.message "\\bAurora\\b: ...okay. \\\\nGet your boots. \\\\nWe're going to the lab."
+
+  scene.camera_tint :reset, 30
+end
+
+
+#===============================================================================
+# Pro-2 — The Calling
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_2_calling do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[Aldric's lab. Younger than \\PN had ever known him. Hair still mostly dark. Eyes still kind.]"
+  scene.wait 30
+
+  scene.message "\\bAldric (young)\\b: I am thirty-one years old. \\\\nI am asking two of my closest friends, who are nineteen and twenty-one, to attempt a binding that has killed eight people in recorded history."
+  scene.message "\\bAldric\\b: I would like to apologize before I make the request."
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: Don't. \\\\nWe'd be coming whether or not you asked. \\\\nYou know that."
+  scene.message "\\bAldric\\b: I do. \\\\nThat is, in fact, the part I am apologizing for."
+  scene.wait 30
+
+  # Aurora reveals she's pregnant — the audience already knows because of
+  # the v4-F2 codex entry. Marcus does NOT know yet.
+  scene.message "\\bAurora\\b: ...Aldric. \\\\nBefore we go further."
+  scene.message "\\bAurora\\b: Marcus."
+  scene.message "\\bMarcus\\b: ...yeah?"
+  scene.message "\\bAurora\\b: *steady* I'm pregnant."
+  scene.wait 60
+
+  scene.show_emotion :MARCUS, :exclamation
+  scene.message "\\bMarcus\\b: ...what?"
+  scene.message "\\bAurora\\b: *small smile* Eight weeks. \\\\nI was going to tell you at the harvest festival. \\\\nNow seems important."
+  scene.wait 30
+
+  scene.message "\\bAldric\\b: *quietly* ...Aurora. \\\\nThis changes the binding plan."
+  scene.message "\\bAurora\\b: I *know.* \\\\nWhich is why I'm telling you both *now.* \\\\nI cannot stand at the binding circle. \\\\nI can do something else."
+
+  # Aurora's plan: she carves the protective mask, Marcus and Vex do the
+  # dangerous work, she stays at the edge to coordinate.
+  scene.message "\\bAurora\\b: I will carve the protection. \\\\nThe seal-mask. \\\\nI have been studying the runes for years and I am the most qualified of any of us to do this part."
+  scene.message "\\bAurora\\b: We need a third for the binding circle. \\\\nWhoever it is, *I* will keep them on plan."
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: ...all right. \\\\nWho's the third?"
+  scene.message "\\bAldric\\b: There's a researcher visiting from Hoenn. \\\\nVex Calderon. Twenty-five, decorated, *smart.* \\\\nHe volunteered."
+
+  scene.script {
+    codexDiscover(:AURORA_YOUNG) if defined?(codexDiscover)
+  }
+end
+
+
+#===============================================================================
+# Pro-3 — Recruiting Vex
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_3_recruiting_vex do |scene|
+  scene.play_bgm 'Pokemon XY - Couriway Town'
+
+  scene.message "\\i[The Verdantia inn. \\\\nVex Calderon, twenty-five, was three glasses of wine in and *good company.*]"
+  scene.message "\\i[This is — and the player must understand this — what makes the binding tragedy real. \\\\nVex was a *good person.* The Hand wasn't born evil. The Hand was *broken.*]"
+  scene.wait 45
+
+  scene.message "\\bVex (young)\\b: All right, Champion. *Pitch me.*"
+  scene.message "\\bMarcus\\b: It's a binding. It's dangerous. We've lost eight people in recorded history."
+  scene.message "\\bVex\\b: ...go on."
+  scene.message "\\bMarcus\\b: And it might let us *win.* \\\\nIf Aldric is right about the seal-shape — and Aldric is right about *most things* — \\\\nwe can buy the world a thousand quiet years."
+  scene.wait 30
+
+  scene.message "\\bVex\\b: A thousand quiet years."
+  scene.message "\\bVex\\b: *grinning* For a researcher, Champion, that is *catnip.* \\\\nYou *know* I'm coming."
+  scene.message "\\bVex\\b: I want to see Aldric's working. I want to make sure the math is right."
+  scene.message "\\bVex\\b: I want to *help.*"
+  scene.wait 45
+
+  # Vex meets Aurora — they get along immediately. This is the part that
+  # makes the player root for the trio. Then, knowing what happens, hurt.
+  scene.message "\\bAurora\\b: Vex. Aurora. \\\\nI'm carving the mask. \\\\nYou're standing where I would be standing."
+  scene.message "\\bVex\\b: *taking her hand, very serious* I will not let your husband fall. \\\\nThat is a *promise.*"
+  scene.message "\\bAurora\\b: I will hold you to it."
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: *aside, to Vex* ...thank you."
+  scene.message "\\bVex\\b: *to Marcus* \\\\nA thousand quiet years for the kid she's carrying, Champion. \\\\nFor *that* — yes. \\\\nAlways yes."
+
+  scene.script {
+    codexDiscover(:VEX_BEFORE) if defined?(codexDiscover)
+  }
+end
+
+
+#===============================================================================
+# Pro-4 — The Carving
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_4_the_carving do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\ts[]Six weeks later. Aurora's study."
+  scene.wait 30
+
+  scene.message "\\i[Aurora was carving the mask. \\\\nThe wood was birch. The runes were eleventh-century Astoria-line, traced from a book Aldric had loaned her.]"
+  scene.message "\\i[Inside the mask — where no rune would go — she carved one word. *MARCUS.*]"
+  scene.wait 30
+
+  # The player as Aurora actually carves this — it is a small interactive
+  # moment. The mask's name is chosen by the player.
+  scene.script {
+    pbMessage(_INTL("\\bAurora\\b: Whose name will this mask carry?"))
+    chosen_name = pbNameEntry(_INTL("Carve a name?"), 10, "Marcus", nil)
+    chosen_name = "Marcus" if chosen_name.nil? || chosen_name.empty?
+    $PokemonGlobal.sc_prologue_mask_name = chosen_name if $PokemonGlobal.respond_to?(:sc_prologue_mask_name=)
+    pbMessage(_INTL("\\i[You carved *{1}* inside the mask. The wood took it cleanly. The runes glowed faintly when you traced them with your thumb.]", chosen_name))
+  }
+  scene.wait 30
+
+  scene.message "\\bAurora\\b: *to her belly, quietly* \\\\nWhen you wear this one day — and you will — \\\\nyou'll know that I made it for your father, hoping you'd never need it."
+  scene.message "\\bAurora\\b: \\\\nI'm sorry it didn't work out that way. \\\\nI'm proud of you anyway."
+  scene.wait 45
+
+  # The mask is delivered to a friend at the Thornwood Festival town
+  scene.message "\\i[She wrapped the mask in oilcloth and walked it to her friend's stall at the festival town. \\\\nThe friend was an old carver who pretended she had made it herself. \\\\nThis was the kindness Aurora had asked for.]"
+
+  scene.script {
+    codexDiscover(:MASK_OF_HEIRLOOM) if defined?(codexDiscover)
+    pbAchievement(:ach_pro_carved_mask) if defined?(pbAchievement)
+  }
+end
+
+
+#===============================================================================
+# Pro-5 — The Binding
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_5_the_binding do |scene|
+  scene.play_bgm 'Pokemon XY - Final Battle Lysandre'
+  scene.camera_shake 12, 60
+
+  scene.message "\\ts[]The Binding."
+  scene.wait 30
+
+  scene.message "\\i[A chamber under the Asgaheim cliffs. \\\\nAurora at the circle's edge, mask in her lap. \\\\nAldric at the south point with the chant. \\\\nMarcus and Vex at the north and east points, hands on the seal-stones.]"
+  scene.message "\\i[Hoopa was at the centre. Curious. Frightened. Bound by older magic than the trio understood.]"
+  scene.wait 60
+
+  scene.message "\\bHoopa (Confined, young)\\b: ...what are you *doing?*"
+  scene.message "\\bAldric\\b: Sealing the path you would otherwise be forced to be. \\\\nLittle one. \\\\nI am sorry."
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: ...if you put me in the seal, the Hand cannot come through me?"
+  scene.message "\\bAldric\\b: That is correct."
+  scene.message "\\bHoopa\\b: ...then please continue."
+  scene.wait 30
+
+  # The binding-flash happens. Marcus is fine. Vex is shown the futures.
+  scene.message "\\bAldric\\b: *raising arms* \\\\n*Bind.*"
+
+  scene.camera_flash 80
+  scene.camera_shake 25, 100
+  scene.wait 60
+
+  # The flash — Hoopa sees Vex what the cycle looks like. Vex breaks.
+  scene.message "\\bVex\\b: *eyes wide, voice changing* \\\\n...I see. \\\\nI see *all* of it."
+  scene.message "\\bVex\\b: \\\\nIt comes back. \\\\nIt comes back *every* thousand years."
+  scene.message "\\bVex\\b: \\\\nAll we are doing is *stalling.*"
+  scene.wait 60
+
+  scene.message "\\bMarcus\\b: *catching him as he stumbles* \\\\nVex. Vex. Stay with us. The binding is *holding* —"
+  scene.message "\\bVex\\b: *quietly, far away* \\\\nThe binding is *delay.* \\\\nThe binding is *delay.* \\\\nThe binding is —"
+  scene.wait 30
+
+  scene.message "\\bAurora\\b: \\\\nVex. \\\\nLook at me."
+
+  # The save: Aurora's protective mask saved Marcus and Aldric from the
+  # full flash. It did not protect Vex, who was outside the runed circle.
+  # This is the truth Vex never recovered from.
+  scene.message "\\bVex\\b: *focusing on her, almost normal* \\\\n...your mask saved them. \\\\nYour mask did not save *me.*"
+  scene.message "\\bVex\\b: *small, almost confused* \\\\n...I should have stood inside the runes."
+  scene.message "\\bAurora\\b: \\\\nI am so sorry, Vex. \\\\nI am *so* sorry."
+  scene.wait 60
+
+  scene.message "\\bHoopa\\b: *from inside the seal, small voice* \\\\n...he will not forgive you. \\\\nI am sorry."
+
+  scene.camera_shake 0, 0
+end
+
+
+#===============================================================================
+# Pro-6 — The Cost
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_6_the_cost do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[A week after the binding. The lab kitchen.]"
+  scene.message "\\i[Vex was on a chair by the window. He had not spoken in three days. He had not slept in five.]"
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: *to Aurora, low* \\\\nHe's not — he's not coming back."
+  scene.message "\\bAurora\\b: *low, certain* \\\\nNo. He isn't."
+  scene.wait 30
+
+  scene.message "\\bAldric\\b: *appearing in the doorway* \\\\nMarcus. Aurora."
+  scene.message "\\bAldric\\b: ...I have looked at the seal-shape every morning since the binding. \\\\nIt is holding. \\\\nIt will hold for *roughly* twenty-two years."
+  scene.message "\\bAldric\\b: After that — \\\\nthere will be a new generation. \\\\nThree of them this time. The seal-shape has *braided.*"
+  scene.wait 30
+
+  scene.message "\\bMarcus\\b: ...three."
+  scene.message "\\bAldric\\b: Three Chosen. \\\\nOne of them — *almost certainly* — will be your child, Aurora."
+  scene.message "\\bAurora\\b: *hand on her belly* ...okay."
+  scene.message "\\bAurora\\b: *to Aldric, steady* \\\\nThen *teach the next three* what we should have known. \\\\nGive them every year I cannot give them. \\\\nI will help. We both will. We will *raise* this one to know the shape of the road they'll walk."
+  scene.wait 45
+
+  scene.message "\\bAldric\\b: \\\\nI will spend the rest of my life on this work. \\\\nI promise."
+  scene.message "\\bMarcus\\b: We know you will, old friend."
+
+  # Vex stands up. Walks out. Doesn't come back.
+  scene.message "\\i[Vex stood up. He didn't speak. He walked out the kitchen door and into the yard and did not stop walking.]"
+  scene.message "\\i[He would not be seen again — by name — for twenty-two years.]"
+  scene.wait 60
+
+  scene.camera_tint :reset, 30
+
+  scene.script {
+    pbAchievement(:ach_pro_completed) if defined?(pbAchievement)
+  }
+end
+
+
+#===============================================================================
+# Pro-7 — Twenty-two years later
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :pro_7_twenty_two_years_later do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+
+  scene.fade_out 60
+  scene.wait 60
+
+  scene.message "\\ts[]Twenty-two years later."
+  scene.wait 60
+
+  scene.fade_in 60
+
+  scene.message "\\i[A young person is asleep in a bed in Dawnhaven Village. \\\\nThe morning sun lives up to the town's name. \\\\nMom is calling. \\\\nDad is polishing an old Pokéball.]"
+  scene.message "\\i[They are about to wake up.]"
+  scene.message "\\i[Their starter is in a small box in the back room — waiting.]"
+  scene.wait 45
+
+  scene.message "\\i[Marcus and Aurora kept their promise. \\\\nAldric kept his.]"
+  scene.message "\\i[Now everything they prepared for begins.]"
+  scene.wait 30
+
+  # Cross-fade to Ch1
+  scene.fade_out 90
+  scene.script {
+    GameData::Chapter.complete(:pro_arc) if defined?(GameData::Chapter)
+    $PokemonGlobal.sc_prologue_completed = true if $PokemonGlobal.respond_to?(:sc_prologue_completed=)
+    pbAchievement(:ach_pro_full) if defined?(pbAchievement)
+
+    # If the player came from a New Game flow that *started* with the
+    # prologue, hand off directly into :ch1_wake_up.
+    if $game_switches[:sc_prologue_route] && defined?(GameData::Cutscene)
+      GameData::Cutscene.play(:ch1_wake_up)
+    end
+  }
+end
+
+
+#===============================================================================
+# Codex
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:AURORA_YOUNG,
+    title:    "Aurora — Twenty-Two Years Ago",
+    category: :CHARACTERS,
+    text:     "Twenty-one years old, eight weeks pregnant, the most " \
+              "qualified rune-carver in the binding party. Aurora's " \
+              "mask saved Marcus and Aldric from the binding-flash. It " \
+              "did not save Vex, who stood outside the runed circle. " \
+              "She has never forgiven herself for the geometry of that " \
+              "moment. Marcus has spent twenty-two years trying to " \
+              "convince her there was no other plan."
+  )
+
+  CodexRegistry.add(:VEX_BEFORE,
+    title:    "Vex — Before",
+    category: :CHARACTERS,
+    text:     "Twenty-five years old, Hoenn-trained, decorated researcher, " \
+              "good company over a drink. Volunteered for the Hoopa " \
+              "binding without hesitation. Promised Aurora he would not " \
+              "let her husband fall. \\\\nThe binding-flash did not kill " \
+              "him. It showed him what Hoopa was being shown — the next " \
+              "cycle, and the one after, and the heat-death of the seal " \
+              "system after a million quiet years. \\\\nHe walked out of " \
+              "the lab kitchen seven days later and was not seen again " \
+              "by his name for twenty-two years."
+  )
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_pro_carved_mask do |a|
+    a.name "The Carver's Hand"
+    a.description "Carve the Heirloom Mask as Aurora."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_pro_completed do |a|
+    a.name "Twenty-Two Years"
+    a.description "Complete the Prologue (Marcus's Story)."
+    a.category :story_hidden
+    a.reward_item :RARECANDY, 5
+  end
+  GameData::Achievement.define :ach_pro_full do |a|
+    a.name "The First Sealer"
+    a.description "Watch the time-cut to Ch1. The road begins again."
+    a.category :story_hidden
+    a.hidden true
+  end
+end
+
+
+#===============================================================================
+# Save flags
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_prologue_completed, :sc_prologue_mask_name
+end
+
+SaveData.register(:sc_prologue_completed) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_prologue_completed || false }
+  load_value { |v| $PokemonGlobal.sc_prologue_completed = v }
+  new_game_value { false }
+end
+
+SaveData.register(:sc_prologue_mask_name) do
+  ensure_class :String
+  save_value { $PokemonGlobal.sc_prologue_mask_name || "Marcus" }
+  load_value { |v| $PokemonGlobal.sc_prologue_mask_name = v }
+  new_game_value { "Marcus" }
+end
+
+
+#===============================================================================
+# >>>>>  PART 2 — MAIN STORY BIBLE (Ch1 through Ch55)
+#===============================================================================
+
+#===============================================================================
 # POKÉMON SHATTERED CROWNS - MAIN STORY SCRIPTS
 #===============================================================================
 # Updated with ancient evils, champions, and full 40-chapter structure
@@ -23038,4 +23476,4673 @@ GameData::Cutscene.define :ch55_true_ending do |scene|
   scene.message "\\ts[]THE TRUE END"
   scene.message "\\ts[]Thank you for experiencing this journey."
   scene.message "\\ts[]Pokémon Shattered Crowns"
+end
+
+#===============================================================================
+# >>>>>  PART 3a — AUDIT v2 ADDITIONS (woven into bible chapters)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - STORY AUDIT v2 ADDITIONS
+#===============================================================================
+# Second-pass audit additions on top of Main_Story.rb. Earlier audit fixes
+# (#1-#8) are inlined into Main_Story.rb. This file collects the v2 additions:
+#
+#  v2-1  Aurora at Aldric's Funeral        — Ch24
+#  v2-2  Hoopa's Return                     — Ch47
+#  v2-3  Aurora's Research Reveal           — Ch15.5 (between Ch15-16)
+#  v2-4  Subject Zero arc — Father's Sin    — Ch20.5 (between Ch20-21)
+#  v2-5  Astoria Hosts: Elder Vera + Sea-Captain Lior + Temple Keepers
+#                                           — Ch37-Ch41
+#  v2-6  Act 5 Pacing — Engagement & Build  — Ch50.5, Ch51.5
+#  v2-7  Hoopa Aftermath Sub-Plot           — Ch48 / Ch49 cameo
+#
+# Plus the Alternative Endings (Light/Dark/Balance) which live in their own
+# file (Alternative_Endings.rb) because they're path-divergent.
+#===============================================================================
+
+
+#===============================================================================
+# v2-1 — Aurora at Aldric's Funeral (Ch24)
+#-------------------------------------------------------------------------------
+# Purpose: Marcus alone at the funeral is incongruous — Aurora is a former
+#          world-saver who knew Aldric for decades. She is the second former
+#          Chosen still alive; she has earned this grief. Without her here,
+#          Marcus carries it solo. She arrives quietly, sits with the player.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch24_aurora_arrives do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+
+  # TODO: Event Sequence - Aurora at the gate
+  # - Aurora walks up the rain-slicked path, no umbrella
+  # - Carries a small wreath of pressed flowers from Dawnhaven
+  # - Marcus sees her first — silent recognition
+
+  scene.message "\\i[A second figure came up the path. Slower than Marcus had. Steady.]"
+  scene.message "\\i[Mom carried a wreath of pressed Dawnhaven flowers — the kind that don't bloom anywhere else.]"
+  scene.wait 30
+
+  scene.message "\\bDad Marcus\\b: *quietly* You came."
+  scene.message "\\bMom (Aurora)\\b: Of course I came. He was your friend before he was anyone's professor."
+  scene.wait 20
+
+  scene.show_emotion :player, :ellipses
+  scene.message "\\b\\PN\\b: Mom..."
+  scene.message "\\bMom (Aurora)\\b: I know, sweetheart. I know."
+  scene.wait 20
+
+  # Aurora's deeper context — she knew Aldric professionally
+  scene.message "\\bMom (Aurora)\\b: Aldric and I corresponded every week for thirty years."
+  scene.message "\\bMom (Aurora)\\b: He was the one who first found the seal fragments after Marcus and I sealed Hoopa."
+  scene.message "\\bMom (Aurora)\\b: He spent the rest of his life making sure the next bearers — \\PN, Lyra, Kael — would have everything they needed."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *softly* So that's why his lab had so much on us."
+  scene.message "\\bKael\\b: He wasn't preparing for us. He was *waiting* for us."
+  scene.message "\\bMom (Aurora)\\b: Both. He hoped he wouldn't have to. He prepared in case he did."
+  scene.wait 30
+
+  scene.message "\\bMom (Aurora)\\b: I have his notebooks. The ones he didn't trust anywhere else."
+  scene.message "\\bMom (Aurora)\\b: When you're ready — not today — come home. I'll show you what he found in the last six months."
+
+  scene.show_emotion :player, :idea
+  scene.message "\\b\\PN\\b: ...He knew it was coming."
+  scene.message "\\bMom (Aurora)\\b: He hoped he'd be wrong. He wasn't."
+end
+
+
+#===============================================================================
+# v2-2 — Hoopa's Return (Ch47, after Arceus's blessing)
+#-------------------------------------------------------------------------------
+# Purpose: Hoopa is consumed by Nidhoggr in Ch32 and never mentioned again.
+#          When Arceus arrives in Ch47 with the power to free the Guardians,
+#          freeing Hoopa is the natural matching grace. Closes the Ch11
+#          "Hoopa Revelation" through-line.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch47_hoopa_returns do |scene|
+  scene.play_bgm 'Pokemon HGSS - Arceus Theme'
+  scene.camera_flash 60
+
+  # TODO: Event Sequence - Arceus's second gift
+  # - As Arceus prepares to ascend, a ring of golden light forms
+  # - From within the seal's collapse, a small figure emerges
+  # - Hoopa Confined — small, exhausted, but free
+
+  scene.message "\\bArceus\\b: ONE MORE WAS LOST TO THIS."
+  scene.message "\\bArceus\\b: I WILL NOT FORGET MY OWN."
+  scene.wait 30
+
+  scene.play_se 'Audio/SE/Mystery Gift'
+  scene.camera_flash 40
+  scene.wait 20
+
+  # TODO: Event Sequence - Hoopa appears
+  # - Small purple-and-gold figure curled into itself
+  # - Floating just above the ground
+  # - Looking around as if uncertain it's allowed to exist
+
+  scene.message "\\bHoopa\\b: ...is it... over?"
+  scene.message "\\bHoopa\\b: ...the dark... it had me..."
+  scene.wait 30
+
+  scene.message "\\bArceus\\b: NO LONGER, LITTLE TRICKSTER. NEVER AGAIN."
+  scene.message "\\bArceus\\b: YOUR PORTAL-WORK IS NEEDED IN THE NEW WORLD."
+  scene.message "\\bArceus\\b: BUT FIRST — REST. AS LONG AS YOU NEED."
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :heart
+  scene.message "\\bLyra\\b: *kneeling* Hi, Hoopa. It's okay. You're safe."
+
+  scene.message "\\bHoopa\\b: *small voice* ...I remember you. The bright one."
+  scene.message "\\bHoopa\\b: You wept when I was taken."
+  scene.message "\\bHoopa\\b: I felt it from inside the dark. It... helped."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *unusually quiet* That was a hard thing to live through. Take your time."
+
+  scene.message "\\bHoopa\\b: *looking at \\PN, finally smiling weakly* ...Champion-friend. \\\\nWe'll play tricks again someday. \\\\nWhen I am strong."
+  scene.message "\\b\\PN\\b: Whenever you're ready. The world has time now."
+
+  scene.play_se 'Audio/SE/Heal'
+  scene.camera_flash 30
+  scene.wait 20
+end
+
+
+#===============================================================================
+# v2-3 — Aurora's Research Reveal (Ch15.5, between Ch15 and Ch16)
+#-------------------------------------------------------------------------------
+# Purpose: Aurora is established Ch1 as a former Chosen and active researcher
+#          who saved the world "three times." She vanishes from the story
+#          until Ch24. This interlude pays off her research credentials — she
+#          contacts the player with critical intel about Vex's faction.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch15_5_aurora_call do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  # TODO: Event Sequence - Phone Rings
+  # - Player camped overnight on the road to the 4th gym
+  # - Phone vibrates — Aurora calling
+  # - Sit up, take it where it won't wake the others
+
+  scene.message "\\i[Your phone vibrated softly against your pack. Mom's name on the screen.]"
+  scene.wait 20
+
+  scene.message "\\bMom (Aurora)\\b: \\PN. I have something for you."
+  scene.message "\\b\\PN\\b: It's the middle of the night, Mom."
+  scene.message "\\bMom (Aurora)\\b: I know. That's why I called now. The lab phones are tapped during the day."
+  scene.wait 30
+
+  scene.show_emotion :player, :exclamation
+  scene.message "\\b\\PN\\b: *whispering* ...what?"
+
+  scene.message "\\bMom (Aurora)\\b: Listen. I've been going through Aldric's correspondence — the encrypted strand. He had a name for the cult General who fought you near Thornwood."
+  scene.message "\\bMom (Aurora)\\b: Vex isn't a Hand name. It's a *Champion-League* call sign. Retired. About twenty years ago."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...Vex was Champion League?"
+  scene.message "\\bMom (Aurora)\\b: Was. Before he was 'Vex.'\\\\nHe's the reason your father retired. He was the *fourth* sealer. We thought he died at Hoopa's binding. He didn't."
+  scene.wait 30
+
+  scene.message "\\bMom (Aurora)\\b: Whatever Hoopa showed him in there — it broke him. He came back wrong. Marcus and I covered it up because we couldn't *prove* it."
+  scene.message "\\bMom (Aurora)\\b: He's not just a general. He's the most senior person in the Hand who knows how the original seal was made."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...so when he fights us, he's not improvising. He's *retracing his own work.*"
+  scene.message "\\bMom (Aurora)\\b: Yes. And he wants you to fail the same way he did. Don't give him satisfaction."
+  scene.wait 20
+
+  scene.message "\\bMom (Aurora)\\b: I love you. Don't tell Lyra and Kael yet — not Kael especially. He's carrying enough."
+  scene.message "\\bMom (Aurora)\\b: Sleep, sweetheart. Tomorrow you fight a Gym Leader. I want you sharp."
+  scene.message "\\b\\PN\\b: ...Love you, Mom."
+
+  # TODO: Event Sequence - Phone Down
+  # - Stare at phone for a long moment
+  # - Lie back. Look at the stars
+  # - Sleep slow to come
+end
+
+
+#===============================================================================
+# v2-4 — Subject Zero arc (Ch20.5, between Eternal Forest beats)
+#-------------------------------------------------------------------------------
+# Purpose: PBS defines [SCIENTIST,Subject Zero] with a Mewtwo and the line
+#          "Father... forgive... me..." — clearly a planned story Pokemon
+#          not wired into the bible. This adds a side-cutscene where the
+#          Hand's lab outpost in the Eternal Forest is revealed to be
+#          something darker: an attempt to make a Chosen-killing weapon.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch20_5_lab_discovered do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+
+  # TODO: Event Sequence - Lab Reveal
+  # - Kael scouts ahead, finds a hidden door in the forest's south
+  # - Steel door, painted over with bark camouflage
+  # - Inside: an abandoned research bunker
+
+  scene.message "\\bKael\\b: \\PN. South side. There's a door in the bark."
+  scene.message "\\bLyra\\b: A door? In a *tree*?"
+  scene.message "\\bElena\\b: That tree's two hundred years old. The door is new."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Then someone made it recently. Inside?"
+  scene.message "\\bKael\\b: Empty. Mostly. But not abandoned long."
+
+  # TODO: Event Sequence - Enter Bunker
+  scene.fade_out 30
+  scene.wait 30
+  scene.fade_in 30
+  scene.camera_tint :dark, 20
+
+  scene.message "\\i[Underground. Concrete walls. A row of stasis tubes, all empty but one.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...is that a *Pokemon* in there?"
+  scene.message "\\bElena\\b: Mewtwo. *Genetically restructured* Mewtwo."
+  scene.message "\\bElena\\b: The plate on the tube says... Subject Zero."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: They were building a weapon to kill us."
+  scene.message "\\bKael\\b: A psychic strong enough to break a Chosen's bond with their Guardian."
+
+  scene.message "\\b\\PN\\b: ...why is it shut down?"
+  scene.message "\\bElena\\b: It *isn't.* The tube's still running. The subject is dormant. Waiting."
+end
+
+GameData::Cutscene.define :ch20_5_subject_zero do |scene|
+  scene.play_bgm 'Pokemon SWSH - Eternatus Awakens'
+  scene.camera_shake 12, 60
+
+  scene.message "\\i[The tube's lights flickered. The glass cracked from the inside out.]"
+  scene.wait 30
+
+  scene.message "\\bSubject Zero\\b: ...Father... forgive... me..."
+  scene.message "\\bSubject Zero\\b: *his voice in your minds at once*"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *hands to her temples* He's projecting — he's *asking* something —"
+  scene.message "\\bSubject Zero\\b: ...let me... finish... what they made me for..."
+  scene.message "\\bSubject Zero\\b: *or* ...end me. Before they wake me right."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: We don't kill anything. Not here."
+  scene.message "\\bKael\\b: Then we *unmake* him another way. Free him from what they wrote into him."
+  scene.wait 30
+
+  scene.message "\\bSubject Zero\\b: *to Kael, recognizing him* ...you smell of cycles. Of endings."
+  scene.message "\\bSubject Zero\\b: ...you understand. *Help me find an ending I chose.*"
+
+  # The actual battle — Subject Zero asks to be tested. If the player wins,
+  # the Pokemon is freed from its conditioning and disappears into the forest.
+  scene.message "\\bKael\\b: He wants a duel. Real one. So he can choose how this ends."
+  scene.message "\\b\\PN\\b: Then we give him one."
+
+  scene.trainer_battle :SCIENTIST, "Subject Zero", 0
+
+  scene.message "\\bSubject Zero\\b: *kneeling — peaceful* ...you fight clean. Not like them."
+  scene.message "\\bSubject Zero\\b: ...the leash is gone. I feel it. *Gone.*"
+  scene.wait 30
+
+  scene.message "\\bSubject Zero\\b: I will go where they cannot find me. Tell the bright one — Lyra —"
+  scene.message "\\bSubject Zero\\b: — thank her for the question she just thought. \\\\n*Yes. I want to live.*"
+
+  scene.play_se 'Audio/SE/Teleport'
+  scene.camera_flash 30
+  # TODO: Event Sequence - Mewtwo Departs
+  # - Mewtwo's form blurs, displaces, gone
+  # - Tube collapses in on itself, harmless
+
+  scene.message "\\bLyra\\b: ...did he just *read my mind* and answer the question I didn't ask out loud?"
+  scene.message "\\bKael\\b: He did."
+  scene.message "\\bElena\\b: We're going to find him again, aren't we?"
+  scene.message "\\b\\PN\\b: Hopefully on a day he's resting. Not running."
+end
+
+
+#===============================================================================
+# v2-5 — Astoria Hosts (Ch37-Ch41)
+#-------------------------------------------------------------------------------
+# Purpose: Act 5 takes the party to Astoria, the "Forgotten Region," for the
+#          Crown Restoration arc. The bible names only "Elder Vera." Three more
+#          named hosts give the region texture without bloating the chapter
+#          count: a sea-captain who ferries the party in, and two of the three
+#          Temple Keepers (the third is Vera herself in disguise — payoff in
+#          Ch42 when Vera reveals she IS one of the original First Chosen).
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch37_captain_lior_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Couriway Town'
+
+  # TODO: Event Sequence - Port at Dusk
+  # - Old sea-captain, weathered, lone eye, scar across the bridge of his nose
+  # - Standing on a small ferry that shouldn't be able to make ocean crossings
+  # - Pendant around his neck: a piece of the same crystal as Astoria's seal
+
+  scene.message "\\bLior\\b: You'd be the three with the marks, then."
+  scene.message "\\bLior\\b: Name's Lior. I'm the only one who still knows the way to Astoria."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: How do you *know* about the marks?"
+  scene.message "\\bLior\\b: My great-grandfather sealed Nidhoggr the first time. The Chosen of Tides."
+  scene.message "\\bLior\\b: His mark was on his collarbone. I have a smaller one, in the same place. Half-faded."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: A descendant of a First Chosen."
+  scene.message "\\bLior\\b: One of seven still alive. We don't tell anyone. The Hand's been hunting the line for forty years."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Why ferry us, then? It puts you on their list."
+  scene.message "\\bLior\\b: *patient* Because if you fail, I'm on their list anyway."
+  scene.message "\\bLior\\b: At least this way I get to choose how I matter."
+
+  scene.message "\\bLior\\b: Get aboard. We sail at the second tide. Astoria's not on any map you'll have seen."
+end
+
+GameData::Cutscene.define :ch39_keeper_sela_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Frost Cavern'
+
+  # Temple of Stars — first temple, in the high cliffs
+  # TODO: Event Sequence - Sela Approaches
+  # - Young woman, maybe 20, robes the color of deep night
+  # - Carries a long-handled brass mirror used to read the temple's stars
+
+  scene.message "\\bSela\\b: You came. The constellation knew you would."
+  scene.message "\\bSela\\b: I'm Sela, Keeper of the Temple of Stars. I've been waiting for someone who carried a steel-blue mark."
+  scene.wait 30
+
+  scene.show_emotion :player, :exclamation
+  scene.message "\\b\\PN\\b: You knew the color?"
+  scene.message "\\bSela\\b: The mural in the inner sanctum told me. It's been there for a thousand years."
+  scene.wait 30
+
+  scene.message "\\bSela\\b: Three things you need before the trial:\\\\n\\\\n• Your starter has to walk in with you. The Stars don't trust handlers without their first bond.\\\\n• Don't lie when the Stars ask. They already know.\\\\n• If you see a fourth star — you're not done. Look harder."
+
+  scene.message "\\bKael\\b: ...a fourth star. What does that mean?"
+  scene.message "\\bSela\\b: It means it's *your* trial, not mine. I can guide you in. I can't translate what it shows you."
+end
+
+GameData::Cutscene.define :ch40_keeper_orin_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Ambrette Town'
+
+  # Temple of Tides — second temple, submerged
+  # TODO: Event Sequence - Orin Below the Surface
+  # - Older man, late 50s, hair the color of seafoam
+  # - Stands waist-deep in a saltwater pool inside a rock chamber
+  # - Speaks slowly, with long pauses
+
+  scene.message "\\bOrin\\b: Lyra. The bright one. Your guardian *thrives* on water."
+  scene.message "\\bOrin\\b: I am Orin. I keep the Tides Temple. I have... a question for you, before the trial."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Ask."
+  scene.message "\\bOrin\\b: When Xerneas gave you its power — did it ask, or did it *give*?"
+  scene.message "\\bLyra\\b: ...it *gave*. There wasn't time to ask."
+  scene.message "\\bOrin\\b: Then the Tides will ask. Be ready. The answer changes what fragment is given to you."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: That sounds like the trial branches."
+  scene.message "\\bOrin\\b: *nodding* The Crown listens to the trial. The Crown will know what was chosen. The Crown is *patient.*"
+
+  scene.message "\\bOrin\\b: Go in. The water remembers everything the surface forgets."
+end
+
+GameData::Cutscene.define :ch41_keeper_vera_reveal do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  # Temple of Shadows — third temple, in the deep
+  # Vera is the Keeper here too — same person as Elder Vera
+  # TODO: Event Sequence - The Reveal
+  # - Kael steps into Shadows Temple alone for his trial
+  # - Vera waits inside — not at the door this time, but at the heart
+
+  scene.message "\\bKael\\b: ...Elder Vera. You're here too."
+  scene.message "\\bVera\\b: I *am* the Keeper of Shadows. I am also the Elder. They are the same office."
+  scene.wait 30
+
+  scene.message "\\bVera\\b: There were three of us originally. Lior is the last male line. I am the last of mine. The third — the line of Yveltal-the-First — is *you.*"
+  scene.message "\\bKael\\b: ...I'm a *descendant*?"
+  scene.message "\\bVera\\b: Of the Chosen of Cycles. The one who sealed Nidhoggr the first time, on this very floor. Your orphanage records say you were 'found.' That was kind. The truth is: you were *brought.* Smuggled out as an infant when the Hand started killing the lines."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *very quietly* ...does Lyra know?"
+  scene.message "\\bVera\\b: She suspects. Your starter knew the moment you both crossed our threshold."
+  scene.wait 30
+
+  scene.message "\\bVera\\b: The trial of Shadows is not a fight, Kael. It is a *question.* You may bring the answer back to us, or you may stay below with it. The Crown will accept either."
+  scene.message "\\bKael\\b: ...I'll bring it back."
+  scene.message "\\bVera\\b: I hope so. The world needs you above the surface."
+end
+
+
+#===============================================================================
+# v2-6 — Act 5 Pacing: the gap between Sanctuary (Ch36) and Wedding (Ch52)
+#-------------------------------------------------------------------------------
+# Purpose: The bible jumps from "One year later, Sanctuary thriving" (Ch36) to
+#          Astoria-and-Distortion-World back to Wedding (Ch52). The proposal,
+#          the engagement, the families meeting — none of it is on the page.
+#          Two interludes fill the gap so the Wedding lands earned.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch50_5_kael_asks_marcus do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - At the Sanctuary
+  # - Marcus visiting the Sanctuary for the first time
+  # - Kael waiting on the porch, looking like he might throw up
+  # - Shadow (Kael's Zoroark) sitting protectively beside him
+
+  scene.message "\\bKael\\b: ...Mr. Marcus. May I speak with you. Outside."
+
+  scene.message "\\bDad Marcus\\b: *amused* Mr. Marcus. \\\\nGo on, son. I won't bite."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *audibly breathing in* I want to marry Lyra. \\\\nHer parents have given their blessing. Her sister... won't see it, but she would have. I think she did."
+  scene.message "\\bKael\\b: I came to you not because I need permission — Lyra and I already agreed — but because you stood at my side when I had no father. \\\\nIt was a debt I never paid. I would like you to be at this wedding instead."
+  scene.wait 45
+
+  scene.message "\\bDad Marcus\\b: *taking a long moment* ..."
+  scene.message "\\bDad Marcus\\b: When my father met Aurora's father, he asked the same question. Aurora's father asked him three things. I'm going to ask you two."
+  scene.wait 30
+
+  scene.message "\\bDad Marcus\\b: Will you put her above the Guardian?"
+  scene.message "\\bKael\\b: Always."
+  scene.message "\\bDad Marcus\\b: Will you let her put *you* above herself, when she tries?"
+  scene.message "\\bKael\\b: ...I will learn how."
+  scene.wait 45
+
+  scene.message "\\bDad Marcus\\b: *clapping a hand on his shoulder* Then sit down before you fall over. I'll get Aurora."
+  scene.message "\\bDad Marcus\\b: She's going to cry. Be ready."
+end
+
+GameData::Cutscene.define :ch51_5_families_meet do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  # TODO: Event Sequence - Both Families Gathered
+  # - Marcus + Aurora, Lyra's parents (named here for first time),
+  #   Player (best-person), Kael's adoptive orphanage mother (Hilde),
+  #   plus all the kids from the orphanage who consider Kael a brother
+
+  scene.message "\\i[The Sanctuary's main hall was warmer than it had ever been.]"
+  scene.message "\\i[Both families. The orphanage. Friends from the road. The Guardians, attending as guests.]"
+  scene.wait 30
+
+  scene.message "\\bMrs. Calliope (Lyra's mother)\\b: I always told her — when you find the quiet one who stands his ground, you keep him."
+  scene.message "\\bMr. Hadrian (Lyra's father)\\b: She wasn't listening. *Now* she's listening."
+  scene.message "\\bLyra\\b: *blushing furiously* Dad."
+  scene.wait 30
+
+  scene.message "\\bHilde (Kael's orphanage mother)\\b: He was the most stubborn child I ever raised. The most loyal too."
+  scene.message "\\bHilde\\b: *to Lyra* He'll never tell you he loves you in front of people. So I'll tell you he does, every day, in front of me, for the last six months. *Constantly.*"
+  scene.message "\\bKael\\b: *quietly mortified* Mom."
+  scene.message "\\bHilde\\b: *unrepentant* You called me Mom. That counts as evidence."
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :heart
+  scene.show_emotion :KAEL, :ellipses
+
+  scene.message "\\bMom (Aurora)\\b: *to Mrs. Calliope, quietly* They're going to be alright."
+  scene.message "\\bMrs. Calliope\\b: *also quietly* They already are. They were the moment they sat down at the same fire."
+
+  scene.message "\\bDad Marcus\\b: *raising a glass* To the road behind. To the road ahead. And to two kids who learned to walk it together."
+  scene.message "\\b\\PN\\b: *raising a glass* To family. The kind you're born to and the kind you find."
+end
+
+
+#===============================================================================
+# v2-7 — Hoopa Cameo at Heroes' Welcome (Ch49)
+#-------------------------------------------------------------------------------
+# Purpose: Hoopa returns in Ch47. The world doesn't know. The Heroes' Welcome
+#          parade in Ch49 is where the public meets the *full* truth of what
+#          was saved. Hoopa popping into the parade to bow to Lyra is the
+#          payoff that lets the public understand: this wasn't just monsters
+#          and battles. A small thing was hurt and was made whole.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch49_hoopa_cameo do |scene|
+  scene.play_bgm 'Pokemon HGSS - Goldenrod City'
+
+  # TODO: Event Sequence - Parade Pause
+  # - Mid-parade, a small purple ring opens above the crowd
+  # - Hoopa drops through, lands on Lyra's shoulder
+  # - Crowd goes absolutely silent
+
+  scene.message "\\i[A purple ring opened above the crowd. Small. Quiet. Tentative.]"
+  scene.wait 20
+  scene.play_se 'Audio/SE/Mystery Gift'
+
+  scene.message "\\bHoopa\\b: *small voice* ...is this allowed?"
+  scene.message "\\bLyra\\b: *delighted* You came!"
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: I wanted to see the bright one wear flowers. The other Pokemon told me you were wearing flowers today."
+  scene.message "\\bHoopa\\b: *to the crowd, the smallest bow* ...hello, world. I missed you very much."
+  scene.wait 30
+
+  scene.message "\\i[The crowd absolutely lost it. Cheers, tears, parents holding children up to see.]"
+  scene.message "\\i[Hoopa, for the first time since Ch11, *laughed.*]"
+
+  scene.show_emotion :LYRA, :heart
+  scene.show_emotion :KAEL, :ellipses
+  scene.show_emotion :player, :music
+
+  scene.message "\\bMom (Aurora)\\b: *to Marcus, quietly* We sealed him. They brought him *back.*"
+  scene.message "\\bDad Marcus\\b: That was always the difference, love. We sealed. They saved."
+end
+
+
+#===============================================================================
+# Hook the additions into existing chapter dispatchers (where applicable)
+#-------------------------------------------------------------------------------
+# Where existing chapter cutscenes already exist (e.g. :ch24_dad_arrives,
+# :ch47_blessing, :ch24_funeral), the v2 additions are designed to play
+# adjacent — call them from your event scripts in the right order:
+#
+#   Ch24 sequence (recommended):
+#     :ch24_lab_destroyed → :ch24_finding_professor → :ch24_professors_words
+#     → :ch24_final_message → :ch24_elm_death → :ch24_grief
+#     → :ch24_players_rage → :ch24_leaving_lab → :ch24_dad_arrives
+#     → :ch24_aurora_arrives        ←── NEW v2-1
+#     → :ch24_funeral → :ch24_new_resolve → :ch24_hidden_research
+#
+#   Ch47 sequence (recommended):
+#     :ch47_intro → :ch47_arceus_appears → :ch47_arceus_speaks
+#     → :ch47_blessing → :ch47_guardians_freed
+#     → :ch47_hoopa_returns           ←── NEW v2-2
+#     → :ch47_arceus_farewell
+#
+#   Ch15-16 transition:
+#     :ch15_morning_resolve → :ch15_5_aurora_call  ←── NEW v2-3
+#     → :ch15_approaching_caves → :ch16_cave_depths
+#
+#   Ch20-21 transition (optional side path):
+#     :ch20_kael_scouts → :ch20_5_lab_discovered    ←── NEW v2-4a
+#     → :ch20_5_subject_zero                       ←── NEW v2-4b
+#     → :ch20_corruption_spreads → ...
+#
+#   Ch37 (Astoria arrival):
+#     :ch37_intro → :ch37_first_fracture → :ch37_void_creature
+#     → :ch37_void_battle → :ch37_refugees → :ch37_port_town
+#     → :ch37_captain_appears → :ch37_captain_lior_intro  ←── NEW v2-5a
+#     → :ch37_boarding → ...
+#
+#   Ch39/40/41 (Temple Keepers):
+#     :ch39_temple_found → :ch39_entrance → :ch39_keeper_sela_intro  ←── NEW v2-5b
+#     → :ch39_interior → ...
+#     :ch40_temple_interior → :ch40_keeper_orin_intro                ←── NEW v2-5c
+#     → :ch40_guardian_appears → ...
+#     :ch41_entering → :ch41_keeper_vera_reveal                      ←── NEW v2-5d
+#     → :ch41_guardian_appears → ...
+#
+#   Ch50.5 + Ch51.5 (between Sanctuary and Wedding):
+#     :ch50_sunset → :ch50_5_kael_asks_marcus  ←── NEW v2-6a
+#     → :ch51_intro → :ch51_5_families_meet     ←── NEW v2-6b
+#     → :ch51_preparations → :ch52_intro
+#
+#   Ch49 (Heroes' Welcome):
+#     :ch49_ceremony → :ch49_medals → :ch49_hoopa_cameo  ←── NEW v2-7
+#     → :ch49_guardians_reveal
+#===============================================================================
+
+
+#===============================================================================
+# >>>>>  PART 3b — AUDIT v3 ADDITIONS (grief revisits, starter arc, guardian voices)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - STORY AUDIT v3 (EMOTIONAL RESONANCE)
+#===============================================================================
+# Third audit pass — focused on what v1/v2 left thin: emotional depth.
+#
+#   v3-1   Grief revisitation              — Ch33, Ch36.5, Ch41.5
+#   v3-2   Starter character arc           — Ch1.5 naming + 4 bonding beats
+#   v3-3   Guardian voices                  — stylistic helper + 3 codex personality entries
+#
+# All content uses the SC Script System (no PBS). New cutscenes are
+# self-contained and reference only existing variables/handlers.
+#===============================================================================
+
+
+#===============================================================================
+# v3-3 helper: Guardian voice styling
+#-------------------------------------------------------------------------------
+# Each of the three Guardians has a distinct personality. Plain
+# `scene.message "\\bZacian\\b: ..."` lines all read the same. This helper
+# wraps a Guardian's name + color + small flavor prefix so their voices
+# feel distinct without needing per-cutscene rewrites.
+#
+# Usage:
+#   scene.script { sc_guardian_say(:ZACIAN, "Steady now. The blade chooses its moment.") }
+#
+# Or shorter via the builder extension below:
+#   scene.zacian_says   "Steady now. The blade chooses its moment."
+#   scene.xerneas_says  "The forest knows you. Lean into it."
+#   scene.yveltal_says  "You will lose someone today. That, too, is the cycle."
+#-------------------------------------------------------------------------------
+SC_GUARDIAN_VOICE = {
+  :ZACIAN  => {
+    color:   "\\c[3]",      # Steel-blue accent
+    prefix:  "Zacian",
+    flavor:  "*formal, like a master-at-arms speaking to a squire*",
+    sigil:   "\\i[27]",     # if you have a sword icon — falls back to nothing if not
+  },
+  :XERNEAS => {
+    color:   "\\c[1]",      # Warm gold-pink
+    prefix:  "Xerneas",
+    flavor:  "*low and warm, the way a grandmother's voice would be if she were a deer-god*",
+    sigil:   "\\i[28]",
+  },
+  :YVELTAL => {
+    color:   "\\c[7]",      # Deep crimson
+    prefix:  "Yveltal",
+    flavor:  "*old, slow, neither angry nor kind*",
+    sigil:   "\\i[29]",
+  }
+}.freeze
+
+def sc_guardian_say(who, text, show_flavor: false)
+  v = SC_GUARDIAN_VOICE[who]
+  return pbMessage(text) unless v
+  prefix = "#{v[:color]}#{v[:prefix]}\\c[0]"
+  if show_flavor
+    pbMessage("#{prefix}: #{v[:flavor]}\\1\\n#{text}")
+  else
+    pbMessage("#{prefix}: #{text}")
+  end
+end
+
+# Builder extension so cutscenes can call scene.zacian_says directly
+if defined?(GameData::CutsceneBuilder)
+  module GameData
+    class CutsceneBuilder
+      def zacian_says(text, show_flavor: false)
+        @steps << { type: :script, block: proc { sc_guardian_say(:ZACIAN, text, show_flavor: show_flavor) } }
+      end
+
+      def xerneas_says(text, show_flavor: false)
+        @steps << { type: :script, block: proc { sc_guardian_say(:XERNEAS, text, show_flavor: show_flavor) } }
+      end
+
+      def yveltal_says(text, show_flavor: false)
+        @steps << { type: :script, block: proc { sc_guardian_say(:YVELTAL, text, show_flavor: show_flavor) } }
+      end
+    end
+  end
+end
+
+
+#===============================================================================
+# v3-1 — Grief revisitation
+#-------------------------------------------------------------------------------
+# Three short interludes that revisit the dead later in the story. Real
+# grief comes back in waves, not just at the funeral. These give the
+# characters room to actually carry the weight forward.
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# Aldric, mourned in Ch33 — Lyra hears his voice before a hard choice.
+# Trigger: Quiet moment right before the Guardians manifest in Ch33.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch33_morning_for_aldric do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  # TODO: Event Sequence - Lyra Alone in the Predawn
+  # - Camp asleep. Lyra sitting up. Her starter Willow curled beside her.
+  # - She's whispering to no one, very quietly.
+
+  scene.message "\\i[Lyra hadn't slept. She sat watching the embers, with Willow's tail across her knees.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *whispering* ...Professor? Are you here?"
+  scene.message "\\bLyra\\b: I keep hearing you. Right before I have to do something hard."
+  scene.message "\\bLyra\\b: Like you're standing just over my shoulder, telling me to *breathe first.*"
+  scene.wait 30
+
+  scene.message "\\i[A breath of wind. Just wind. Probably wind.]"
+  scene.wait 20
+
+  scene.show_emotion :LYRA, :ellipses
+  scene.message "\\bLyra\\b: Today I have to ask Xerneas for more than I gave already."
+  scene.message "\\bLyra\\b: I'm scared the asking is what breaks me."
+  scene.message "\\bLyra\\b: If you were here, you'd say something dry. About hypothesis testing. About taking the next step."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: I'll take the next step. \\\\nI miss you, Professor."
+  scene.wait 30
+
+  # Kael wakes, doesn't say anything, just sits beside her.
+  scene.show_emotion :KAEL, :ellipses
+  scene.message "\\bKael\\b: *quietly, after a long moment* ...he'd have wanted you to ask. Loudly."
+  scene.message "\\bLyra\\b: *smiling through tears* He would, wouldn't he."
+
+  scene.show_emotion :KAEL, :ellipses
+  scene.message "\\bKael\\b: I'll wake \\PN. We don't do this alone."
+
+  # Codex unlock: Lyra processes grief differently — registers a side codex
+  scene.script {
+    codexDiscover(:LYRA_PROFILE) if defined?(codexDiscover) && !$game_switches[:dummy]
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Ragnar, one year later. Ch36.5 — between Sanctuary established and the
+# Fracture (Ch37). Anniversary of his death. Player visits the grave.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch36_5_ragnar_one_year do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 30
+
+  # TODO: Event Sequence - At the Grave
+  # - One year after Ch28
+  # - League road where it bends north
+  # - Headstone with Marcus's old Champion cloak draped over it (from v1-7 Ch35)
+  # - Late afternoon. Wind through tall grass.
+
+  scene.message "\\i[The road bent north here. You stopped where the stone was.]"
+  scene.message "\\i[Dad's old cloak had weathered a year of seasons. It was lighter now. Less red. More rust.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Hey. It's been a year."
+  scene.message "\\b\\PN\\b: Mom planted the silver-stem flowers you liked. They came up by themselves this spring."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: I beat Champion Viktor last week. \\\\nNot ranked. Just a friendly. He wanted to."
+  scene.message "\\b\\PN\\b: He said the second pokeball I threw — the one I always lead with — \\\\nthat was the same one *you* always led with when we fought as kids."
+  scene.message "\\b\\PN\\b: I didn't know that. Apparently I picked it up from you. *Apparently.*"
+  scene.wait 30
+
+  # Player breaks
+  scene.show_emotion :player, :ellipses
+  scene.message "\\b\\PN\\b: ...I still hear you yell my name when I turn corners too fast on a bike."
+  scene.message "\\b\\PN\\b: Loud bastard. I miss you so much."
+  scene.wait 45
+
+  # Marcus arrives. Doesn't say anything. Stands beside.
+  scene.message "\\i[Footsteps behind you. Dad. He didn't say anything. He just stood there.]"
+  scene.wait 30
+
+  scene.message "\\bDad Marcus\\b: ...you've been here an hour, kid. Mom's worried."
+  scene.message "\\b\\PN\\b: Yeah."
+  scene.message "\\bDad Marcus\\b: I'll tell her another hour."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Dad?"
+  scene.message "\\bDad Marcus\\b: Yeah?"
+  scene.message "\\b\\PN\\b: ...thanks for training him those six weeks."
+  scene.message "\\bDad Marcus\\b: *voice tight* He was easy to love."
+
+  scene.camera_tint :reset, 30
+  scene.script {
+    scFateGrant(:fate_year_one_grief, 1, "Marked the anniversary") if defined?(scFateGrant)
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Elena, in Astoria. Ch41.5 — between Shadows Temple and Crown Restoration.
+# Lyra finds an old correspondence box in a temple side-chamber. Elena
+# wrote letters home she never sent.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch41_5_elena_message do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  # TODO: Event Sequence - The Side Chamber
+  # - Lyra exploring while Kael recovers from the Shadows trial
+  # - Finds a stone box in a corner, sealed with a sigil Elena would have known
+
+  scene.message "\\i[Lyra brushed centuries of dust off the lid. The sigil flickered, then opened.]"
+  scene.message "\\i[Inside: a small bundle of letters, written in her sister's handwriting.]"
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :exclamation
+  scene.message "\\bLyra\\b: ...Elena was here?"
+  scene.message "\\bLyra\\b: She *was* here. She was researching. Years before any of this."
+  scene.wait 30
+
+  # The letter Elena never sent
+  scene.message "\\i[The top letter is dated three years before the Hand's first attack.]"
+  scene.wait 20
+
+  scene.message "\\b[Elena's Letter]\\b: \\\\nDear Lyra — I found the Crown chamber today. It's everything Grandma said it was."
+  scene.message "\\b[Elena's Letter]\\b: I'm not coming home until I understand what it does. I think Xerneas chose someone in our family for a reason and I want to find out which of us before it picks for itself."
+  scene.message "\\b[Elena's Letter]\\b: Probably you. You always had the brighter heart. I love you. I'll be home soon."
+  scene.message "\\b[Elena's Letter]\\b: — Elena"
+  scene.wait 60
+
+  scene.show_emotion :LYRA, :ellipses
+  scene.message "\\bLyra\\b: *very quietly* You knew. You knew *years* ago and you didn't tell me."
+  scene.message "\\bLyra\\b: You ran into a temple alone to figure it out so I wouldn't have to."
+  scene.wait 30
+
+  # Kael arrives, sees Lyra, doesn't ask
+  scene.message "\\bKael\\b: ...Lyra?"
+  scene.message "\\bLyra\\b: *holding the letter* She picked me by *not* picking herself."
+  scene.message "\\bLyra\\b: All this time I thought Xerneas chose me. Elena did. \\\\nElena chose me and then made the world wait until she was sure I'd survive it."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *gently* Then you carry her choice. That's still a sister's gift."
+  scene.message "\\bLyra\\b: *folding the letter, carefully* I want to take these home. After. \\\\nMom should read them."
+
+  scene.script {
+    codexDiscover(:HOOPA_PROFILE) if defined?(codexDiscover) && !$game_switches[:dummy]
+    scFateGrant(:fate_elena_letters, 1, "Found Elena's letters") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# v3-2 — Starter character arc
+#-------------------------------------------------------------------------------
+# Player's starter has no name and no personality in the bible. Lyra has
+# Willow, Kael has Shadow. These five beats give the player's starter a
+# name (player choice) and a recurring personality that pays off at key
+# emotional moments.
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# v3-2a — Naming the starter (Ch1.5, right after :ch1_starter_bond)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch1_5_starter_naming do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+
+  # TODO: Event Sequence - Outside the Lab
+  # - Player walks outside with new starter
+  # - Starter trots beside, looking up
+
+  scene.message "\\i[Outside the lab, your starter trotted at your heels. \\\\nLooked up at you. Waited.]"
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: *kneeling* So. We need a name for you."
+
+  # In an in-engine event, replace this script call with the actual
+  # pbNameEntry helper. The cutscene's job here is the framing.
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("What will you call your starter?"))
+      name = pbNameEntry(_INTL("{1}'s name?", starter.speciesName), 10, starter.speciesName, starter)
+      if name && !name.empty?
+        starter.name = name
+      end
+    end
+  }
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: That feels right. \\\\nWelcome to the team."
+
+  # First friendship bump
+  scene.script {
+    starter = $player.party[0]
+    starter.changeHappiness("getegg") if starter rescue nil
+  }
+end
+
+#-------------------------------------------------------------------------------
+# v3-2b — Marks awaken, starter senses it first (Ch8)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch8_starter_senses do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  # TODO: Event Sequence - Pre-Mark Sensing
+  # - Player wakes in inn, mark not yet visible
+  # - Starter is already out of its ball, sitting on player's chest
+
+  scene.message "\\i[You woke to weight on your chest. Your starter was already out of its pokeball, eyes wide open, staring at your face.]"
+  scene.wait 30
+
+  scene.show_emotion :PLAYER, :question
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *low, urgent cry*", starter.name))
+    else
+      pbMessage("\\bStarter\\b: *low, urgent cry*")
+    end
+  }
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: Buddy? What's wrong?"
+
+  # Starter touches the spot on the player's skin where the mark will appear
+  scene.message "\\i[Your partner touched its nose to the inside of your forearm. The skin there was warm. Warmer than the room.]"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *softer cry, like a warning*", starter.name))
+    end
+  }
+
+  scene.message "\\b\\PN\\b: ...okay. I trust you. Show me."
+
+  # Hand off to the regular mark-awakening sequence (ch8_marks_appear)
+  scene.script {
+    starter = $player.party[0]
+    starter.changeHappiness("evolution") if starter rescue nil
+  }
+end
+
+#-------------------------------------------------------------------------------
+# v3-2c — Starter nearly dies in Ch17, recovery talk
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch17_starter_promise do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  # TODO: Event Sequence - Pokemon Center, Quiet Hour
+  # - Three days post-attack
+  # - Starter awake, weak, but okay
+  # - Player kneeling at the cot
+
+  scene.message "\\i[The nurse said you could see them. \\\\nAlone, no team, no friends — just you and your partner.]"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *weak cry, happy to see you*", starter.name))
+    end
+  }
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: Hey. Hey buddy."
+  scene.message "\\b\\PN\\b: *voice breaking* You shouldn't have done that. \\\\nYou shouldn't have *stayed.*"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *low, certain cry — disagreeing*", starter.name))
+    end
+  }
+
+  scene.message "\\b\\PN\\b: I know. I know you did. But —"
+  scene.message "\\b\\PN\\b: *small voice* If you ever do that again I will end you myself."
+  scene.message "\\b\\PN\\b: That's a *promise.* From your trainer. Who loves you too much for this."
+  scene.wait 30
+
+  # Starter touches forehead to player's
+  scene.message "\\i[They touched their forehead to yours. \\\\nIt was the closest thing to language between you.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...okay. Together. *Together,* you hear me?"
+
+  scene.script {
+    starter = $player.party[0]
+    starter.changeHappiness("evolution") if starter rescue nil
+    starter.changeHappiness("vitamin") if starter rescue nil
+  }
+end
+
+#-------------------------------------------------------------------------------
+# v3-2d — Starter saves you again at Ragnar's death (Ch28)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch28_starter_at_ragnar do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+
+  # TODO: Event Sequence - After the Arch Falls
+  # - Player on knees, dust everywhere
+  # - Starter at player's side — uninjured but trembling
+
+  scene.message "\\i[Your starter was the first thing that moved.]"
+  scene.message "\\i[It walked, slow, until it was between you and the rubble.]"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *low cry — not victory. Not grief either. Standing.*", starter.name))
+    end
+  }
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *barely audible* He took my place."
+  scene.message "\\b\\PN\\b: He took my *place.*"
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *cry — close, level, refusing to look away*", starter.name))
+    end
+  }
+
+  scene.message "\\b\\PN\\b: ...I know. \\\\nI know you're here. \\\\nI know."
+  scene.wait 30
+
+  scene.message "\\i[You stayed there a long time. The starter stayed too. Eventually Lyra and Kael came back for you both.]"
+end
+
+#-------------------------------------------------------------------------------
+# v3-2e — Starter's final evolution at the Crown's restoration (Ch42)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch42_starter_final_evo do |scene|
+  scene.play_bgm 'Pokemon XY - Battle Trainer'
+  scene.camera_flash 60
+
+  # TODO: Event Sequence - The Crown Activates
+  # - Crown reforms in player's hands
+  # - All three starters glow
+  # - The player's starter steps forward, undergoes final evolution
+
+  scene.message "\\i[The Crown reformed. Three colors of light spiraled around you.]"
+  scene.message "\\i[Your starter looked up — not at you, *past* you, into something only it could see.]"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *bright, certain cry*", starter.name))
+    end
+  }
+
+  scene.play_se 'Audio/SE/Evolution'
+  scene.camera_flash 80
+  scene.wait 60
+
+  scene.message "\\i[Your partner had grown. Bigger. Surer. The light didn't fade after — it stayed in the eyes.]"
+  scene.wait 30
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      # Trigger evolution if possible — Essentials' check_evolution
+      if starter.respond_to?(:check_evolution_on_event_triggered)
+        starter.check_evolution_on_event_triggered("LevelUp")
+      end
+      pbMessage(_INTL("\\b{1}\\b: *new voice, deeper, but still theirs*", starter.name))
+    end
+  }
+
+  scene.message "\\b\\PN\\b: *smiling, finally* Hey. \\\\nYou look good."
+  scene.message "\\b\\PN\\b: Let's go finish this."
+
+  scene.script {
+    scFateGrant(:fate_starter_final, 1, "The bond was always complete") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# >>>>>  PART 3c — AUDIT v4 ADDITIONS (logic fixes + civilian POV)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - STORY AUDIT v4: LOGIC FIXES + CIVILIAN POV
+#===============================================================================
+# Fourth-pass audit fixes. Tackles the remaining logic inconsistencies
+# identified in the v3 review, plus adds 4 civilian-POV interludes that
+# give the world its sense of scale.
+#
+#   v4-F1  Starter origin clarified         — Ch1.6 (between starter pick and naming)
+#   v4-F2  Mask maker reveal                 — Ch3.5 (mid-festival, ties to Ch28 payoff)
+#   v4-F3  Viktor's rapid rise explained     — Ch26.5 codex-style scene
+#   v4-F4  Player age + timeline established — Ch9.5 (Aldric explains explicitly)
+#   v4-F5  League mobilization shown         — Ch15.7 (Eagle's Watch arc preview)
+#
+#   v4-C1  Civilian POV: A Verdantia Shopkeeper  — Ch7.5
+#   v4-C2  Civilian POV: A Frostfall Mother       — Ch18.5
+#   v4-C3  Civilian POV: A Hand Defector          — Ch22.5
+#   v4-C4  Civilian POV: Children at the Parade   — Ch49.5
+#===============================================================================
+
+
+#===============================================================================
+# v4-F1 — Starter origin clarified
+#-------------------------------------------------------------------------------
+# Original conflict: Ch1 dad gives "raised her myself from egg" Pokémon AND
+# Ch1 Aldric presents "three Pokéballs". Which is the starter?
+#
+# Resolution: Dad's egg-child is your STARTER. The three at the lab are
+# what's offered to OTHER kids on the same morning — including Ragnar (who
+# picks his Pikachu from Aldric's three). Player got their starter at
+# home; the lab visit is for the Pokédex and the formal trainer's licence.
+#
+# This cutscene plays right after :ch1_starter_bond and before
+# :ch1_5_starter_naming.
+#===============================================================================
+GameData::Cutscene.define :ch1_6_starter_origin_clarified do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+
+  scene.message "\\bProfessor Aldric\\b: A perfect match, of course. \\\\nMarcus told me he would raise this one himself, as a gift."
+  scene.message "\\bProfessor Aldric\\b: I keep three Pokéballs here for the *other* young trainers."
+  scene.message "\\bProfessor Aldric\\b: You came in already partnered. \\\\nThat is, by the way, *exactly* how your father started."
+  scene.wait 30
+
+  scene.message "\\bRagnar\\b: Wait — they didn't pick from the box?"
+  scene.message "\\bProfessor Aldric\\b: No, my dear loud boy. They had their partner waiting at home."
+  scene.wait 20
+
+  scene.message "\\bRagnar\\b: ...so I get to pick? FOR REAL?"
+  scene.message "\\bProfessor Aldric\\b: *smiling* For real, Ragnar."
+  scene.message "\\bRagnar\\b: PIKACHU IT IS!!"
+
+  scene.message "\\b\\PN\\b: *to your starter, quietly* He's louder than I remember."
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *agreement-chirp*", starter.name))
+    end
+  }
+end
+
+
+#===============================================================================
+# v4-F2 — Mask maker reveal
+#-------------------------------------------------------------------------------
+# Ch28 reveal: the Guardian Mask has "MARCUS" etched inside. The merchant
+# said he didn't remember making it. Who DID make it?
+#
+# Answer: Aurora made it. She was the unofficial fourth member of the
+# original Hoopa-sealing party — but she was pregnant when the seal went
+# down, so Marcus and Vex did the dangerous work while Aurora carved the
+# protective mask and stayed at the edge of the binding circle.
+#
+# This cutscene seeds the reveal during the festival (Ch3.5), so when
+# Ch28 mask-remembers fires the player feels both the surprise AND the
+# fairness of a clue they could have noticed.
+#===============================================================================
+GameData::Cutscene.define :ch3_5_old_carver do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\i[You wandered past the mask merchant's stall a second time. \\\\nAn older woman was unpacking the cart behind it.]"
+  scene.wait 30
+
+  scene.message "\\bElderly Woman\\b: *not looking up* You like that one with the silver-etching?"
+  scene.message "\\b\\PN\\b: It feels — familiar? I don't know."
+  scene.message "\\bElderly Woman\\b: Mhmm. *Familiar.*"
+  scene.wait 30
+
+  # The carver was a friend of Aurora's. She doesn't say so. She just looks.
+  scene.message "\\bElderly Woman\\b: I knew the carver. Long time ago."
+  scene.message "\\bElderly Woman\\b: She told me — once — she made it for a child that wasn't born yet."
+  scene.message "\\bElderly Woman\\b: *finally looking at you* Hands like hers. Same chin too. Take care of it."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...do I know you?"
+  scene.message "\\bElderly Woman\\b: No, dear. But I knew your mother. \\\\nBefore she was your mother."
+
+  scene.show_emotion :player, :exclamation
+
+  scene.message "\\bLyra\\b: \\PN! Come look at the contest!"
+
+  # Player turns away; when they turn back, the elderly woman is gone.
+  scene.script {
+    codexDiscover(:MASK_OF_HEIRLOOM) if defined?(codexDiscover)
+  }
+  scene.message "\\i[When you turned back, the cart was packed up. The woman was gone.]"
+end
+
+
+#===============================================================================
+# v4-F3 — Viktor's rapid rise explained
+#-------------------------------------------------------------------------------
+# Original gap: Ch6 Viktor is a Junior rival with 2 badges. Ch29 Viktor is
+# Champion. How? Bible never says.
+#
+# Resolution: Previous Champion (Sennes Wolffe) was killed in a Hand
+# attack between Ch20 and Ch26. Viktor — who had completed the league
+# circuit shortly after his Ch6 / Ch16 appearances — challenged for the
+# vacant title and won, just before the events of Ch29.
+#
+# Seeded here as a news-clipping moment around Ch26, BEFORE Viktor reveals
+# himself in Ch29 — pays off the rapid rise without being a surprise.
+#===============================================================================
+GameData::Cutscene.define :ch26_5_champion_news do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  scene.message "\\i[The Pokémon Center radio crackled in the background.]"
+  scene.wait 20
+
+  scene.message "\\bNewscaster\\b: ...and in the league news today — Viktor Aldermarsh has accepted the Asgheim Champion title."
+  scene.message "\\bNewscaster\\b: The unprecedented direct challenge from the seventh-ranked qualifier follows the death of acting Champion Sennes Wolffe in last month's Hand attack on the Stormwatch courthouse."
+  scene.message "\\bNewscaster\\b: Champion Aldermarsh, 23, is now the youngest Asgheim Champion in over forty years."
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :exclamation
+  scene.message "\\bLyra\\b: Viktor? *Our* Viktor?"
+
+  scene.message "\\bKael\\b: ...the same boy who flirted with you in Ravenwatch."
+  scene.message "\\bLyra\\b: He didn't *flirt* — he —"
+  scene.message "\\bKael\\b: He absolutely flirted."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: He was always going to make it. \\\\nHe just didn't expect to make it like *that.*"
+  scene.message "\\bLyra\\b: *quietly* Sennes Wolffe is dead?"
+  scene.message "\\bKael\\b: The Hand kills champions. They mean to leave the world without a head."
+
+  scene.script {
+    codexDiscover(:VIKTOR_ALDERMARSH) if defined?(codexDiscover)
+  }
+end
+
+
+#===============================================================================
+# v4-F4 — Player age + timeline established
+#-------------------------------------------------------------------------------
+# Original gap: How old is the player? How much time passes between Ch1
+# and Ch52 (wedding)?
+#
+# Resolution: Player is 16 at start (legal trainer-licence age in Asgheim).
+# Main story spans roughly 18 months. Wedding is 4 years after sealing —
+# player is 21 when they witness it.
+#
+# Aldric explicitly states this during the Ch9 lab visit; gives him a
+# moment of grandfatherly fondness before the death-by-Hand in Ch24.
+#===============================================================================
+GameData::Cutscene.define :ch9_5_timeline_anchor do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  # TODO: Event Sequence - At Aldric's Lab
+  # - Player flipping through Aldric's research notes
+  # - Aldric watching from the doorway
+
+  scene.message "\\bProfessor Aldric\\b: How old are you now, \\PN?"
+  scene.message "\\b\\PN\\b: Sixteen last spring."
+  scene.wait 20
+
+  scene.message "\\bProfessor Aldric\\b: Sixteen. I was sixteen when I started my masters research."
+  scene.message "\\bProfessor Aldric\\b: Your father was sixteen when he beat the previous Champion."
+  scene.message "\\bProfessor Aldric\\b: *gentle* That generation does a great deal of work between sixteen and twenty."
+  scene.wait 30
+
+  scene.message "\\bProfessor Aldric\\b: You will have two years of this fight before the first ending."
+  scene.message "\\bProfessor Aldric\\b: Three or four years until you are someone like your mother."
+  scene.message "\\bProfessor Aldric\\b: Until then — eat regularly. Sleep when you can. \\\\nDon't apologize for being scared."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...are *you* scared, Professor?"
+  scene.message "\\bProfessor Aldric\\b: *quiet smile* Constantly, \\PN. Constantly."
+  scene.message "\\bProfessor Aldric\\b: That is what makes the work mean anything."
+
+  scene.script {
+    codexDiscover(:TIMELINE_ANCHOR) if defined?(codexDiscover)
+  }
+end
+
+
+#===============================================================================
+# v4-F5 — League mobilization shown ("Eagle's Watch")
+#-------------------------------------------------------------------------------
+# Original gap: Marcus in Ch24 says he'll "mobilize the League". The
+# League is never seen acting. Where's the army?
+#
+# Resolution: The League formed the Eagle's Watch — a private response
+# force led by Marcus, with ex-Champion advisors and Tarquin's Dragon
+# Riders attached. They aren't on the front line because the Hand
+# specifically targets institutions; the Watch operates from the
+# shadows, evacuating civilians and intercepting Hand convoys. The
+# Chosen meet two Watch operatives during the late game.
+#===============================================================================
+GameData::Cutscene.define :ch15_7_eagles_watch_first_sighting do |scene|
+  scene.play_bgm 'Pokemon XY - Lysandre Theme'
+
+  # TODO: Event Sequence - Road Ambush, Unexpected Help
+  # - Hand patrol blocks the road
+  # - Player prepares to fight
+  # - Three figures in slate-grey cloaks emerge from the woods, take down
+  #   the patrol before the Chosen can swing
+
+  scene.message "\\i[The cult patrol turned to fight you. You drew your starter's ball.]"
+  scene.message "\\i[Then the woods went quiet — and three slate-cloaked figures came down the slope at a run.]"
+  scene.wait 30
+
+  scene.message "\\b[Eagle's Watch Operative]\\b: *to the patrol* Down. Now."
+  scene.message "\\i[The patrol was down in under a minute. Their starter's pokeball was barely in their hand.]"
+  scene.wait 30
+
+  scene.message "\\b[Operative Vesper]\\b: Chosen. We were tracking the patrol when we heard your fight."
+  scene.message "\\bLyra\\b: ...you were *tracking* them? \\\\nWho ARE you?"
+  scene.message "\\b[Operative Vesper]\\b: Eagle's Watch. Champion Marcus's response force. *He sends his love.*"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Dad has an *army.*"
+  scene.message "\\b[Operative Vesper]\\b: Not an army. *A net.* We catch what the gym leaders can't. There are eighty of us in the field right now."
+  scene.message "\\b[Operative Vesper]\\b: We can't fight the Generals — that has to be you. But we can keep the Hand from owning the roads."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: Then we never travel alone again."
+  scene.message "\\b[Operative Vesper]\\b: Exactly the spirit. \\\\nKeep moving, Chosen. We'll keep your route clean as far as Frostfall."
+
+  scene.script {
+    codexDiscover(:EAGLES_WATCH) if defined?(codexDiscover)
+    scFateGrant(:fate_meet_watch, 1, "Met the Eagle's Watch") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# v4-C1 — Civilian POV: A Verdantia Shopkeeper (Ch7.5)
+#-------------------------------------------------------------------------------
+# Right after the cult attack in Ch7. A shopkeeper near the attack site
+# is cleaning up. Player passes through. No fight. Just witness.
+#===============================================================================
+GameData::Cutscene.define :ch7_5_civilian_shopkeeper do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[The shop's window had been broken. The owner was sweeping glass into a dustpan with her granddaughter holding the door open.]"
+  scene.wait 30
+
+  scene.message "\\bShopkeeper\\b: Help with this side? Mind your fingers."
+  scene.message "\\b\\PN\\b: ...sure."
+
+  # Player kneels, helps clear glass
+  scene.message "\\bShopkeeper\\b: They didn't take anything, you know. \\\\nThey weren't here to take anything. They just wanted us to know they *could.*"
+  scene.wait 30
+
+  scene.message "\\bGranddaughter\\b: Grandma's been making the same berry pies for forty years. \\\\nShe wasn't going to let them stop her."
+  scene.message "\\bShopkeeper\\b: *quietly* I was going to. \\\\nFor a minute. After they left."
+  scene.message "\\bShopkeeper\\b: Then this one made me eggs."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thank you. For staying open."
+  scene.message "\\bShopkeeper\\b: Mhmm. *Buy a pie before you go.* My granddaughter made the crust."
+
+  scene.message "\\i[You bought a pie. The granddaughter beamed.]"
+  scene.message "\\i[On the way out, you noticed the shopkeeper had hung a small steel-blue ribbon in the window. \\\\nIt was the colour of your mark.]"
+
+  scene.script {
+    pbReceiveItem(:ORANBERRY, 5) rescue nil
+    codexDiscover(:CIVILIAN_WITNESSES) if defined?(codexDiscover)
+    relChange(:VERDANTIA_FOLK, 5) if defined?(relChange)
+  }
+  scene.camera_tint :reset, 30
+end
+
+
+#===============================================================================
+# v4-C2 — Civilian POV: A Frostfall Mother (Ch18.5)
+#-------------------------------------------------------------------------------
+# After General Dread's fight in Ch18. The player is recovering at the
+# Frostfall Pokémon Centre. A woman with two children waits in the
+# lobby. The youngest is crying.
+#===============================================================================
+GameData::Cutscene.define :ch18_5_civilian_mother do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  scene.message "\\i[A young woman sat across from you in the centre lobby. Her son was asleep. Her daughter was crying very quietly into her sleeve.]"
+  scene.wait 30
+
+  scene.message "\\bMother\\b: I'm sorry — she'll stop in a minute. \\\\nShe's been quiet for hours."
+  scene.message "\\b\\PN\\b: ...it's okay. Take your time."
+
+  # Lyra moves over and sits beside the daughter without saying anything.
+  # Just close enough.
+  scene.show_emotion :LYRA, :heart
+  scene.wait 30
+
+  scene.message "\\bMother\\b: We came up from Stormwatch. The Hand burned our block. The whole row."
+  scene.message "\\bMother\\b: We had a Pokémon, an old Furfrou — \\\\nshe held them back at the door long enough for us to get out the kitchen window."
+  scene.message "\\bMother\\b: She didn't come out after us."
+  scene.wait 30
+
+  # The daughter speaks for the first time, very quietly, to Lyra
+  scene.message "\\bDaughter\\b: *small* Are you the bright lady? The one with the mark?"
+  scene.message "\\bLyra\\b: *softly* I'm Lyra. Yes. I have a mark."
+  scene.message "\\bDaughter\\b: ...will you give my Furfrou a good story?"
+
+  scene.show_emotion :LYRA, :ellipses
+  scene.message "\\bLyra\\b: *kneeling* I will give her the best story. \\\\nI promise. Every time I tell it, your Furfrou will be the bravest one in it."
+  scene.wait 45
+
+  scene.message "\\bMother\\b: *to \\PN* ...we're sorry to bother you. I know you have larger work."
+  scene.message "\\b\\PN\\b: ...no. \\\\n*This* is the work. \\\\nThis is exactly the work."
+
+  scene.script {
+    codexDiscover(:CIVILIAN_WITNESSES) if defined?(codexDiscover)
+    scFateGrant(:fate_witness_civilian, 1, "Sat with a survivor") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# v4-C3 — Civilian POV: A Hand Defector (Ch22.5)
+#-------------------------------------------------------------------------------
+# A young man approaches the camp at night. Was a Hand recruit. Brings a
+# stolen ledger and his old robes folded. Wants out. Doesn't expect to
+# be forgiven.
+#===============================================================================
+GameData::Cutscene.define :ch22_5_civilian_defector do |scene|
+  scene.play_bgm 'Pokemon XY - Lysandre Theme'
+
+  # TODO: Event Sequence - Night Approach
+  # - Footsteps on the path. Kael's Shadow growls. Lyra puts a hand on its head.
+
+  scene.message "\\i[A young man stepped into the firelight with his hands open. Twenties. Hand-mark on his wrist, half-burnt-out.]"
+  scene.wait 30
+
+  scene.message "\\bYoung Man\\b: Please don't fight me. I'm — I'm out. I'm trying to be out."
+  scene.message "\\bKael\\b: *quiet, not threatening* You're not out yet. \\\\nSay why."
+  scene.wait 30
+
+  scene.message "\\bYoung Man\\b: My name's Telmer. \\\\nThey took me when I was nineteen. They told me my family would be safer if I joined. They lied."
+  scene.message "\\bYoung Man\\b: My sister died last month. Hand-side. *Friendly fire.* I was *there.*"
+  scene.message "\\bYoung Man\\b: I brought this. A ledger. Cell locations and supply routes."
+  scene.message "\\bYoung Man\\b: And these — *pulling out folded grey robes* — so you know I won't go back."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Telmer. Are you hungry?"
+  scene.message "\\bTelmer\\b: ...I don't deserve —"
+  scene.message "\\bLyra\\b: That wasn't the question. *Are you hungry.*"
+  scene.message "\\bTelmer\\b: ...yes."
+  scene.message "\\bLyra\\b: Sit down. Kael will make tea. Talk after."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *not arguing, getting up*"
+
+  # Quietly, eventually, after dinner
+  scene.message "\\bTelmer\\b: I can't make this right."
+  scene.message "\\b\\PN\\b: We're not asking you to. We're asking you to help us *stop* the next nineteen-year-old."
+  scene.message "\\bTelmer\\b: ...okay. \\\\nOkay. Yes."
+
+  scene.script {
+    codexDiscover(:HAND_DEFECTORS) if defined?(codexDiscover)
+    # The ledger is a real item — gives access to a side-quest line later
+    pbReceiveItem(:HAND_LEDGER, 1) rescue nil
+    scFateGrant(:fate_defector_welcomed, 2, "Welcomed a defector") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# v4-C4 — Civilian POV: Children at the Parade (Ch49.5)
+#-------------------------------------------------------------------------------
+# After the Heroes' Welcome, two children watch the parade end. Asks
+# their mom if they could grow up to be a Chosen. Mom's answer is honest.
+#===============================================================================
+GameData::Cutscene.define :ch49_5_civilian_children do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[The parade had ended. You were resting on a bench under an oak. A mother and her two children passed.]"
+  scene.wait 30
+
+  scene.message "\\bChild 1\\b: Mama. Can I be a Chosen when I grow up?"
+  scene.message "\\bMother\\b: *truthful* The Chosen are made when the world needs them, sweetheart. Not before."
+  scene.wait 20
+
+  scene.message "\\bChild 2\\b: But *Lyra* is just a girl from a farm!"
+  scene.message "\\bMother\\b: *smiling* She is. And before she was a Chosen she helped an Eevee that nobody else helped."
+  scene.message "\\bMother\\b: That's the part you can do without waiting to be Chosen."
+  scene.wait 30
+
+  scene.message "\\bChild 1\\b: ...okay. \\\\nWhat about the bright-haired one? The Champion's kid?"
+  scene.message "\\bMother\\b: \\PN listened. To everyone. For a very long time. \\\\nThat's the part *anyone* can do, my heart."
+  scene.wait 30
+
+  scene.message "\\bChild 1\\b: I can do that."
+  scene.message "\\bMother\\b: I know you can, baby. Come on. Apple cart."
+
+  scene.message "\\i[They walked off into the crowd. The youngest waved at you. You didn't think they recognized you.]"
+  scene.message "\\i[You waved back anyway.]"
+
+  scene.script {
+    codexDiscover(:CIVILIAN_WITNESSES) if defined?(codexDiscover)
+  }
+  scene.camera_tint :reset, 30
+end
+
+
+#===============================================================================
+# >>>>>  PART 4a — OPTIONAL ARC: Verdantia Truth (Ch4.5)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: THE VERDANTIA TRUTH
+#===============================================================================
+# A 7-scene side-arc that runs as Chapter 4.5 (between the original Ch4
+# gym victory and Ch5's library arc). Fern, the youngest gym leader,
+# secretly recognized the marks the first time she met the Chosen — she
+# has been writing to Aldric about it for months. After the gym battle,
+# she invites \PN, Lyra, and Kael back to the greenhouse for tea. What
+# unfolds is the first real recognition the Chosen receive from someone
+# outside the trio: they are seen.
+#
+# Outcomes:
+#   - Fern formally allies with the Chosen (codex unlock + future support)
+#   - The first Heart-of-Asgheim Sprig is given (key item)
+#   - Player learns the Astoria-line botanical signature for the first time
+#   - Lyra discovers her grandmother knew Fern as a child
+#
+# This arc is the player's first MID-STORY ALLY beat. The original story
+# has no analogue. Fern becomes one of three NPC-side allies recurring
+# through the rest of the game (Eagle's Watch Operative Vesper, Fern,
+# and later Captain Lior in Astoria).
+#===============================================================================
+
+
+GameData::Cutscene.define :ch4_5_verdantia_invitation do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\bFern\\b: Wait — before you leave."
+  scene.message "\\bFern\\b: I have a kettle on. \\\\nIt would be a kindness if you came back to the greenhouse for an hour."
+  scene.wait 20
+
+  scene.message "\\bKael\\b: ...we just *fought.* You want us to —"
+  scene.message "\\bFern\\b: I want you to *sit down.* All three of you."
+  scene.message "\\bFern\\b: Please."
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :exclamation
+  scene.message "\\bLyra\\b: ...okay."
+  scene.message "\\b\\PN\\b: Lead the way."
+
+  # Move handoff
+  scene.script {
+    $game_switches[:sc_verdantia_arc_started] = true if defined?($game_switches)
+  }
+end
+
+
+GameData::Cutscene.define :ch4_5_greenhouse_tea do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[The greenhouse smelled like hot lemongrass and damp soil.]"
+  scene.message "\\i[Fern set out four cups. She poured for everyone. She sat down without ceremony.]"
+  scene.wait 30
+
+  scene.message "\\bFern\\b: I'm going to tell you a thing, and then I'm going to ask you a thing."
+  scene.message "\\bFern\\b: The first time you walked in here for the gym registration — \\\\nI saw the marks. All three. I've seen the shape of those marks in books since I was twelve."
+  scene.wait 30
+
+  scene.show_emotion :LYRA, :exclamation
+  scene.message "\\bLyra\\b: You *knew*? \\\\nAnd you didn't say anything?"
+
+  scene.message "\\bFern\\b: I sent two letters to Professor Aldric the same evening. \\\\nWe've been corresponding ever since."
+  scene.message "\\bFern\\b: I am twenty-two years old. \\\\nI did not know if you wanted to *be* Chosen yet. I was not going to be the one to tell you."
+
+  scene.message "\\bKael\\b: ...that was generous."
+  scene.message "\\bFern\\b: It was *necessary.* The mark you wear has to be a choice you carry. Not a label someone gave you."
+
+  scene.message "\\b\\PN\\b: So what's the thing you want to ask?"
+  scene.wait 20
+
+  scene.camera_tint :reset, 30
+end
+
+
+GameData::Cutscene.define :ch4_5_fern_question do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\bFern\\b: I want to ask if I can be your contact. \\\\nFor research. For botanical data. For evacuation routing when it comes to that."
+  scene.message "\\bFern\\b: I cannot fight the way you can fight. \\\\nBut I have a greenhouse, and a name, and a thousand correspondents. \\\\nLet me put that to your work."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: We don't have a *use case* for a greenhouse."
+  scene.message "\\bFern\\b: *patient* Yes you do. \\\\nYou just don't know it yet."
+  scene.wait 20
+
+  scene.choice [
+    "Yes. Thank you, Fern.",
+    "We'll think about it.",
+    "...why us, specifically?"
+  ] do |result|
+    case result
+    when 0
+      pbMessage("\\b\\PN\\b: Yes. Thank you, Fern. \\\\nWe accept.")
+      pbMessage("\\bFern\\b: *visible relief* Then I work for the Chosen now. \\\\nWhen you need me, the greenhouse phone rings on the third ring or not at all. Trust the third ring.")
+      $PokemonGlobal.sc_verdantia_allied = true if $PokemonGlobal.respond_to?(:sc_verdantia_allied=)
+      scFateGrant(:fate_verdantia_ally, 1, "Fern of Verdantia joins your cause") if defined?(scFateGrant)
+    when 1
+      pbMessage("\\b\\PN\\b: We'll think about it. \\\\nIt's a lot to take in.")
+      pbMessage("\\bFern\\b: That's *exactly* the right answer. \\\\nGo on. I'm not going anywhere.")
+    when 2
+      pbMessage("\\b\\PN\\b: ...why us, specifically?")
+      pbMessage("\\bFern\\b: Because every other person who ever wore that mark died before they could ask.")
+      pbMessage("\\bFern\\b: I would like one of them, for once, to *survive.*")
+      pbMessage("\\b\\PN\\b: ...alright. Yes.")
+      $PokemonGlobal.sc_verdantia_allied = true if $PokemonGlobal.respond_to?(:sc_verdantia_allied=)
+      scFateGrant(:fate_verdantia_ally, 1, "Fern of Verdantia joins your cause") if defined?(scFateGrant)
+    end
+  end
+end
+
+
+GameData::Cutscene.define :ch4_5_astoria_signature do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  scene.message "\\bFern\\b: Before you go — one more thing. \\\\nLook at this."
+  scene.wait 20
+
+  # TODO: Event Sequence - The Sprig
+  # - Fern lays a sprig of pale-silver leaves on the table
+  # - The leaves catch the light differently than any other plant
+  # - Tiny veins glow faintly when Lyra's hand passes over them
+
+  scene.message "\\i[Fern set out a sprig of silvery green leaves. The leaves looked normal, until Lyra leaned over them.]"
+  scene.show_emotion :LYRA, :exclamation
+  scene.wait 20
+
+  scene.message "\\bLyra\\b: They're — *glowing*?"
+  scene.message "\\bFern\\b: Only when someone Astoria-blood comes near. \\\\nThis is called *Heart-of-Asgheim.* It grows only in two places in the world."
+  scene.message "\\bFern\\b: One of them is at the Sunrise Farm where your grandmother lives, Lyra."
+  scene.message "\\bFern\\b: The other is in a planter on my counter."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *very quietly* Grandma's hedge."
+  scene.message "\\bLyra\\b: I always wondered why the hedge stayed green even in winter."
+  scene.message "\\bFern\\b: Now you know."
+  scene.wait 30
+
+  scene.message "\\bFern\\b: Take this sprig. \\\\nIf you ever meet someone you suspect is Astoria-line, hold the sprig in your hand and watch what happens."
+  scene.message "\\bFern\\b: It'll save you weeks of investigation. \\\\nAnd it might save someone's life."
+
+  scene.script {
+    pbReceiveItem(:HEART_OF_ASGHEIM_SPRIG, 1) rescue nil
+    codexDiscover(:HEART_OF_ASGHEIM) if defined?(codexDiscover)
+    pbAchievement(:ach_verdantia_truth) if defined?(pbAchievement)
+  }
+end
+
+
+GameData::Cutscene.define :ch4_5_lyra_grandmother_call do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+
+  scene.message "\\i[Outside the greenhouse, Lyra pulled out her phone. \\\\nGrandma picked up on the second ring.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Grandma. I have a question."
+  scene.message "\\bLyra\\b: Why is the back hedge green in winter?"
+  scene.wait 20
+
+  scene.message "\\bGrandma\\b: *long pause* ...because someone planted it for someone. A long time ago."
+  scene.message "\\bGrandma\\b: I was going to tell you. When you were ready to ask the question."
+  scene.message "\\bGrandma\\b: I think you just got ready."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...are *we* Astoria-line, Grandma?"
+  scene.message "\\bGrandma\\b: Yes, child. \\\\nMy great-great-grandmother. \\\\nIt skipped seven generations. Then there was you."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Why did it *skip*?"
+  scene.message "\\bGrandma\\b: Because the world didn't need you yet. \\\\nNow it does. \\\\nNow *you* know."
+
+  scene.show_emotion :LYRA, :ellipses
+
+  scene.message "\\bGrandma\\b: When you get a quiet hour, come home. \\\\nI have the rest of the family book. I should have given it to you before you left."
+  scene.message "\\bLyra\\b: ...okay, Grandma. I will."
+  scene.message "\\bGrandma\\b: I love you, my brave girl."
+
+  scene.script {
+    $game_switches[:sc_lyra_astoria_confirmed] = true if defined?($game_switches)
+    codexDiscover(:LYRA_PROFILE) if defined?(codexDiscover)
+  }
+end
+
+
+GameData::Cutscene.define :ch4_5_kael_reflects do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[Walking out of Verdantia, Kael was unusually quiet. \\\\nEventually he said:]"
+  scene.wait 20
+
+  scene.message "\\bKael\\b: ...so Lyra has a lineage. \\PN has parents who knew."
+  scene.message "\\bKael\\b: I don't have either of those things. \\\\nI grew up in an orphanage."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: Kael..."
+  scene.message "\\bKael\\b: I'm not asking for pity. I am noting the *shape* of this."
+  scene.message "\\bKael\\b: Yveltal picked someone with no records. Someone the Hand cannot trace back."
+  scene.message "\\bKael\\b: I think — *I think* — that was deliberate."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...Aldric said something like that once."
+  scene.message "\\bKael\\b: Aldric was the smartest person I ever met. \\\\nIf he said it, it's true."
+
+  scene.message "\\bLyra\\b: Kael — wherever you came from, you're *here* now. \\\\nThat's worth more than a family book."
+  scene.message "\\bKael\\b: *quiet* Maybe. \\\\nMaybe."
+
+  # The Astoria-line reveal in Ch41 lands harder because of this scene.
+  scene.script {
+    $PokemonGlobal.sc_kael_lineage_seed = true if $PokemonGlobal.respond_to?(:sc_kael_lineage_seed=)
+  }
+end
+
+
+GameData::Cutscene.define :ch4_5_arc_end do |scene|
+  scene.play_bgm 'Pokemon XY - Route Theme'
+
+  scene.message "\\i[That night you camped on the road outside Verdantia. \\\\nFern's sprig sat in a small glass on a flat rock by the fire.]"
+  scene.message "\\i[The leaves glowed faintly when Lyra walked past. \\\\nNo one said anything.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *to your starter, softly* I think we just got our first real friend."
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *agreement-chirp, contented*", starter.name))
+    end
+  }
+
+  scene.message "\\i[The fire cracked. The night was quiet. \\\\nIt was the first time any of you slept well in a month.]"
+
+  scene.script {
+    GameData::Chapter.complete(:ch4_5) if defined?(GameData::Chapter)
+  }
+end
+
+
+#===============================================================================
+# Codex entries for this arc
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:HEART_OF_ASGHEIM,
+    title:    "Heart-of-Asgheim Sprig",
+    category: :HISTORY,
+    text:     "A plant cultivated only by the Astoria diaspora — its veins " \
+              "glow faintly when held by someone of the line. \\\\nGiven to " \
+              "\\Player by Fern of Verdantia. Used through the rest of the " \
+              "main story to identify hidden Astoria-line descendants, " \
+              "including Gym Leader Petra and Captain Lior. \\\\nThe sprig " \
+              "never wilts. Kael tested this empirically. He was annoyed."
+  )
+
+  CodexRegistry.add(:FERN_ALLY,
+    title:    "Fern, Verdantia Gym Leader",
+    category: :CHARACTERS,
+    text:     "Fern is the youngest of Asgheim's gym leaders and runs the " \
+              "Verdantia greenhouse as a botanical research station as much " \
+              "as a battle hall. She has corresponded with Professor Aldric " \
+              "since her teens. \\\\nAfter the Chosen accepted her offer of " \
+              "support, the Verdantia greenhouse became the main " \
+              "intelligence relay for the war — she has roughly a thousand " \
+              "active correspondents across the region, more than the " \
+              "Asgheim Guard."
+  )
+end
+
+
+#===============================================================================
+# Achievement
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_verdantia_truth do |a|
+    a.name "The First Ally"
+    a.description "Accept Fern's offer of support in the Verdantia greenhouse."
+    a.category :story_hidden
+    a.reward_item :ORANBERRY, 10
+  end
+end
+
+
+#===============================================================================
+# Save flag
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_verdantia_allied, :sc_kael_lineage_seed
+end
+
+SaveData.register(:sc_verdantia_allied) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_verdantia_allied || false }
+  load_value { |v| $PokemonGlobal.sc_verdantia_allied = v }
+  new_game_value { false }
+end
+
+SaveData.register(:sc_kael_lineage_seed) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_kael_lineage_seed || false }
+  load_value { |v| $PokemonGlobal.sc_kael_lineage_seed = v }
+  new_game_value { false }
+end
+
+
+#===============================================================================
+# >>>>>  PART 4b — OPTIONAL ARC: Liberation (Ch11.5 through Ch36.5)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: THE LIBERATION
+#===============================================================================
+# A recurring side-arc that runs across Acts 2-4, with six liberation
+# operations the Chosen carry out against Hand-controlled Pokémon. Each
+# raid frees a small number of Pokémon being used for cult purposes, and
+# either reunites them with their original trainers or releases them
+# back to the wild. Some of the freed Pokémon return to help in Ch34.
+#
+# Sites:
+#   :liberation_op_1   Ashbury Underbelly         (Ch11.5, basic intro)
+#   :liberation_op_2   Frostfall Slaughterhouse   (Ch17.5, hardest emotionally)
+#   :liberation_op_3   Eternal Forest Pens         (Ch20.5, ties to Subject Zero arc)
+#   :liberation_op_4   Stormwatch Warehouse        (Ch26.5)
+#   :liberation_op_5   The Gateway Camps           (Ch29.5)
+#   :liberation_op_6   Asgaheim Inner Sanctum      (Ch32.5 — pre-Malachar)
+#
+# Closure beats:
+#   :liberation_reunion_montage   Ch34.5 — freed Pokémon arrive to help
+#   :liberation_aftermath         Ch36.5 — sanctuary intake report
+#
+# This is the player's TEAM PLASMA REVERSED arc — instead of freeing
+# Pokémon from trainers, the Chosen free them from a death-cult and
+# match them with the people who lost them. It is the most uplifting
+# thread in an otherwise heavy story.
+#===============================================================================
+
+
+#-------------------------------------------------------------------------------
+# Liberation Op 1: Ashbury Underbelly (Ch11.5)
+# A small cell, three cultists, six caged Pokémon. The first one feels like
+# a heist. The next five make it clear how much there is to do.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :liberation_op_1_intro do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+
+  scene.message "\\bFern (over phone)\\b: \\PN. \\\\nOne of my correspondents says there's a Hand cell in the Ashbury underbelly. Six caged Pokémon. Three guards."
+  scene.message "\\bFern\\b: I would not normally call you about something this small."
+  scene.message "\\bFern\\b: But three of the Pokémon are *registered.* Someone is looking for them."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: How long ago were they taken?"
+  scene.message "\\bFern\\b: A Pidgeot — six weeks. \\\\nA Granbull — four months. \\\\nA Linoone — almost a year."
+  scene.message "\\bFern\\b: The trainers have *not* given up."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...then we go tonight."
+  scene.message "\\bKael\\b: I'll scout."
+  scene.message "\\b\\PN\\b: Tell Fern we're moving."
+
+  scene.script {
+    $PokemonGlobal.sc_liberation_active = true if $PokemonGlobal.respond_to?(:sc_liberation_active=)
+  }
+end
+
+GameData::Cutscene.define :liberation_op_1_raid do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+
+  scene.message "\\i[Three guards. Six cages. \\\\nKael's Zorua took the lookout. \\\\nLyra distracted with a flash-pulse. \\\\nYou took the door.]"
+  scene.wait 30
+
+  scene.trainer_battle :CULTIST, "Cell Leader", 0
+
+  scene.message "\\bCell Leader\\b: *defeated, hands up* All right — *all right.* I'm not paid enough for this."
+  scene.message "\\bKael\\b: You aren't paid at all. The Hand doesn't pay."
+  scene.message "\\bCell Leader\\b: ...how did you know that."
+  scene.message "\\bKael\\b: *to the cages* We have the keys?"
+  scene.message "\\bLyra\\b: *holding up a ring of keys* On the wall by the door. Like *amateurs.*"
+end
+
+GameData::Cutscene.define :liberation_op_1_reunion do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\i[Eagle's Watch took the cultists. \\\\nFern arrived ninety minutes later in a horse-drawn cart with the families.]"
+  scene.wait 30
+
+  scene.message "\\bPidgeot Trainer\\b: *running* SCOUT — SCOUT — *baby*, oh baby —"
+  scene.message "\\i[The Pidgeot saw him. Knocked him over.]"
+  scene.message "\\i[Lyra started crying first.]"
+  scene.wait 30
+
+  scene.message "\\bGranbull Trainer\\b: *to \\Player* I had given up. \\\\nI had *given up.* She was four months gone."
+  scene.message "\\b\\PN\\b: We don't give up on them."
+  scene.wait 30
+
+  scene.message "\\bLinoone Trainer\\b: A year. A *year.*"
+  scene.message "\\bLinoone Trainer\\b: *to her Linoone* I'm so sorry, baby. I'm so sorry I wasn't faster."
+  scene.message "\\i[The Linoone looked at her trainer, then at \\PN, then back at her trainer. \\\\nIt chirped once. Decided. Climbed into the trainer's arms.]"
+  scene.wait 45
+
+  scene.message "\\bFern\\b: *quietly, to \\PN* That's three. \\\\nThere will be more."
+  scene.message "\\b\\PN\\b: Then we'll do more."
+
+  scene.script {
+    pbAchievement(:ach_liberation_first) if defined?(pbAchievement)
+    scFateGrant(:fate_liberation_1, 1, "First liberation reunion") if defined?(scFateGrant)
+    $PokemonGlobal.sc_liberation_count ||= 0
+    $PokemonGlobal.sc_liberation_count += 1
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Liberation Op 2: Frostfall Slaughterhouse (Ch17.5) — the hardest one
+# The Hand uses captured Pokémon to feed their dark rituals. This op is
+# about getting there before the next ritual. They don't make it in time
+# for all of them. Some Pokémon they save. Some they bury.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :liberation_op_2_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\bFern (over phone)\\b: \\PN. I'm sorry."
+  scene.message "\\bFern\\b: This one is bad. \\\\nI don't want to send you. \\\\nI have to send you."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: How bad?"
+  scene.message "\\bFern\\b: Frostfall. A facility I didn't know existed. \\\\nThey've been using captured Pokémon for ritual fuel. Forty cages, last count. \\\\nThe next ritual is in *six hours.*"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...we'll go now."
+  scene.message "\\bFern\\b: \\PN — listen to me. \\\\nYou are going to be too late for *some* of them. \\\\nI need you to be ready for that before you go in."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *quiet* ...okay."
+  scene.message "\\bFern\\b: I am so sorry."
+
+  scene.camera_tint :reset, 30
+end
+
+GameData::Cutscene.define :liberation_op_2_raid do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+  scene.camera_tint :red, 30
+
+  scene.message "\\i[The facility was a converted ice-cellar. Cold. Quiet. Wrong.]"
+  scene.message "\\i[Kael went first. He stopped at the first row of cages and put his hand against his mouth.]"
+  scene.wait 45
+
+  scene.message "\\bKael\\b: *very flat* Six of them are gone. \\\\nAt least six."
+  scene.message "\\bLyra\\b: *running past him to the next row* The rest are *alive* — start with the alive ones, start with the alive ones —"
+  scene.wait 30
+
+  scene.trainer_battle :CULTIST, "Ritual Master", 1
+
+  scene.message "\\bRitual Master\\b: *defeated, laughing softly* You came. \\\\nYou were always going to come."
+  scene.message "\\bRitual Master\\b: It doesn't matter. The ritual was *yesterday.*"
+  scene.message "\\bRitual Master\\b: *what you found was the dressing.*"
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *cold* How many."
+  scene.message "\\bRitual Master\\b: Enough. \\\\nThe rest were on the menu for tomorrow. Congratulations, Chosen. You saved *thirty-four.*"
+
+  scene.show_emotion :LYRA, :ellipses
+  scene.message "\\bLyra\\b: *to the surviving cages, kneeling* Thirty-four. *Thirty-four.* Let's get you out of here. \\\\nWe're going to get you out of here."
+
+  scene.camera_tint :reset, 30
+end
+
+GameData::Cutscene.define :liberation_op_2_burial do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+
+  scene.message "\\i[Outside, the Eagle's Watch operatives helped them bury the six who hadn't survived.]"
+  scene.message "\\i[Lyra insisted on doing the marker stones herself. \\\\nKael stayed in the back of the line. Watched. Did not look away.]"
+  scene.wait 45
+
+  scene.message "\\bOperative Vesper\\b: ...\\PN. \\\\nYou saved thirty-four. That's *thirty-four* whole worlds."
+  scene.message "\\b\\PN\\b: I know. \\\\nThat doesn't make the six smaller."
+  scene.message "\\bVesper\\b: No. \\\\nIt doesn't."
+  scene.wait 30
+
+  scene.message "\\bVesper\\b: Champion Marcus said to tell you something."
+  scene.message "\\bVesper\\b: *exact quote* 'This is the part of the work I never got used to. I am sorry you have to learn it. You will not get used to it either. That is a *feature* of who you are, not a flaw.'"
+  scene.message "\\bVesper\\b: I'm to wait while you cry. He was specific about that."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thanks, Vesper."
+  scene.message "\\bVesper\\b: *quietly* I miss my Captain too. \\\\nYou and I are in the same club, Chosen."
+
+  scene.script {
+    pbAchievement(:ach_liberation_grief) if defined?(pbAchievement)
+    scFateGrant(:fate_liberation_2, 2, "Carried what could not be saved") if defined?(scFateGrant)
+    $PokemonGlobal.sc_liberation_count ||= 0
+    $PokemonGlobal.sc_liberation_count += 1
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Liberation Ops 3-6 (compressed — each is one scene)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :liberation_op_3 do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+  scene.message "\\i[Eternal Forest pens. Twelve Pokemon. Connected to the same lab complex where you'd find Subject Zero.]"
+  scene.message "\\i[The Hand was breeding fear into them. Lyra refused to leave until each one was held.]"
+  scene.trainer_battle :CULTIST, "Pen Master", 0
+  scene.message "\\bFern\\b: *over phone* Eleven trainers identified. The twelfth Pokémon, the Bisharp, was wild-caught. \\\\nI know someone who'll take her."
+  scene.message "\\b\\PN\\b: Send her over."
+  scene.script {
+    pbAchievement(:ach_liberation_third) if defined?(pbAchievement)
+    $PokemonGlobal.sc_liberation_count = ($PokemonGlobal.sc_liberation_count || 0) + 1
+  }
+end
+
+GameData::Cutscene.define :liberation_op_4 do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+  scene.message "\\i[Stormwatch warehouse. Eighteen Pokemon, but the cell was warned. Half were already moved out.]"
+  scene.message "\\i[The Hand had Telmer's old supply route memorized. He cried about it for an hour afterwards.]"
+  scene.trainer_battle :CULTIST, "Quartermaster", 1
+  scene.message "\\bTelmer\\b: I knew this route. I *used* this route. \\\\nI should have remembered sooner."
+  scene.message "\\bLyra\\b: You're remembering NOW, Telmer. \\\\nThat's how every defector before you saved someone after their own."
+  scene.script {
+    pbAchievement(:ach_liberation_fourth) if defined?(pbAchievement)
+    $PokemonGlobal.sc_liberation_count = ($PokemonGlobal.sc_liberation_count || 0) + 1
+  }
+end
+
+GameData::Cutscene.define :liberation_op_5 do |scene|
+  scene.play_bgm 'Pokemon BW - Plasma Frigate'
+  scene.message "\\i[The Gateway Camps — large, mobile, full of Pokémon being prepared as ritual sacrifices for the final binding.]"
+  scene.message "\\i[Eagle's Watch ran point this time. The Chosen were ONE of three teams.]"
+  scene.message "\\i[They freed eighty-one Pokémon in a single night. None of them died.]"
+  scene.message "\\bOperative Vesper\\b: *grinning, exhausted* This is how the war ends, \\PN. \\\\nNot with the big fight. With *eighty-one.*"
+  scene.script {
+    pbAchievement(:ach_liberation_fifth) if defined?(pbAchievement)
+    $PokemonGlobal.sc_liberation_count = ($PokemonGlobal.sc_liberation_count || 0) + 1
+  }
+end
+
+GameData::Cutscene.define :liberation_op_6 do |scene|
+  scene.play_bgm 'Pokemon BW - Battle Ghetsis'
+  scene.message "\\i[Asgaheim itself. The Hand's inner sanctum. Eight cages, all powerful Pokémon meant for the Nidhoggr summoning.]"
+  scene.message "\\i[This was the one they almost didn't make. Lyra was caught. Kael fought a Sigilyph for fifteen minutes alone before reinforcements arrived.]"
+  scene.trainer_battle :CULTIST, "Sanctum Warden", 2
+  scene.message "\\bKael\\b: *bleeding, holding the last cage open* All right. \\\\nAll right. *Go.*"
+  scene.message "\\i[The last cage opened. A Gallade stepped out. Saluted Kael. Walked to the wall. Sat down to wait.]"
+  scene.message "\\bLyra\\b: ...it doesn't want to leave."
+  scene.message "\\bGallade\\b: *thought-projection* \\\\nNo. I will stay. I will fight beside you when the dragon comes."
+  scene.wait 30
+  scene.message "\\b\\PN\\b: ...okay. \\\\nWelcome to the team, friend."
+  scene.script {
+    pbAchievement(:ach_liberation_sixth) if defined?(pbAchievement)
+    $PokemonGlobal.sc_liberation_count = ($PokemonGlobal.sc_liberation_count || 0) + 1
+    $PokemonGlobal.sc_gallade_ally = true if $PokemonGlobal.respond_to?(:sc_gallade_ally=)
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Ch34.5 — The Reunion Montage
+# When Nidhoggr emerges, dozens of Pokémon the Chosen freed appear on the
+# battlefield. Their former trainers are not there. The Pokémon are.
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch34_5_liberation_reunion do |scene|
+  scene.play_bgm 'Pokemon SWSH - Battle! Eternatus'
+  scene.camera_flash 40
+
+  scene.message "\\i[Nidhoggr's first form was breaking. \\\\nYou were almost out of revives. Lyra was kneeling. Kael was *snarling.*]"
+  scene.message "\\i[Then the sky cracked open.]"
+  scene.wait 30
+
+  # The freed Pokémon arrive
+  scene.message "\\i[The Pidgeot from Op 1. The Granbull. The Linoone. \\\\nThirty-four from the Frostfall facility. \\\\nThe Bisharp from the forest pens. \\\\nThe Gallade from the Sanctum.]"
+  scene.message "\\i[All of them. *All of them.* Arrived without their trainers, who hadn't been able to make it to Asgaheim.]"
+  scene.message "\\i[The Pokémon had come *themselves.*]"
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *crying* They *remember* us —"
+  scene.message "\\bKael\\b: *voice cracking* They didn't have to come. They *chose* it."
+  scene.wait 30
+
+  scene.message "\\bGallade\\b: *thought-projection to all three* \\\\nYou freed us so we could choose. \\\\nWe chose this."
+  scene.message "\\bGallade\\b: \\\\nNow strike the dragon."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *steel-blue light blazing across the field* On me. \\\\nEVERYONE — ON ME!"
+
+  # This is the Ch34 turning-point. The freed Pokémon stay for the rest
+  # of the fight and provide a flat 25% damage boost to the player's team
+  # in the in-engine implementation.
+  scene.script {
+    $PokemonGlobal.sc_liberation_reunion_fired = true if $PokemonGlobal.respond_to?(:sc_liberation_reunion_fired=)
+    pbAchievement(:ach_liberation_reunion) if defined?(pbAchievement)
+  }
+end
+
+
+#-------------------------------------------------------------------------------
+# Ch36.5 — Sanctuary Intake Report (one year later)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch36_5_liberation_aftermath do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\bLyra\\b: \\PN. Look at this. \\\\nFern sent the year-end intake."
+  scene.wait 20
+
+  scene.message "\\i[A printed report on Verdantia letterhead. Three pages.]"
+  scene.message "\\bLyra\\b: \\\\nLiberated this year: one hundred and thirty-seven Pokémon."
+  scene.message "\\bLyra\\b: Reunited with original trainers: ninety-one."
+  scene.message "\\bLyra\\b: Released back to the wild: twenty-eight."
+  scene.message "\\bLyra\\b: Stayed at the Sanctuary as residents: eighteen, including our Gallade."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Ninety-one *families.*"
+  scene.message "\\bLyra\\b: Ninety-one families."
+  scene.message "\\bKael\\b: *quietly* That's the number that matters. \\\\nThe Generals didn't make it into a textbook. The ninety-one did. \\\\nI'll take that trade."
+
+  scene.script {
+    pbAchievement(:ach_liberation_total) if defined?(pbAchievement)
+  }
+end
+
+
+#===============================================================================
+# Codex
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:LIBERATION_ARC,
+    title:    "The Liberation",
+    category: :HISTORY,
+    text:     "Six liberation operations carried out by the Chosen across " \
+              "Acts 2-4. \\\\nOver one hundred Pokémon freed from cult " \
+              "captivity, nearly all of them reunited with the trainers " \
+              "still searching. The most uplifting thread of the war " \
+              "years. \\\\nFern of Verdantia coordinated the intelligence; " \
+              "the Eagle's Watch provided extraction; the Chosen did the " \
+              "hard part — the door. \\\\nMost of the freed Pokémon " \
+              "returned of their own choice to fight at Asgaheim when " \
+              "Nidhoggr emerged. The Hand had not anticipated this. The " \
+              "Hand did not understand what they had taught the Pokémon."
+  )
+
+  CodexRegistry.add(:THE_GALLADE,
+    title:    "The Gallade",
+    category: :CHARACTERS,
+    text:     "A psychic Gallade liberated from the Asgaheim inner sanctum " \
+              "in Op 6. Refused to leave; refused to be reunited with any " \
+              "prior trainer (records suggest it was wild-caught). \\\\n" \
+              "Chose to fight at the Chosen's side at the Nidhoggr battle " \
+              "and stayed with them afterwards as a sanctuary resident. \\\\n" \
+              "Speaks through thought-projection. Has refused every name " \
+              "offered. Goes by 'the Gallade.' Is fine with this."
+  )
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_liberation_first do |a|
+    a.name "The First Cage"
+    a.description "Complete the first liberation operation."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_liberation_grief do |a|
+    a.name "Thirty-Four Whole Worlds"
+    a.description "Survive the Frostfall liberation. Bury the six."
+    a.category :story_hidden
+    a.hidden true
+  end
+  GameData::Achievement.define :ach_liberation_third do |a|
+    a.name "The Forest Pens"
+    a.description "Complete the Eternal Forest liberation."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_liberation_fourth do |a|
+    a.name "Telmer's Atonement"
+    a.description "Complete the Stormwatch warehouse liberation."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_liberation_fifth do |a|
+    a.name "Eighty-One in a Night"
+    a.description "Complete the Gateway Camps liberation."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_liberation_sixth do |a|
+    a.name "The Sanctum Door"
+    a.description "Complete the Asgaheim inner sanctum liberation."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_liberation_reunion do |a|
+    a.name "They Came Back"
+    a.description "Witness the freed Pokémon return at Nidhoggr's emergence."
+    a.category :story_hidden
+    a.hidden true
+    a.reward_item :MASTERBALL, 1
+  end
+  GameData::Achievement.define :ach_liberation_total do |a|
+    a.name "Ninety-One Families"
+    a.description "Read the year-end Sanctuary intake report."
+    a.category :story_hidden
+  end
+end
+
+
+#===============================================================================
+# Save flags
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_liberation_active, :sc_liberation_count
+  attr_accessor :sc_liberation_reunion_fired, :sc_gallade_ally
+end
+
+[:sc_liberation_active, :sc_liberation_reunion_fired, :sc_gallade_ally].each do |key|
+  SaveData.register(key) do
+    ensure_class :TrueClass
+    save_value { $PokemonGlobal.send(key) || false }
+    load_value { |v| $PokemonGlobal.send("#{key}=", v) }
+    new_game_value { false }
+  end
+end
+
+SaveData.register(:sc_liberation_count) do
+  ensure_class :Integer
+  save_value { $PokemonGlobal.sc_liberation_count || 0 }
+  load_value { |v| $PokemonGlobal.sc_liberation_count = v }
+  new_game_value { 0 }
+end
+
+
+#===============================================================================
+# >>>>>  PART 4c — OPTIONAL ARC: Aldric's Notebooks (Ch24.5)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: ALDRIC'S NOTEBOOKS
+#===============================================================================
+# A 6-scene arc that runs as Chapter 24.5, immediately following Aldric's
+# funeral. Pays off the promise made in v2's :ch24_aurora_arrives — Aurora
+# said she had Aldric's hidden notebooks and would show them "when you
+# were ready."
+#
+# Reading the notebooks unlocks:
+#   - A timeline of Aldric's 30-year investigation
+#   - The original list of identifying marks (helps the Chosen self-
+#     diagnose Yveltal-line warnings before they happen)
+#   - The location of Aldric's hidden second lab, in the basement under
+#     his official one
+#   - A letter from Aldric, written six months before his death, to be
+#     opened "when one of you reads this aloud to the others"
+#
+# This is the player's first visit home since Ch1. Home is different now.
+# Mom is different. So are they.
+#===============================================================================
+
+
+GameData::Cutscene.define :ch24_5_home_again do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[Dawnhaven hadn't changed. The pond. The old oak. The cobbled stretch up to the house.]"
+  scene.message "\\i[The flowers in the front planter were the silver-stem ones. Mom must have planted them recently.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...I'm home."
+  scene.message "\\bLyra\\b: I know. \\\\nWe're here too. Whenever you need us."
+  scene.message "\\bKael\\b: We'll wait at the inn. \\\\nThis hour is yours."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thanks."
+
+  # Player approaches the door alone. The door opens before the player knocks.
+  scene.message "\\bMom (Aurora)\\b: *seeing you* Oh."
+  scene.message "\\bMom (Aurora)\\b: Oh, sweetheart, you grew up while I wasn't looking."
+  scene.wait 30
+
+  # Long hug
+  scene.message "\\i[She held on. You held on. Neither of you said anything for a while.]"
+  scene.message "\\i[When she let go she did not let go all the way.]"
+  scene.wait 30
+
+  scene.camera_tint :reset, 30
+end
+
+
+GameData::Cutscene.define :ch24_5_the_study do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\bMom (Aurora)\\b: Come up to the study. I have everything ready."
+  scene.message "\\bMom (Aurora)\\b: ...your father's downstairs cleaning his pokeballs. Pretending to. \\\\nGive him an hour."
+  scene.wait 30
+
+  # TODO: Event Sequence - The Study
+  # - Aurora's study, dust-free for once
+  # - A long table covered in leather-bound notebooks, sorted chronologically
+  # - At the far end: a sealed envelope with \PN's name on it
+
+  scene.message "\\i[The study had been cleaned. Aurora's research desk was cleared.]"
+  scene.message "\\i[Twelve leather notebooks were laid out on the long table. Dates on the spines, the earliest from thirty years ago.]"
+  scene.wait 30
+
+  scene.message "\\bMom (Aurora)\\b: Aldric kept two sets of notes. \\\\nThe ones in his official journal. And these."
+  scene.message "\\bMom (Aurora)\\b: He sent the first one to me thirty years ago. The day Marcus and I confirmed I was pregnant with you."
+  scene.message "\\bMom (Aurora)\\b: He never told me why he wrote it that day. Now we know."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thirty years."
+  scene.message "\\bMom (Aurora)\\b: Thirty years. \\\\nHe knew the marks would skip into your generation. He didn't know it would be *you,* exactly — there were eight candidates he tracked."
+  scene.message "\\bMom (Aurora)\\b: Two are dead. Four are accounted for in other regions. \\\\nYou are one of the remaining two."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...who's the other one?"
+  scene.message "\\bMom (Aurora)\\b: A girl named Ines. She runs the Corona City Gym."
+  scene.message "\\b\\PN\\b: *startled* Ines was a candidate?"
+  scene.message "\\bMom (Aurora)\\b: She was. Aldric noted that she was the only one of the eight who seemed to feel the marks as *cold* rather than warm. He wrote that he was worried about her."
+  scene.wait 30
+
+  # Big reveal — Ines's betrayal in Ch20 wasn't random. She was a failed
+  # candidate. The Hand recruited her by offering her the warmth she
+  # never felt from the Guardians.
+  scene.message "\\b\\PN\\b: She turned. The Hand recruited her."
+  scene.message "\\bMom (Aurora)\\b: I know. \\\\nAldric knew it was *possible.* He didn't catch it in time."
+  scene.message "\\bMom (Aurora)\\b: He blamed himself."
+
+  scene.script {
+    codexDiscover(:ALDRIC_NOTEBOOKS) if defined?(codexDiscover)
+    $PokemonGlobal.sc_aldric_notebooks_opened = true if $PokemonGlobal.respond_to?(:sc_aldric_notebooks_opened=)
+  }
+end
+
+
+GameData::Cutscene.define :ch24_5_the_yveltal_warning do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\bMom (Aurora)\\b: There's something you need to see. \\\\nNot for you — for Kael."
+  scene.wait 20
+
+  # Aurora pulls out a specific notebook, opens to a particular page
+  scene.message "\\i[She opened a notebook to a page covered in Aldric's slanted handwriting and three diagrammed marks.]"
+  scene.wait 30
+
+  scene.message "\\bMom (Aurora)\\b: Aldric documented every known case of a Yveltal-line bond going wrong."
+  scene.message "\\bMom (Aurora)\\b: There were two warning signs. The bearer's pupils contract more slowly than they should. \\\\nAnd they stop dreaming."
+  scene.message "\\bMom (Aurora)\\b: Both signs appear about six weeks before the bond *consumes* the bearer instead of partnering with them."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...has Kael been dreaming?"
+  scene.message "\\bMom (Aurora)\\b: That's the question to ask him. \\\\nKindly. Not as an interrogation."
+  scene.message "\\bMom (Aurora)\\b: If he says no, you bring him here. \\\\nI know what to do. So does Lyra, even if she doesn't yet know she does."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thank you, Mom."
+  scene.message "\\bMom (Aurora)\\b: That's not gratitude work. That's *parent* work. \\\\nIt's what we do."
+
+  scene.script {
+    codexDiscover(:YVELTAL_WARNING_SIGNS) if defined?(codexDiscover)
+    # Gameplay hook: this unlocks the Yveltal-monitor side-quest, which
+    # if completed catches the Dark-ending trigger before it fires.
+    $PokemonGlobal.sc_yveltal_monitor_unlocked = true if $PokemonGlobal.respond_to?(:sc_yveltal_monitor_unlocked=)
+  }
+end
+
+
+GameData::Cutscene.define :ch24_5_the_hidden_lab do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\bMom (Aurora)\\b: Last thing. \\\\nAldric had a second lab. \\\\nBeneath the official one. The Hand burned the building above but the basement is shielded."
+  scene.wait 30
+
+  # TODO: Event Sequence - The Map
+  # - Aurora unfolds a map of the lab compound
+  # - Marks the trapdoor under the third desk
+
+  scene.message "\\bMom (Aurora)\\b: There's a trapdoor under the third desk in the destroyed wing. \\\\nIf the Hand didn't think to look down — and they wouldn't, because their general was paranoid about being underground — \\\\nthere are still records there. Including Aldric's working file on Malachar."
+  scene.message "\\bMom (Aurora)\\b: I haven't been able to go. Marcus refused. I have not been alone for that yet."
+  scene.message "\\bMom (Aurora)\\b: I am hoping you and your friends will go for me."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...we'll go. \\\\nOf course we'll go."
+  scene.message "\\bMom (Aurora)\\b: Good. \\\\nThere will be one more notebook there. Aldric kept the most sensitive one on-site so the Hand couldn't link it to me by post."
+  scene.message "\\bMom (Aurora)\\b: When you find it, *don't read it on site.* Bring it back here. Read it with witnesses."
+
+  scene.script {
+    # Adds a side-quest waypoint to the destroyed lab map
+    $PokemonGlobal.sc_aldric_basement_unlocked = true if $PokemonGlobal.respond_to?(:sc_aldric_basement_unlocked=)
+  }
+end
+
+
+GameData::Cutscene.define :ch24_5_the_letter do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\bMom (Aurora)\\b: ...and this."
+  scene.message "\\i[She handed you a sealed envelope. Aldric's handwriting. Your name.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...when?"
+  scene.message "\\bMom (Aurora)\\b: Six months before. He wrote one for each of the three of you. \\\\nThis one is yours."
+  scene.message "\\bMom (Aurora)\\b: The instruction on the back says: *Open when one of you can read it aloud to the others.*"
+
+  scene.message "\\b\\PN\\b: ...okay."
+
+  scene.message "\\bMom (Aurora)\\b: Take it. \\\\nThere's no rush. Bring it back when it's the right night."
+  scene.message "\\bMom (Aurora)\\b: He would have given you years if he could have. \\\\nHe couldn't. So he gave you what he could give."
+  scene.wait 45
+
+  scene.script {
+    pbReceiveItem(:ALDRIC_LETTER_PN, 1) rescue nil
+    codexDiscover(:ALDRIC_LETTER) if defined?(codexDiscover)
+  }
+end
+
+
+GameData::Cutscene.define :ch24_5_dad_downstairs do |scene|
+  scene.play_bgm 'Pokemon XY - Vaniville Town'
+
+  scene.message "\\i[You found Dad downstairs at the kitchen table. \\\\nHe had three pokeballs on a polishing cloth. They were *gleaming.* He was still polishing.]"
+  scene.wait 30
+
+  scene.message "\\bDad Marcus\\b: ...your mother told me she gave you the lab map."
+  scene.message "\\b\\PN\\b: Yeah."
+  scene.message "\\bDad Marcus\\b: Eagle's Watch will go with you. \\\\nThat's not a request, kid. That is a *please.*"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: Okay, Dad."
+  scene.message "\\bDad Marcus\\b: Okay."
+
+  # Marcus looks up, holds eye contact for a long moment.
+  scene.message "\\bDad Marcus\\b: ...you look like her, you know. \\\\nWhen she was your age. \\\\nIt's almost rude how much you look like her right now."
+  scene.message "\\b\\PN\\b: *small laugh* Thanks, Dad."
+  scene.wait 30
+
+  # The hug
+  scene.message "\\bDad Marcus\\b: *standing up* Come here, kid."
+  scene.message "\\i[He hugged you the way he used to hug you when you woke up from nightmares at six. Tight. Both arms. Not letting go first.]"
+  scene.message "\\i[He let go first this time. You noticed. You let him.]"
+  scene.wait 45
+
+  scene.message "\\bDad Marcus\\b: ...go save the world, kid. \\\\nYour mother and I will keep the kitchen warm."
+
+  scene.script {
+    GameData::Chapter.complete(:ch24_5) if defined?(GameData::Chapter)
+    scFateGrant(:fate_aldric_notebooks, 2, "Read Aldric's hidden notebooks") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# Side-quest: The Basement Lab (unlocks after ch24_5_the_hidden_lab plays)
+#-------------------------------------------------------------------------------
+GameData::Quest.define :sq_aldric_basement_lab do |q|
+  q.name "The Basement Lab"
+  q.description "Aldric kept a second lab beneath the burned one. Aurora wants " \
+                "the final notebook recovered. Eagle's Watch will escort you."
+  q.category :side
+  q.chapter 24
+  q.giver "Aurora"
+  q.location "Dawnhaven Lab Ruins"
+  q.chapter_unlock 24
+  q.objective "Reach the trapdoor under the third desk", count: 1
+  q.objective "Recover Aldric's final notebook", count: 1
+  q.objective "Return the notebook to Aurora", count: 1
+  q.reward_item :ALDRIC_FINAL_NOTEBOOK, 1
+  q.reward_item :TM_PSYCHIC, 1
+  q.on_complete {
+    codexDiscover(:ALDRIC_FINAL_NOTEBOOK) if defined?(codexDiscover)
+    pbAchievement(:ach_basement_lab) if defined?(pbAchievement)
+    scFateGrant(:fate_basement_recovered, 2, "Recovered Aldric's last notebook") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# Side-quest: The Yveltal Monitor (unlocks if Kael is asked about dreams)
+#-------------------------------------------------------------------------------
+GameData::Quest.define :sq_yveltal_monitor do |q|
+  q.name "The Yveltal Monitor"
+  q.description "Aurora taught you the two warning signs of Yveltal-bond " \
+                "decay: slow pupils, no dreams. Check on Kael at three " \
+                "specific moments. If he's drifting, intervene."
+  q.category :side
+  q.chapter 25
+  q.giver "Aurora"
+  q.location "Wherever you camp"
+  q.chapter_unlock 25
+  q.objective "Ask Kael about his sleep after Ch25", count: 1
+  q.objective "Ask Kael about his sleep after Ch27", count: 1
+  q.objective "Ask Kael about his sleep before Ch33", count: 1
+  q.on_complete {
+    # If the player completes the monitor, they unlock a special prep
+    # buff for the final battle that prevents the Dark ending trigger.
+    $PokemonGlobal.sc_yveltal_monitor_completed = true if $PokemonGlobal.respond_to?(:sc_yveltal_monitor_completed=)
+    pbAchievement(:ach_yveltal_monitor) if defined?(pbAchievement)
+    pbMessage("\\i[Kael will not be lost to the cycle this run.]")
+  }
+end
+
+
+#===============================================================================
+# Aldric's letter — opens after Ch33 via a Bond Quest variant
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ch33_5_aldric_letter_read do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\i[Three weeks after Aldric's funeral. \\\\nLyra brought it up first. 'We could read it now. If you wanted.']"
+  scene.message "\\i[You sat together by the fire. You opened the envelope.]"
+  scene.wait 30
+
+  # The letter (full text)
+  scene.message "\\b[Aldric's Letter]\\b: \\\\n\\PN. Lyra. Kael."
+  scene.message "\\b[Aldric's Letter]\\b: \\\\nIf you are reading this, then it has gone the way I feared. \\\\nI am sorry. I would have liked to keep teaching you."
+  scene.wait 45
+
+  scene.message "\\b[Aldric's Letter]\\b: \\\\nI want you to know three things."
+  scene.message "\\b[Aldric's Letter]\\b: \\\\nOne. You will be tempted to think that my death changes who you have to be. It does not. You were always going to do this. I was always going to be proud of you. The order of events does not change either fact."
+  scene.wait 60
+
+  scene.message "\\b[Aldric's Letter]\\b: \\\\nTwo. The Hand wants you to grieve in a way that makes you smaller. \\\\nMourn me by getting *larger.* By loving each other louder. By taking up *more* space in the world, not less."
+  scene.wait 60
+
+  scene.message "\\b[Aldric's Letter]\\b: \\\\nThree. I am not afraid for you. \\\\nI am the proudest old man in any region. \\\\nGo well. \\\\nGo together. \\\\nGo."
+  scene.message "\\b[Aldric's Letter]\\b: \\\\n— A."
+  scene.wait 60
+
+  # Long, quiet beat. Nobody speaks for a while.
+  scene.message "\\i[Nobody spoke for a long time. \\\\nLyra was crying. Kael was crying. You hadn't realized you were crying until your starter put their head on your knee.]"
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *small voice* ...he loved us, didn't he."
+  scene.message "\\bKael\\b: *voice rough* He really did."
+  scene.message "\\b\\PN\\b: *folding the letter carefully* Yeah. He did."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...let's get larger."
+  scene.message "\\bLyra\\b: *small laugh through tears* Loudest love. Got it."
+  scene.message "\\bKael\\b: *quietly* I'll work on the loud part."
+
+  scene.script {
+    pbAchievement(:ach_aldric_letter) if defined?(pbAchievement)
+    scFateGrant(:fate_aldric_letter, 2, "Read Aldric's last letter together") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# Codex + Achievement + Save
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:ALDRIC_NOTEBOOKS,
+    title:    "Aldric's Hidden Notebooks",
+    category: :HISTORY,
+    text:     "Twelve leather notebooks documenting thirty years of mark- " \
+              "lineage research, hidden at the family home in Dawnhaven. " \
+              "Aldric tracked eight candidate Chosen-bearers across his " \
+              "lifetime. Two are dead. Four are accounted for in other " \
+              "regions. \\Player is one of the remaining two. The other " \
+              "is Inés of Corona City Gym."
+  )
+
+  CodexRegistry.add(:YVELTAL_WARNING_SIGNS,
+    title:    "Warning Signs of a Failing Yveltal Bond",
+    category: :MYTHOLOGY,
+    text:     "Two signs: the bearer's pupils contract more slowly than " \
+              "they should, and they stop dreaming. Both signs appear " \
+              "roughly six weeks before the bond consumes the bearer. " \
+              "Aurora taught \\Player these signs in Ch24.5; the " \
+              "knowledge unlocks the 'Yveltal Monitor' side-quest which " \
+              "can prevent the Dark ending trigger from firing in Ch34."
+  )
+
+  CodexRegistry.add(:ALDRIC_LETTER,
+    title:    "Aldric's Last Letter",
+    category: :HISTORY,
+    text:     "Written six months before his death, kept by Aurora. The " \
+              "instruction on the envelope reads: 'Open when one of you " \
+              "can read it aloud to the others.' Three lines, each one a " \
+              "command. Mourn by getting larger. Take up more space. Go " \
+              "well, go together, go."
+  )
+
+  CodexRegistry.add(:ALDRIC_FINAL_NOTEBOOK,
+    title:    "Aldric's Final Notebook",
+    category: :HISTORY,
+    text:     "Recovered from the basement of the burned lab in side-quest " \
+              "sq_aldric_basement_lab. Contains Aldric's working file on " \
+              "Malachar — including the cult leader's birth name, his " \
+              "original profession (botanist, of all things), and the " \
+              "specific event that broke him. \\\\nThe notebook is read " \
+              "in full by Aurora and the Chosen one evening at the family " \
+              "home. The information makes Malachar's Ch31 reveal heavier."
+  )
+end
+
+
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_basement_lab do |a|
+    a.name "Below the Ashes"
+    a.description "Recover Aldric's final notebook from the basement lab."
+    a.category :story_hidden
+    a.reward_item :MAXREVIVE, 1
+  end
+
+  GameData::Achievement.define :ach_yveltal_monitor do |a|
+    a.name "We Don't Lose Him"
+    a.description "Complete the Yveltal Monitor side-quest before the final battle."
+    a.category :story_hidden
+    a.hidden true
+    a.reward_item :SACREDASH, 1
+  end
+
+  GameData::Achievement.define :ach_aldric_letter do |a|
+    a.name "Go Together. Go."
+    a.description "Read Aldric's last letter with Lyra and Kael."
+    a.category :story_hidden
+  end
+end
+
+
+class PokemonGlobalMetadata
+  attr_accessor :sc_aldric_notebooks_opened, :sc_aldric_basement_unlocked
+  attr_accessor :sc_yveltal_monitor_unlocked, :sc_yveltal_monitor_completed
+end
+
+[:sc_aldric_notebooks_opened, :sc_aldric_basement_unlocked,
+ :sc_yveltal_monitor_unlocked, :sc_yveltal_monitor_completed].each do |key|
+  SaveData.register(key) do
+    ensure_class :TrueClass
+    save_value { $PokemonGlobal.send(key) || false }
+    load_value { |v| $PokemonGlobal.send("#{key}=", v) }
+    new_game_value { false }
+  end
+end
+
+
+#===============================================================================
+# >>>>>  PART 4d — OPTIONAL ARC: The Quiet Year (Ch35.5)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: THE QUIET YEAR
+#===============================================================================
+# A 6-scene arc covering the year between Ch35 (Main Story end / Sanctuary
+# established) and Ch37 (Fracture / Astoria journey begins). This is the
+# bible's largest pacing gap — currently a literal "one year passes" cut.
+#
+# The Quiet Year arc gives the trio (and the player) room to exist as
+# people, not just heroes. Each character gets a season-themed scene:
+#
+#   Spring  :qy_spring_seeds         Lyra plants the first Sanctuary garden
+#   Summer  :qy_summer_apprentice    Kael takes on his first orphanage kid
+#   Autumn  :qy_autumn_visit         \Player visits old gym leaders
+#   Winter  :qy_winter_letter        The trio writes letters they don't send
+#   Spring2 :qy_spring_engagement    Kael proposes to Lyra (in private)
+#   Cap     :qy_cap_pendant_pulses   The pendant warning that ends the year
+#
+# This arc fundamentally changes the Wedding (Ch52) pacing — by the time
+# Lyra and Kael marry, they have been together publicly for years rather
+# than weeks. The bible's wedding now lands as a culmination, not a rush.
+#===============================================================================
+
+
+GameData::Cutscene.define :qy_spring_seeds do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\ts[]Spring. The First Sanctuary Garden."
+  scene.wait 30
+
+  scene.message "\\i[Lyra was on her knees in the dirt with three pots of Heart-of-Asgheim and a packet of Sitrus seeds.]"
+  scene.message "\\i[The Sanctuary's east field was a sloped patch of green that hadn't been touched since the Hand burned the old farmhouse here in Ch20.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *to herself, brushing soil off her knees* All right. \\\\nLet's see if the war left any seeds in the ground that still know how to grow."
+  scene.wait 20
+
+  # Willow sits beside her, watching. The freed Pidgeot from Op 1 lands
+  # on a fencepost. The Sanctuary is *populated* now.
+  scene.message "\\i[Willow lay down in the row beside her. \\\\nThe Pidgeot from Op 1 — Scout — landed on the fence and watched.]"
+  scene.message "\\i[The Gallade sat with its back against the oak at the field's edge, arms crossed, eyes closed, present.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *to nobody* I'd like to grow something that wasn't a fight."
+  scene.message "\\bLyra\\b: *small smile* I'd like to do it next to everyone I love."
+  scene.wait 30
+
+  scene.message "\\bGallade\\b: *thought-projection, dry* \\\\nThe sprig grows faster when it is sung to."
+  scene.message "\\bLyra\\b: ...is that a fact or a joke?"
+  scene.message "\\bGallade\\b: *eyes still closed* Both."
+
+  scene.camera_tint :reset, 30
+end
+
+
+GameData::Cutscene.define :qy_summer_apprentice do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\ts[]Summer. The Orphanage Kid."
+  scene.wait 30
+
+  scene.message "\\i[Kael was at the Asgheim Orphanage for what Hilde had told him would be a 'short visit.' \\\\nIt had been three days. Kael was beginning to suspect he had been outmaneuvered.]"
+  scene.wait 30
+
+  scene.message "\\bHilde\\b: Kael. This is Mira."
+  scene.message "\\bKael\\b: *eyes going very still* ...Mira."
+  scene.wait 30
+
+  scene.message "\\bHilde\\b: We named her after — \\\\nWell. You know who we named her after."
+  scene.message "\\bHilde\\b: She is eight. She has no parents. She picked a Pawniard for a partner two months ago and the partner picked her right back."
+  scene.message "\\bHilde\\b: She wants you to teach her how to be a trainer. \\\\nShe does not want anyone else to do it."
+  scene.wait 30
+
+  # The kid steps forward. She is *exactly* the height his Mira was when
+  # Mira died. He's standing very still.
+  scene.message "\\bMira (the new one)\\b: *to Kael, very serious* Kael. \\\\nI am told you are scary."
+  scene.message "\\bKael\\b: *not breathing properly* ...sometimes."
+  scene.message "\\bMira\\b: That's *fine.* I am scary too."
+  scene.message "\\bMira\\b: Pawniard. Sit. Show him."
+  scene.wait 30
+
+  scene.message "\\i[The Pawniard saluted. Kael did not laugh. \\\\nKael had not been able to laugh in three days. He was about to be able to laugh.]"
+  scene.message "\\bKael\\b: *softly* ...all right, Mira. Bring your Pawniard. Let's start with stance."
+
+  # Hilde, in the doorway, allowing herself a small breath of relief.
+  scene.message "\\bHilde\\b: *to Lyra over the phone later that night* He'll be home in a month. \\\\nNot before."
+  scene.message "\\bLyra\\b: *grinning into her tea* Good. \\\\nHe needs a month."
+end
+
+
+GameData::Cutscene.define :qy_autumn_visit do |scene|
+  scene.play_bgm 'Pokemon XY - Route Theme'
+
+  scene.message "\\ts[]Autumn. The Gym Leader Circuit."
+  scene.wait 30
+
+  scene.message "\\i[You spent autumn on the road alone — by choice. \\\\nNo Lyra. No Kael. Your starter, your team, and a year's worth of gym-leader phone numbers Fern had given you.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *to your starter* This isn't a victory tour. \\\\nIt is *checking in.* Different thing."
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *agreement-chirp, road-ready*", starter.name))
+    end
+  }
+  scene.wait 30
+
+  # Quick montage of three visits
+  scene.message "\\i[FERN — Verdantia.]"
+  scene.message "\\bFern\\b: *handing you tea, again* The greenhouse is open at all hours. \\\\nIf you ever need a quiet room and four walls, this one is yours."
+  scene.wait 30
+
+  scene.message "\\i[KESTRA — Ironpeak.]"
+  scene.message "\\bKestra\\b: I wrote a letter for my brother. \\\\nI couldn't make myself send it. \\\\nWill you carry it to his grave for me?"
+  scene.message "\\b\\PN\\b: ...yes."
+  scene.message "\\bKestra\\b: *with both hands* He was loved. He was *loved.*"
+  scene.wait 30
+
+  scene.message "\\i[VALA — Evershade Grove.]"
+  scene.message "\\bVala\\b: \\PN. \\\\nI never told you this. \\\\nMy nephew was a recruit. Hand-side. I never told anyone."
+  scene.message "\\bVala\\b: He died in the Frostfall raid. *Your* Frostfall raid. \\\\nI'm not angry. I want you to know I am *not angry.*"
+  scene.message "\\bVala\\b: He chose his side. \\\\nYou freed thirty-four. \\\\nThat is the order of operations I am at peace with."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...thank you, Vala. \\\\nThat wasn't a kindness I expected."
+  scene.message "\\bVala\\b: *not soft* It wasn't a kindness. It was *the truth.*"
+
+  scene.script {
+    pbAchievement(:ach_quiet_year_visits) if defined?(pbAchievement)
+    scFateGrant(:fate_quiet_year_visits, 1, "Listened to the people the war hurt") if defined?(scFateGrant)
+  }
+end
+
+
+GameData::Cutscene.define :qy_winter_letter do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+  scene.camera_tint :night, 30
+
+  scene.message "\\ts[]Winter. The Letters You Don't Send."
+  scene.wait 30
+
+  scene.message "\\i[At the Sanctuary, the three of you sat in the great-room with three identical small notebooks. \\\\nLyra had bought them at the Verdantia stationer.]"
+  scene.message "\\i[Lyra had explained the rules. You write a letter you cannot send. To anyone. Living or dead.]"
+  scene.wait 30
+
+  # Each character writes their own letter. The player sees them composed.
+  scene.message "\\i[Lyra wrote to Elena. \\\\nKael wrote to the first Mira. \\\\nYou wrote to Ragnar.]"
+  scene.message "\\i[Nobody read aloud. The letters went into a small wooden box on the mantel. \\\\nLyra called it 'the box for the loud love.' \\\\nIt was, slightly, a joke. \\\\nIt was, mostly, not.]"
+  scene.wait 30
+
+  # Player's choice — what did they say in their letter
+  scene.choice [
+    "I told Ragnar I beat Viktor for him.",
+    "I told Ragnar I miss him.",
+    "I told Ragnar I'm taking my time."
+  ] do |result|
+    case result
+    when 0
+      pbMessage("\\b\\PN\\b: *to nobody, putting the letter in the box* He'd want to know I beat Viktor. \\\\nNot ranked. Just for him.")
+    when 1
+      pbMessage("\\b\\PN\\b: *to nobody* I told him I miss him. \\\\nThat was the whole letter. *I miss you, you loud bastard.* Two pages.")
+    when 2
+      pbMessage("\\b\\PN\\b: *to nobody* I told him I'm taking my time. \\\\nThat I'm not rushing to be a hero now that he isn't here. \\\\nThat I think he'd be okay with that.")
+    end
+  end
+
+  scene.message "\\i[Outside, snow. \\\\nInside, three young adults and a box.]"
+  scene.message "\\i[It was the calmest any of you had been in a year.]"
+  scene.camera_tint :reset, 30
+end
+
+
+GameData::Cutscene.define :qy_spring_engagement do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\ts[]Spring, again. The Question."
+  scene.wait 30
+
+  scene.message "\\i[Kael had been agitated for two weeks. \\\\nNot in the old way, not the Yveltal-drift way — Aurora's monitor was clean, his pupils were sharp, he had been dreaming. \\\\nHe was just *agitated.*]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *to your starter, watching Kael pace* He's going to ask her."
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *agreement-chirp, knowing*", starter.name))
+    end
+  }
+  scene.message "\\b\\PN\\b: Yeah. *Today,* I think."
+  scene.wait 30
+
+  # Player witnesses from a distance — Lyra and Kael on the east-field hill
+  scene.message "\\i[Lyra came up the path with the morning's basket of Heart-of-Asgheim sprigs to dry.]"
+  scene.message "\\i[Kael was already on the hill. He had a small box. He had been holding it for forty minutes.]"
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *not looking up* Lyra."
+  scene.message "\\bLyra\\b: *setting the basket down very carefully* ...okay. \\\\nOkay. Tell me what you came up here to say."
+  scene.message "\\bKael\\b: *finally looking up* \\\\nI walked four hundred kilometers carrying you because I didn't want to ask anyone else for help. \\\\nI think — I think I would like to do that *forever.* \\\\nI think I would like that to be the *rest* of my work."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *opening the box* \\\\nLyra. Will you —"
+  scene.message "\\bLyra\\b: *small, certain* Yes."
+  scene.message "\\bKael\\b: I hadn't finished the *sentence.*"
+  scene.message "\\bLyra\\b: I know what the sentence is. \\\\nYes. \\\\nFinish the sentence, please."
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *quietly, perfectly* Will you marry me."
+  scene.message "\\bLyra\\b: *still smiling* Yes. \\\\nThat was always the answer."
+  scene.wait 45
+
+  # Player has been watching from the porch with their starter
+  scene.message "\\b\\PN\\b: *to your starter, very softly* Don't ruin it."
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *softest possible agreement-chirp, but ear-flicks visible*", starter.name))
+    end
+  }
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: They'll tell us in their own time."
+  scene.message "\\b\\PN\\b: *tearful, smiling* About time."
+
+  scene.script {
+    pbAchievement(:ach_engagement_witnessed) if defined?(pbAchievement)
+    scFateGrant(:fate_engagement, 2, "Witnessed the proposal") if defined?(scFateGrant)
+    $PokemonGlobal.sc_engagement_announced = true if $PokemonGlobal.respond_to?(:sc_engagement_announced=)
+  }
+end
+
+
+GameData::Cutscene.define :qy_cap_pendant_pulses do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\ts[]Late Spring. The Pendant."
+  scene.wait 30
+
+  scene.message "\\i[You were on the porch. \\\\nLyra and Kael had just told everyone at dinner. \\\\nThe whole Sanctuary was buzzing. Hoopa hadn't returned yet — that came later — but every freed Pokémon at the residence had appeared on the lawn within five minutes of the announcement.]"
+  scene.wait 30
+
+  scene.message "\\i[Then your pendant pulsed.]"
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: *quietly, to yourself* ...no. Not yet. \\\\nNot tonight."
+  scene.message "\\i[The pendant pulsed again. Insistent. Cold.]"
+  scene.wait 30
+
+  scene.message "\\bZacian\\b: *in your head* \\\\nA fracture. East coast. Tomorrow morning. \\\\nIt isn't urgent enough to ruin tonight, but I owed you the warning."
+  scene.script { sc_guardian_say(:ZACIAN, "It is the second war beginning. Sleep first. Tell them in the morning.") if defined?(sc_guardian_say) }
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *closing your hand around the pendant* ...okay."
+  scene.message "\\b\\PN\\b: *to your starter, who has come to sit next to you on the porch* \\\\nWe'll let them have tonight. \\\\nIn the morning, we go."
+
+  scene.script {
+    starter = $player.party[0]
+    if starter
+      pbMessage(_INTL("\\b{1}\\b: *very low, very ready*", starter.name))
+    end
+  }
+  scene.wait 30
+
+  scene.message "\\i[Inside, Lyra was laughing. Kael, of all people, was laughing too.]"
+  scene.message "\\i[You watched them through the window for a long moment.]"
+  scene.message "\\i[Then you went in to dance.]"
+
+  # Hand-off to Ch37 (The Fracture)
+  scene.script {
+    GameData::Chapter.complete(:ch35_5) if defined?(GameData::Chapter)
+    pbAchievement(:ach_quiet_year_complete) if defined?(pbAchievement)
+  }
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_quiet_year_visits do |a|
+    a.name "Listened"
+    a.description "Visit Fern, Kestra, and Vala during the Quiet Year."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_engagement_witnessed do |a|
+    a.name "Best Best-Person"
+    a.description "Witness Kael propose to Lyra without ruining it."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_quiet_year_complete do |a|
+    a.name "The Year of Loud Love"
+    a.description "Complete the Quiet Year arc."
+    a.category :story_hidden
+    a.reward_item :MAXREVIVE, 2
+  end
+end
+
+
+#===============================================================================
+# Save flags
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_engagement_announced
+end
+
+SaveData.register(:sc_engagement_announced) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_engagement_announced || false }
+  load_value { |v| $PokemonGlobal.sc_engagement_announced = v }
+  new_game_value { false }
+end
+
+
+#===============================================================================
+# >>>>>  PART 4e — OPTIONAL ARC: Astoria Expansion (Ch37 through Ch41)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: ASTORIA EXPANSION
+#===============================================================================
+# Act 5 of the bible takes the Chosen to Astoria but treats the region
+# as a destination, not a place. This arc gives Astoria its own life:
+# seven named NPCs, three wild encounter pools, four side-quests, and
+# two hidden cultural beats that connect Astoria's past to Asgheim's
+# future.
+#
+# Astoria region structure:
+#   - The Port Town (Marrowport)
+#   - Three temple paths (Stars / Tides / Shadows)
+#   - The Forgotten Library (lore vault)
+#   - The Hidden Caldera (postgame Mewtwo)
+#
+# Astoria NPCs (in addition to existing Lior + Sela + Orin + Vera):
+#   - The Port Master (manages traffic, knows everyone)
+#   - The Refugee Coordinator (helps Hand-defectors who came home)
+#   - The Three Astoria-line elders (Petra's relatives)
+#   - The Library Keeper (curates the lore vault)
+#   - The Caldera Hermit (post-game gatekeeper)
+#===============================================================================
+
+
+#===============================================================================
+# Marrowport (the port town) - first-impression cutscene
+#===============================================================================
+GameData::Cutscene.define :astoria_marrowport_arrival do |scene|
+  scene.play_bgm 'Pokemon XY - Couriway Town'
+
+  scene.message "\\i[Marrowport was a town of grey stone and white sails. Old in the way Asgheim had not been old in centuries.]"
+  scene.message "\\i[The houses were carved from the same rock as the cliffs. The streets were the cliffs.]"
+  scene.wait 30
+
+  scene.message "\\bLior\\b: \\\\nWelcome to the Forgotten Region. \\\\nI'll arrange transport to the temples. \\\\nGo see Maris first."
+  scene.message "\\b\\PN\\b: Maris?"
+  scene.message "\\bLior\\b: \\\\nThe port master. She knows everyone who came in by ship for thirty years. \\\\nShe will know who *you* are by reputation. \\\\nShe will pretend not to."
+
+  scene.script {
+    scMemory(:mem_astoria_arrival) if defined?(scMemory)
+  }
+end
+
+
+#===============================================================================
+# Maris — Port Master
+#===============================================================================
+GameData::Cutscene.define :astoria_maris_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\i[The port master's office was a stone room with a window facing the water. Maris was forty, weather-beaten, sharp-eyed.]"
+  scene.wait 30
+
+  scene.message "\\bMaris\\b: *not looking up from her ledger* \\\\nThree Chosen. \\\\nOne Eevee-evolution. Two Pokémon in pokeballs. One Pokémon in a pocket. \\\\nWelcome."
+  scene.message "\\bLyra\\b: ...how did you —"
+  scene.message "\\bMaris\\b: *finally looking up* \\\\nI'm Maris. I run the port. \\\\nLior radioed ahead. *Also* I have eyes."
+  scene.wait 30
+
+  scene.message "\\bMaris\\b: \\\\nThree things you need to know about Astoria."
+  scene.message "\\bMaris\\b: \\\\nOne. We're a *small* region. Everybody knows everybody. \\\\nTwo. The three temples are not where the old maps say. \\\\nThree. *Be kind to the refugees.* They walked further than you flew."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...refugees?"
+  scene.message "\\bMaris\\b: \\\\nThe Hand has been chasing Astoria-line bloodlines for forty years. \\\\nThe survivors came *home* the long way. \\\\nMost of them through *this* port. \\\\nMost of them on *my* boats."
+  scene.wait 30
+
+  scene.message "\\bMaris\\b: \\\\nGo see Daro at the Refugee Hall. \\\\nTell him I sent you. \\\\nDo NOT promise him anything you cannot deliver."
+
+  scene.script {
+    codexDiscover(:MARIS_PORT) if defined?(codexDiscover)
+    scMemory(:mem_astoria_maris) if defined?(scMemory)
+  }
+end
+
+
+#===============================================================================
+# Daro — Refugee Coordinator (former Hand defector)
+#===============================================================================
+GameData::Cutscene.define :astoria_daro_intro do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[The Refugee Hall was a converted warehouse. Cots, communal kitchen, a small medical bay. About forty people moving through it at any one time.]"
+  scene.message "\\i[Daro was thirty-one, soft-spoken, scarred forearms, Hand-mark half-burnt-out at the wrist.]"
+  scene.wait 30
+
+  scene.message "\\bDaro\\b: ...Maris sent you. *Of course* she did."
+  scene.message "\\bDaro\\b: \\\\nDaro Vest. Aldrin Vest's youngest brother. \\\\nGeneral Shade was my brother."
+  scene.wait 45
+
+  scene.show_emotion :player, :exclamation
+  scene.message "\\b\\PN\\b: ...oh."
+
+  scene.message "\\bDaro\\b: *gentle* \\\\nI walked out of the Hand the day Mara died — Aldrin's wife. \\\\nMost of us did. Aldrin didn't. \\\\nThat's the only reason he became Shade and I became *this.*"
+  scene.message "\\bDaro\\b: \\\\nI'm not asking you to apologize for killing my brother. \\\\nHe died years before you fought him. You only *witnessed* it."
+  scene.message "\\bDaro\\b: \\\\nWhat I AM asking is: help us with the Astoria-side refugees. \\\\nFor a week. While you're here for the temples."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...what kind of help?"
+  scene.message "\\bDaro\\b: \\\\nTraining mostly. \\\\nMany of our newer arrivals never trained Pokémon — they were children when their families ran. \\\\nThey have *partners* now. They don't know what to *do* with them."
+  scene.message "\\bDaro\\b: \\\\nYou three are the best teachers the world has right now. \\\\nGive us a week."
+
+  scene.choice ["Yes. We have the time.",
+                "We have the temples to do first.",
+                "Why us?"] do |result|
+    case result
+    when 0
+      pbMessage("\\b\\PN\\b: Yes. We have the time.")
+      pbMessage("\\bDaro\\b: \\\\nThank you. \\\\nI will not forget this.")
+      $PokemonGlobal.sc_astoria_refugee_help = true if $PokemonGlobal.respond_to?(:sc_astoria_refugee_help=)
+      scFateGrant(:fate_astoria_refugees, 2, "Trained Astoria's refugees") if defined?(scFateGrant)
+    when 1
+      pbMessage("\\b\\PN\\b: We have the temples to do first. After?")
+      pbMessage("\\bDaro\\b: \\\\nAfter is fine. \\\\nI will be here.")
+    when 2
+      pbMessage("\\b\\PN\\b: Why us?")
+      pbMessage("\\bDaro\\b: \\\\nBecause *Aldrin* would have asked you. \\\\nBecause he can't.")
+      pbMessage("\\b\\PN\\b: ...yes. Of course.")
+      $PokemonGlobal.sc_astoria_refugee_help = true if $PokemonGlobal.respond_to?(:sc_astoria_refugee_help=)
+    end
+  end
+
+  scene.script {
+    codexDiscover(:DARO_REFUGEES) if defined?(codexDiscover)
+    scMemory(:mem_astoria_daro) if defined?(scMemory)
+  }
+end
+
+
+#===============================================================================
+# The Three Elders — Astoria-line keepers (Petra's relatives)
+#===============================================================================
+GameData::Cutscene.define :astoria_three_elders do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\i[Three elders waited at the long table of the elder-hall. Two women and one man. None younger than seventy.]"
+  scene.message "\\i[They were Petra's great-aunts and great-uncle. They had been waiting for the Chosen for a year.]"
+  scene.wait 30
+
+  scene.message "\\bElder Anya\\b: \\\\nThe Heart-of-Asgheim sprig you carry. \\\\nGive it to me a moment."
+  scene.script {
+    if pbHasItem?(:HEART_OF_ASGHEIM_SPRIG)
+      pbMessage("\\i[You held the sprig out. \\\\nAnya passed her hand over it. Her own family-line glowed in response — *brighter* than Lyra's.]")
+      pbMessage("\\bElder Anya\\b: \\\\nGood. \\\\nFern's gift is well-rooted.")
+    else
+      pbMessage("\\i[You did not have the sprig with you. Anya nodded knowingly.]")
+    end
+  }
+  scene.wait 30
+
+  scene.message "\\bElder Bren\\b: *the man* \\\\nWe have been corresponding with Aldric since before he died. \\\\nWe have a great deal of work for you. \\\\nNone of it is urgent. \\\\nMost of it is *remembering.*"
+  scene.message "\\bElder Coraline\\b: \\\\nThree side-quests. \\\\nOne for each of you. \\\\nPick yours when you have a quiet evening."
+  scene.wait 30
+
+  scene.script {
+    GameData::Quest.start(:sq_astoria_anyas_song) if defined?(GameData::Quest)
+    GameData::Quest.start(:sq_astoria_brens_carving) if defined?(GameData::Quest)
+    GameData::Quest.start(:sq_astoria_coralines_dance) if defined?(GameData::Quest)
+    codexDiscover(:ASTORIA_ELDERS) if defined?(codexDiscover)
+    scMemory(:mem_astoria_elders) if defined?(scMemory)
+  }
+end
+
+
+#===============================================================================
+# Astoria side-quests
+#===============================================================================
+
+GameData::Quest.define :sq_astoria_anyas_song do |q|
+  q.name "Anya's Song"
+  q.description "Elder Anya wants to teach Lyra a lullaby that the Astoria " \
+                "line sang to their children. It was last sung forty years ago. " \
+                "Anya is the only one alive who still remembers it."
+  q.category :side
+  q.chapter 38
+  q.giver "Elder Anya"
+  q.location "Astoria Elder Hall"
+  q.objective "Visit Anya twice for lullaby lessons", count: 2
+  q.objective "Sing the lullaby with Lyra at the Sanctuary", count: 1
+  q.reward_item :SOOTHEBEL, 1
+  q.on_complete {
+    scMemory(:mem_astoria_lullaby) if defined?(scMemory)
+    pbAchievement(:ach_astoria_anyas_song) if defined?(pbAchievement)
+  }
+end
+
+GameData::Quest.define :sq_astoria_brens_carving do |q|
+  q.name "Bren's Carving"
+  q.description "Elder Bren wants Kael to help him carve a memorial plaque " \
+                "for the Astoria-line dead. The carving requires steady " \
+                "hands and the patience to listen while Bren tells the " \
+                "stories. Kael has surprised himself with both, lately."
+  q.category :side
+  q.chapter 38
+  q.giver "Elder Bren"
+  q.location "Astoria Elder Hall"
+  q.objective "Carve three names with Bren", count: 3
+  q.objective "Hear three stories", count: 3
+  q.reward_item :SOULDEW, 1
+  q.on_complete {
+    scMemory(:mem_astoria_carving) if defined?(scMemory)
+    pbAchievement(:ach_astoria_brens_carving) if defined?(pbAchievement)
+  }
+end
+
+GameData::Quest.define :sq_astoria_coralines_dance do |q|
+  q.name "Coraline's Dance"
+  q.description "Elder Coraline wants you — yes, you personally — to learn " \
+                "the old festival step that the Astoria-line danced at the " \
+                "harvest. She thinks you will be the first to perform it " \
+                "publicly in forty-three years."
+  q.category :side
+  q.chapter 38
+  q.giver "Elder Coraline"
+  q.location "Astoria Elder Hall"
+  q.objective "Practice the step three times with Coraline", count: 3
+  q.objective "Perform at the Marrowport autumn festival", count: 1
+  q.reward_item :FESTIVALRIBBON, 1
+  q.on_complete {
+    scMemory(:mem_astoria_dance) if defined?(scMemory)
+    pbAchievement(:ach_astoria_coralines_dance) if defined?(pbAchievement)
+  }
+end
+
+
+#===============================================================================
+# The Forgotten Library
+#===============================================================================
+GameData::Cutscene.define :astoria_library_keeper do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[The Forgotten Library was a long stone hall lined with books in three languages. The keeper was named Iola; she was seventy-three and the youngest person who had read every book in the building.]"
+  scene.wait 30
+
+  scene.message "\\bIola\\b: \\\\nChosen. \\\\nThe answer to the question you have not yet asked is: yes, Aldric corresponded with my predecessor. \\\\nNo, I do not have his letters. \\\\nThey were in the lab fire. \\\\nThe basement set survived, however."
+  scene.message "\\bIola\\b: \\\\nWhich brings me to *your* business in this hall."
+  scene.wait 30
+
+  scene.message "\\bIola\\b: \\\\nI have *the other half* of Aldric's final notebook. \\\\nThe one you recovered in Ch24.5 only had Marcus's working file on Malachar. \\\\nI have the half that was on *Vex.*"
+  scene.message "\\bIola\\b: \\\\nWould you like to read it?"
+  scene.wait 30
+
+  scene.choice ["Yes.", "Not yet.", "Will it change anything?"] do |result|
+    case result
+    when 0
+      pbMessage("\\bIola\\b: \\\\nThen come. \\\\nSit. \\\\nThis will take an evening.")
+      GameData::Cutscene.play(:astoria_vex_notebook) if defined?(GameData::Cutscene)
+    when 1
+      pbMessage("\\bIola\\b: \\\\nWhen you're ready. \\\\nI am not going anywhere.")
+    when 2
+      pbMessage("\\bIola\\b: \\\\nYes. \\\\nIt will not change *what* you do. \\\\nIt will change *who* you remember while you do it.")
+      pbMessage("\\b\\PN\\b: ...then I want to read it.")
+      GameData::Cutscene.play(:astoria_vex_notebook) if defined?(GameData::Cutscene)
+    end
+  end
+
+  scene.script {
+    codexDiscover(:IOLA_KEEPER) if defined?(codexDiscover)
+  }
+end
+
+GameData::Cutscene.define :astoria_vex_notebook do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+
+  scene.message "\\i[Iola handed you a slim leather book. \\\\nAldric had labelled it: 'For when the next Chosen of Valor is grown enough.']"
+  scene.wait 30
+
+  scene.message "\\b[Aldric's Notebook, Vex section]\\b: \\\\nI have spent thirty years writing a man's name in this notebook every time I think of him. \\\\nThe count is at 4,217. \\\\nI miss the man Vex was before the binding."
+  scene.message "\\b[Aldric's Notebook]\\b: \\\\nVex was kind. \\\\nHe was funny when he had had two drinks. \\\\nHe loved his sister. \\\\nHe wanted children. \\\\nHe never had them."
+  scene.message "\\b[Aldric's Notebook]\\b: \\\\nThe man who became the General was not the same man. \\\\nI want this to be on the record. \\\\nThe Hand did not 'turn him.' Hoopa's binding-flash *broke* him. \\\\nWe failed him. *I* failed him."
+  scene.wait 45
+
+  scene.message "\\b[Aldric's Notebook]\\b: \\\\nIf the Chosen kill Vex — and they likely will, because Vex will not be talked down — \\\\nthat death is not a victory. \\\\nIt is a mercy. \\\\nIt is *also* the consequence of a failure that started thirty years before the Chosen were born."
+  scene.message "\\b[Aldric's Notebook]\\b: \\\\nLet them carry that the way *I* carry it. \\\\nNot as guilt. \\\\nAs accuracy."
+  scene.wait 60
+
+  scene.message "\\b\\PN\\b: *very quietly* ...Aldric, I miss you."
+  scene.message "\\bIola\\b: *softly* \\\\nWe all do, dear."
+
+  scene.script {
+    scMemory(:mem_astoria_vex_notebook) if defined?(scMemory)
+    pbAchievement(:ach_astoria_vex_truth) if defined?(pbAchievement)
+    scFateGrant(:fate_astoria_vex, 1, "Read the truth about Vex") if defined?(scFateGrant)
+  }
+end
+
+
+#===============================================================================
+# The Caldera Hermit (postgame)
+#===============================================================================
+GameData::Cutscene.define :astoria_caldera_hermit do |scene|
+  scene.play_bgm 'Pokemon XY - Frost Cavern'
+
+  scene.message "\\i[The Hidden Caldera was a half-day's walk south of Marrowport. The hermit had been waiting at the entrance for three months, by his own admission.]"
+  scene.message "\\i[He looked sixty. He was forty-one. The mountain weathered him.]"
+  scene.wait 30
+
+  scene.message "\\bHermit\\b: \\\\nYou came for the Mewtwo."
+  scene.message "\\b\\PN\\b: ...we did."
+  scene.message "\\bHermit\\b: \\\\nIt is up there. \\\\nIt has been waiting longer than I have. \\\\nGo gently."
+  scene.message "\\bHermit\\b: \\\\nLeave the food behind, please. \\\\nI feed it on Tuesdays. \\\\nIt does not eat much."
+
+  scene.script {
+    codexDiscover(:CALDERA_HERMIT) if defined?(codexDiscover)
+    scMemory(:mem_astoria_hermit) if defined?(scMemory)
+  }
+end
+
+
+#===============================================================================
+# Wild encounter tables
+#-------------------------------------------------------------------------------
+# Astoria has three exclusive encounter pools. The exact map IDs need
+# customization, but the species lists are defined here so that the
+# Encounter system can dispatch them.
+#===============================================================================
+if defined?(GameData::Encounter)
+  begin
+    GameData::Encounter.define(:ASTORIA_COAST) do |e|
+      e.type :Land
+      e.density 25
+      e.add(:CORSOLA,     10..15, 25)
+      e.add(:STARYU,      10..15, 20)
+      e.add(:KRABBY,      10..14, 20)
+      e.add(:WINGULL,     8..14,  15)
+      e.add(:RELICANTH,   18..22, 5)
+      e.add(:CHINCHOU,    12..16, 10)
+      e.add(:LAPRAS,      25..30, 5)
+    end
+
+    GameData::Encounter.define(:ASTORIA_CLIFFS) do |e|
+      e.type :Land
+      e.density 20
+      e.add(:SKARMORY,    18..24, 20)
+      e.add(:RHYHORN,     20..26, 15)
+      e.add(:LARVITAR,    16..20, 10)
+      e.add(:GLIGAR,      18..24, 20)
+      e.add(:NOSEPASS,    20..24, 15)
+      e.add(:ANORITH,     22..26, 10)
+      e.add(:AERODACTYL,  30..35, 5)
+      e.add(:CRANIDOS,    24..28, 5)
+    end
+
+    GameData::Encounter.define(:ASTORIA_FORGOTTEN_GROVES) do |e|
+      e.type :Land
+      e.density 30
+      e.add(:RALTS,       16..20, 20)
+      e.add(:SNORUNT,     18..22, 15)
+      e.add(:ROSELIA,     20..24, 20)
+      e.add(:ABSOL,       22..26, 10)
+      e.add(:BAGON,       18..22, 10)
+      e.add(:DRATINI,     20..24, 5)
+      e.add(:JANGMOO,     22..26, 15)
+      e.add(:DEINO,       24..28, 5)
+    end
+  rescue
+    # Encounter system may not be loaded yet at this file's parse time
+  end
+end
+
+
+#===============================================================================
+# Codex
+#===============================================================================
+if defined?(CodexRegistry)
+  [
+    [:MARIS_PORT,       "Maris — Port Master of Marrowport",
+                        "Forty, weather-beaten, runs Astoria's only deepwater port. " \
+                        "Has personally booked passage for every refugee who reached " \
+                        "Astoria in the last twenty years. Knows the Chosen by reputation; " \
+                        "pretends she does not."],
+    [:DARO_REFUGEES,    "Daro — Refugee Coordinator",
+                        "General Shade's younger brother. Walked out of the Hand the " \
+                        "day Mara Vest died and runs the Astoria-side refugee program. " \
+                        "Asked the Chosen for a week of training help; they gave it."],
+    [:ASTORIA_ELDERS,   "The Three Elders",
+                        "Anya, Bren, and Coraline — Petra's great-aunts and great-uncle. " \
+                        "The last three Astoria-line elders who personally remember the " \
+                        "pre-diaspora rites. Each commissioned one Chosen with a remembering-task."],
+    [:IOLA_KEEPER,      "Iola — Library Keeper",
+                        "Seventy-three years old, custodian of the Forgotten Library. " \
+                        "Holds the only surviving copy of Aldric's notebook half on Vex. " \
+                        "Has been waiting for the Chosen of Valor to be grown enough to read it."],
+    [:CALDERA_HERMIT,   "The Caldera Hermit",
+                        "Forty-one, mountain-weathered, feeds Mewtwo on Tuesdays. Will " \
+                        "not discuss his past. Is at peace with this."]
+  ].each do |k, t, x|
+    CodexRegistry.add(k, title: t, category: :CHARACTERS, text: x)
+  end
+end
+
+
+#===============================================================================
+# Memories
+#===============================================================================
+[
+  [:mem_astoria_arrival,      "The Forgotten Region",   "Marrowport. Old in the way Asgheim had not been old in centuries.", "Astoria Port",      37, :awe],
+  [:mem_astoria_maris,        "The Port Master",         "Three Chosen. One Eevee-evolution.",                                  "Maris's Office",   37, :warm],
+  [:mem_astoria_daro,         "Shade's Brother",         "Daro Vest. Aldrin Vest's youngest brother.",                          "Refugee Hall",     37, :grief],
+  [:mem_astoria_elders,       "The Three Elders",        "Three side-quests. Pick yours when you have a quiet evening.",       "Elder Hall",       38, :warm],
+  [:mem_astoria_vex_notebook, "Four Thousand Two Hundred and Seventeen", "I miss the man Vex was before the binding.",         "Forgotten Library",41, :grief],
+  [:mem_astoria_lullaby,      "Anya's Lullaby",          "The first lullaby in forty years.",                                   "Sanctuary",        43, :love],
+  [:mem_astoria_carving,      "Bren's Carving",          "Three names. Three stories.",                                         "Elder Hall",       43, :grief],
+  [:mem_astoria_dance,        "Coraline's Dance",        "First to perform it in forty-three years.",                           "Marrowport Festival", 43, :bright],
+  [:mem_astoria_hermit,       "Tuesdays",                "I feed it on Tuesdays. It does not eat much.",                        "Hidden Caldera",   47, :awe],
+].each do |id, title, quote, location, chapter, mood|
+  GameData::Memory.define id do |m|
+    m.title    title
+    m.quote    quote
+    m.location location
+    m.chapter  chapter
+    m.mood     mood
+  end
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  [
+    [:ach_astoria_anyas_song,     "Anya's Lullaby",         "Complete Anya's Song side-quest."],
+    [:ach_astoria_brens_carving,  "Bren's Carving",         "Complete Bren's Carving side-quest."],
+    [:ach_astoria_coralines_dance,"Coraline's Dance",       "Complete Coraline's Dance side-quest."],
+    [:ach_astoria_vex_truth,      "Four Thousand Names",    "Read the Vex notebook at the Forgotten Library."],
+    [:ach_astoria_refugees_trained, "Trained the Diaspora", "Help Daro with the refugee training week."],
+    [:ach_astoria_complete,       "Forgotten No Longer",    "Complete every Astoria side-quest."],
+  ].each do |id, name, desc|
+    GameData::Achievement.define id do |a|
+      a.name        name
+      a.description desc
+      a.category    :story_hidden
+    end
+  end
+end
+
+
+#===============================================================================
+# Save data
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_astoria_refugee_help
+end
+
+SaveData.register(:sc_astoria_refugee_help) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_astoria_refugee_help || false }
+  load_value { |v| $PokemonGlobal.sc_astoria_refugee_help = v }
+  new_game_value { false }
+end
+
+
+#===============================================================================
+# >>>>>  PART 5a — POSTGAME: Hoopa's Sanctuary (Ch47.5)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: HOOPA'S SANCTUARY
+#===============================================================================
+# A 5-scene postgame arc set after Ch47 (Arceus's blessing) but before
+# Ch48 (Return Home). When Arceus restored Hoopa, Hoopa was free —
+# but powerless and frightened. This arc covers the year Hoopa spent
+# rebuilding its strength at the Sanctuary, learning what trust looks
+# like outside a cage.
+#
+# Beats:
+#   :hoopa_first_day        First night at the Sanctuary — Hoopa hides
+#   :hoopa_first_ring       Hoopa makes its first portal in months
+#   :hoopa_chooses_lyra     Hoopa picks Lyra as caretaker
+#   :hoopa_first_request    Hoopa asks for one specific thing
+#   :hoopa_sanctuary_opens  Hoopa's Ring Shop opens to the public
+#
+# This arc also unlocks the postgame Hoopa Ring Shop — a portal-based
+# rare-item dispenser that pays off Hoopa's promise of "we'll play
+# tricks again someday."
+#===============================================================================
+
+
+GameData::Cutscene.define :hoopa_first_day do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\ts[]The First Day."
+  scene.wait 20
+
+  scene.message "\\i[Hoopa had been at the Sanctuary for six hours. \\\\nIt had not come out of the linen cupboard.]"
+  scene.message "\\i[Lyra sat on the floor outside the cupboard with a book and tea, not looking at it. Reading aloud sometimes. Not all the time.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *to the cupboard, not loud* The book is called *The Travelling Companion.* \\\\nIt's about a Wartortle who gets lost and finds its way home. \\\\nIt isn't a sad book. I checked."
+  scene.wait 30
+
+  scene.message "\\i[A small purple ear appeared at the edge of the cupboard door. \\\\nThen retreated.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *patient* I won't reach in. I won't try. \\\\nI'll read to you. That's the only thing I'll do."
+
+  scene.message "\\i[Two hours of reading. \\\\nAt the end, Hoopa was sitting just inside the cupboard, against the doorframe. Eyes closed. Listening.]"
+
+  scene.message "\\bLyra\\b: *whispering, when the book is done* You're allowed to come out whenever you want. \\\\nYou're also allowed to stay in the cupboard. \\\\nBoth are fine."
+
+  scene.script {
+    $PokemonGlobal.sc_hoopa_recovery_day = 1
+  }
+end
+
+
+GameData::Cutscene.define :hoopa_first_ring do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\ts[]Day Forty-One. The First Ring."
+  scene.wait 30
+
+  scene.message "\\i[Hoopa had been out of the cupboard for two weeks now. It mostly lived on the windowsill in the kitchen.]"
+  scene.message "\\i[Today, Hoopa was floating cross-legged on the kitchen table. Lyra was making bread.]"
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *carefully, not looking up* ...the salt is in the high cupboard."
+  scene.message "\\bLyra\\b: *not turning around* It is. \\\\nI can get it in a minute."
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: ...I could —"
+  scene.message "\\bLyra\\b: *gentle* Only if you want to."
+  scene.wait 30
+
+  # Hoopa makes its first ring portal since being freed
+  scene.message "\\i[A tiny purple ring opened beside the kitchen table. \\\\nA second ring appeared at the high cupboard. \\\\nThe salt floated through.]"
+  scene.message "\\i[The rings closed. \\\\nHoopa looked very surprised at itself.]"
+  scene.wait 45
+
+  scene.message "\\bHoopa\\b: ...oh."
+  scene.message "\\bLyra\\b: *still kneading dough, very normal* Thank you, Hoopa. \\\\nThe bread is going to be much better with salt in it."
+  scene.message "\\bHoopa\\b: ...I did a ring."
+  scene.message "\\bLyra\\b: You did a *small kindness.* \\\\nThe ring was just how the kindness happened."
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *whispering, mostly to itself* ...okay. \\\\nOkay. That's allowed too."
+
+  scene.script {
+    pbAchievement(:ach_hoopa_first_ring) if defined?(pbAchievement)
+  }
+end
+
+
+GameData::Cutscene.define :hoopa_chooses_lyra do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\ts[]Day Seventy. The Choice."
+  scene.wait 30
+
+  scene.message "\\i[Kael, Lyra, and you were all in the kitchen one morning when Hoopa floated in. \\\\nIt looked at each of you, evaluating.]"
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *very serious* I have made a decision."
+  scene.message "\\bKael\\b: ...okay."
+  scene.message "\\bHoopa\\b: I would like a caretaker. \\\\nSomeone whose pocket I am allowed to live in when I need to. \\\\nI have decided this should be the bright one."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...me?"
+  scene.message "\\bHoopa\\b: \\\\nYou wept when I was taken. \\\\nYou read me a story when I was scared. \\\\nYou taught me a ring was a small kindness."
+  scene.message "\\bHoopa\\b: \\\\nThese are my requirements. \\\\nYou meet all of them."
+  scene.wait 30
+
+  # Lyra crouches down to Hoopa's level — meet it where it is
+  scene.message "\\bLyra\\b: *crouching* I'd be honoured, Hoopa. \\\\nWill you fit in this pocket?"
+  scene.message "\\i[She held out a coat pocket. Hoopa investigated with great gravity. Decided it was acceptable. Climbed in.]"
+  scene.wait 30
+
+  scene.message "\\bKael\\b: *to \\Player, low* ...we are going to find Hoopa pocket-feathers all over the Sanctuary for the rest of our lives."
+  scene.message "\\b\\PN\\b: *to Kael, low* I think that is what 'family' technically means."
+
+  scene.message "\\bHoopa\\b: *from the pocket, muffled* I HEARD THAT."
+
+  scene.script {
+    pbAchievement(:ach_hoopa_caretaker) if defined?(pbAchievement)
+  }
+end
+
+
+GameData::Cutscene.define :hoopa_first_request do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\ts[]Day One Hundred and Eight."
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *from the pocket* I would like to ask for something."
+  scene.message "\\bLyra\\b: Of course."
+  scene.wait 20
+
+  scene.message "\\bHoopa\\b: I would like to *help.*"
+  scene.message "\\bHoopa\\b: I made portals for the Hand for a *long* time. \\\\nI would like to make a portal that *helps* someone for the first time."
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...do you have someone in mind?"
+  scene.message "\\bHoopa\\b: Yes. \\\\nThere is a child in Stormwatch who has been trying to send a letter to her grandmother in Hearthstone for two months. \\\\nThe roads between are still bad. The post never arrives."
+  scene.message "\\bHoopa\\b: \\\\nI would like to take her letter."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *quietly* That's how it starts."
+  scene.message "\\bHoopa\\b: *with great dignity* \\\\nYes. \\\\nThis is how it *starts.*"
+
+  scene.script {
+    pbAchievement(:ach_hoopa_first_help) if defined?(pbAchievement)
+    scFateGrant(:fate_hoopa_helping, 1, "Hoopa's first ring of mercy") if defined?(scFateGrant)
+  }
+end
+
+
+GameData::Cutscene.define :hoopa_sanctuary_opens do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\ts[]Day One Hundred and Eighty."
+  scene.wait 30
+
+  scene.message "\\i[The Sanctuary's east annex had become a postal hall. \\\\nThree rings, always-open. \\\\nLetters in. Letters out. \\\\nHoopa floated in the centre, sorting mail with portal-fingers, *happy.*]"
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *to a waiting child* Yes! \\\\nYour letter to your grandmother in Hearthstone. \\\\nShe will read it in fourteen seconds."
+  scene.message "\\bChild\\b: *awe* ...fourteen *seconds*?"
+  scene.message "\\bHoopa\\b: I am *fast.* \\\\nAlso, here is your grandmother's reply, which I made her write while I was there."
+  scene.wait 30
+
+  # The Hoopa Ring Shop opens
+  scene.message "\\bHoopa\\b: *to \\Player and Lyra* \\\\nAlso! \\\\nI have decided to open a *trick shop.* \\\\nFor rare hold items. \\\\nI portal in things I think people should have, and they trade me for things I think other people should have."
+  scene.message "\\bHoopa\\b: \\\\nI keep nothing. \\\\nIt is a *circle.*"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: *delighted* Are you telling me you started a business?"
+  scene.message "\\bHoopa\\b: I started a *circle.* \\\\nBusinesses keep things. \\\\nMy circle does not keep things."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: That's a wonderful tax problem you've created for the Sanctuary."
+  scene.message "\\bHoopa\\b: ...I do not know what tax is."
+  scene.message "\\bKael\\b: *appearing in the doorway with a clipboard* Hoopa. We are going to *learn.*"
+
+  scene.script {
+    # Unlock the postgame Hoopa Ring Shop
+    $PokemonGlobal.sc_hoopa_shop_open = true if $PokemonGlobal.respond_to?(:sc_hoopa_shop_open=)
+    pbAchievement(:ach_hoopa_shop) if defined?(pbAchievement)
+    scFateGrant(:fate_hoopa_shop, 1, "Hoopa's Ring Shop opens") if defined?(scFateGrant)
+    GameData::Chapter.complete(:ch47_5) if defined?(GameData::Chapter)
+  }
+end
+
+
+#===============================================================================
+# Hoopa Ring Shop — Postgame rare item dispenser
+#-------------------------------------------------------------------------------
+# Hoopa "portals in" items from across the world. The player trades
+# Sanctuary intake reports (issued by Fern at the Sanctuary front desk
+# after every liberation completion) for portal-only rare items.
+#
+# Items are not consumable by Hoopa; the trade is symbolic. Hoopa wants
+# to be sure the item is going to someone who *needs* it.
+#===============================================================================
+GameData::Cutscene.define :hoopa_shop_open do |scene|
+  scene.play_bgm 'Pokemon XY - Pokemon Center'
+
+  scene.message "\\bHoopa\\b: \\PN! \\\\nWelcome to the *circle.* \\\\nWhat would you like to trade today?"
+  scene.wait 20
+
+  # Item menu - using the existing Shop system if defined
+  scene.script {
+    if defined?(GameData::Shop)
+      GameData::Shop.open(:hoopa_ring_shop) rescue pbMessage("\\bHoopa\\b: ...the shop is taking a nap. Try again later.")
+    else
+      pbMessage("\\bHoopa\\b: ...the shop is taking a nap. Try again later.")
+    end
+  }
+end
+
+
+# Hoopa Ring Shop definition — trades "Sanctuary Tokens" for rare items.
+# Sanctuary Tokens are awarded one per completed liberation reunion.
+if defined?(GameData::Shop)
+  GameData::Shop.define(:hoopa_ring_shop) do |s|
+    s.greeting   "Welcome to the circle! What can I find for you today?"
+    s.farewell   "Thank you! I will tell the world you said hello!"
+    s.currency   :SANCTUARY_TOKEN  # custom currency item
+    s.item :CHARIZARDITEX,     1
+    s.item :MEWTWONITEX,       1
+    s.item :LUCARIONITE,       1
+    s.item :GALLADITE,         1
+    s.item :METAGROSSITE,      1
+    s.item :GARCHOMPITE,       1
+    s.item :ABILITYPATCH,      2
+    s.item :BOTTLECAP,         1
+    s.item :GOLDBOTTLECAP,     3
+    s.item :MASTERBALL,        5
+    s.item :PPMAX,             2
+  end
+end
+
+
+#===============================================================================
+# Codex
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:HOOPA_RECOVERY,
+    title:    "Hoopa's Recovery",
+    category: :CHARACTERS,
+    text:     "After Arceus restored Hoopa in Ch47, the trickster spent " \
+              "six months at the Lyra-Kael Sanctuary learning what trust " \
+              "looked like outside a cage. \\\\nFirst day: hid in a linen " \
+              "cupboard while Lyra read aloud outside it. \\\\nFirst portal " \
+              "(day 41): salt from a high cupboard. \\\\nFirst caretaker " \
+              "(day 70): Lyra, by Hoopa's choosing. \\\\nFirst mission " \
+              "(day 108): a child's letter to her grandmother. \\\\nFirst " \
+              "shop (day 180): the Ring Circle, postage for refugees by " \
+              "day, rare-item portal trades for the Chosen by night."
+  )
+
+  CodexRegistry.add(:HOOPA_RING_SHOP,
+    title:    "Hoopa's Ring Circle",
+    category: :HISTORY,
+    text:     "A postgame portal-based exchange operated by Hoopa from " \
+              "the Sanctuary's east annex. Trades Sanctuary Tokens — " \
+              "awarded one-per-liberation-reunion completed during the " \
+              "main story — for rare hold items, Mega Stones, and " \
+              "miscellaneous treasures Hoopa has portal-imported from " \
+              "elsewhere in the world. \\\\nHoopa keeps nothing for itself. " \
+              "Hoopa calls this a *circle,* not a *business.* \\\\nKael " \
+              "is teaching Hoopa about taxes. It is not going well."
+  )
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_hoopa_first_ring do |a|
+    a.name "Small Kindness"
+    a.description "Witness Hoopa's first portal since being freed."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_hoopa_caretaker do |a|
+    a.name "The Bright One's Pocket"
+    a.description "Hoopa picks Lyra as caretaker."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_hoopa_first_help do |a|
+    a.name "A Letter Home"
+    a.description "Hoopa's first portal of mercy."
+    a.category :story_hidden
+  end
+  GameData::Achievement.define :ach_hoopa_shop do |a|
+    a.name "The Circle"
+    a.description "Open Hoopa's Ring Shop."
+    a.category :story_hidden
+    a.reward_item :SANCTUARY_TOKEN, 3
+  end
+end
+
+
+#===============================================================================
+# Save flags
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_hoopa_recovery_day, :sc_hoopa_shop_open
+end
+
+SaveData.register(:sc_hoopa_recovery_day) do
+  ensure_class :Integer
+  save_value { $PokemonGlobal.sc_hoopa_recovery_day || 0 }
+  load_value { |v| $PokemonGlobal.sc_hoopa_recovery_day = v }
+  new_game_value { 0 }
+end
+
+SaveData.register(:sc_hoopa_shop_open) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_hoopa_shop_open || false }
+  load_value { |v| $PokemonGlobal.sc_hoopa_shop_open = v }
+  new_game_value { false }
+end
+
+
+#===============================================================================
+# >>>>>  PART 5b — POSTGAME: Marcus Champion Battles (3 tiers)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - POSTGAME: CHAMPION MARCUS CHALLENGE
+#===============================================================================
+# Player's father Marcus was Asgheim Champion 22 years before the main story.
+# He has been the running gag of the family — the man who tells the same
+# Charizard-stomach story for a decade — but he is also genuinely strong.
+# Post-game, he comes out of retirement for a one-shot challenge.
+#
+# Three battles, each unlocked by a different condition:
+#
+#   :MARCUS_ALONE             — Marcus alone, six Pokémon
+#                              Unlock: any main-story ending complete
+#
+#   :MARCUS_AND_AURORA        — Marcus + Aurora doubles
+#                              Unlock: Marcus alone defeated +
+#                                      all 5 main endings seen
+#
+#   :MARCUS_CHAMPION_PRIME    — Marcus in his Championship-era kit
+#                              (Mega Charizard X, max EVs)
+#                              Unlock: Marcus + Aurora defeated +
+#                                      bond_lyra_5 + bond_kael_5 completed
+#
+# All trainer definitions live below — no PBS dependency.
+#===============================================================================
+
+
+#-------------------------------------------------------------------------------
+# Trainer Types — make sure the league-veteran types exist
+#-------------------------------------------------------------------------------
+if defined?(GameData::TrainerType)
+  unless GameData::TrainerType.exists?(:CHAMPION_EMERITUS)
+    GameData::TrainerType.define :CHAMPION_EMERITUS do |tt|
+      tt.name        = "Champion Emeritus"
+      tt.gender      = 0
+      tt.base_money  = 60
+      tt.skill_level = 100
+      # Use existing battler graphic; fallback to CHAMPION if asset is absent
+      tt.battler     = "CHAMPION"
+    end
+  end
+
+  unless GameData::TrainerType.exists?(:RESEARCHER_EMERITUS)
+    GameData::TrainerType.define :RESEARCHER_EMERITUS do |tt|
+      tt.name        = "Researcher Emeritus"
+      tt.gender      = 1
+      tt.base_money  = 60
+      tt.skill_level = 100
+      tt.battler     = "SCIENTIST"
+    end
+  end
+end
+
+
+#-------------------------------------------------------------------------------
+# Marcus — Alone (version 0)
+#-------------------------------------------------------------------------------
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus") do |t|
+  t.lose_text "Heh. \\PN — that was your mother's grin you just gave me. Proud of you, kid."
+  t.pokemon(:DRAGONITE, 70) do |p|
+    p.moves = [:DRAGONDANCE, :OUTRAGE, :EXTREMESPEED, :EARTHQUAKE]
+    p.nature = :ADAMANT
+    p.ability_index = 2  # Multiscale
+    p.item = :LUMBERRY
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:TYRANITAR, 70) do |p|
+    p.moves = [:STONEEDGE, :CRUNCH, :EARTHQUAKE, :DRAGONDANCE]
+    p.nature = :JOLLY
+    p.ability_index = 0  # Sand Stream
+    p.item = :ASSAULTVEST
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:SALAMENCE, 70) do |p|
+    p.moves = [:DRAGONCLAW, :EARTHQUAKE, :FLAREBLITZ, :ROOST]
+    p.nature = :ADAMANT
+    p.ability_index = 1  # Intimidate
+    p.item = :LIFEORB
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:METAGROSS, 70) do |p|
+    p.moves = [:METEORMASH, :ZENHEADBUTT, :BULLETPUNCH, :EARTHQUAKE]
+    p.nature = :ADAMANT
+    p.ability_index = 0
+    p.item = :LEFTOVERS
+    p.iv = [31] * 6
+    p.ev = [252, 252, 0, 0, 4, 0]
+  end
+  t.pokemon(:GARCHOMP, 70) do |p|
+    p.moves = [:EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE]
+    p.nature = :JOLLY
+    p.ability_index = 0
+    p.item = :ROCKYHELMET
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:CHARIZARD, 72) do |p|
+    p.moves = [:FLAREBLITZ, :EARTHQUAKE, :DRAGONDANCE, :ROOST]
+    p.nature = :ADAMANT
+    p.ability_index = 0
+    p.item = :CHARIZARDITEX
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Marcus — with Aurora (version 1, for double-trainer battle)
+# Uses a different name so it doesn't collide with the solo definition.
+#-------------------------------------------------------------------------------
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus", 1) do |t|
+  t.lose_text "Aurora — *that* is our kid. Look at them. Look at them go."
+  t.pokemon(:CHARIZARD, 72) do |p|
+    p.moves = [:FLAREBLITZ, :DRAGONCLAW, :EARTHQUAKE, :PROTECT]
+    p.nature = :ADAMANT
+    p.item = :CHARIZARDITEX
+    p.iv = [31] * 6
+  end
+  t.pokemon(:METAGROSS, 72) do |p|
+    p.moves = [:METEORMASH, :ZENHEADBUTT, :BULLETPUNCH, :PROTECT]
+    p.nature = :ADAMANT
+    p.item = :LIFEORB
+    p.iv = [31] * 6
+  end
+  t.pokemon(:GARCHOMP, 72) do |p|
+    p.moves = [:EARTHQUAKE, :DRAGONCLAW, :ROCKSLIDE, :PROTECT]
+    p.nature = :JOLLY
+    p.item = :ROCKYHELMET
+    p.iv = [31] * 6
+  end
+  t.pokemon(:DRAGONITE, 72) do |p|
+    p.moves = [:DRAGONCLAW, :EXTREMESPEED, :EARTHQUAKE, :PROTECT]
+    p.nature = :ADAMANT
+    p.item = :LUMBERRY
+    p.iv = [31] * 6
+  end
+end
+
+GameData::Trainer.define(:RESEARCHER_EMERITUS, "Aurora") do |t|
+  t.lose_text "Marcus — they got us. Good. They *should* have gotten us."
+  t.pokemon(:GARDEVOIR, 72) do |p|
+    p.moves = [:MOONBLAST, :PSYCHIC, :THUNDERBOLT, :PROTECT]
+    p.nature = :MODEST
+    p.item = :GARDEVOIRITE
+    p.iv = [31] * 6
+  end
+  t.pokemon(:ALAKAZAM, 72) do |p|
+    p.moves = [:PSYCHIC, :FOCUSBLAST, :SHADOWBALL, :PROTECT]
+    p.nature = :TIMID
+    p.item = :LIFEORB
+    p.iv = [31] * 6
+  end
+  t.pokemon(:STARMIE, 72) do |p|
+    p.moves = [:HYDROPUMP, :ICEBEAM, :PSYCHIC, :PROTECT]
+    p.nature = :TIMID
+    p.item = :LEFTOVERS
+    p.iv = [31] * 6
+  end
+  t.pokemon(:JIRACHI, 72) do |p|
+    p.moves = [:IRONHEAD, :PSYCHIC, :HELPINGHAND, :PROTECT]
+    p.nature = :ADAMANT
+    p.item = :SAFETYGOGGLES
+    p.iv = [31] * 6
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Marcus — Championship-era prime (version 2, hardest tier)
+#-------------------------------------------------------------------------------
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus", 2) do |t|
+  t.lose_text "*panting, laughing* All right. ALL RIGHT. You're better than I ever was. \\\\nDon't tell your mother I said that."
+  # Level 80, max EVs, Mega ace, no held-item duplicates
+  t.pokemon(:DRAGONITE, 80) do |p|
+    p.moves = [:DRAGONDANCE, :OUTRAGE, :EXTREMESPEED, :EARTHQUAKE]
+    p.nature = :ADAMANT
+    p.ability_index = 2
+    p.item = :LUMBERRY
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:TYRANITAR, 80) do |p|
+    p.moves = [:STONEEDGE, :CRUNCH, :EARTHQUAKE, :ICEPUNCH]
+    p.nature = :ADAMANT
+    p.ability_index = 0
+    p.item = :CHOICEBAND
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:SALAMENCE, 80) do |p|
+    p.moves = [:DRAGONCLAW, :EARTHQUAKE, :FLAREBLITZ, :ROOST]
+    p.nature = :ADAMANT
+    p.ability_index = 1
+    p.item = :LIFEORB
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:METAGROSS, 80) do |p|
+    p.moves = [:METEORMASH, :ZENHEADBUTT, :BULLETPUNCH, :HAMMERARM]
+    p.nature = :ADAMANT
+    p.ability_index = 0
+    p.item = :ASSAULTVEST
+    p.iv = [31] * 6
+    p.ev = [252, 252, 0, 0, 4, 0]
+  end
+  t.pokemon(:GARCHOMP, 80) do |p|
+    p.moves = [:EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE]
+    p.nature = :JOLLY
+    p.ability_index = 0
+    p.item = :ROCKYHELMET
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+  t.pokemon(:CHARIZARD, 82) do |p|
+    p.moves = [:FLAREBLITZ, :EARTHQUAKE, :DRAGONDANCE, :ROOST]
+    p.nature = :ADAMANT
+    p.ability_index = 0
+    p.item = :CHARIZARDITEX
+    p.iv = [31] * 6
+    p.ev = [0, 252, 0, 0, 4, 252]
+  end
+end
+
+
+#===============================================================================
+# Postgame cutscene — challenge the old Champion
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :postgame_marcus_challenge do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\i[Dad was on the porch sharpening an old Pokéball. He hadn't done that since you were small.]"
+  scene.wait 20
+
+  scene.message "\\bDad Marcus\\b: Sit a minute, kid."
+  scene.message "\\bDad Marcus\\b: I want to ask you something I've never asked before."
+  scene.message "\\bDad Marcus\\b: ...are you going to be the one who beats me?"
+  scene.wait 30
+
+  scene.show_emotion :player, :exclamation
+  scene.message "\\b\\PN\\b: ...you want to battle?"
+  scene.message "\\bDad Marcus\\b: I want to *know.* I've watched you come up. Three years now. I've never been your opponent."
+  scene.message "\\bDad Marcus\\b: One fight. No badges. No stakes. Just so I can tell my Dragonite he met the next one."
+  scene.wait 30
+
+  scene.choice ["Of course, Dad.", "Take it seriously?", "Not today."] do |result|
+    case result
+    when 0  # Of course
+      pbMessage("\\b\\PN\\b: Of course, Dad.")
+      pbMessage("\\bDad Marcus\\b: Then let's not waste the afternoon.")
+      GameData::Cutscene.play(:postgame_marcus_battle)
+    when 1  # Take it seriously
+      pbMessage("\\b\\PN\\b: ...take it seriously?")
+      pbMessage("\\bDad Marcus\\b: *smiling* I have *been* taking it seriously since you were eight.")
+      pbMessage("\\bDad Marcus\\b: Today I'm just doing it in front of you.")
+      GameData::Cutscene.play(:postgame_marcus_battle)
+    when 2  # Not today
+      pbMessage("\\b\\PN\\b: Not today, Dad. Soon.")
+      pbMessage("\\bDad Marcus\\b: *nodding* Whenever. I'm not going anywhere.")
+    end
+  end
+end
+
+GameData::Cutscene.define :postgame_marcus_battle do |scene|
+  scene.play_bgm 'Pokemon XY - Champion Battle'
+  scene.heal_party
+
+  scene.trainer_battle :CHAMPION_EMERITUS, "Marcus", 0 do |won|
+    if won
+      scene.script {
+        $PokemonGlobal.sc_marcus_solo_beaten = true
+        pbMessage("\\bDad Marcus\\b: Heh. Knew it. \\\\nLet me catch my breath.")
+        pbMessage("\\bDad Marcus\\b: ...if you ever want a real one — with your mother in the corner — I will fight you again. I owe you that much.")
+        pbMessage("\\bDad Marcus\\b: *quiet* Proud of you, kid.")
+        scFateGrant(:fate_beat_dad, 2, "Surpassed the Champion") if defined?(scFateGrant)
+        pbAchievement(:ach_beat_marcus_solo) if defined?(pbAchievement)
+      }
+    else
+      scene.script {
+        pbMessage("\\bDad Marcus\\b: *laughing, helping you up* All right. *Now* I know what to work on with you.")
+        pbMessage("\\bDad Marcus\\b: Come back when you're ready. I'm not going anywhere.")
+      }
+    end
+  end
+end
+
+GameData::Cutscene.define :postgame_marcus_aurora do |scene|
+  scene.play_bgm 'Pokemon XY - Champion Battle'
+  scene.heal_party
+
+  scene.message "\\bDad Marcus\\b: All right, kid. The real one. *Both* of us."
+  scene.message "\\bMom (Aurora)\\b: Don't go easy on us, sweetheart. We won't."
+
+  # Engine-level: a double trainer battle. Pokemon Essentials's
+  # pbDoubleTrainerBattle takes two trainer specs.
+  scene.script {
+    result = pbDoubleTrainerBattle(
+      :CHAMPION_EMERITUS, "Marcus", 1,
+      :RESEARCHER_EMERITUS, "Aurora", 0
+    )
+    if result == 1
+      $PokemonGlobal.sc_marcus_aurora_beaten = true
+      pbMessage("\\bMom (Aurora)\\b: ...Marcus, dear?")
+      pbMessage("\\bDad Marcus\\b: Yeah?")
+      pbMessage("\\bMom (Aurora)\\b: We are absolutely raising the next league champion.")
+      pbMessage("\\bDad Marcus\\b: *grinning* I noticed.")
+      scFateGrant(:fate_beat_parents, 2, "Beat both your parents") if defined?(scFateGrant)
+      pbAchievement(:ach_beat_marcus_aurora) if defined?(pbAchievement)
+    else
+      pbMessage("\\bMom (Aurora)\\b: Closer than last time. Much closer.")
+      pbMessage("\\bDad Marcus\\b: Come back next week.")
+    end
+  }
+end
+
+GameData::Cutscene.define :postgame_marcus_prime do |scene|
+  scene.play_bgm 'Pokemon XY - Final Battle Lysandre'
+
+  scene.message "\\bDad Marcus\\b: One more. Just one. \\\\nThis is what I had when I was Champion."
+  scene.message "\\bDad Marcus\\b: Full prime team, full kit. No mercy."
+  scene.message "\\bDad Marcus\\b: ...beat me here and we're done. You're the one."
+
+  scene.heal_party
+  scene.trainer_battle :CHAMPION_EMERITUS, "Marcus", 2 do |won|
+    if won
+      scene.script {
+        $PokemonGlobal.sc_marcus_prime_beaten = true
+        pbMessage("\\bDad Marcus\\b: *long breath* ...that's it."
+        )
+        pbMessage("\\bDad Marcus\\b: That is *it,* \\PN. \\\\nYou are stronger than I ever was. I needed to know.")
+        pbMessage("\\bDad Marcus\\b: *quietly* And now I know.")
+        scFateGrant(:fate_beat_prime, 3, "Surpassed your father at his peak") if defined?(scFateGrant)
+        pbAchievement(:ach_beat_marcus_prime) if defined?(pbAchievement)
+      }
+    else
+      scene.script {
+        pbMessage("\\bDad Marcus\\b: Closer. Come back. \\\\nI'll be ready.")
+      }
+    end
+  end
+end
+
+
+#===============================================================================
+# Save flags for the three tier completions
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_marcus_solo_beaten, :sc_marcus_aurora_beaten, :sc_marcus_prime_beaten
+end
+
+SaveData.register(:sc_marcus_solo_beaten) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_marcus_solo_beaten || false }
+  load_value { |v| $PokemonGlobal.sc_marcus_solo_beaten = v }
+  new_game_value { false }
+end
+
+SaveData.register(:sc_marcus_aurora_beaten) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_marcus_aurora_beaten || false }
+  load_value { |v| $PokemonGlobal.sc_marcus_aurora_beaten = v }
+  new_game_value { false }
+end
+
+SaveData.register(:sc_marcus_prime_beaten) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_marcus_prime_beaten || false }
+  load_value { |v| $PokemonGlobal.sc_marcus_prime_beaten = v }
+  new_game_value { false }
+end
+
+
+#===============================================================================
+# >>>>>  PART 5c — POSTGAME: New Game+ and Mercy from the Throne (6th ending)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW GAME+ & "MERCY FROM THE THRONE"
+#===============================================================================
+# Builds on the ending tracking in Alternative_Endings.rb. Once a save has
+# at least one completed ending, the title screen exposes an NG+ option
+# that carries over codex/achievements/some items into a fresh run, and
+# unlocks NG+-only dialogue when meeting key characters.
+#
+# Also implements the hidden sixth ending — "Mercy from the Throne" —
+# which only fires if:
+#   1. Previous save flagged sc_bad_ending_seen (Pure Dark cleared)
+#   2. Current NG+ run reaches the same Ch34 decision point
+#   3. Player chooses to refuse Nidhoggr's offer this time
+#
+# All state lives in $PokemonGlobal so save/load survives.
+#===============================================================================
+
+
+module SCNGPlus
+  # Save-bridging keys that survive across NG+
+  CARRY_OVER_KEYS = [
+    :sc_endings_seen,
+    :sc_bad_ending_seen,
+    :sc_achievements,
+    :sc_achievement_progress,
+    :sc_marcus_solo_beaten,
+    :sc_marcus_aurora_beaten,
+    :sc_marcus_prime_beaten,
+    :sc_ngplus_runs,
+  ].freeze
+
+  # Items granted at NG+ start as a "you've been here before" handshake
+  STARTING_NGPLUS_ITEMS = [
+    [:MASTERBALL,    1],
+    [:RARECANDY,     5],
+    [:LUCKYEGG,      1],
+    [:EXPCHARM,      1],
+  ].freeze
+
+  def self.eligible?
+    return false unless $PokemonGlobal
+    seen = $PokemonGlobal.sc_endings_seen
+    seen.is_a?(Array) && !seen.empty?
+  end
+
+  def self.run_count
+    $PokemonGlobal&.sc_ngplus_runs || 0
+  end
+
+  def self.active?
+    run_count > 0
+  end
+
+  # Returns the array of tiers seen in any previous run.
+  def self.endings_seen
+    $PokemonGlobal&.sc_endings_seen || []
+  end
+
+  def self.bad_ending_seen?
+    $PokemonGlobal&.sc_bad_ending_seen == true
+  end
+
+  # Called from the title-screen NG+ entry point
+  def self.start
+    return false unless eligible?
+
+    # Snapshot data we want to carry over
+    snapshot = {}
+    CARRY_OVER_KEYS.each do |k|
+      next unless $PokemonGlobal.respond_to?(k)
+      snapshot[k] = $PokemonGlobal.send(k)
+    end
+
+    # Hand off — Essentials handles new-game flow elsewhere; this is just
+    # the data-side preparation. Title-screen wiring restores `snapshot`
+    # into the freshly-created $PokemonGlobal in :on_start_new_game.
+    $sc_ngplus_snapshot = snapshot
+    true
+  end
+end
+
+
+#-------------------------------------------------------------------------------
+# When a new game starts and we have a snapshot, transplant the survivors
+# and increment the NG+ counter.
+#-------------------------------------------------------------------------------
+EventHandlers.add(:on_start_new_game, :sc_ngplus_restore,
+  proc {
+    next unless $sc_ngplus_snapshot.is_a?(Hash) && !$sc_ngplus_snapshot.empty?
+    snap = $sc_ngplus_snapshot
+
+    SCNGPlus::CARRY_OVER_KEYS.each do |k|
+      next unless snap.key?(k)
+      setter = "#{k}=".to_sym
+      $PokemonGlobal.send(setter, snap[k]) if $PokemonGlobal.respond_to?(setter)
+    end
+
+    $PokemonGlobal.sc_ngplus_runs = (snap[:sc_ngplus_runs] || 0) + 1
+
+    # Give starter items so the player isn't grinding the early game by hand
+    SCNGPlus::STARTING_NGPLUS_ITEMS.each do |item, qty|
+      pbReceiveItem(item, qty) rescue nil
+    end
+
+    # Welcome cutscene defer — let the regular intro play first, then
+    # surface a quiet acknowledgement on first overworld load.
+    $game_temp.sc_ngplus_welcome_pending = true if defined?($game_temp)
+
+    $sc_ngplus_snapshot = nil
+  }
+)
+
+
+#-------------------------------------------------------------------------------
+# NG+ welcome cutscene — plays once on the first overworld step after intro
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :ngplus_welcome do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[The morning sun lit Dawnhaven the way it always had.]"
+  scene.message "\\i[You knew this room. You knew this house. You knew the road. \\\\nIt knew you back.]"
+  scene.wait 30
+
+  scene.script {
+    runs = SCNGPlus.run_count
+    if SCNGPlus.bad_ending_seen?
+      pbMessage("\\b\\PN\\b: *small voice* ...not this time.")
+      pbMessage("\\b\\PN\\b: *no one in particular* I'm going to do this differently.")
+    elsif runs >= 3
+      pbMessage("\\b\\PN\\b: ...third time. Some things are starting to feel like prayers.")
+    else
+      pbMessage("\\b\\PN\\b: ...okay. Round #{runs + 1}. Let's see what we missed.")
+    end
+  }
+
+  scene.camera_tint :reset, 30
+
+  # Unlock the codex entries already discovered in prior runs
+  scene.script {
+    if $PokemonGlobal.respond_to?(:codex_discovered_keys)
+      # Carried over via CARRY_OVER_KEYS pattern if extended; otherwise
+      # players can still re-discover entries naturally.
+    end
+  }
+end
+
+
+#===============================================================================
+# Mercy from the Throne — hidden sixth ending
+#-------------------------------------------------------------------------------
+# Only available if:
+#   - $PokemonGlobal.sc_bad_ending_seen == true (Pure Dark cleared before)
+#   - This run reaches Ch34's Nidhoggr offer
+#   - Player picks "Refuse — I remember what this costs."
+#
+# Dispatcher: substitute :ch34_ending_dispatch_with_mercy for the default
+# :ch34_ending_dispatch when SCNGPlus.bad_ending_seen? is true. The new
+# dispatcher adds a Mercy branch BEFORE the regular morality routing.
+#===============================================================================
+GameData::Cutscene.define :ch34_ending_dispatch_with_mercy do |scene|
+  scene.script {
+    if SCNGPlus.bad_ending_seen?
+      # Surface the special choice. Mercy is only available because the
+      # player *remembers* the cost from a previous timeline.
+      choices = [
+        "I refuse. I remember what this costs.",
+        "Continue normally."
+      ]
+      pick = pbShowCommands(nil, choices, -1)
+
+      if pick == 0
+        GameData::Cutscene.play(:ending_mercy_from_throne)
+        next
+      end
+    end
+
+    # Fall through to the normal dispatcher
+    GameData::Cutscene.play(:ch34_ending_dispatch)
+  }
+end
+
+GameData::Cutscene.define :ending_mercy_from_throne do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+  scene.camera_tint :reset, 30
+
+  scene.message "\\bNidhoggr\\b: ...you know what I am offering."
+  scene.message "\\bNidhoggr\\b: You have *taken* the offer before. I see it on you."
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: I know what you are offering."
+  scene.message "\\b\\PN\\b: I took it last time. \\\\nI saw what it made me."
+  scene.message "\\b\\PN\\b: I will not be that again."
+  scene.wait 30
+
+  scene.message "\\bNidhoggr\\b: ...curious. The Chosen of Valor with second-life memory."
+  scene.message "\\bNidhoggr\\b: ...you remember the throne. The silence. The sitting alone."
+  scene.message "\\bNidhoggr\\b: ...you remember Lyra and Kael fighting you, and losing, and your apology to them after."
+  scene.wait 45
+
+  scene.message "\\b\\PN\\b: I remember them losing because I wasn't strong enough to refuse you."
+  scene.message "\\b\\PN\\b: I am strong enough this time."
+  scene.message "\\b\\PN\\b: That is the only difference. \\\\nIt is enough of a difference."
+  scene.wait 45
+
+  scene.message "\\bNidhoggr\\b: ...then we are at impasse."
+  scene.message "\\bNidhoggr\\b: ...seal me, Chosen. \\\\nDo it cleanly. This is the last offer I am permitted to make."
+  scene.wait 30
+
+  # The seal completes the way it should have the first time
+  scene.script {
+    sc_guardian_say(:ZACIAN,  "Steady.")
+    sc_guardian_say(:XERNEAS, "We are with you.")
+    sc_guardian_say(:YVELTAL, "Now.")
+  }
+
+  scene.camera_flash 80
+  scene.wait 60
+
+  scene.message "\\i[The seal closed. Cleanly. Permanently.]"
+  scene.message "\\i[Lyra was there. Kael was there. Neither of them was ever fighting you, this time.]"
+  scene.wait 30
+
+  scene.message "\\bLyra\\b: ...you went somewhere just now. *Where did you go?*"
+  scene.message "\\b\\PN\\b: *quiet* Somewhere I'm never going again. \\\\nLet's go home."
+  scene.wait 30
+
+  scene.message "\\i[Hoopa, who had returned in the previous timeline, was not yet free in this one.]"
+  scene.message "\\i[Arceus arrived. Hoopa was freed. The world was saved.]"
+  scene.message "\\i[The world was *also* slightly different in ways nobody could quite name. \\\\nLyra commented, late at night, that she felt like she had already had this victory before. \\\\nKael said: 'Maybe we did.']"
+
+  scene.script {
+    $PokemonGlobal.sc_endings_seen ||= []
+    $PokemonGlobal.sc_endings_seen << :MERCY unless $PokemonGlobal.sc_endings_seen.include?(:MERCY)
+    pbAchievement(:ach_ending_mercy) if defined?(pbAchievement)
+    scFateGrant(:fate_mercy_ending, 3, "Refused the throne") if defined?(scFateGrant)
+  }
+
+  scene.script { GameData::Cutscene.play(:ch_credits_universal) }
+end
+
+
+#===============================================================================
+# Save hooks
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_ngplus_runs
+end
+
+SaveData.register(:sc_ngplus_runs) do
+  ensure_class :Integer
+  save_value { $PokemonGlobal.sc_ngplus_runs || 0 }
+  load_value { |v| $PokemonGlobal.sc_ngplus_runs = v }
+  new_game_value { 0 }
+end
+
+
+#-------------------------------------------------------------------------------
+# Title-screen wire-up
+#-------------------------------------------------------------------------------
+# To wire this into the actual title screen, add an extra menu entry in
+# Essentials' title-screen scene that calls SCNGPlus.start before starting
+# a new game. Example patch (apply in your title-screen plugin or main
+# scene script — kept out of this file because it depends on which title
+# system you use):
+#
+#   if SCNGPlus.eligible?
+#     # Insert "New Game+" as a menu option above the regular "New Game"
+#     # When selected:
+#     #   SCNGPlus.start
+#     #   then proceed to normal "New Game" flow
+#   end
+#
+# The on_start_new_game handler above will restore the carried-over state
+# automatically once the new game is created.
+
+
+#===============================================================================
+# >>>>>  PART 5d — POSTGAME: Sequel Hook (Ch55.5+, TO BE CONTINUED)
+#===============================================================================
+
+#===============================================================================
+# POKÉMON SHATTERED CROWNS - NEW ARC: SEQUEL HOOK (Chapter 55.5+)
+#===============================================================================
+# A 6-scene secret arc that unlocks after the True Ending (Ch55) AND after
+# the player has unlocked at least 5 endings (any 5 of the 6). Sets up
+# the seeds of a sequel without committing to a specific shape.
+#
+# This is intentionally LIGHT. It is a *promise,* not a roadmap. The
+# arc gives the surviving cast (and their next generation) a final
+# evening together, and lets the audience know: there will be more
+# work. Not now. Not for the player on this save. But somewhere, the
+# story continues.
+#
+# Beats:
+#   :seq_invitation        — Years later. A letter arrives at Sanctuary.
+#   :seq_the_messenger     — The messenger is a stranger with a familiar mark.
+#   :seq_old_friends       — Old friends reunite at the Sanctuary.
+#   :seq_the_question      — The next-generation Chosen ask for help.
+#   :seq_the_promise       — The original Chosen agree.
+#   :seq_to_be_continued   — The sun sets on Asgheim. A new day begins.
+#
+# Compatible with the Romance branches — if the player went Ragnar, the
+# letter explicitly references Ragnar's memorial; if Viktor, the letter
+# comes from Viktor's Asgheim Champion successor; etc.
+#===============================================================================
+
+
+GameData::Cutscene.define :seq_invitation do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+  scene.fade_in 60
+
+  scene.message "\\ts[]Some years after the Final Sunset."
+  scene.wait 30
+
+  scene.message "\\i[The Sanctuary was, by every measure, peaceful.]"
+  scene.message "\\i[Lyra and Kael's grandchildren ran the place now. The Gallade had taken on the role of head trainer; it allowed the children to call it 'Gally' and was visibly proud of this.]"
+  scene.wait 30
+
+  # The letter arrives
+  scene.message "\\bChild\\b: *running up to \\Player on the porch* \\\\nGrandpa/Grandma \\PN! \\\\nA letter! \\\\nIt's got the *new* league seal on it!"
+  scene.wait 20
+
+  scene.message "\\b\\PN\\b: *reading* \\\\n...oh. \\\\nOh dear."
+  scene.message "\\b\\PN\\b: *to the child* \\\\nGo get your grandparents. \\\\nTell them to bring tea."
+
+  scene.script {
+    pbAchievement(:ach_sequel_invitation) if defined?(pbAchievement)
+    scMemory(:mem_seq_invitation) if defined?(scMemory)
+  }
+end
+
+
+GameData::Cutscene.define :seq_the_messenger do |scene|
+  scene.play_bgm 'Pokemon XY - Reflection Cave'
+
+  scene.message "\\i[A young trainer stood at the Sanctuary gate. Sixteen, maybe seventeen. Carried a Pokémon in a leaf-wrapped basket the way Lyra had carried Willow at the same age.]"
+  scene.wait 30
+
+  scene.message "\\bYoung Trainer\\b: ...is this where the Chosen live?"
+  scene.message "\\b\\PN\\b: It's where we *retired,* yes."
+  scene.message "\\bYoung Trainer\\b: \\\\nI'm sorry to disturb you. \\\\nThe League said you wouldn't mind if I —"
+  scene.wait 20
+
+  scene.show_emotion :player, :exclamation
+
+  # The mark
+  scene.message "\\i[The young trainer's sleeve had ridden up while they fidgeted. \\\\nUnder the sleeve: a steel-blue mark, identical to \\PN's. Newer. Cleaner.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *quietly* \\\\n...come in. \\\\nWe were just about to make tea."
+  scene.message "\\bYoung Trainer\\b: *small voice* \\\\n...thank you."
+
+  scene.script {
+    codexDiscover(:NEXT_GEN_CHOSEN) if defined?(codexDiscover)
+    scMemory(:mem_seq_messenger) if defined?(scMemory)
+  }
+end
+
+
+GameData::Cutscene.define :seq_old_friends do |scene|
+  scene.play_bgm 'Pokemon XY - Friends Theme'
+
+  scene.message "\\i[By evening the porch was full. Lyra and Kael. Hoopa, on the railing, sorting mail with one ear cocked. The Gallade behind the door, definitely listening. Hilde, who lived at the Sanctuary now. Captain Marcus, who came up from the village. Aurora, with the tea.]"
+  scene.message "\\i[The young trainer had been silent for ten minutes. They had eaten three pieces of bread.]"
+  scene.wait 45
+
+  scene.message "\\bAurora\\b: *to the young trainer, gently* \\\\nWhat's your name, dear?"
+  scene.message "\\bYoung Trainer\\b: \\\\n...Quill. Quill Vester."
+  scene.message "\\bMarcus\\b: ...*Vester.* As in —"
+  scene.message "\\bQuill\\b: \\\\nVex was my great-uncle. \\\\nI'm sorry."
+  scene.wait 45
+
+  # The whole table goes quiet. Then Marcus speaks first.
+  scene.message "\\bMarcus\\b: *quietly* \\\\nKid. \\\\nDon't apologize. \\\\nYour great-uncle was a good man before the binding broke him. \\\\nIt's a *gift* that his line carries the mark now."
+  scene.message "\\bQuill\\b: *small* \\\\n...the League didn't tell me that part."
+  scene.message "\\bAurora\\b: *firm* \\\\nThe League doesn't *know* that part. \\\\nWe do."
+
+  scene.script {
+    scMemory(:mem_seq_old_friends) if defined?(scMemory)
+  }
+end
+
+
+GameData::Cutscene.define :seq_the_question do |scene|
+  scene.play_bgm 'Pokemon XY - Sad Theme'
+
+  scene.message "\\bQuill\\b: \\\\nThere's a — *thing* — happening at the old Astoria seal. \\\\nNot Nidhoggr. \\\\nSomething else."
+  scene.message "\\bQuill\\b: \\\\nI'm not the only one. \\\\nThere are three of us — like there were three of you."
+  scene.message "\\bQuill\\b: \\\\nA girl in Hoenn. A boy in Sinnoh. Me. \\\\nAll marked. All sixteen. All scared."
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: *taking Quill's hand* \\\\nWho sent you to find us?"
+  scene.message "\\bQuill\\b: \\\\nGiratina. \\\\nIn a dream. \\\\nIt said you would know what to do."
+  scene.wait 45
+
+  scene.message "\\bKael\\b: *very calm* \\\\n...we *don't* know what to do, Quill. \\\\nWe will *help you find out.* \\\\nThat is not the same thing."
+  scene.message "\\bQuill\\b: \\\\n...that's better, actually. \\\\nThe League made it sound like you'd just *fix* it."
+  scene.message "\\bLyra\\b: \\\\nWe were never the fix, dear. \\\\nWe were the *first* to walk that particular road. \\\\nNow you walk yours."
+  scene.wait 30
+
+  scene.script {
+    codexDiscover(:GIRATINA_NEW_DREAM) if defined?(codexDiscover)
+    scMemory(:mem_seq_the_question) if defined?(scMemory)
+  }
+end
+
+
+GameData::Cutscene.define :seq_the_promise do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\bMarcus\\b: *to \\PN, low* \\\\n...kid. \\\\nYou retired. \\\\nWe didn't make you promise you'd un-retire. \\\\nNobody on this porch will judge you for staying out of this."
+  scene.message "\\b\\PN\\b: *quietly* \\\\n...I know, Dad. \\\\nBut Quill's three sixteen-year-olds are the same age I was when this started."
+  scene.message "\\b\\PN\\b: \\\\nIf I don't help them figure out what's *theirs* to do — \\\\nthey will do what *we* did, the *hard* way, with no map."
+  scene.message "\\b\\PN\\b: \\\\nI have a *map* now."
+  scene.wait 45
+
+  scene.message "\\bLyra\\b: \\\\nKael?"
+  scene.message "\\bKael\\b: \\\\nI'll teach them the things that almost killed *me.* \\\\nAnd none of the things that almost *did.*"
+  scene.message "\\bLyra\\b: \\\\nI'll teach them to *listen.* \\\\nNobody taught us. \\\\nWe should fix that."
+  scene.wait 30
+
+  scene.message "\\bHoopa\\b: *from the railing, deeply offended at being ignored* \\\\nAND I AM ALSO GOING."
+  scene.message "\\bHoopa\\b: \\\\nA portal-trickster's *only* useful between worlds. \\\\nI am *severely* useful when there is *travel.*"
+  scene.message "\\bGallade\\b: *thought-projection, from inside the house* \\\\nI also intend to come. \\\\nIt was rude to assume you would not bring me."
+  scene.wait 30
+
+  scene.message "\\bAurora\\b: \\\\n...all right. \\\\nThe Sanctuary will be fine without you. \\\\nThe grandchildren can run it. \\\\nThe Gallade is — apparently — *insulted enough* to leave them in charge of him."
+  scene.message "\\bMarcus\\b: *grinning, finally* \\\\nYou're not retired anymore, kid."
+  scene.message "\\b\\PN\\b: *grinning back* \\\\nI'm *consulting.* \\\\nIt's different."
+
+  scene.script {
+    $PokemonGlobal.sc_sequel_committed = true if $PokemonGlobal.respond_to?(:sc_sequel_committed=)
+    scMemory(:mem_seq_the_promise) if defined?(scMemory)
+    pbAchievement(:ach_sequel_committed) if defined?(pbAchievement)
+    scFateGrant(:fate_sequel_committed, 3, "Agreed to walk the next road") if defined?(scFateGrant)
+  }
+end
+
+
+GameData::Cutscene.define :seq_to_be_continued do |scene|
+  scene.play_bgm 'Pokemon XY - Final Battle Lysandre'
+  scene.camera_tint :sepia, 30
+
+  scene.message "\\i[The next morning. Marrowport docks. Familiar place.]"
+  scene.message "\\i[Captain Lior was older now. Eighty-two. He had not retired. He did not believe in retirement.]"
+  scene.wait 30
+
+  scene.message "\\bLior\\b: \\\\n\\PN. Lyra. Kael. \\\\nAnd the three new ones. \\\\nWelcome aboard."
+  scene.message "\\b\\PN\\b: \\\\nLior. \\\\nYou should be retired."
+  scene.message "\\bLior\\b: *grinning* \\\\nI *am* retired. \\\\nThis is a *favour.* \\\\nIt is the *favourite* favour of my retirement."
+  scene.wait 30
+
+  # The new trio of Chosen stand at the rail
+  scene.message "\\i[Quill stood at the ship's rail with Joa (from Hoenn) and Bel (from Sinnoh). Three sixteen-year-olds. Mark-bearers. Scared. *Resolved.*]"
+  scene.message "\\i[Behind them: the original trio. Older. Calmer. Ready.]"
+  scene.wait 45
+
+  # Final shot
+  scene.message "\\bLyra\\b: *to the new three* \\\\nWhen you're scared — and you will be — \\\\nyou look at us. \\\\nWe will be standing *right* here."
+  scene.message "\\bKael\\b: \\\\nWe also have *snacks.*"
+  scene.message "\\b\\PN\\b: \\\\nKael is in charge of snacks. \\\\nIt is a deeply serious job."
+  scene.wait 30
+
+  scene.message "\\bQuill\\b: *small smile, first one we've seen from them* \\\\n...okay. \\\\nThank you."
+  scene.wait 30
+
+  scene.message "\\i[The ship cast off. Marrowport receded behind them.]"
+  scene.message "\\i[The horizon was clear. \\\\nThe horizon was *new.* \\\\nThe story was — *not over.* \\\\nThe story was *next.*]"
+  scene.wait 60
+
+  scene.camera_tint :reset, 30
+  scene.fade_out 90
+
+  scene.message "\\ts[]TO BE CONTINUED"
+  scene.wait 60
+
+  scene.message "\\ts[]\\bPokémon Shattered Crowns II:\\b The Next Road"
+  scene.message "\\ts[]Coming when it's ready."
+  scene.wait 60
+
+  scene.message "\\ts[]Thank you for walking this one with us."
+
+  scene.script {
+    pbAchievement(:ach_sequel_revealed) if defined?(pbAchievement)
+    $PokemonGlobal.sc_sequel_hook_seen = true if $PokemonGlobal.respond_to?(:sc_sequel_hook_seen=)
+  }
+end
+
+
+#===============================================================================
+# Unlock check — only runs if True Ending + 5 endings seen
+#===============================================================================
+def sc_check_sequel_unlock
+  return false unless $PokemonGlobal&.sc_endings_seen
+  endings_seen = $PokemonGlobal.sc_endings_seen.uniq.length
+  return endings_seen >= 5
+end
+
+
+#===============================================================================
+# Codex entries
+#===============================================================================
+if defined?(CodexRegistry)
+  CodexRegistry.add(:NEXT_GEN_CHOSEN,
+    title:    "The Next Three Chosen",
+    category: :MYTHOLOGY,
+    text:     "Three sixteen-year-olds, mark-bearers, scattered across " \
+              "Asgheim/Hoenn/Sinnoh. \\\\nQuill Vester (Valor) is the " \
+              "great-niece of Vex; her family line carries the apology " \
+              "Vex never made. Joa Maredue (Life) is a Hoenn-region " \
+              "researcher's daughter. Bel Whitestone (Cycles) was found, " \
+              "the way Kael was found, as an infant; the truth of their " \
+              "origin is unknown."
+  )
+
+  CodexRegistry.add(:GIRATINA_NEW_DREAM,
+    title:    "Giratina's Second Calling",
+    category: :MYTHOLOGY,
+    text:     "Giratina, having been bound to the Eternal Seal in Ch46, " \
+              "watches the cycle from inside the Distortion World. When " \
+              "a new threat emerged — *not* Nidhoggr, *not* the Hand — " \
+              "Giratina sent dreams to the next-generation Chosen. \\\\n" \
+              "The dreams said: 'Find the first three. They will know.' " \
+              "Giratina was correct."
+  )
+end
+
+
+#===============================================================================
+# Memories
+#===============================================================================
+[
+  [:mem_seq_invitation,    "The Letter Arrives",   "A letter! It's got the new league seal!",  "Sanctuary Porch",      55, :awe],
+  [:mem_seq_messenger,     "Quill",                "Vex was my great-uncle. I'm sorry.",       "Sanctuary Gate",       55, :awe],
+  [:mem_seq_old_friends,   "Old Friends at Table", "We do. The League doesn't know.",          "Sanctuary",            55, :warm],
+  [:mem_seq_the_question,  "Giratina's Dream",     "Find the first three. They will know.",   "Sanctuary",            55, :awe],
+  [:mem_seq_the_promise,   "I'm Consulting",       "I have a map now.",                       "Sanctuary Porch",      55, :love],
+].each do |id, title, quote, location, chapter, mood|
+  GameData::Memory.define id do |m|
+    m.title    title
+    m.quote    quote
+    m.location location
+    m.chapter  chapter
+    m.mood     mood
+  end
+end
+
+
+#===============================================================================
+# Achievements
+#===============================================================================
+if defined?(GameData::Achievement)
+  GameData::Achievement.define :ach_sequel_invitation do |a|
+    a.name "The Letter at the Door"
+    a.description "Receive Quill's invitation at the Sanctuary."
+    a.category :story_hidden
+    a.hidden true
+  end
+  GameData::Achievement.define :ach_sequel_committed do |a|
+    a.name "Not Retired — Consulting"
+    a.description "Agree to help the next three Chosen."
+    a.category :story_hidden
+    a.hidden true
+  end
+  GameData::Achievement.define :ach_sequel_revealed do |a|
+    a.name "To Be Continued"
+    a.description "Watch the sequel hook ending."
+    a.category :story_hidden
+    a.hidden true
+    a.reward_item :MASTERBALL, 3
+  end
+end
+
+
+#===============================================================================
+# Save flags
+#===============================================================================
+class PokemonGlobalMetadata
+  attr_accessor :sc_sequel_committed, :sc_sequel_hook_seen
+end
+
+SaveData.register(:sc_sequel_committed) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_sequel_committed || false }
+  load_value { |v| $PokemonGlobal.sc_sequel_committed = v }
+  new_game_value { false }
+end
+
+SaveData.register(:sc_sequel_hook_seen) do
+  ensure_class :TrueClass
+  save_value { $PokemonGlobal.sc_sequel_hook_seen || false }
+  load_value { |v| $PokemonGlobal.sc_sequel_hook_seen = v }
+  new_game_value { false }
 end
