@@ -9,45 +9,52 @@ arcs, or adds endgame/postgame content that wasn't in the bible at all.
 
 ## Files at a glance
 
+After the structural reorganization, files are now sorted into
+numbered folders by purpose. See `README.md` for the full layout
+explanation.
+
 ```
 Data/Scripts/Story/
-  Main_Story.rb                       ← bible, 23k lines (untouched by audits)
-  Main_Story_Quests.rb                ← bible (existing)
-  Side_Quests.rb                      ← bible (existing)
-  Interludes.rb                       ← bible (existing)
-  BattleMechanicStory.rb              ← bible (existing)
-  Soundtrack_Mapping.rb               ← bible (existing)
-  STORY_TODO.md                       ← v2 integration TODO
-
-  ─── v2 Audit ───────────────────────────────────────────────────────
-  SC_Story_Audit_v2.rb                ← 9 cutscenes (Aurora funeral, Hoopa
-                                         return, Astoria hosts, etc.)
-  Fate_Point_Events.rb                ← Destiny Board ↔ story wiring
-  Bond_Quests.rb                      ← 15 relationship quests
-  Alternative_Endings.rb              ← 5 endings + dispatcher
-
-  ─── v3 Audit ───────────────────────────────────────────────────────
-  SC_Story_Audit_v3.rb                ← Grief + Starter + Guardian voices
-  SC_Postgame_Marcus.rb               ← 3-tier postgame Champion battle
-  SC_NG_Plus.rb                       ← NG+ + Mercy from the Throne (6th end)
-  SC_Story_Achievements.rb            ← 27 achievements with dispatchers
-
-  ─── v4 Audit ───────────────────────────────────────────────────────
-  SC_Story_Audit_v4_Fixes.rb          ← Logic fixes + 4 civilian POV
-  SC_Arc_Verdantia_Truth.rb           ← NEW ARC Ch4.5
-  SC_Arc_Aldric_Notebooks.rb          ← NEW ARC Ch24.5
-  SC_Arc_Liberation.rb                ← NEW ARC Ch11.5-32.5 (recurring)
-  SC_Arc_Quiet_Year.rb                ← NEW ARC Ch35.5
-  SC_Arc_Hoopa_Sanctuary.rb           ← NEW ARC Ch47.5 postgame
-  SC_Arc_Prologue.rb                  ← NEW ARC Ch0 (playable as Marcus)
-  SC_Sys_Memory_Album.rb              ← Auto-saved keepsake system
-  SC_Sys_Wild_Legendaries.rb          ← 8 legendary encounters
-  SC_Sys_Romance_Branches.rb          ← Optional player romance paths
-  SC_Sys_Festival_Of_Crowns.rb        ← Festival mini-game (6 booths)
-  SC_Sys_Pokedex_Lore.rb              ← 21 Asgheim Pokédex lore entries
-  SC_Sys_Trainer_Card_Story.rb        ← Trainer Card story-page
-  SC_Arc_Astoria_Expansion.rb         ← Astoria NPCs + encounters
-  SC_Arc_Sequel_Hook.rb               ← TO BE CONTINUED (Ch55+)
+├─ 0_Prologue/
+│    └─ Prologue.rb                     ← Ch0, playable as Marcus
+├─ 1_Bible/
+│    ├─ BattleMechanicStory.rb
+│    ├─ Interludes.rb
+│    ├─ Main_Story.rb                   ← canonical 55-chapter spine (23k lines)
+│    ├─ Main_Story_Quests.rb
+│    ├─ Side_Quests.rb
+│    └─ Soundtrack_Mapping.rb
+├─ 2_Story_Additions/
+│    ├─ Audit_v2.rb                     ← Aurora funeral, Hoopa, Astoria hosts
+│    ├─ Audit_v3.rb                     ← Grief + Starter arc + Guardian voices
+│    └─ Audit_v4_Fixes.rb               ← Logic fixes + civilian POV
+├─ 3_Optional_Arcs/
+│    ├─ Arc_Ch04_5_Verdantia_Truth.rb
+│    ├─ Arc_Ch11_5_to_36_5_Liberation.rb
+│    ├─ Arc_Ch24_5_Aldric_Notebooks.rb
+│    ├─ Arc_Ch35_5_Quiet_Year.rb
+│    └─ Arc_Ch37_to_41_Astoria_Expansion.rb
+├─ 4_Postgame/
+│    ├─ Arc_Ch47_5_Hoopa_Sanctuary.rb
+│    ├─ Arc_Ch55_5_Sequel_Hook.rb
+│    ├─ Marcus_Battles.rb               ← 3-tier postgame Champion
+│    └─ NG_Plus.rb                       ← + Mercy from the Throne (6th end)
+├─ 5_Systems/
+│    ├─ Achievements.rb                  ← ~70 story achievements
+│    ├─ Alternative_Endings.rb           ← 5 morality-driven endings
+│    ├─ Bond_Quests.rb                   ← 15 character-bond quests
+│    ├─ Fate_Point_Events.rb             ← Destiny Board wiring
+│    ├─ Festival_Of_Crowns.rb            ← 6-booth Ch3 mini-game
+│    ├─ Memory_Album.rb                  ← Auto-saved keepsakes (~50)
+│    ├─ Pokedex_Lore.rb                  ← 21 mythology Pokédex entries
+│    ├─ Romance_Branches.rb              ← 4 player romance paths
+│    ├─ Trainer_Card_Story.rb            ← Story-snapshot trainer card
+│    └─ Wild_Legendaries.rb              ← 8 legendary encounters
+├─ Chapters/                            ← German design docs (markdown)
+├─ README.md                            ← structure explained
+├─ STORY_OVERVIEW.md                    ← this file
+├─ STORY_TODO.md                        ← integration TODO
+└─ Story_Bible.md                       ← top-level lore reference
 ```
 
 Plus updates to `Plugins/[SC] Lore Codex/Data/entries_sample.rb` —
