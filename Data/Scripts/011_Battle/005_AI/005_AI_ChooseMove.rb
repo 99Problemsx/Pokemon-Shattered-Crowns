@@ -371,13 +371,36 @@ class Battle::AI
       end
     end
     # Pick a move randomly from choices weighted by their scores
-    randNum = pbAIRandom(total_score)
-    choices.each do |c|
-      randNum -= c[3]
-      next if randNum >= 0
-      @battle.pbRegisterMove(user_battler.index, c[0], false)
-      @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] >= 0
-      break
+    move_registered = false
+    if total_score > 0
+      randNum = pbAIRandom(total_score)
+      choices.each do |c|
+        randNum -= c[3]
+        next if randNum >= 0
+        if @battle.pbRegisterMove(user_battler.index, c[0], false)
+          @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] >= 0
+          move_registered = true
+        end
+        break
+      end
+    end
+    # SC FIX: Fallback when the weighted pick registered nothing.
+    # This happens when every move score collapsed to the threshold floor
+    # (total_score == 0) — e.g. the AI's only move was hard-penalised to
+    # -999/-1000 (False Swipe vs a trainer, Fake Out after turn 1, an
+    # only-move that's Disabled/Imprisoned/Choice-locked, etc.). Without
+    # this guard the AI registered no command at all and simply did
+    # nothing on its turn. Force the highest-scored move; if even that
+    # can't be registered, auto-choose (Struggle).
+    unless move_registered
+      best = choices.max_by { |c| c[1] }
+      if best && @battle.pbRegisterMove(user_battler.index, best[0], false)
+        @battle.pbRegisterTarget(user_battler.index, best[2]) if best[2] >= 0
+        PBDebug.log_ai("#{@user.name} fallback: forcing best-scored move (all scores were terrible)")
+      else
+        @battle.pbAutoChooseMove(user_battler.index)
+        PBDebug.log_ai("#{@user.name} fallback: auto-choosing a move or Struggle")
+      end
     end
     # Log the result
     if @battle.choices[user_battler.index][2]

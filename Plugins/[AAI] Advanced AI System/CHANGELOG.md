@@ -8,6 +8,34 @@ Shattered-Crowns-side fixes to the upstream Advanced AI plugin
 
 ## Critical fixes
 
+### AI with an only-move that scored -999/-1000 did nothing on its turn
+
+Reported: an AI opponent whose only move was False Swipe just stood
+there each turn. Two interacting issues:
+
+1. **`0_Move_Scorer.rb` returned a flat `-999` for False Swipe in
+   trainer battles** (mislabelled "PVP" — this is a single-player game,
+   there is no online multiplayer). The special-case was removed
+   entirely. False Swipe is a weak 40 BP move that already scores low
+   on its own merits; the AI still uses it when it's the best or only
+   option, which is correct.
+
+2. **The real bug — `005_AI_ChooseMove.rb#pbChooseMove` registered no
+   command when every move score collapsed to the threshold floor.**
+   When the AI's only move is hard-penalised (False Swipe's old -999,
+   but also Fake Out after turn 1, an only-move that's Disabled /
+   Imprisoned / Choice-locked, or every move at 0 PP), `max_score`
+   goes negative, every choice's weight `c[3]` becomes 0,
+   `total_score` is 0, `pbAIRandom(0)` returns 0, and the weighted-pick
+   loop's `next if randNum >= 0` skips *every* choice — no move is
+   registered and the turn passes empty.
+
+   Added a structural fallback: if the weighted pick registers nothing,
+   force the highest-scored move; if even that can't be registered,
+   `pbAutoChooseMove` (Struggle). Guarantees the AI never stands idle,
+   and catches **every** hard-penalty-only-move case, not just False
+   Swipe.
+
 ### Switch moves "succeeded" but no switch actually happened
 
 **The eeveeexpo bug.** U-Turn / Volt Switch / Flip Turn / Parting Shot /
