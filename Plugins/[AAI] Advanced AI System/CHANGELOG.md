@@ -268,3 +268,18 @@ the inner multiplication.
   ```
   git log --all --oneline -- "Plugins/[000_AAI]*"
   ```
+
+---
+
+## Known issues
+
+- **Aliases lack `unless method_defined?` guards** (~20 across the
+  plugin, including 8 files that all chain `pbRegisterMove`:
+  Disruption_Moves, Special_Moves, Advanced_Abilities, Recoil_Tracking,
+  Weather_Terrain_Wars, Advanced_Items, Doubles_Strategy,
+  Priority_Tiers). A shipped build is unaffected — scripts load once.
+  But an F12 script reload in the dev editor re-runs the alias lines,
+  growing each chain, and eventually a battle action raises
+  `SystemStackError`. Workaround for now: restart the game instead of
+  F12-reloading after touching AAI files. Proper fix is to wrap each
+  alias in `unless method_defined?(:aliased_name)`.
