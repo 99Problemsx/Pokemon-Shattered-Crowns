@@ -418,7 +418,6 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_prologue_completed) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_prologue_completed || false }
   load_value { |v| $PokemonGlobal.sc_prologue_completed = v }
   new_game_value { false }
@@ -25231,14 +25230,12 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_verdantia_allied) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_verdantia_allied || false }
   load_value { |v| $PokemonGlobal.sc_verdantia_allied = v }
   new_game_value { false }
 end
 
 SaveData.register(:sc_kael_lineage_seed) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_kael_lineage_seed || false }
   load_value { |v| $PokemonGlobal.sc_kael_lineage_seed = v }
   new_game_value { false }
@@ -25654,8 +25651,7 @@ end
 
 [:sc_liberation_active, :sc_liberation_reunion_fired, :sc_gallade_ally].each do |key|
   SaveData.register(key) do
-    ensure_class :TrueClass
-    save_value { $PokemonGlobal.send(key) || false }
+      save_value { $PokemonGlobal.send(key) || false }
     load_value { |v| $PokemonGlobal.send("#{key}=", v) }
     new_game_value { false }
   end
@@ -26065,8 +26061,7 @@ end
 [:sc_aldric_notebooks_opened, :sc_aldric_basement_unlocked,
  :sc_yveltal_monitor_unlocked, :sc_yveltal_monitor_completed].each do |key|
   SaveData.register(key) do
-    ensure_class :TrueClass
-    save_value { $PokemonGlobal.send(key) || false }
+      save_value { $PokemonGlobal.send(key) || false }
     load_value { |v| $PokemonGlobal.send("#{key}=", v) }
     new_game_value { false }
   end
@@ -26385,7 +26380,6 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_engagement_announced) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_engagement_announced || false }
   load_value { |v| $PokemonGlobal.sc_engagement_announced = v }
   new_game_value { false }
@@ -26840,7 +26834,6 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_astoria_refugee_help) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_astoria_refugee_help || false }
   load_value { |v| $PokemonGlobal.sc_astoria_refugee_help = v }
   new_game_value { false }
@@ -27164,7 +27157,6 @@ SaveData.register(:sc_hoopa_recovery_day) do
 end
 
 SaveData.register(:sc_hoopa_shop_open) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_hoopa_shop_open || false }
   load_value { |v| $PokemonGlobal.sc_hoopa_shop_open = v }
   new_game_value { false }
@@ -27526,21 +27518,18 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_marcus_solo_beaten) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_marcus_solo_beaten || false }
   load_value { |v| $PokemonGlobal.sc_marcus_solo_beaten = v }
   new_game_value { false }
 end
 
 SaveData.register(:sc_marcus_aurora_beaten) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_marcus_aurora_beaten || false }
   load_value { |v| $PokemonGlobal.sc_marcus_aurora_beaten = v }
   new_game_value { false }
 end
 
 SaveData.register(:sc_marcus_prime_beaten) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_marcus_prime_beaten || false }
   load_value { |v| $PokemonGlobal.sc_marcus_prime_beaten = v }
   new_game_value { false }
@@ -28134,14 +28123,12 @@ class PokemonGlobalMetadata
 end
 
 SaveData.register(:sc_sequel_committed) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_sequel_committed || false }
   load_value { |v| $PokemonGlobal.sc_sequel_committed = v }
   new_game_value { false }
 end
 
 SaveData.register(:sc_sequel_hook_seen) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_sequel_hook_seen || false }
   load_value { |v| $PokemonGlobal.sc_sequel_hook_seen = v }
   new_game_value { false }

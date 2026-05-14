@@ -352,7 +352,6 @@ SaveData.register(:sc_romance_choice) do
 end
 
 SaveData.register(:sc_ragnar_lover_confession) do
-  ensure_class :TrueClass
   save_value { $PokemonGlobal.sc_ragnar_lover_confession || false }
   load_value { |v| $PokemonGlobal.sc_ragnar_lover_confession = v }
   new_game_value { false }
