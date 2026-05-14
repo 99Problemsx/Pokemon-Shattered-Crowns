@@ -166,19 +166,9 @@ class Battle::AI
       end
     end
     
-    # NOTE: There used to be a hard `return -999` for False Swipe in
-    # trainer battles here (mislabelled "PVP" — this is a single-player
-    # game, there is no online multiplayer). It was removed because:
-    #   1. It caused the AI to do *nothing* when False Swipe was its only
-    #      move — every move score collapsed to the threshold floor and
-    #      the weighted random picked no command.
-    #   2. False Swipe is already a weak 40 BP move; it scores low on its
-    #      own merits against trainers without a special-case. The AI
-    #      will still use it when it is the best (or only) option, which
-    #      is the correct behaviour.
-    # The structural fallback in 005_AI_ChooseMove.rb#pbChooseMove now
-    # also guarantees the AI never stands idle even if some future move
-    # is hard-penalised the same way.
+    # (Removed: a hard -999 for False Swipe vs trainers. It froze the AI
+    # when False Swipe was its only move, and a 40 BP move already scores
+    # low without a special case.)
 
     # Torment: Can't use the same move twice in a row
     if user.effects[PBEffects::Torment] && user.lastMoveUsed == move.id

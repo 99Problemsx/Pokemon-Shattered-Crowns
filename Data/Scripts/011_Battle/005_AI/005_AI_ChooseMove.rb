@@ -384,14 +384,10 @@ class Battle::AI
         break
       end
     end
-    # SC FIX: Fallback when the weighted pick registered nothing.
-    # This happens when every move score collapsed to the threshold floor
-    # (total_score == 0) — e.g. the AI's only move was hard-penalised to
-    # -999/-1000 (False Swipe vs a trainer, Fake Out after turn 1, an
-    # only-move that's Disabled/Imprisoned/Choice-locked, etc.). Without
-    # this guard the AI registered no command at all and simply did
-    # nothing on its turn. Force the highest-scored move; if even that
-    # can't be registered, auto-choose (Struggle).
+    # Fallback: when total_score is 0 every choice weight is 0 and the
+    # weighted pick above registers nothing (happens when the only move
+    # is hard-penalised, or all moves are out of PP). Force the best move,
+    # or Struggle if it can't be registered.
     unless move_registered
       best = choices.max_by { |c| c[1] }
       if best && @battle.pbRegisterMove(user_battler.index, best[0], false)
