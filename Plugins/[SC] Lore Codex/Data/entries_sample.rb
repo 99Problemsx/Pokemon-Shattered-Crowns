@@ -564,3 +564,62 @@ CodexRegistry.add(:MARCUS_RETIRED,
             "He is lying."
 )
 
+
+
+# ─── Elite Four (Asgheim League, current cycle) ──────────────────────────────
+
+CodexRegistry.add(:FENRIS_PROFILE,
+  title:    "Fenris — Fire Specialist",
+  category: :CHARACTERS,
+  text:     "First seat of the Asgheim Elite Four. Trained alongside " \
+            "Marcus in the same Champion-track class twenty-two years " \
+            "ago — every senior trainer on the league roster from that " \
+            "era remembers them as the two who pushed each other into " \
+            "the dirt every morning. Fenris took the Elite Four seat the " \
+            "year Marcus retired; he has held it ever since. He is " \
+            "publicly bitter that Marcus 'quit the work to be a father.' " \
+            "Privately, the first thing he asks every visiting Asgheim " \
+            "trainer is how Marcus's kids are doing."
+)
+
+CodexRegistry.add(:VALDRA_PROFILE,
+  title:    "Valdra — Dragon Specialist",
+  category: :CHARACTERS,
+  text:     "Second seat. Was once Aurora's research partner in " \
+            "Aldric's circle — the two co-authored the field paper on " \
+            "Salamence emotion-bond stability that is still taught in " \
+            "Asgheim's mid-tier trainer schools. Valdra took her Elite " \
+            "seat when Aurora chose mothering over the field-station. " \
+            "She does not consider Aurora's choice a betrayal; she " \
+            "considers it the more difficult of the two paths and is " \
+            "annoyed when other people fail to see this. She tutors " \
+            "promising young dragon-trainers privately on the side."
+)
+
+CodexRegistry.add(:MORWEN_PROFILE,
+  title:    "Morwen — Ghost Specialist",
+  category: :CHARACTERS,
+  text:     "Third seat. Yes, that Morwen — Lady Morwen of the old " \
+            "house, encountered in the Mortality Ruins. She came out " \
+            "of the ruins with a vow to spend her remaining years " \
+            "tending the graves she had failed to tend before; the " \
+            "League seat is one of those graves. She does not battle " \
+            "for sport. She battles to give the ghost-line trainers " \
+            "she defeats a teacher they will remember, and because she " \
+            "thinks the dead are owed witnesses who can still fight."
+)
+
+CodexRegistry.add(:ORM_PROFILE,
+  title:    "Orm — Water Specialist",
+  category: :CHARACTERS,
+  text:     "Fourth seat, youngest by a decade. Captain Lior's " \
+            "nephew — raised on the Astoria coast after his mother's " \
+            "death by drowning, taught the tides and the old Astoria " \
+            "sea-songs by his uncle in the years Lior could not yet " \
+            "speak about his sister. Orm took the Elite seat at " \
+            "twenty-three, against Lior's wishes; the captain bet a " \
+            "month's pay that 'no kid from the docks could hold a " \
+            "league chair,' a bet he has been quietly paying off for " \
+            "three years. Their relationship is fond and openly " \
+            "competitive."
+)

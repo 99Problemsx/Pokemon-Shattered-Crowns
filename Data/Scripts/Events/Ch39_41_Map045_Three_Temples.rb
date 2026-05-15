@@ -22,7 +22,7 @@ MapEvents.define(45) do |m|
       p.cutscene :ch39_climbing
       p.cutscene :ch39_temple_found
       p.cutscene :ch39_entrance
-      p.cutscene :astoria_keeper_sela_intro    # v2 audit Sela
+      p.cutscene :ch39_keeper_sela_intro       # v2 audit Sela
       p.cutscene :ch39_interior
       p.cutscene :ch39_guardian_appears
       p.cutscene :ch39_trial_begins
@@ -54,7 +54,7 @@ MapEvents.define(45) do |m|
       p.cutscene :ch40_intro, event_id: 2
       p.cutscene :ch40_approach
       p.cutscene :ch40_descent
-      p.cutscene :astoria_keeper_orin_intro    # v2 audit Orin
+      p.cutscene :ch40_keeper_orin_intro       # v2 audit Orin
       p.cutscene :ch40_temple_interior
       p.cutscene :ch40_guardian_appears
       p.cutscene :ch40_trial_begins
@@ -86,7 +86,7 @@ MapEvents.define(45) do |m|
       p.cutscene :ch41_kael_tense
       p.cutscene :ch41_temple_found
       p.cutscene :ch41_entering
-      p.cutscene :astoria_keeper_vera_reveal   # v2 audit — Vera reveal
+      p.cutscene :ch41_keeper_vera_reveal      # v2 audit — Vera reveal
       p.cutscene :ch41_guardian_appears
       p.cutscene :ch41_kael_trial
       p.cutscene :ch41_kael_acceptance

@@ -104,9 +104,12 @@ module RuneForgeManager
     data.add_rune(hybrid_key)
 
     pbSEPlay(RuneForging::SE_FORGE)
+    # Forge glow shader ([SC] Visual Effects). Safe-noop if absent.
+    pbApplyShader(:rune_forging) if defined?(pbApplyShader)
     pbMessage(_INTL("The runes merge in Yggdrasil's light..."))
     pbMessage(_INTL("You forged the {1}!", recipe[:name]))
     pbMessage(_INTL("{1}", recipe[:description]))
+    pbRemoveShader(:rune_forging) if defined?(pbRemoveShader)
 
     # Lore Codex integration
     codexDiscover(:"RUNE_FORGED_#{hybrid_key}") if defined?(codexDiscover)

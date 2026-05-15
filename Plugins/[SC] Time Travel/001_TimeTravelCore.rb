@@ -249,8 +249,16 @@ module TimeTravelManager
 
   def self.play_transition
     pbSEPlay(TimeTravelSystem::TRANSITION_SE)
-    pbFlash(TimeTravelSystem::TRANSITION_FLASH_COLOR, TimeTravelSystem::TRANSITION_FLASH_SPEED)
-    pbWait(Graphics.frame_rate / 2)
+    # Apply time-travel tunnel shader during the flash ([SC] Visual Effects).
+    if defined?(pbApplyShader)
+      pbApplyShader(:time_travel)
+      pbFlash(TimeTravelSystem::TRANSITION_FLASH_COLOR, TimeTravelSystem::TRANSITION_FLASH_SPEED)
+      pbWait(Graphics.frame_rate / 2)
+      pbRemoveShader(:time_travel) if defined?(pbRemoveShader)
+    else
+      pbFlash(TimeTravelSystem::TRANSITION_FLASH_COLOR, TimeTravelSystem::TRANSITION_FLASH_SPEED)
+      pbWait(Graphics.frame_rate / 2)
+    end
   end
 
   #=============================================================================

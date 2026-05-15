@@ -1903,6 +1903,9 @@ GameData::Cutscene.define :ch3_festival_story do |scene|
   scene.message "\\bOld Storyteller\\b: Each wore a crown of divine power."
   scene.message "\\bOld Storyteller\\b: But a great evil coveted their strength..."
   scene.message "\\bOld Storyteller\\b: In a battle that shook the heavens..."
+  scene.script { pbApplyShader(:crown_shatter) if defined?(pbApplyShader) }
+  scene.script { pbWait(Graphics.frame_rate * 2) }
+  scene.script { pbRemoveShader(:crown_shatter) if defined?(pbRemoveShader) }
   scene.message "\\bOld Storyteller\\b: The crowns were shattered!"
   
   scene.message "\\bLyra\\b: Ooh, spooky!"
@@ -17379,98 +17382,91 @@ end
 
 GameData::Cutscene.define :ch29_first_elite do |scene|
   scene.play_bgm 'Pokemon XY - Elite Four Battle'
-  
-  # TODO: Event Sequence - Narrative
-  # - The first chamber opened.
-  # - A trainer stood amidst swirling shadows.
-  
-  scene.message "\\bElite Gareth\\b: I am Gareth of the Elite Four."
-  scene.message "\\bElite Gareth\\b: Master of Ghost types."
-  scene.message "\\bElite Gareth\\b: I've heard of you, Chosen Ones."
-  
-  scene.message "\\b\\PN\\b: News travels fast."
-  
-  scene.message "\\bElite Gareth\\b: The spirits whisper your names."
-  scene.message "\\bElite Gareth\\b: Let's see if you live up to the legend."
-  
-  # TODO: Event Sequence - Battle Transition
-  # scene.message "The battle was fierce."
-  # scene.message "But you prevailed."
-  
-  scene.message "\\bElite Gareth\\b: Impressive..."
-  scene.message "\\bElite Gareth\\b: The next chamber awaits."
+
+  # The first chamber: warm stone walls, a forge burning at the back.
+  scene.message "\\i[A man in a Fire-corps mantle was sharpening his Cinderace's claws on a whetstone. He looked up — and laughed, recognising the name on the league roster.]"
+
+  scene.message "\\bElite Fenris\\b: Marcus's child? *snort* Of course you'd come for me first."
+  scene.message "\\bElite Fenris\\b: I trained alongside your father at the old league. Before he had you. Before he had anything to lose."
+
+  scene.message "\\bLyra\\b: You knew Dad?"
+  scene.message "\\bElite Fenris\\b: Better than he probably told you. He was the only one in our class who could outwork me. Then he quit to raise a family — and I never forgave him for being right about it."
+
+  scene.message "\\b\\PN\\b: ..."
+  scene.message "\\bElite Fenris\\b: Don't pity me, kid. I got the Elite Four out of his absence. Now I want to see what he traded it all for."
+
+  scene.script { codexDiscover(:FENRIS_PROFILE) if defined?(codexDiscover) }
+  scene.trainer_battle :ELITEFOUR_Fenris, "Fenris"
+
+  scene.message "\\bElite Fenris\\b: ...So this is what Marcus saw in you."
+  scene.message "\\bElite Fenris\\b: Tell him I said his trade was worth it. He'll know what that means."
 end
 
 GameData::Cutscene.define :ch29_second_elite do |scene|
   scene.play_bgm 'Pokemon XY - Elite Four Battle'
-  
-  # TODO: Event Sequence - Narrative
-  # - The second chamber blazed with heat.
-  # - Fire danced along the walls.
-  
-  scene.message "\\bElite Seraphina\\b: Seraphina. Fire specialist."
-  scene.message "\\bElite Seraphina\\b: You've done well to reach me."
-  
-  scene.message "\\bLyra\\b: She's intense..."
-  
-  scene.message "\\bElite Seraphina\\b: Passion fuels my flames!"
-  scene.message "\\bElite Seraphina\\b: Show me yours!"
-  
-  # TODO: Event Sequence - Battle Intensity
-  # scene.message "The battle pushed your team to their limits."
-  # scene.message "But fire could not burn your resolve."
-  
-  scene.message "\\bElite Seraphina\\b: *laughing* Wonderful!"
-  scene.message "\\bElite Seraphina\\b: Your passion burns brighter than mine!"
-  scene.message "\\bElite Seraphina\\b: Onward!"
+
+  # The second chamber: high ceiling, dragon murals, dim with sky-light.
+  scene.message "\\i[A tall woman in a scholar's coat stood reading a notebook. She looked up — and her face went still. Then surprised. Then quietly pleased.]"
+
+  scene.message "\\bElite Valdra\\b: Aurora's child. I see her in your bearing."
+  scene.message "\\bElite Valdra\\b: We were research partners under Aldric, your mother and I. Before the Calling pulled her out of the lab and into mothering."
+
+  scene.message "\\b\\PN\\b: You knew Aldric, too?"
+  scene.message "\\bElite Valdra\\b: I knew Aldric. I knew Aurora. I knew the look on her face the day she chose the kitchen over the field-station. I respected her for it. Still do."
+
+  scene.message "\\bKael\\b: (She's not at all what I expected an Elite Four to be.)"
+  scene.message "\\bElite Valdra\\b: I battle to keep my mind sharp. The dragons are simply the most interesting partners for that. — Show me Aurora's child has inherited her precision."
+
+  scene.script { codexDiscover(:VALDRA_PROFILE) if defined?(codexDiscover) }
+  scene.trainer_battle :ELITEFOUR_Valdra, "Valdra"
+
+  scene.message "\\bElite Valdra\\b: Aurora chose well in her child. I see her in you."
+  scene.message "\\bElite Valdra\\b: Give her my regards. Tell her the notebooks are still where she left them."
 end
 
 GameData::Cutscene.define :ch29_third_elite do |scene|
   scene.play_bgm 'Pokemon XY - Elite Four Battle'
-  
-  # TODO: Event Sequence - Narrative
-  # - The third chamber was cold.
-  # - Ice crystals hung from the ceiling.
-  
-  scene.message "\\bElite Frost\\b: I am Frost."
-  scene.message "\\bElite Frost\\b: I will freeze your advance."
-  
-  scene.message "\\bKael\\b: Another edgy one."
-  
-  scene.message "\\bElite Frost\\b: Mock all you want."
-  scene.message "\\bElite Frost\\b: The cold cares not for your words."
-  
-  # TODO: Event Sequence - Battle Struggle
-  # scene.message "The battle was grueling."
-  # scene.message "Frost's ice nearly overwhelmed you."
-  # scene.message "But warmth won out."
-  
-  scene.message "\\bElite Frost\\b: ...Thawed by the fire of your bonds."
-  scene.message "\\bElite Frost\\b: Impressive."
+
+  # The third chamber: silent, candle-lit, walls painted with old-house crests.
+  scene.message "\\i[A woman in widow's grey waited in a chair beside a single guttering candle. Her hair was short now — shorter than at the ruins.]"
+
+  scene.message "\\bElite Morwen\\b: We meet again, little chosen ones."
+  scene.message "\\bElite Morwen\\b: I told you in the ruins I would tend my graves. The League is one of those graves. The dead deserve a witness at the gate."
+
+  scene.message "\\bLyra\\b: ...You took an Elite Four seat?"
+  scene.message "\\bElite Morwen\\b: I had nowhere else to put my grief, child. The dead leave a great deal of skill behind."
+
+  scene.message "\\b\\PN\\b: You don't have to do this."
+  scene.message "\\bElite Morwen\\b: Yes I do. And so do you. Let us be honest with each other in the only language we both still speak."
+
+  scene.script { codexDiscover(:MORWEN_PROFILE) if defined?(codexDiscover) }
+  scene.trainer_battle :ELITEFOUR_Morwen, "Morwen"
+
+  scene.message "\\bElite Morwen\\b: I tended graves longer than I battled. The dead have nothing left to say to me."
+  scene.message "\\bElite Morwen\\b: ...Live the lives I could not bury, child."
 end
 
 GameData::Cutscene.define :ch29_fourth_elite do |scene|
   scene.play_bgm 'Pokemon XY - Elite Four Battle'
-  
-  # TODO: Event Sequence - Narrative
-  # - The fourth chamber opened to the sky.
-  # - Wind howled through the open ceiling.
-  
-  scene.message "\\bElite Tempest\\b: Tempest. Master of Flying types."
-  scene.message "\\bElite Tempest\\b: You've come far, children."
-  
-  scene.message "\\b\\PN\\b: We're not children."
-  
-  scene.message "\\bElite Tempest\\b: To me, all are children."
-  scene.message "\\bElite Tempest\\b: But let's see how high you can fly."
-  
-  # TODO: Event Sequence - Battle Soar
-  # scene.message "The battle soared."
-  # scene.message "Tempest's Pokémon ruled the air."
-  # scene.message "But you brought them down."
-  
-  scene.message "\\bElite Tempest\\b: The sky bows to you."
-  scene.message "\\bElite Tempest\\b: The Champion awaits."
+
+  # The fourth chamber: a saltwater channel cuts through the floor; sea-spray
+  # and tide-sounds bleed in from a half-open ceiling slot.
+  scene.message "\\i[A young man with sun-bleached hair and a sailor's coat sat on the edge of the channel, feeding a Pelipper from his palm. He grinned as the party stepped in.]"
+
+  scene.message "\\bElite Orm\\b: Hah! Uncle Lior bet me a month's pay you'd never get this far. He's going to be *insufferable* about losing."
+
+  scene.message "\\bLyra\\b: Uncle... Lior? Captain Lior?"
+  scene.message "\\bElite Orm\\b: That's the one. He raised me after Mom died — taught me the tides, the boats, the old Astoria songs. The League pulled me out before I'd finished growing up. He's still mad about it."
+
+  scene.message "\\bKael\\b: Astoria-born. Like Kael."
+  scene.message "\\bElite Orm\\b: Same coast, same songs. You'll feel them in the battle. Don't worry — I don't drown the kids. Just bruise them a little."
+
+  scene.script { codexDiscover(:ORM_PROFILE) if defined?(codexDiscover) }
+  scene.trainer_battle :ELITEFOUR_Orm, "Orm"
+
+  scene.message "\\bElite Orm\\b: Uncle Lior bet I'd lose. He'll be insufferable about it."
+  scene.message "\\bElite Orm\\b: Tell him from me — the kid's all right. He owes me dinner."
+  scene.message "\\bElite Orm\\b: The Champion's chamber is past the spiral stair. Watch your footing — the floor up there gets *theatrical.*"
 end
 
 GameData::Cutscene.define :ch29_pre_champion_moment do |scene|
