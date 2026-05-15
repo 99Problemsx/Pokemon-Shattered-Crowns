@@ -1,9 +1,10 @@
 #===============================================================================
 # [SC] Dex Mode - Shattered Crowns Limited Dex (curated species list)
 #===============================================================================
-# ~430 species across Gen 1-9, hand-picked to fit the Shattered Crowns
+# ~600 species across Gen 1-9, hand-picked to fit the Shattered Crowns
 # palette: nordic mythology, dragons, ghosts, ancient/fossil, weather,
-# steel knights, and every line that any story character actually uses.
+# steel knights, cosmic horror, and every line that any story character
+# actually uses. Route-filler rodents/birds/normal-types are cut.
 #
 # Inclusion rules:
 #   1. EVERY species used by a named story trainer (Generals, Marcus,
@@ -137,438 +138,274 @@ module SCLimitedDex
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 1 - selected lines (Asgheim-flavoured)
+  # Gen 1 - thematic selection (dragons, ghosts, ice, steel, fossil,
+  # warriors, weather) — filler routes mons cut.
   #-----------------------------------------------------------------------------
   GEN1 = [
-    # already starters + electric mascot above
-    :RATTATA, :RATICATE,
-    :SPEAROW, :FEAROW,
-    :EKANS, :ARBOK,
-    :NIDORANfE, :NIDORINA, :NIDOQUEEN, :NIDORANmA, :NIDORINO, :NIDOKING,
-    :VULPIX, :NINETALES,
-    :ZUBAT, :GOLBAT, :CROBAT,
-    :ODDISH, :GLOOM, :VILEPLUME, :BELLOSSOM,
-    :GROWLITHE, :ARCANINE,
-    :POLIWAG, :POLIWHIRL, :POLIWRATH, :POLITOED,
-    :MACHOP, :MACHOKE, :MACHAMP,
-    :BELLSPROUT, :WEEPINBELL, :VICTREEBEL,
-    :TENTACOOL, :TENTACRUEL,
-    :GEODUDE, :GRAVELER, :GOLEM,
-    :PONYTA, :RAPIDASH,
-    :SLOWPOKE, :SLOWBRO, :SLOWKING,
-    :MAGNEMITE, :MAGNETON, :MAGNEZONE,
-    :DODUO, :DODRIO,
-    :GRIMER, :MUK,
-    :SHELLDER, :CLOY­STER,
-    :ONIX, :STEELIX,
-    :DROWZEE, :HYPNO,
-    :EXEGGCUTE, :EXEGGUTOR,
-    :CUBONE, :MAROWAK,
-    :LICKITUNG, :LICKILICKY,
-    :KOFFING, :WEEZING,
-    :TANGELA, :TANGROWTH,
-    :KANGASKHAN,
-    :HORSEA, :SEADRA, :KINGDRA,
-    :SCYTHER, :SCIZOR,
-    :ELECTABUZZ, :ELECTIVIRE,
-    :MAGMAR, :MAGMORTAR,
-    :PINSIR, :HERACROSS,
-    :TAUROS,
-    :MAGIKARP, :GYARADOS,
-    :DITTO,
-    :PORYGON, :PORYGON2, :PORYGONZ,
-    :SNORLAX, :MUNCHLAX,
-    :ARTICUNO, :ZAPDOS, :MOLTRES,
+    :VULPIX, :NINETALES,                       # nordic fox spirit
+    :ZUBAT, :GOLBAT, :CROBAT,                  # cave staple
+    :GROWLITHE, :ARCANINE,                     # heroic hound
+    :MACHOP, :MACHOKE, :MACHAMP,               # warrior
+    :GEODUDE, :GRAVELER, :GOLEM,               # rock golem
+    :PONYTA, :RAPIDASH,                        # fire steed
+    :SLOWPOKE, :SLOWBRO, :SLOWKING,            # mysterious oracle
+    :MAGNEMITE, :MAGNETON, :MAGNEZONE,         # steel cluster
+    :SHELLDER, :CLOYSTER,                      # ice
+    :ONIX, :STEELIX,                           # rock+steel serpent
+    :CUBONE, :MAROWAK,                         # bone warrior (Alolan ghost flavour)
+    :KOFFING, :WEEZING,                        # poison
+    :KANGASKHAN,                               # heavy bruiser
+    :HORSEA, :SEADRA, :KINGDRA,                # sea dragon
+    :SCYTHER, :SCIZOR,                         # steel mantis
+    :ELECTABUZZ, :ELECTIVIRE,                  # electric warrior
+    :MAGMAR, :MAGMORTAR,                       # fire warrior
+    :PINSIR, :HERACROSS,                       # rival beetles
+    :TAUROS,                                   # heavy bruiser
+    :MAGIKARP, :GYARADOS,                      # rage-dragon
+    :PORYGON, :PORYGON2, :PORYGONZ,            # synthetic
+    :OMANYTE, :OMASTAR,                        # fossil
+    :KABUTO, :KABUTOPS,                        # fossil
+    :SNORLAX, :MUNCHLAX,                       # heavy
+    :ARTICUNO, :ZAPDOS, :MOLTRES,              # legendary trio
+    :DRATINI, :DRAGONAIR, :DRAGONITE,          # classic dragon
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 2 - selected lines (nordic-flavoured)
+  # Gen 2 - nordic-heavy (owls, ravens, ice bears, steel knight, mareep)
   #-----------------------------------------------------------------------------
   GEN2 = [
-    :HOOTHOOT, :NOCTOWL,
-    :LEDYBA, :LEDIAN,
-    :SPINARAK, :ARIADOS,
-    :MAREEP, :FLAAFFY, :AMPHAROS,
-    :HOPPIP, :SKIPLOOM, :JUMPLUFF,
-    :MAREEP,
-    :SUDOWOODO, :BONSLY,
-    :HOPPIP, :SKIPLOOM, :JUMPLUFF,
-    :AIPOM, :AMBIPOM,
-    :YANMA, :YANMEGA,
-    :WOOPER, :QUAGSIRE,
-    :MURKROW, :HONCHKROW,
-    :SLUGMA, :MAGCARGO,
-    :SWINUB, :PILOSWINE, :MAMOSWINE,
-    :REMORAID, :OCTILLERY,
-    :DELIBIRD,
-    :SKARMORY,
-    :SNEASEL, :WEAVILE,
-    :TEDDIURSA, :URSARING,
-    :STANTLER,
-    :SMEARGLE,
-    :TYROGUE, :HITMONLEE, :HITMONCHAN, :HITMONTOP,
-    :SMOOCHUM, :JYNX,
-    :ELEKID,
-    :MAGBY,
-    :MILTANK,
-    :PHANPY, :DONPHAN,
-    :HERACROSS,
-    :LUGIA, :HOOH, :CELEBI,
-    :SUICUNE, :ENTEI, :RAIKOU,
+    :HOOTHOOT, :NOCTOWL,                       # nordic owl
+    :MAREEP, :FLAAFFY, :AMPHAROS,              # electric ram
+    :MURKROW, :HONCHKROW,                      # raven (Huginn/Muninn)
+    :SWINUB, :PILOSWINE, :MAMOSWINE,           # ice tusker
+    :SKARMORY,                                 # steel knight bird
+    :SNEASEL, :WEAVILE,                        # ice dark
+    :TEDDIURSA, :URSARING,                     # great bear
+    :HITMONLEE, :HITMONCHAN, :HITMONTOP,       # combat masters
+    :MILTANK,                                  # heavy
+    :PHANPY, :DONPHAN,                         # heavy
+    :LUGIA, :HOOH, :CELEBI,                    # legendaries
+    :SUICUNE, :ENTEI, :RAIKOU,                 # beast trio
+    :PICHU, :PIKACHU, :RAICHU,                 # mascot (story tribute)
+    :CLEFFA, :CLEFAIRY, :CLEFABLE,             # fairy / cosmic
+    :IGGLYBUFF, :JIGGLYPUFF, :WIGGLYTUFF,      # fairy
+    :TOGEPI, :TOGETIC, :TOGEKISS,              # fairy
+    :MARILL, :AZUMARILL, :AZURILL,             # fairy
+    :CHINCHOU, :LANTURN,                       # deep-sea (already mandatory but kept here too)
+    :LARVITAR, :PUPITAR, :TYRANITAR,           # pseudo-legendary (mandatory)
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 3 - selected lines (dragon + ancient)
+  # Gen 3 - dragons, weather, fossils, ghosts, ancient artifacts
   #-----------------------------------------------------------------------------
   GEN3 = [
-    :POOCHYENA, :MIGHTYENA,
-    :TAILLOW, :SWELLOW,
-    :WINGULL, :PELIPPER,
-    :SHROOMISH, :BRELOOM,
-    :NINCADA, :NINJASK, :SHEDINJA,
-    :WHISMUR, :LOUDRED, :EXPLOUD,
-    :MAKUHITA, :HARIYAMA,
-    :ARON, :LAIRON, :AGGRON,
-    :MEDITITE, :MEDICHAM,
-    :ELECTRIKE, :MANECTRIC,
-    :PLUSLE, :MINUN,
-    :GULPIN, :SWALOT,
-    :CARVANHA, :SHARPEDO,
-    :NUMEL, :CAMERUPT,
-    :TORKOAL,
-    :SPOINK, :GRUMPIG,
-    :SPINDA,
-    :TRAPINCH, :VIBRAVA, :FLYGON,
-    :CACNEA, :CACTURNE,
-    :SWABLU, :ALTARIA,
-    :ZANGOOSE, :SEVIPER,
-    :LUNATONE, :SOLROCK,
-    :BARBOACH, :WHISCASH,
-    :CORPHISH, :CRAWDAUNT,
-    :BALTOY, :CLAYDOL,
-    :LILEEP, :CRADILY,
-    :ANORITH, :ARMALDO,
-    :FEEBAS, :MILOTIC,
-    :CASTFORM,
-    :KECLEON,
-    :SHUPPET, :BANETTE,
-    :DUSKULL, :DUSCLOPS, :DUSKNOIR,
-    :TROPIUS,
-    :CHIMECHO, :CHINGLING,
-    :ABSOL,
-    :WYNAUT, :WOBBUFFET,
-    :SNORUNT, :GLALIE, :FROSLASS,
-    :CLAMPERL, :HUNTAIL, :GOREBYSS,
-    :RELICANTH,
-    :LUVDISC,
-    :BAGON, :SHELGON, :SALAMENCE,
-    :BELDUM, :METANG, :METAGROSS,
-    :REGIROCK, :REGICE, :REGISTEEL,
-    :LATIAS, :LATIOS,
-    :KYOGRE, :GROUDON, :RAYQUAZA,
-    :JIRACHI, :DEOXYS,
+    :MIGHTYENA, :POOCHYENA,                    # dark hound
+    :NINCADA, :NINJASK, :SHEDINJA,             # ghost husk
+    :ARON, :LAIRON, :AGGRON,                   # steel knight
+    :TRAPINCH, :VIBRAVA, :FLYGON,              # desert dragon
+    :SWABLU, :ALTARIA,                         # cloud dragon
+    :LUNATONE, :SOLROCK,                       # cosmic
+    :LILEEP, :CRADILY,                         # fossil
+    :ANORITH, :ARMALDO,                        # fossil (mandatory)
+    :CASTFORM,                                 # weather
+    :SHUPPET, :BANETTE,                        # ghost (mandatory)
+    :DUSKULL, :DUSCLOPS, :DUSKNOIR,            # ghost (mandatory)
+    :ABSOL,                                    # disaster
+    :SNORUNT, :GLALIE, :FROSLASS,              # ice ghost (mandatory)
+    :RELICANTH,                                # living fossil (mandatory)
+    :BAGON, :SHELGON, :SALAMENCE,              # dragon (mandatory)
+    :BELDUM, :METANG, :METAGROSS,              # steel (mandatory)
+    :REGIROCK, :REGICE, :REGISTEEL,            # golem trio (mandatory)
+    :LATIAS, :LATIOS,                          # eon (mandatory)
+    :KYOGRE, :GROUDON, :RAYQUAZA,              # weather trio
+    :JIRACHI, :DEOXYS,                         # cosmic (mandatory)
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 4 - selected lines
+  # Gen 4 - dragons, fossils, steel knights, ghosts, cosmic legends
   #-----------------------------------------------------------------------------
   GEN4 = [
-    :STARLY, :STARAVIA, :STARAPTOR,
-    :BIDOOF, :BIBAREL,
-    :KRICKETOT, :KRICKETUNE,
-    :SHINX, :LUXIO, :LUXRAY,
-    :BUDEW,
-    :CRANIDOS, :RAMPARDOS,
-    :SHIELDON, :BASTIODON,
-    :BURMY, :WORMADAM, :MOTHIM,
-    :COMBEE, :VESPIQUEN,
-    :PACHIRISU,
-    :BUIZEL, :FLOATZEL,
-    :CHERUBI, :CHERRIM,
-    :SHELLOS, :GASTRODON,
-    :DRIFLOON, :DRIFBLIM,
-    :BUNEARY, :LOPUNNY,
-    :GLAMEOW, :PURUGLY,
-    :CHINGLING,
-    :STUNKY, :SKUNTANK,
-    :BRONZOR, :BRONZONG,
-    :CHATOT,
-    :SPIRITOMB,
-    :GIBLE, :GABITE, :GARCHOMP,
-    :MUNCHLAX,
-    :RIOLU, :LUCARIO,
-    :HIPPOPOTAS, :HIPPOWDON,
-    :SKORUPI, :DRAPION,
-    :CROAGUNK, :TOXICROAK,
-    :CARNIVINE,
-    :FINNEON, :LUMINEON,
-    :MANTYKE,
-    :SNOVER, :ABOMASNOW,
-    :MAGNEZONE, :LICKILICKY, :RHYPERIOR, :TANGROWTH, :ELECTIVIRE, :MAGMORTAR, :TOGEKISS, :YANMEGA, :LEAFEON, :GLACEON, :GLISCOR, :MAMOSWINE, :PORYGONZ, :GALLADE, :PROBOPASS, :DUSKNOIR, :FROSLASS, :ROTOM,
-    :UXIE, :MESPRIT, :AZELF,
-    :DIALGA, :PALKIA, :HEATRAN, :REGIGIGAS, :GIRATINA, :CRESSELIA, :PHIONE, :MANAPHY, :DARKRAI, :SHAYMIN, :ARCEUS,
+    :STARLY, :STARAVIA, :STARAPTOR,            # boss bird
+    :SHINX, :LUXIO, :LUXRAY,                   # electric lion
+    :CRANIDOS, :RAMPARDOS,                     # fossil (mandatory)
+    :SHIELDON, :BASTIODON,                     # fossil knight
+    :DRIFLOON, :DRIFBLIM,                      # ghost
+    :BRONZOR, :BRONZONG,                       # ancient bell
+    :SPIRITOMB,                                # ghost (mandatory)
+    :GIBLE, :GABITE, :GARCHOMP,                # dragon (mandatory)
+    :RIOLU, :LUCARIO,                          # aura warrior
+    :HIPPOPOTAS, :HIPPOWDON,                   # sandstorm
+    :SKORUPI, :DRAPION,                        # dark scorpion
+    :SNOVER, :ABOMASNOW,                       # ice giant
+    :ROTOM,                                    # ghost electric spirit
+    :UXIE, :MESPRIT, :AZELF,                   # cosmic trio
+    :DIALGA, :PALKIA, :HEATRAN,                # cosmic / underworld
+    :REGIGIGAS, :GIRATINA, :CRESSELIA,         # legendaries
+    :PHIONE, :MANAPHY, :DARKRAI,               # legendaries
+    :SHAYMIN, :ARCEUS,                         # legendaries
+    # Cross-gen evolutions (their base lines are kept in Gen1/Gen2)
+    :TOGEKISS, :MAMOSWINE, :GALLADE,           # fairy / ice / steel knight
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 5 - selected lines (dragons + ghosts heavy)
+  # Gen 5 - dragons, ghosts, steel knights, cosmic horror, fossils
   #-----------------------------------------------------------------------------
   GEN5 = [
-    :PATRAT, :WATCHOG,
-    :LILLIPUP, :HERDIER, :STOUTLAND,
-    :PURRLOIN, :LIEPARD,
-    :PIDOVE, :TRANQUILL, :UNFEZANT,
-    :BLITZLE, :ZEBSTRIKA,
-    :ROGGENROLA, :BOLDORE, :GIGALITH,
-    :WOOBAT, :SWOOBAT,
-    :DRILBUR, :EXCADRILL,
-    :AUDINO,
-    :TIMBURR, :GURDURR, :CONKELDURR,
-    :TYMPOLE, :PALPITOAD, :SEISMITOAD,
-    :SEWADDLE, :SWADLOON, :LEAVANNY,
-    :VENIPEDE, :WHIRLIPEDE, :SCOLIPEDE,
-    :COTTONEE, :WHIMSICOTT,
-    :PETILIL, :LILLIGANT,
-    :BASCULIN,
-    :SANDILE, :KROKOROK, :KROOKODILE,
-    :DARUMAKA, :DARMANITAN,
-    :MARACTUS,
-    :DWEBBLE, :CRUSTLE,
-    :SCRAGGY, :SCRAFTY,
-    :SIGILYPH,
-    :YAMASK, :COFAGRIGUS,
-    :TIRTOUGA, :CARRACOSTA,
-    :ARCHEN, :ARCHEOPS,
-    :TRUBBISH, :GARBODOR,
-    :ZORUA, :ZOROARK,
-    :MINCCINO, :CINCCINO,
-    :GOTHITA, :GOTHORITA, :GOTHITELLE,
-    :SOLOSIS, :DUOSION, :REUNICLUS,
-    :DUCKLETT, :SWANNA,
-    :VANILLITE, :VANILLISH, :VANILLUXE,
-    :DEERLING, :SAWSBUCK,
-    :EMOLGA,
-    :KARRABLAST, :ESCAVALIER,
-    :FOONGUS, :AMOONGUSS,
-    :FRILLISH, :JELLICENT,
-    :ALOMOMOLA,
-    :JOLTIK, :GALVANTULA,
-    :FERROSEED, :FERROTHORN,
-    :KLINK, :KLANG, :KLINKLANG,
-    :TYNAMO, :EELEKTRIK, :EELEKTROSS,
-    :ELGYEM, :BEHEEYEM,
-    :LITWICK, :LAMPENT, :CHANDELURE,
-    :AXEW, :FRAXURE, :HAXORUS,
-    :CUBCHOO, :BEARTIC,
-    :CRYOGONAL,
-    :SHELMET, :ACCELGOR,
-    :STUNFISK,
-    :MIENFOO, :MIENSHAO,
-    :DRUDDIGON,
-    :GOLETT, :GOLURK,
-    :PAWNIARD, :BISHARP, :KINGAMBIT,
-    :BOUFFALANT,
-    :RUFFLET, :BRAVIARY,
-    :VULLABY, :MANDIBUZZ,
-    :HEATMOR,
-    :DURANT,
-    :DEINO, :ZWEILOUS, :HYDREIGON,
-    :LARVESTA, :VOLCARONA,
-    :COBALION, :TERRAKION, :VIRIZION, :KELDEO,
-    :TORNADUS, :THUNDURUS, :LANDORUS,
-    :RESHIRAM, :ZEKROM, :KYUREM,
-    :MELOETTA, :GENESECT,
+    :LILLIPUP, :HERDIER, :STOUTLAND,           # nordic war hound
+    :DRILBUR, :EXCADRILL,                      # steel mole
+    :SANDILE, :KROKOROK, :KROOKODILE,          # dark crocodile
+    :DARUMAKA, :DARMANITAN,                    # fire (Galarian ice form fits)
+    :DWEBBLE, :CRUSTLE,                        # rock dwelling
+    :SIGILYPH,                                 # ancient artifact bird
+    :YAMASK, :COFAGRIGUS,                      # ghost (mandatory)
+    :TIRTOUGA, :CARRACOSTA,                    # fossil
+    :ARCHEN, :ARCHEOPS,                        # fossil
+    :ZORUA, :ZOROARK,                          # illusion (mandatory)
+    :GOTHITA, :GOTHORITA, :GOTHITELLE,         # witch psychic
+    :KARRABLAST, :ESCAVALIER,                  # steel knight bug
+    :FRILLISH, :JELLICENT,                     # ghost jelly
+    :JOLTIK, :GALVANTULA,                      # electric spider
+    :FERROSEED, :FERROTHORN,                   # steel
+    :KLINK, :KLANG, :KLINKLANG,                # steel cluster
+    :LITWICK, :LAMPENT, :CHANDELURE,           # ghost (mandatory)
+    :AXEW, :FRAXURE, :HAXORUS,                 # dragon
+    :CUBCHOO, :BEARTIC,                        # ice bear
+    :CRYOGONAL,                                # ice
+    :MIENFOO, :MIENSHAO,                       # martial arts
+    :DRUDDIGON,                                # dragon
+    :GOLETT, :GOLURK,                          # ghost golem
+    :PAWNIARD, :BISHARP, :KINGAMBIT,           # dark knight (mandatory)
+    :RUFFLET, :BRAVIARY,                       # nordic eagle
+    :VULLABY, :MANDIBUZZ,                      # dark vulture
+    :DURANT,                                   # steel
+    :DEINO, :ZWEILOUS, :HYDREIGON,             # dragon (mandatory)
+    :LARVESTA, :VOLCARONA,                     # fire moth
+    :COBALION, :TERRAKION, :VIRIZION, :KELDEO, # swords of justice (mandatory)
+    :TORNADUS, :THUNDURUS, :LANDORUS,          # weather trio
+    :RESHIRAM, :ZEKROM, :KYUREM,               # tao dragons (mandatory)
+    :MELOETTA, :GENESECT,                      # legendaries
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 6 - selected lines
+  # Gen 6 - knights, dragons, fossils, ghosts, ice, fairy garden
   #-----------------------------------------------------------------------------
   GEN6 = [
-    :BUNNELBY, :DIGGERSBY,
-    :FLETCHLING, :FLETCHINDER, :TALONFLAME,
-    :SCATTERBUG, :SPEWPA, :VIVILLON,
-    :LITLEO, :PYROAR,
-    :FLABEBE, :FLOETTE, :FLORGES,
-    :SKIDDO, :GOGOAT,
-    :PANCHAM, :PANGORO,
-    :FURFROU,
-    :ESPURR, :MEOWSTIC,
-    :HONEDGE, :DOUBLADE, :AEGISLASH,
-    :SPRITZEE, :AROMATISSE,
-    :SWIRLIX, :SLURPUFF,
-    :INKAY, :MALAMAR,
-    :BINACLE, :BARBARACLE,
-    :SKRELP, :DRAGALGE,
-    :CLAUNCHER, :CLAWITZER,
-    :HELIOPTILE, :HELIOLISK,
-    :TYRUNT, :TYRANTRUM,
-    :AMAURA, :AURORUS,
-    :HAWLUCHA,
-    :DEDENNE,
-    :CARBINK,
-    :GOOMY, :SLIGGOO, :GOODRA,
-    :KLEFKI,
-    :PHANTUMP, :TREVENANT,
-    :PUMPKABOO, :GOURGEIST,
-    :BERGMITE, :AVALUGG,
-    :NOIBAT, :NOIVERN,
-    :XERNEAS, :YVELTAL, :ZYGARDE,
-    :DIANCIE, :HOOPA, :VOLCANION,
+    :FLETCHLING, :FLETCHINDER, :TALONFLAME,    # phoenix bird
+    :LITLEO, :PYROAR,                          # lion
+    :FLABEBE, :FLOETTE, :FLORGES,              # fairy garden
+    :FURFROU,                                  # tribute (Pip)
+    :HONEDGE, :DOUBLADE, :AEGISLASH,           # sword knight (mandatory)
+    :INKAY, :MALAMAR,                          # dark psychic
+    :SKRELP, :DRAGALGE,                        # poison dragon
+    :TYRUNT, :TYRANTRUM,                       # fossil dragon
+    :AMAURA, :AURORUS,                         # fossil ice
+    :CARBINK,                                  # rock fairy
+    :GOOMY, :SLIGGOO, :GOODRA,                 # dragon
+    :KLEFKI,                                   # steel fairy
+    :PHANTUMP, :TREVENANT,                     # ghost tree
+    :PUMPKABOO, :GOURGEIST,                    # halloween ghost
+    :BERGMITE, :AVALUGG,                       # ice giant
+    :NOIBAT, :NOIVERN,                         # dragon bat
+    :XERNEAS, :YVELTAL, :ZYGARDE,              # legendaries (mandatory)
+    :DIANCIE, :HOOPA, :VOLCANION,              # legendaries (mandatory)
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 7 - selected lines
+  # Gen 7 - dragons, ghosts, island guardians, cosmic horror (Ultra Beasts)
   #-----------------------------------------------------------------------------
   GEN7 = [
-    :PIKIPEK, :TRUMBEAK, :TOUCANNON,
-    :YUNGOOS, :GUMSHOOS,
-    :GRUBBIN, :CHARJABUG, :VIKAVOLT,
-    :CRABRAWLER, :CRABOMINABLE,
-    :ORICORIO,
-    :CUTIEFLY, :RIBOMBEE,
-    :ROCKRUFF, :LYCANROC,
-    :WISHIWASHI,
-    :MAREANIE, :TOXAPEX,
-    :MUDBRAY, :MUDSDALE,
-    :DEWPIDER, :ARAQUANID,
-    :FOMANTIS, :LURANTIS,
-    :MORELULL, :SHIINOTIC,
-    :SALANDIT, :SALAZZLE,
-    :STUFFUL, :BEWEAR,
-    :BOUNSWEET, :STEENEE, :TSAREENA,
-    :COMFEY,
-    :ORANGURU,
-    :PASSIMIAN,
-    :WIMPOD, :GOLISOPOD,
-    :SANDYGAST, :PALOSSAND,
-    :PYUKUMUKU,
-    :TYPENULL, :SILVALLY,
-    :MINIOR,
-    :KOMALA,
-    :TURTONATOR,
-    :TOGEDEMARU,
-    :MIMIKYU,
-    :BRUXISH,
-    :DRAMPA,
-    :DHELMISE,
-    :JANGMOO, :HAKAMOO, :KOMMOO,
-    :TAPUKOKO, :TAPULELE, :TAPUBULU, :TAPUFINI,
-    :COSMOG, :COSMOEM, :SOLGALEO, :LUNALA,
-    :NIHILEGO, :BUZZWOLE, :PHEROMOSA, :XURKITREE, :CELESTEELA, :KARTANA, :GUZZLORD,
-    :NECROZMA, :MAGEARNA, :MARSHADOW,
-    :POIPOLE, :NAGANADEL,
-    :STAKATAKA, :BLACEPHALON,
-    :ZERAORA, :MELTAN, :MELMETAL,
+    :GRUBBIN, :CHARJABUG, :VIKAVOLT,           # electric beetle
+    :ROCKRUFF, :LYCANROC,                      # wolf (Nordic)
+    :MAREANIE, :TOXAPEX,                       # eldritch sea horror
+    :MUDBRAY, :MUDSDALE,                       # heavy war-horse
+    :SALANDIT, :SALAZZLE,                      # fire lizard
+    :SANDYGAST, :PALOSSAND,                    # ghost sand-castle
+    :TYPENULL, :SILVALLY,                      # synthetic guardian
+    :MINIOR,                                   # cosmic
+    :TURTONATOR,                               # fire dragon turtle
+    :MIMIKYU,                                  # ghost (mandatory)
+    :DRAMPA,                                   # dragon
+    :DHELMISE,                                 # ghost-steel anchor
+    :JANGMOO, :HAKAMOO, :KOMMOO,               # dragon (mandatory)
+    :TAPUKOKO, :TAPULELE, :TAPUBULU, :TAPUFINI,# island guardians
+    :COSMOG, :COSMOEM, :SOLGALEO, :LUNALA,     # cosmic legendaries
+    :NIHILEGO, :BUZZWOLE, :PHEROMOSA,          # ultra beasts
+    :XURKITREE, :CELESTEELA, :KARTANA, :GUZZLORD,
+    :POIPOLE, :NAGANADEL,                      # ultra beast dragon
+    :STAKATAKA, :BLACEPHALON,                  # ultra beasts
+    :NECROZMA, :MAGEARNA, :MARSHADOW,          # legendaries
+    :ZERAORA, :MELTAN, :MELMETAL,              # legendaries / steel
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 8 - selected lines
+  # Gen 8 - steel knights, dragons, fossils, fairy witches, Nordic standing
+  # stones, cursed objects. This is the strongest thematic gen for SC.
   #-----------------------------------------------------------------------------
   GEN8 = [
-    :SKWOVET, :GREEDENT,
-    :ROOKIDEE, :CORVISQUIRE, :CORVIKNIGHT,
-    :BLIPBUG, :DOTTLER, :ORBEETLE,
-    :NICKIT, :THIEVUL,
-    :GOSSIFLEUR, :ELDEGOSS,
-    :WOOLOO, :DUBWOOL,
-    :CHEWTLE, :DREDNAW,
-    :YAMPER, :BOLTUND,
-    :ROLYCOLY, :CARKOL, :COALOSSAL,
-    :APPLIN, :FLAPPLE, :APPLETUN, :DIPPLIN,
-    :SILICOBRA, :SANDACONDA,
-    :CRAMORANT,
-    :ARROKUDA, :BARRASKEWDA,
-    :TOXEL, :TOXTRICITY,
-    :SIZZLIPEDE, :CENTISKORCH,
-    :CLOBBOPUS, :GRAPPLOCT,
-    :SINISTEA, :POLTEAGEIST,
-    :HATENNA, :HATTREM, :HATTERENE,
-    :IMPIDIMP, :MORGREM, :GRIMMSNARL,
-    :OBSTAGOON,
-    :PERRSERKER,
-    :CURSOLA,
-    :SIRFETCHD,
-    :MR_RIME,
-    :RUNERIGUS,
-    :MILCERY, :ALCREMIE,
-    :FALINKS,
-    :PINCURCHIN,
-    :SNOM, :FROSMOTH,
-    :STONJOURNER,
-    :EISCUE,
-    :INDEEDEE,
-    :MORPEKO,
-    :CUFANT, :COPPERAJAH,
-    :DRACOZOLT, :ARCTOZOLT,
-    :DRACOVISH, :ARCTOVISH,
-    :DURALUDON, :ARCHALUDON,
-    :DREEPY, :DRAKLOAK, :DRAGAPULT,
-    :ZACIAN, :ZAMAZENTA, :ETERNATUS,
-    :KUBFU, :URSHIFU,
-    :ZARUDE,
-    :REGIELEKI, :REGIDRAGO,
-    :GLASTRIER, :SPECTRIER, :CALYREX,
-    :ENAMORUS,
+    :ROOKIDEE, :CORVISQUIRE, :CORVIKNIGHT,     # steel knight crow
+    :CHEWTLE, :DREDNAW,                        # turtle warrior
+    :ROLYCOLY, :CARKOL, :COALOSSAL,            # rock/fire colossus
+    :APPLIN, :FLAPPLE, :APPLETUN, :DIPPLIN,    # dragon
+    :TOXEL, :TOXTRICITY,                       # electric/poison
+    :SIZZLIPEDE, :CENTISKORCH,                 # fire centipede
+    :SINISTEA, :POLTEAGEIST,                   # cursed teacup
+    :HATENNA, :HATTREM, :HATTERENE,            # witch
+    :IMPIDIMP, :MORGREM, :GRIMMSNARL,          # fairy ogre (mandatory)
+    :OBSTAGOON,                                # dark gangster
+    :PERRSERKER,                               # viking cat
+    :CURSOLA,                                  # cursed coral
+    :SIRFETCHD,                                # leek knight
+    :RUNERIGUS,                                # cursed runestone (Norse!)
+    :FALINKS,                                  # phalanx knights
+    :SNOM, :FROSMOTH,                          # ice moth
+    :STONJOURNER,                              # standing stone (Norse!)
+    :DRACOZOLT, :ARCTOZOLT,                    # fossil
+    :DRACOVISH, :ARCTOVISH,                    # fossil
+    :DURALUDON, :ARCHALUDON,                   # steel dragon
+    :DREEPY, :DRAKLOAK, :DRAGAPULT,            # ghost dragon
+    :ZACIAN, :ZAMAZENTA, :ETERNATUS,           # guardians + boss (mandatory)
+    :KUBFU, :URSHIFU,                          # martial dragon
+    :ZARUDE,                                   # rogue dragon
+    :REGIELEKI, :REGIDRAGO,                    # regi
+    :GLASTRIER, :SPECTRIER, :CALYREX,          # ice/ghost king (Norse winter king!)
+    :ENAMORUS,                                 # weather quartet
   ].freeze
 
   #-----------------------------------------------------------------------------
-  # Gen 9 - selected lines (heavy on Paradox + new dragons)
+  # Gen 9 - Paradox Pokemon, knights, dragons, cursed objects, treasures
   #-----------------------------------------------------------------------------
   GEN9 = [
-    :LECHONK, :OINKOLOGNE,
-    :TAROUNTULA, :SPIDOPS,
-    :NYMBLE, :LOKIX,
-    :PAWMI, :PAWMO, :PAWMOT,
-    :TANDEMAUS, :MAUSHOLD,
-    :FIDOUGH, :DACHSBUN,
-    :SMOLIV, :DOLLIV, :ARBOLIVA,
-    :SQUAWKABILLY,
-    :NACLI, :NACLSTACK, :GARGANACL,
-    :CHARCADET, :ARMAROUGE, :CERULEDGE,
-    :TADBULB, :BELLIBOLT,
-    :WATTREL, :KILOWATTREL,
-    :MASCHIFF, :MABOSSTIFF,
-    :SHROODLE, :GRAFAIAI,
-    :BRAMBLIN, :BRAMBLEGHAST,
-    :TOEDSCOOL, :TOEDSCRUEL,
-    :KLAWF,
-    :CAPSAKID, :SCOVILLAIN,
-    :RELLOR, :RABSCA,
-    :FLITTLE, :ESPATHRA,
-    :TINKATINK, :TINKATUFF, :TINKATON,
-    :WIGLETT, :WUGTRIO,
-    :BOMBIRDIER,
-    :FINIZEN, :PALAFIN,
-    :VAROOM, :REVAVROOM,
-    :CYCLIZAR,
-    :ORTHWORM,
-    :GLIMMET, :GLIMMORA,
-    :GREAVARD, :HOUNDSTONE,
-    :FLAMIGO,
-    :CETODDLE, :CETITAN,
-    :VELUZA,
-    :DONDOZO, :TATSUGIRI,
-    :ANNIHILAPE,
-    :CLODSIRE,
-    :FARIGIRAF,
-    :DUDUNSPARCE,
-    :KINGAMBIT,
-    :GREATTUSK, :SCREAMTAIL, :BRUTEBONNET, :FLUTTERMANE,
-    :SLITHERWING, :SANDYSHOCKS,
-    :IRONTREADS, :IRONBUNDLE, :IRONHANDS, :IRONJUGULIS, :IRONMOTH, :IRONTHORNS,
-    :FRIGIBAX, :ARCTIBAX, :BAXCALIBUR,
-    :GIMMIGHOUL, :GHOLDENGO,
-    :WO_CHIEN, :CHIEN_PAO, :TING_LU, :CHI_YU,
-    :ROARING_MOON, :IRON_VALIANT,
-    :KORAIDON, :MIRAIDON,
-    :WALKING_WAKE, :IRON_LEAVES,
-    :POLTCHAGEIST, :SINISTCHA,
-    :OKIDOGI, :MUNKIDORI, :FEZANDIPITI,
-    :OGERPON,
-    :HYDRAPPLE,
-    :GOUGING_FIRE, :RAGING_BOLT,
-    :IRON_BOULDER, :IRON_CROWN,
-    :TERAPAGOS,
-    :PECHARUNT,
+    :FIDOUGH, :DACHSBUN,                       # bread hound (cute Norse)
+    :NACLI, :NACLSTACK, :GARGANACL,            # salt knight
+    :CHARCADET, :ARMAROUGE, :CERULEDGE,        # knight (mandatory)
+    :MASCHIFF, :MABOSSTIFF,                    # mastiff
+    :BRAMBLIN, :BRAMBLEGHAST,                  # ghost tumbleweed
+    :TINKATINK, :TINKATUFF, :TINKATON,         # steel-fairy hammer
+    :VAROOM, :REVAVROOM,                       # steel vehicle
+    :CYCLIZAR,                                 # dragon
+    :ORTHWORM,                                 # steel worm
+    :GLIMMET, :GLIMMORA,                       # poison crystal
+    :GREAVARD, :HOUNDSTONE,                    # ghost dog
+    :CETODDLE, :CETITAN,                       # ice whale (Norse leviathan)
+    :ANNIHILAPE,                               # rage spirit
+    :GREATTUSK, :SCREAMTAIL, :BRUTEBONNET,     # ancient paradoxes
+    :FLUTTERMANE, :SLITHERWING, :SANDYSHOCKS,  # ancient paradoxes
+    :IRONTREADS, :IRONBUNDLE, :IRONHANDS,      # future paradoxes
+    :IRONJUGULIS, :IRONMOTH, :IRONTHORNS,      # future paradoxes
+    :FRIGIBAX, :ARCTIBAX, :BAXCALIBUR,         # ice dragon (mandatory)
+    :GIMMIGHOUL, :GHOLDENGO,                   # cursed coin
+    :WOCHIEN, :CHIENPAO, :TINGLU, :CHIYU,      # treasures of ruin
+    :ROARINGMOON, :IRONVALIANT,                # paradoxes
+    :KORAIDON, :MIRAIDON,                      # legendaries (mandatory)
+    :WALKINGWAKE, :IRONLEAVES,                 # paradoxes
+    :POLTCHAGEIST, :SINISTCHA,                 # cursed teapot
+    :OKIDOGI, :MUNKIDORI, :FEZANDIPITI,        # loyal three
+    :OGERPON,                                  # mask wearer
+    :HYDRAPPLE,                                # dragon
+    :GOUGINGFIRE, :RAGINGBOLT,                 # paradoxes
+    :IRONBOULDER, :IRONCROWN,                  # paradoxes
+    :TERAPAGOS,                                # legendary (mandatory)
+    :PECHARUNT,                                # mythical (mandatory)
   ].freeze
 
   #-----------------------------------------------------------------------------
@@ -580,8 +417,8 @@ module SCLimitedDex
             GEN1 + GEN2 + GEN3 + GEN4 + GEN5 + GEN6 + GEN7 + GEN8 + GEN9
       list = all.map { |s| s.is_a?(Symbol) ? s : s.to_s.upcase.to_sym }
       list.uniq!
-      # Drop any species that aren't actually registered (handles typos
-      # and species removed by the user's PBS edits gracefully).
+      # Drop any species that aren't actually registered in the
+      # SC Script System (handles typos and species not yet defined).
       list.select! { |s| GameData::Species.exists?(s) } if defined?(GameData::Species)
       list
     end
