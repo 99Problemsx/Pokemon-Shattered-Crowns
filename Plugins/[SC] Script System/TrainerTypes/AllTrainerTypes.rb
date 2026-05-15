@@ -476,6 +476,68 @@ GameData::TrainerType.define :CHAMPION do |tt|
   tt.battle_bgm "Battle Champion"
 end
 
+#-------------------------------------------------------------------------------
+# Shattered Crowns — Asgheim League Elite Four
+#-------------------------------------------------------------------------------
+# All four members are tied to existing established NPCs:
+#   Fenris — Marcus's old training partner (Fire)
+#   Valdra — Aurora's contemporary at Aldric's research circle (Dragon)
+#   Morwen — post-redemption Lady Morwen from Ch25 Mortality Ruins (Ghost)
+#   Orm    — Captain Lior's nephew, raised on Astoria coast (Water)
+#-------------------------------------------------------------------------------
+GameData::TrainerType.define :ELITEFOUR_Fenris do |tt|
+  tt.name "Elite Four"
+  tt.gender :Male
+  tt.base_money 150
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Elite"
+end
+
+GameData::TrainerType.define :ELITEFOUR_Valdra do |tt|
+  tt.name "Elite Four"
+  tt.gender :Female
+  tt.base_money 150
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Elite"
+end
+
+GameData::TrainerType.define :ELITEFOUR_Morwen do |tt|
+  tt.name "Elite Four"
+  tt.gender :Female
+  tt.base_money 150
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Elite"
+end
+
+GameData::TrainerType.define :ELITEFOUR_Orm do |tt|
+  tt.name "Elite Four"
+  tt.gender :Male
+  tt.base_money 150
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Elite"
+end
+
+#-------------------------------------------------------------------------------
+# Postgame: Champion Emeritus Marcus + Researcher Emeritus Aurora
+#-------------------------------------------------------------------------------
+GameData::TrainerType.define :CHAMPION_EMERITUS do |tt|
+  tt.name "Champion Emeritus"
+  tt.gender :Male
+  tt.base_money 200
+  tt.skill_level 100
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Champion"
+end
+
+GameData::TrainerType.define :RESEARCHER_EMERITUS do |tt|
+  tt.name "Researcher"
+  tt.gender :Female
+  tt.base_money 200
+  tt.skill_level 95
+  tt.victory_bgm "Battle victory leader"
+  tt.battle_bgm "Battle Champion"
+end
+
 GameData::TrainerType.define :AITESTER_M do |tt|
   tt.name "AI Tester"
   tt.gender :Male

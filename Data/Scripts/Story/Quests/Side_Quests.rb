@@ -660,52 +660,145 @@ end
 # SIDE STORY: LYRA'S FARM (Relaxation)
 #===============================================================================
 
+#-------------------------------------------------------------------------------
+# Side Story: Lyra's Farm (Sunrise Ranch, post-Ch17 recovery arc)
+#-------------------------------------------------------------------------------
+# Unlocked: after :ch17_starter_crisis_recovery (Ch17 completion)
+# Reward:   Sunrise Berry (custom +friendship), 2 Fate Points, codex:
+#           LYRA_FAMILY entry, Lyra friendship +30, NG+ flag
+#-------------------------------------------------------------------------------
+
+GameData::Quest.define :sq_lyra_farm_visit do |q|
+  q.name "Sunrise on the Farm"
+  q.description "Spend a day at Lyra's family farm. Help Grandmother Brigit with the berry harvest, and hear stories about a small Lyra who hated mud."
+  q.giver "Lyra"
+  q.location "Sunrise Ranch (Map 12)"
+  q.objective :talk_to_npc, npc: "Grandma Brigit"
+  q.on_complete do
+    pbReceiveItem(:SITRUSBERRY, 5)
+    pbReceiveItem(:LEPPABERRY, 5)
+    pbReceiveItem(:SUNRISEBERRY, 1) rescue pbReceiveItem(:LUMBERRY, 3)
+    pbEarnFatePoints(2) if defined?(pbEarnFatePoints)
+    codexDiscover(:LYRA_FAMILY) if defined?(codexDiscover)
+  end
+end
+
 GameData::Cutscene.define :sq_lyra_farm_visit do |scene|
   scene.play_bgm 'Pokemon XY - Vaniville Town'
-  
-  scene.message "\\bLyra\\b: \\PN! Welcome to my family's farm!"
-  scene.message "\\bLyra\\b: Grandma grows the best berries in the region."
-  
-  scene.message "\\b\\PN\\b: It's so peaceful here..."
-  
-  scene.message "\\bLyra\\b: Right? Sometimes I just come here to relax."
-  scene.message "\\bLyra\\b: Want to help with the chores?"
-  
-  scene.choice ["Sure!", "Maybe later"] do |choice|
-    if choice == 0
-      pbMessage("\\bLyra\\b: Great! Let's water the berry trees!")
-      pbMessage("You spent a relaxing afternoon on the farm.")
-      pbMessage("Your friendship with Lyra deepened.")
-    else
-      pbMessage("\\bLyra\\b: No worries! Come back anytime.")
-    end
-  end
+
+  # Beat 1: arrival
+  scene.message "\\bLyra\\b: \\PN! You made it!"
+  scene.message "\\bLyra\\b: This is Sunrise Ranch. Mom grew up here. So did I, for the first six years."
+  scene.message "\\b\\PN\\b: It's beautiful..."
+  scene.message "\\bLyra\\b: It smells like home. — Come on, Grandma's expecting us. She made too much pie. She always makes too much pie."
+
+  # Beat 2: meeting Brigit
+  scene.message "\\i[Grandma Brigit was waiting in the doorway, a Lopunny under each arm. She had Lyra's eyes.]"
+  scene.message "\\bGrandma Brigit\\b: You must be \\PN. Lyra has not stopped talking about you for two months. I was beginning to think you were imaginary."
+  scene.message "\\bLyra\\b: Gran!"
+  scene.message "\\bGrandma Brigit\\b: Hush, sweetheart. — Come in, both of you. The Wurmple are at the lettuce again. I need an extra pair of hands."
+
+  # Beat 3: the chore (battle a wild swarm)
+  scene.message "\\bGrandma Brigit\\b: Three Wurmple, west end of the lettuce row. Just chase them off. Don't hurt them. They're stubborn but they're not malicious."
+  scene.message "\\bLyra\\b: I'll take left. You take right. — Like the temples, but with vegetables."
+
+  # Beat 4: campfire & the family story
+  scene.message "\\bGrandma Brigit\\b: Sit, both of you. I've been saving a story for when Lyra finally brought someone worth telling it to."
+  scene.message "\\bGrandma Brigit\\b: Lyra was six. She fell in the irrigation ditch on a winter morning and came up plastered head-to-toe in mud."
+  scene.message "\\bLyra\\b: Gran, no—"
+  scene.message "\\bGrandma Brigit\\b: She sat down in the kitchen and *cried* — not because she was cold, mind you, but because she said the mud had RUINED her — and she refused, *refused* to come within ten yards of a puddle for six months after."
+  scene.message "\\b\\PN\\b: *trying very hard not to laugh*"
+  scene.message "\\bLyra\\b: *covering her face* This is why I never bring friends here."
+  scene.message "\\bGrandma Brigit\\b: She grew out of it. Mostly. She still won't go near the pigs. — But she is a good child. The best of us. You'll look after her, won't you?"
+  scene.message "\\b\\PN\\b: ...Of course."
+  scene.message "\\bGrandma Brigit\\b: Good. Then take this. I've been saving it for the right one of Lyra's friends."
+
+  # Beat 5: reward + sunset
+  scene.message "\\i[Brigit pressed a small dried berry into your hand — bright orange, smelling of citrus and hay. A Sunrise Berry. The family secret.]"
+  scene.message "\\bGrandma Brigit\\b: Feed it to whichever of your Pokémon needs to know it is loved. They will know."
+  scene.message "\\bLyra\\b: ...Gran gives those to family. *quietly* You're family now, \\PN."
+  scene.message "\\b\\PN\\b: ..."
+  scene.message "\\bLyra\\b: Stay for the pie. *please* — there's so much pie."
+
+  scene.script { pbCompleteQuest(:sq_lyra_farm_visit) if defined?(pbCompleteQuest) }
 end
 
 #===============================================================================
 # SIDE STORY: KAEL'S ORPHANAGE
 #===============================================================================
 
+#-------------------------------------------------------------------------------
+# Side Story: Kael's Orphanage — Hilde's House (deep version)
+#-------------------------------------------------------------------------------
+# Unlocked: post-Ch28 (after Kael's bond_kael_4 quest if completed, OR
+#           independently after Ch28 if bond_kael_4 was skipped)
+# Reward:   Houndoominite (Mega Stone), 3 Fate Points, codex:
+#           HILDE_HOUSE entry, Kael friendship +50, NG+ flag
+#-------------------------------------------------------------------------------
+
+GameData::Quest.define :sq_kael_orphanage do |q|
+  q.name "Hilde's House"
+  q.description "Return with Kael to the orphanage that raised him. The Hand attacked it last week — help Hilde rebuild, and face the Houndoom that's been guarding the children in earnest, not in play-fight."
+  q.giver "Kael"
+  q.location "Hilde's Orphanage (Map 18)"
+  q.objective :defeat_named_trainer, trainer: "Houndoom (Guardian)"
+  q.on_complete do
+    pbReceiveItem(:HOUNDOOMITE) rescue pbReceiveItem(:LIFEORB)
+    pbReceiveItem(:MAXREVIVE, 3)
+    pbReceiveItem(:RAREBONE, 1) rescue pbReceiveItem(:HEARTSCALE, 3)
+    pbEarnFatePoints(3) if defined?(pbEarnFatePoints)
+    codexDiscover(:HILDE_HOUSE) if defined?(codexDiscover)
+  end
+end
+
 GameData::Cutscene.define :sq_kael_orphanage do |scene|
   scene.play_bgm 'Pokemon XY - Emotion'
-  
-  scene.message "\\bKael\\b: ...This is where I grew up."
-  scene.message "A modest building, weathered but warm."
-  
-  scene.message "\\b\\PN\\b: The orphanage?"
-  
-  scene.message "\\bKael\\b: Yeah. They're struggling for funds now."
-  scene.message "\\bKael\\b: I send them money when I can, but..."
-  
-  scene.message "\\b\\PN\\b: Let's help them together."
-  
-  scene.message "\\bKael\\b: ...Really?"
-  
-  scene.message "\\b\\PN\\b: Of course. That's what friends do."
-  
-  scene.message "\\bKael\\b: ..."
-  scene.message "\\bKael\\b: Thanks, \\PN."
-  scene.message "For the first time, Kael looked truly grateful."
+
+  # Beat 1: aftermath
+  scene.message "\\bKael\\b: ...They hit the south wall first. Hilde got the children into the cellar in under a minute. Nobody died."
+  scene.message "\\bKael\\b: Nobody died. *I keep saying that to myself.*"
+  scene.message "\\b\\PN\\b: ..."
+
+  scene.message "\\i[The orphanage's south side was scorched stone. Hilde was carrying a child on her hip and a hammer in her other hand. She did not stop when she saw Kael.]"
+  scene.message "\\bHilde\\b: You came. Good. I needed your hands and I didn't want to ask."
+  scene.message "\\bKael\\b: ...Hilde."
+  scene.message "\\bHilde\\b: Later. Roof now. Words after."
+
+  # Beat 2: repair work
+  scene.message "\\i[You spent three hours hauling stone and beams. The children stayed in the cellar. Kael barely spoke. Hilde sang while she worked.]"
+  scene.message "\\bHilde\\b: Your friend is *good*. I'd forgotten."
+
+  # Beat 3: the Houndoom
+  scene.message "\\i[A grown Houndoom approached at sundown — burned along its flank, eyes still watchful. It bared its teeth at you. Kael stepped between.]"
+  scene.message "\\bKael\\b: She doesn't know you. She doesn't trust anything new since the attack. She'll defend until she's sure."
+  scene.message "\\bHilde\\b: She and I held the cellar door together. She's earned her right to be careful. Earn yours."
+  scene.message "\\b\\PN\\b: ..."
+  scene.message "\\bKael\\b: I'll cover for you. Don't hold back. She'll know if you do."
+
+  # Beat 4: the battle
+  scene.script {
+    pbWildBattle(:HOUNDOOM, 35,
+                  { :nature => :ADAMANT,
+                    :item   => :SITRUSBERRY,
+                    :moves  => [:FLAMETHROWER, :CRUNCH, :WILLOWISP, :SUNNYDAY],
+                    :ability => :INTIMIDATE })
+  }
+
+  # Beat 5: aftermath + Hilde's gift
+  scene.message "\\bHilde\\b: ...All right. She approves. She'll let you through the gate any time you come now."
+  scene.message "\\bHilde\\b: I have something for you. I've been saving it for the day Kael brought home someone worth giving it to."
+  scene.message "\\i[Hilde pressed a small dark stone, veined with red, into your palm. A Mega Stone — Houndoominite. Old family heirloom.]"
+  scene.message "\\bHilde\\b: My grandmother said it would 'find the heir.' I never knew what she meant. *Looking at you now, I think I do.*"
+
+  scene.message "\\bKael\\b: ...Hilde, that's *yours.*"
+  scene.message "\\bHilde\\b: It's the *house's*, dear, and the house decided. — Now go. Take care of him, \\PN. He's terrible at letting people take care of him."
+  scene.message "\\bKael\\b: I can hear you."
+  scene.message "\\bHilde\\b: *Good.*"
+
+  scene.message "\\b\\PN\\b: We'll come back. I promise."
+  scene.message "\\bKael\\b: We will. — Thanks, Hilde."
+
+  scene.script { pbCompleteQuest(:sq_kael_orphanage) if defined?(pbCompleteQuest) }
 end
 
 #===============================================================================

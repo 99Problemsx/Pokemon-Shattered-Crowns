@@ -1096,6 +1096,206 @@ GameData::Trainer.define(:AITESTER_M, "PP Drain") do |t|
   end
 end
 
+#===============================================================================
+# Asgheim League — Elite Four (Ch29)
+#===============================================================================
+# Fenris (Fire), Valdra (Dragon), Morwen (Ghost), Orm (Water). Each roster is
+# 5 mons, level 60-62, fully EV'd and equipped. Skill 80 (high but not max
+# so the player isn't strangled by perfect prediction every turn).
+#===============================================================================
+
+#---------------------------------------
+# Elite Four — Fenris, Fire (Marcus's old partner)
+#---------------------------------------
+GameData::Trainer.define(:ELITEFOUR_Fenris, "Fenris") do |t|
+  t.skill_level 80
+  t.lose_text "...So this is what Marcus saw in you."
+  t.pokemon(:NINETALES, 60) do |p|
+    p.moves :FLAMETHROWER, :NASTYPLOT, :SOLARBEAM, :SUNNYDAY
+    p.ability :DROUGHT
+    p.item :HEATROCK
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 252, SPECIAL_ATTACK: 4, SPEED: 252 })
+  end
+  t.pokemon(:ARCANINE, 60) do |p|
+    p.moves :FLAREBLITZ, :EXTREMESPEED, :CLOSECOMBAT, :MORNINGSUN
+    p.ability :INTIMIDATE
+    p.item :LIFEORB
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:DARMANITAN, 61) do |p|
+    p.moves :FLAREBLITZ, :UTURN, :EARTHQUAKE, :ROCKSLIDE
+    p.ability :SHEERFORCE
+    p.item :CHOICESCARF
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:CHANDELURE, 61) do |p|
+    p.moves :FIREBLAST, :SHADOWBALL, :ENERGYBALL, :TRICK
+    p.ability :FLASHFIRE
+    p.item :CHOICESPECS
+    p.nature :MODEST
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:CINDERACE, 62) do |p|
+    p.moves :PYROBALL, :HIGHJUMPKICK, :UTURN, :SUCKERPUNCH
+    p.ability :LIBERO
+    p.item :LIFEORB
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+end
+
+#---------------------------------------
+# Elite Four — Valdra, Dragon (Aurora's contemporary)
+#---------------------------------------
+GameData::Trainer.define(:ELITEFOUR_Valdra, "Valdra") do |t|
+  t.skill_level 80
+  t.lose_text "Aurora chose well in her child. I see her in you."
+  t.pokemon(:ALTARIA, 60) do |p|
+    p.moves :DRAGONPULSE, :MOONBLAST, :ROOST, :HYPERVOICE
+    p.ability :PIXILATE
+    p.item :ALTARIANITE
+    p.nature :MODEST
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 252, SPECIAL_ATTACK: 4, SPEED: 252 })
+  end
+  t.pokemon(:HAXORUS, 60) do |p|
+    p.moves :OUTRAGE, :EARTHQUAKE, :POISONJAB, :DRAGONDANCE
+    p.ability :MOLDBREAKER
+    p.item :LUMBERRY
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:HYDREIGON, 61) do |p|
+    p.moves :DRACOMETEOR, :DARKPULSE, :FLASHCANNON, :EARTHPOWER
+    p.ability :LEVITATE
+    p.item :LIFEORB
+    p.nature :MODEST
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:DRAGAPULT, 61) do |p|
+    p.moves :DRAGONDARTS, :PHANTOMFORCE, :UTURN, :FIREBLAST
+    p.ability :INFILTRATOR
+    p.item :CHOICESCARF
+    p.nature :NAIVE
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:GARCHOMP, 62) do |p|
+    p.moves :EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE
+    p.ability :ROUGHSKIN
+    p.item :YACHEBERRY
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+end
+
+#---------------------------------------
+# Elite Four — Morwen, Ghost (Lady Morwen from Ch25, post-redemption)
+#---------------------------------------
+GameData::Trainer.define(:ELITEFOUR_Morwen, "Morwen") do |t|
+  t.skill_level 80
+  t.lose_text "I tended graves longer than I battled. The dead have nothing left to say to me."
+  t.pokemon(:SPIRITOMB, 60) do |p|
+    p.moves :SHADOWSNEAK, :SUCKERPUNCH, :WILLOWISP, :MEMENTO
+    p.ability :PRESSURE
+    p.item :LEFTOVERS
+    p.nature :SASSY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 0 })
+    p.ev({ HP: 252, ATTACK: 4, SPECIAL_DEFENSE: 252 })
+  end
+  t.pokemon(:DUSKNOIR, 60) do |p|
+    p.moves :SHADOWPUNCH, :EARTHQUAKE, :ICEPUNCH, :PAINSPLIT
+    p.ability :PRESSURE
+    p.item :ASSAULTVEST
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 252, ATTACK: 252, SPECIAL_DEFENSE: 4 })
+  end
+  t.pokemon(:MIMIKYU, 61) do |p|
+    p.moves :PLAYROUGH, :SHADOWCLAW, :SHADOWSNEAK, :SWORDSDANCE
+    p.ability :DISGUISE
+    p.item :LIFEORB
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:GENGAR, 61) do |p|
+    p.moves :SHADOWBALL, :SLUDGEWAVE, :THUNDERBOLT, :NASTYPLOT
+    p.ability :CURSEDBODY
+    p.item :FOCUSSASH
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:AEGISLASH, 62) do |p|
+    p.moves :SHADOWBALL, :FLASHCANNON, :SHADOWSNEAK, :KINGSSHIELD
+    p.ability :STANCECHANGE
+    p.item :LEFTOVERS
+    p.nature :QUIET
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 0 })
+    p.ev({ HP: 252, ATTACK: 4, SPECIAL_ATTACK: 252 })
+  end
+end
+
+#---------------------------------------
+# Elite Four — Orm, Water (Captain Lior's nephew)
+#---------------------------------------
+GameData::Trainer.define(:ELITEFOUR_Orm, "Orm") do |t|
+  t.skill_level 80
+  t.lose_text "Uncle Lior bet I'd lose. He'll be insufferable about it."
+  t.pokemon(:PELIPPER, 60) do |p|
+    p.moves :HURRICANE, :SURF, :UTURN, :ROOST
+    p.ability :DRIZZLE
+    p.item :DAMPROCK
+    p.nature :MODEST
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 252, SPECIAL_ATTACK: 252, SPEED: 4 })
+  end
+  t.pokemon(:BARRASKEWDA, 60) do |p|
+    p.moves :LIQUIDATION, :CLOSECOMBAT, :PSYCHICFANGS, :AQUAJET
+    p.ability :SWIFTSWIM
+    p.item :CHOICEBAND
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:KINGDRA, 61) do |p|
+    p.moves :HYDROPUMP, :DRACOMETEOR, :SCALD, :RAINDANCE
+    p.ability :SWIFTSWIM
+    p.item :LIFEORB
+    p.nature :MODEST
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:TOXAPEX, 61) do |p|
+    p.moves :SCALD, :TOXIC, :RECOVER, :HAZE
+    p.ability :REGENERATOR
+    p.item :BLACKSLUDGE
+    p.nature :BOLD
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 252, DEFENSE: 252, SPECIAL_DEFENSE: 4 })
+  end
+  t.pokemon(:GYARADOS, 62) do |p|
+    p.moves :WATERFALL, :CRUNCH, :ICEFANG, :DRAGONDANCE
+    p.ability :INTIMIDATE
+    p.item :KINGSROCK
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+end
+
 #---------------------------------------------------------------
 # TEST 10: Tailwind + Shell Smash (Speed Control + Setup)
 # Expected: AI uses Tailwind turn 1, then Shell Smash on Cloyster
@@ -1118,5 +1318,175 @@ GameData::Trainer.define(:AITESTER_F, "Tailwind Support") do |t|
     p.item :FOCUSSASH
     p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
     p.ev({ HP: 0, ATTACK: 252, DEFENSE: 0, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 4, SPEED: 252 })
+  end
+end
+
+#===============================================================================
+# Postgame Marcus — Three-Tier Challenge
+#===============================================================================
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus") do |t|
+  t.skill_level 100
+  t.lose_text "Heh. Knew it."
+  t.pokemon(:DRAGONITE, 70) do |p|
+    p.moves :DRAGONDANCE, :EXTREMESPEED, :DRAGONCLAW, :EARTHQUAKE
+    p.ability :MULTISCALE
+    p.item :LUMBERRY
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:METAGROSS, 70) do |p|
+    p.moves :METEORMASH, :EARTHQUAKE, :BULLETPUNCH, :ICEPUNCH
+    p.ability :CLEARBODY
+    p.item :LIFEORB
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:TYRANITAR, 70) do |p|
+    p.moves :STONEEDGE, :CRUNCH, :EARTHQUAKE, :ICEPUNCH
+    p.ability :SANDSTREAM
+    p.item :CHOICEBAND
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:SALAMENCE, 70) do |p|
+    p.moves :DRAGONCLAW, :EARTHQUAKE, :FIREBLAST, :DRAGONDANCE
+    p.ability :INTIMIDATE
+    p.item :YACHEBERRY
+    p.nature :NAIVE
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:GARCHOMP, 70) do |p|
+    p.moves :EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE
+    p.ability :ROUGHSKIN
+    p.item :GROUNDIUMZ
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:CHARIZARD, 70) do |p|
+    p.moves :FLAMETHROWER, :AIRSLASH, :SOLARBEAM, :DRAGONPULSE
+    p.ability :BLAZE
+    p.item :CHARIZARDITEY
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+end
+
+# Tier 1 — Marcus side of the Aurora duo (version 1)
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus", 1) do |t|
+  t.skill_level 100
+  t.lose_text "All right. *Now* I know what to work on."
+  t.pokemon(:CHARIZARD, 75) do |p|
+    p.moves :FLAMETHROWER, :AIRSLASH, :DRAGONPULSE, :ROOST
+    p.ability :BLAZE
+    p.item :CHARIZARDITEY
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:GARCHOMP, 75) do |p|
+    p.moves :EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE
+    p.ability :ROUGHSKIN
+    p.item :LIFEORB
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:DRAGONITE, 75) do |p|
+    p.moves :OUTRAGE, :EXTREMESPEED, :EARTHQUAKE, :FIREPUNCH
+    p.ability :MULTISCALE
+    p.item :CHOICEBAND
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+end
+
+# Tier 2 — Marcus PRIME (version 2) — full Championship-era team with megas
+GameData::Trainer.define(:CHAMPION_EMERITUS, "Marcus", 2) do |t|
+  t.skill_level 100
+  t.lose_text "...That is it. That is it, kid."
+  t.pokemon(:CHARIZARD, 80) do |p|
+    p.moves :FLAMETHROWER, :AIRSLASH, :DRAGONPULSE, :SOLARBEAM
+    p.ability :BLAZE
+    p.item :CHARIZARDITEY
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:GARCHOMP, 80) do |p|
+    p.moves :EARTHQUAKE, :DRAGONCLAW, :STONEEDGE, :SWORDSDANCE
+    p.ability :ROUGHSKIN
+    p.item :GARCHOMPITE
+    p.nature :JOLLY
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:SALAMENCE, 80) do |p|
+    p.moves :DRAGONCLAW, :EARTHQUAKE, :HYDROPUMP, :DRAGONDANCE
+    p.ability :MOXIE
+    p.item :SALAMENCITE
+    p.nature :NAIVE
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:TYRANITAR, 80) do |p|
+    p.moves :STONEEDGE, :CRUNCH, :EARTHQUAKE, :ICEPUNCH
+    p.ability :SANDSTREAM
+    p.item :TYRANITARITE
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:METAGROSS, 80) do |p|
+    p.moves :METEORMASH, :EARTHQUAKE, :BULLETPUNCH, :ZENHEADBUTT
+    p.ability :CLEARBODY
+    p.item :METAGROSSITE
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:DRAGONITE, 80) do |p|
+    p.moves :DRAGONDANCE, :OUTRAGE, :EXTREMESPEED, :EARTHQUAKE
+    p.ability :MULTISCALE
+    p.item :LUMBERRY
+    p.nature :ADAMANT
+    p.iv({ HP: 31, ATTACK: 31, DEFENSE: 31, SPECIAL_ATTACK: 0, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, ATTACK: 252, SPEED: 252 })
+  end
+end
+
+# Aurora — the duo partner
+GameData::Trainer.define(:RESEARCHER_EMERITUS, "Aurora") do |t|
+  t.skill_level 95
+  t.lose_text "Closer than last time. Much closer."
+  t.pokemon(:GARDEVOIR, 75) do |p|
+    p.moves :PSYCHIC, :MOONBLAST, :CALMMIND, :SHADOWBALL
+    p.ability :TRACE
+    p.item :GARDEVOIRITE
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:ALAKAZAM, 75) do |p|
+    p.moves :PSYCHIC, :FOCUSBLAST, :SHADOWBALL, :ENERGYBALL
+    p.ability :MAGICGUARD
+    p.item :LIFEORB
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
+  end
+  t.pokemon(:STARMIE, 75) do |p|
+    p.moves :HYDROPUMP, :PSYCHIC, :ICEBEAM, :RAPIDSPIN
+    p.ability :NATURALCURE
+    p.item :CHOICESPECS
+    p.nature :TIMID
+    p.iv({ HP: 31, ATTACK: 0, DEFENSE: 31, SPECIAL_ATTACK: 31, SPECIAL_DEFENSE: 31, SPEED: 31 })
+    p.ev({ HP: 4, SPECIAL_ATTACK: 252, SPEED: 252 })
   end
 end

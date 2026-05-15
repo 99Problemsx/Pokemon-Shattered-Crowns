@@ -117,3 +117,23 @@ EventHandlers.add(:on_wild_pokemon_created, :auto_boss_legendary,
     $game_temp.battle_rules["bossBattle"] = boss_rules
   }
 )
+
+#===============================================================================
+# Boss Aura shader — applies [SC] Visual Effects boss_aura on battle start and
+# removes it on battle end. The shader runs on the map viewport, so it's most
+# visible during the map-to-battle transition. Safe-noop if the shader plugin
+# is not installed.
+#===============================================================================
+EventHandlers.add(:on_start_battle, :sc_boss_aura_apply,
+  proc {
+    next unless $game_temp.battle_rules["bossBattle"]
+    pbApplyShader(:boss_aura) if defined?(pbApplyShader)
+  }
+)
+
+EventHandlers.add(:on_end_battle, :sc_boss_aura_remove,
+  proc {
+    next unless defined?(pbRemoveShader)
+    pbRemoveShader(:boss_aura)
+  }
+)

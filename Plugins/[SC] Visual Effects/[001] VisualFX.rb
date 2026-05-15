@@ -20,8 +20,20 @@
 #
 #    pbApplyWater                                   # reads terrain tags automatically
 #    pbApplyWater(speed: 0.8)                       # custom wave speed
-#    pbApplyWater(strength: 1.5, pixelSize: 2.0)   # custom params
+#    pbApplyWater(strength: 1.5, pixelSize: 2.0)   # custom wave params
+#    pbApplyWater(caustics: 0.8, pulseSpeed: 0.5)  # caustics + breathing pulse
+#    pbApplyWater(foam: 1.2)                       # extra-bright shoreline foam
 #    pbRemoveWater                                  # remove water shader
+#
+#  Options (all keyword args, with defaults):
+#    speed         (1.0)   – wave animation speed
+#    strength      (1.0)   – wave displacement amount
+#    pixelSize     (2.0)   – pixel-snap grid for waves
+#    caustics      (0.55)  – light-pattern brightness (0 disables caustics)
+#    causticScale  (1.0)   – caustic cell density
+#    pulseSpeed    (0.6)   – "breathing" rate (~10 s per full pulse)
+#    pulseDepth    (0.35)  – how much it dims at the bottom of the pulse
+#    foam          (0.7)   – shoreline foam brightness (0 disables)
 #
 #  Water mask covers all connected maps loaded by PokemonMapFactory.
 #  Waves work seamlessly across map borders (e.g. water routes).
@@ -181,7 +193,12 @@ module SCVisualFX
     :iris_wipe, :ripple_wipe, :pixel_dissolve, :slash_wipe, :burst,
     # Environmental detail
     :falling_leaves, :moss_overgrowth, :cracked_screen,
-    :scorched, :vines_creeping, :spider_webs
+    :scorched, :vines_creeping, :spider_webs,
+    # SC plugin tie-ins (added 1.1.0)
+    :spirit_realm, :flashback, :time_travel, :crown_shatter,
+    :rune_forging, :low_hp, :boss_aura, :screen_freeze,
+    # Retro / Photo Mode (added 1.1.0)
+    :gbc_palette, :crt_scanlines
   ]
 
   WATER_TAGS = [:DeepWater, :StillWater, :Water, :Waterfall, :WaterfallCrest]
@@ -230,14 +247,20 @@ module SCVisualFX
     dy = $game_map.display_y / Game_Map::Y_SUBPIXELS.to_f
 
     props = {
-      waterMask:    mask,
-      resolution:   [Graphics.width.to_f, Graphics.height.to_f],
-      mapSize:      [@mask_width.to_f, @mask_height.to_f],
-      scrollOffset: [dx, dy],
-      maskOffset:   [@mask_origin_x * 32.0, @mask_origin_y * 32.0],
-      waveSpeed:    opts.fetch(:speed,     1.0),
-      waveStrength: opts.fetch(:strength,  1.0),
-      pixelSize:    opts.fetch(:pixelSize, 2.0)
+      waterMask:       mask,
+      resolution:      [Graphics.width.to_f, Graphics.height.to_f],
+      mapSize:         [@mask_width.to_f, @mask_height.to_f],
+      scrollOffset:    [dx, dy],
+      maskOffset:      [@mask_origin_x * 32.0, @mask_origin_y * 32.0],
+      waveSpeed:       opts.fetch(:speed,          1.0),
+      waveStrength:    opts.fetch(:strength,       1.0),
+      pixelSize:       opts.fetch(:pixelSize,      2.0),
+      # Caustics + breathing pulse + shoreline foam (water.glsl v2).
+      causticStrength: opts.fetch(:caustics,       0.55),
+      causticScale:    opts.fetch(:causticScale,   1.0),
+      pulseSpeed:      opts.fetch(:pulseSpeed,     0.6),
+      pulseDepth:      opts.fetch(:pulseDepth,     0.35),
+      foamStrength:    opts.fetch(:foam,           0.7)
     }
 
     vp.remove_shader(:water) if vp.get_shader(:water)

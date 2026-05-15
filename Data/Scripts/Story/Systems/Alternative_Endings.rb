@@ -47,13 +47,23 @@ GameData::Cutscene.define :ch34_ending_dispatch do |scene|
              :NEUTRAL
            end
 
-    target = case tier
-             when :PURE_LIGHT then :ending_pure_light
-             when :LIGHT      then :ending_light
-             when :NEUTRAL    then :ending_balance     # canonical
-             when :DARK       then :ending_dark
-             when :PURE_DARK  then :ending_pure_dark
-             else :ending_balance
+    # Hidden 6th ending: "Mercy from the Throne" — only available on a NG+
+    # run if the player previously cleared PURE_DARK. Requires the current
+    # run to also be heading PURE_DARK (otherwise it would feel unearned).
+    ng_plus_pure_dark = (defined?(SCNGPlus) && SCNGPlus.ng_plus_run? &&
+                         SCNGPlus.bad_ending_seen? && tier == :PURE_DARK)
+
+    target = if ng_plus_pure_dark
+               :ending_mercy_throne
+             else
+               case tier
+               when :PURE_LIGHT then :ending_pure_light
+               when :LIGHT      then :ending_light
+               when :NEUTRAL    then :ending_balance     # canonical
+               when :DARK       then :ending_dark
+               when :PURE_DARK  then :ending_pure_dark
+               else :ending_balance
+               end
              end
 
     GameData::Cutscene.play(target)
@@ -217,6 +227,83 @@ GameData::Cutscene.define :ending_pure_dark do |scene|
     # Mark this run as the bad ending so NG+ can detect it
     $PokemonGlobal.sc_bad_ending_seen = true if $PokemonGlobal.respond_to?(:sc_bad_ending_seen=)
   }
+end
+
+
+#===============================================================================
+# HIDDEN 6th ENDING: "Mercy from the Throne"
+#===============================================================================
+# Only available on a NG+ run if the previous playthrough cleared PURE_DARK
+# AND the current run is also tracking PURE_DARK. The player has *already*
+# walked the bad path — and remembers it. The throne is offered again.
+# This time they refuse. They take the crown and use it to free everyone
+# the previous-them enslaved. The bad ending eats itself.
+#
+# This is the only ending in which Subject Zero leads its own scene.
+#===============================================================================
+GameData::Cutscene.define :ending_mercy_throne do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\bNidhoggr's voice\\b: *Hello again, little crown.*"
+  scene.message "\\bNidhoggr's voice\\b: *I remember you. You said yes last time.*"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: ...I remember too."
+  scene.message "\\b\\PN\\b: I remember the world you made me build. I remember Lyra's face when she came to fight me. I remember Kael's last words. I remember every name on the lists I signed."
+  scene.message "\\b\\PN\\b: ...I am not doing that again."
+  scene.wait 30
+
+  scene.message "\\bNidhoggr's voice\\b: *You are not strong enough to refuse twice. Yes is easier. Yes was always easier.*"
+  scene.message "\\b\\PN\\b: I know. I am refusing anyway."
+  scene.wait 30
+
+  scene.message "\\i[The throne offered itself the way it had before — black iron, infinite weight. You laid your hand on it. The crown of the world settled on your head.]"
+  scene.message "\\i[And then you did the thing Nidhoggr did not expect.]"
+  scene.wait 30
+
+  scene.message "\\b\\PN\\b: *to the crown* You are mine for one heartbeat. Then I am giving you away."
+  scene.message "\\bMalachar\\b: *appearing — confused, then breaking* ...what are you doing?"
+  scene.message "\\b\\PN\\b: I am the only person who has worn this thing in two timelines. I know what it costs. I am paying it back."
+  scene.wait 30
+
+  scene.message "\\i[You spoke the names. Every name on every list. Every soldier conscripted, every village taxed, every prisoner in every cell. Each name pulled the crown apart a little. The Generals, freed. The Hand, freed. Even Vex. Even — gods help us — even Subject Zero.]"
+
+  scene.message "\\bSubject Zero\\b: *first words it has ever spoken in its own voice* — *Why?*"
+  scene.message "\\b\\PN\\b: Because I remember being you. The other-me would have used you. I cannot."
+  scene.message "\\bSubject Zero\\b: ...*Thank you*."
+  scene.wait 30
+
+  scene.message "\\bNidhoggr's voice\\b: *furious — diminishing* You have broken the throne. There will be no more thrones.*"
+  scene.message "\\b\\PN\\b: Good. — That was the entire point."
+  scene.wait 60
+
+  scene.message "\\i[The world did not heal cleanly. It healed honest. Some of the freed Hand could not bear the second chance and walked into the sea. Some — most — built lives. Malachar opened a hospice in Astoria for survivors of the other timeline; you visited every winter solstice for the rest of your life.]"
+
+  scene.message "\\i[Lyra and Kael married in spring. Subject Zero was the flower-bearer. It was funny and sad at the same time.]"
+  scene.message "\\i[Zacian spoke to you again the day after the wedding. *You walked the dark and chose the light from inside it. There is no harder thing. I am proud, partner.*]"
+  scene.wait 60
+
+  scene.message "\\ts[]MERCY FROM THE THRONE"
+  scene.message "\\ts[](Hidden ending unlocked: completed NG+ after a Pure Dark run while walking the dark path again, and refused at the final moment.)"
+
+  scene.script {
+    # Record this special clear distinctly so it can never be overwritten
+    $PokemonGlobal.sc_mercy_ending_seen = true if $PokemonGlobal.respond_to?(:sc_mercy_ending_seen=)
+    pbAchievement(:ach_mercy_throne) if defined?(pbAchievement)
+    SCNGPlus.record_clear!(:MERCY) if defined?(SCNGPlus)
+    GameData::Cutscene.play(:ch_credits_universal)
+  }
+end
+
+# Save flag for the Mercy ending
+class PokemonGlobalMetadata
+  attr_accessor :sc_mercy_ending_seen
+end
+
+SaveData.register(:sc_mercy_ending_seen) do
+  save_value { $PokemonGlobal.sc_mercy_ending_seen || false }
+  load_value { |v| $PokemonGlobal.sc_mercy_ending_seen = v }
+  new_game_value { false }
 end
 
 

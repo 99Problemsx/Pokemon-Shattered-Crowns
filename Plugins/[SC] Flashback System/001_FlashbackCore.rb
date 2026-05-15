@@ -52,6 +52,9 @@ module FlashbackManager
       # Apply flashback tone
       $game_screen.start_tone_change(FlashbackSystem::FLASHBACK_TONE, 0)
 
+      # Apply flashback shader ([SC] Visual Effects). Safe-noop if absent.
+      pbApplyShader(:flashback) if defined?(pbApplyShader)
+
       # Transfer to flashback map
       $game_temp.player_transferring   = true
       $game_temp.player_new_map_id     = config[:map_id]
@@ -89,6 +92,9 @@ module FlashbackManager
 
       # Restore tone
       $game_screen.start_tone_change(@saved_state[:tone], 0)
+
+      # Remove flashback shader ([SC] Visual Effects). Safe-noop if absent.
+      pbRemoveShader(:flashback) if defined?(pbRemoveShader)
 
       # Transfer back
       $game_temp.player_transferring   = true

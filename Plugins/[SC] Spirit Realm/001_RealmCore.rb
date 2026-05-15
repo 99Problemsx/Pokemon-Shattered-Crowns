@@ -129,6 +129,9 @@ module SpiritRealmManager
       $game_screen.start_tone_change(SpiritRealm::REALM_SCREEN_TONE, 20)
     end
 
+    # Apply Spirit Realm shader ([SC] Visual Effects). Safe-noop if absent.
+    pbApplyShader(:spirit_realm) if defined?(pbApplyShader)
+
     # Play spirit realm BGM
     pbBGMPlay(SpiritRealm::BGM_SPIRIT) if SpiritRealm::BGM_SPIRIT
 
@@ -163,6 +166,9 @@ module SpiritRealmManager
 
     # Restore screen tone
     $game_screen.start_tone_change(Tone.new(0, 0, 0, 0), 20) if $game_screen
+
+    # Remove Spirit Realm shader ([SC] Visual Effects). Safe-noop if absent.
+    pbRemoveShader(:spirit_realm) if defined?(pbRemoveShader)
 
     # Transfer back
     $game_temp.player_transferring  = true

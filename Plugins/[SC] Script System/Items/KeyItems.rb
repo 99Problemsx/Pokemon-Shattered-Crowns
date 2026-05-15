@@ -58,6 +58,14 @@ GameData::Item.define :"DOWSINGMACHINE" do |i|
   i.description "It checks for unseen items in the area and makes noise and lights when it finds something."
 end
 
+GameData::Item.define :"DOWSINGROD" do |i|
+  i.name "Dowsing Rod"
+  i.name_plural "Dowsing Rods"
+  i.pocket 8
+  i.field_use :"Direct"
+  i.description "A rune-carved divining rod. The runes hum when something buried lies in range — and they point the way."
+end
+
 GameData::Item.define :"POKERADAR" do |i|
   i.name "Poké Radar"
   i.name_plural "Poké Radars"
