@@ -284,3 +284,125 @@ GameData::Quest.define :bond_lyra_kael_5 do |q|
     scFateGrant(:fate_witness_love, 1, "Witnessed the bond bloom") if defined?(scFateGrant)
   }
 end
+
+
+#===============================================================================
+# Tier-5 Bond Cutscenes — the emotional payoff scenes
+#===============================================================================
+# Three full cutscenes, one per Tier-5 quest. The lower-tier quests stay
+# text-only (their objectives are the gameplay; no scene needed).
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# bond_lyra_5_scene — "The Blanket Scene" (Lyra side)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :bond_lyra_5_scene do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\i[The campfire was low. The sky over the Gateway was the colour of cold iron. You had been on watch for an hour when Lyra came up with two blankets and a cup of something hot.]"
+  scene.message "\\bLyra\\b: Move over."
+  scene.message "\\b\\PN\\b: ..."
+  scene.message "\\bLyra\\b: I am not asking, \\PN. *Move over.*"
+
+  scene.message "\\i[She sat. She put a blanket around your shoulders, then one around her own. She did not look at you for a long time.]"
+
+  scene.message "\\bLyra\\b: ...I want to tell you something. If I do not say it tonight I am going to spend tomorrow afraid I did not."
+  scene.message "\\bLyra\\b: When this started — when Aldric pulled us into his lab and said \\\"you three\\\" — I was *terrified*. I am not built for this kind of thing. I cried in the bathroom for an hour the first night."
+  scene.message "\\b\\PN\\b: ...You never said."
+  scene.message "\\bLyra\\b: I never had to. Because *you* never said it either. You just kept walking. You kept *choosing* to walk. — And it made it possible for me to walk too."
+
+  scene.message "\\bLyra\\b: I do not know if you understand how *rare* you are. You think you are ordinary. You are not."
+  scene.message "\\bLyra\\b: I needed you to know that. Before tomorrow. In case."
+
+  scene.message "\\b\\PN\\b: ...Lyra."
+  scene.message "\\bLyra\\b: Do not. Do not be sweet. I will cry and I want to not cry yet. — Just sit with me. Drink your tea. Watch the fire."
+  scene.message "\\bLyra\\b: That is all. That is the thing. Thanks for hearing it."
+
+  scene.message "\\i[You sat. The tea was bitter. The blanket was warm. Somewhere behind you, Kael was awake too — pretending to be asleep so Lyra could have this. He would take his turn at his own thing soon enough.]"
+
+  scene.script {
+    pbEarnFatePoints(2) if defined?(pbEarnFatePoints)
+    relChange(:LYRA, 25) if defined?(relChange)
+    codexDiscover(:LYRA_PROFILE) if defined?(codexDiscover)
+  }
+end
+
+#-------------------------------------------------------------------------------
+# bond_kael_5_scene — "What He Could Not Say"
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :bond_kael_5_scene do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\i[Kael was already away from the fire when you came looking. He was on the rocks at the cliff edge, Shadow at his feet, watching the Gateway clouds.]"
+  scene.message "\\bKael\\b: *not turning* I knew you would come."
+  scene.message "\\bKael\\b: Sit. — I need a practice run."
+
+  scene.message "\\b\\PN\\b: Practice run for what?"
+  scene.message "\\bKael\\b: For tomorrow night. If we live through tomorrow morning. There is a thing I have to say to someone, and I have *never* said it to anyone, and I am not going to say it for the first time when it counts."
+  scene.message "\\bKael\\b: So I am going to say it to you. So I know how the words feel in my mouth. So I do not fold like a coward when it is time."
+
+  scene.message "\\b\\PN\\b: ...Okay. Say it."
+
+  scene.message "\\bKael\\b: *long pause* — When I was nine, Hilde found me curled under the cellar stairs because I had convinced myself I was going to be sent back. Sent back to *what*, I do not know. Just back. Out. Done. I cried until I made myself sick and she held me and told me — *you are not going anywhere. You are home.*"
+  scene.message "\\bKael\\b: It is the only time in my life anyone has said that to me and I believed it on the first try."
+
+  scene.message "\\bKael\\b: I am going to tell Lyra tomorrow that she is my second time. That I believed her the first time too. That I was nine then and I am twenty now and I have *never* met another person who made me believe \\\"you are home\\\" without flinching."
+  scene.message "\\bKael\\b: ...That is the thing. That is what I could not say. — How did it sound?"
+
+  scene.message "\\b\\PN\\b: ...Kael. *That is beautiful.*"
+  scene.message "\\bKael\\b: *covers face* — Oh gods. I cannot say it. I cannot say it out loud."
+  scene.message "\\b\\PN\\b: You just did."
+  scene.message "\\bKael\\b: ...To you. That does not count."
+  scene.message "\\b\\PN\\b: It counts more than you think. — You said it. You will say it again tomorrow. To her."
+
+  scene.message "\\bKael\\b: ...Thanks, \\PN. For — being someone I could practise being honest with."
+  scene.message "\\b\\PN\\b: Always."
+
+  scene.script {
+    pbEarnFatePoints(2) if defined?(pbEarnFatePoints)
+    relChange(:KAEL, 25) if defined?(relChange)
+    codexDiscover(:KAEL_PROFILE) if defined?(codexDiscover)
+  }
+end
+
+#-------------------------------------------------------------------------------
+# bond_lyra_kael_5_scene — "The Blanket Scene" (the third thing)
+#-------------------------------------------------------------------------------
+GameData::Cutscene.define :bond_lyra_kael_5_scene do |scene|
+  scene.play_bgm 'Pokemon XY - Emotion'
+
+  scene.message "\\i[You came back to the fire when the eastern sky started bleeding grey. Lyra was awake. Kael was awake. Neither of them had moved. They were sitting closer than they had been when you left.]"
+
+  scene.message "\\bKael\\b: *very softly* Hi."
+  scene.message "\\bLyra\\b: *very softly* Hi."
+
+  scene.message "\\i[You stopped a little distance away. You did not interrupt. You watched them, the way you had watched them for months — the way Lyra found Kael's hand without looking; the way Kael leaned his shoulder into hers like it was the most natural thing in the world; the way neither of them was pretending anymore.]"
+
+  scene.message "\\bLyra\\b: *seeing you* — How long have you been standing there?"
+  scene.message "\\b\\PN\\b: Just got here."
+  scene.message "\\bKael\\b: *not letting go of Lyra's hand* You are a *terrible* liar, \\PN."
+  scene.message "\\bLyra\\b: He really is."
+  scene.message "\\b\\PN\\b: ...Okay. Maybe a little longer than just got here. — But you both deserved a minute."
+
+  scene.message "\\bLyra\\b: ..."
+  scene.message "\\bKael\\b: ..."
+  scene.message "\\bLyra\\b: We were *terrible* at hiding it, were we not?"
+  scene.message "\\b\\PN\\b: *grinning* Catastrophic."
+
+  scene.message "\\bKael\\b: How long have you known?"
+  scene.message "\\b\\PN\\b: ...Since the spirit-realm ambush, probably. The way you both moved when the other was in trouble. — But really? Since the *first day.*"
+  scene.message "\\bLyra\\b: *covering face* Oh my gods. Oh my *gods*."
+  scene.message "\\bKael\\b: I am *never* going to live this down."
+
+  scene.message "\\b\\PN\\b: You do not have to. — I am just really, really happy for you. Both of you."
+
+  scene.message "\\i[Lyra reached out with her free hand and pulled you in. The three of you sat together until the sun came up, and the Gateway was not going to feel survivable today — but it was going to feel survived *together*, which is all any of you had ever asked for.]"
+
+  scene.script {
+    pbEarnFatePoints(3) if defined?(pbEarnFatePoints)
+    relChange(:LYRA, 25) if defined?(relChange)
+    relChange(:KAEL, 25) if defined?(relChange)
+    scFateGrant(:fate_witness_love, 1, "Witnessed the bond bloom") if defined?(scFateGrant)
+    codexDiscover(:LYRA_AND_KAEL_BOND) if defined?(codexDiscover)
+  }
+end

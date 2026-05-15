@@ -28129,3 +28129,111 @@ SaveData.register(:sc_sequel_hook_seen) do
   load_value { |v| $PokemonGlobal.sc_sequel_hook_seen = v }
   new_game_value { false }
 end
+
+
+#===============================================================================
+# POSTGAME: Subject Zero Encounter — hidden Astoria location
+#===============================================================================
+# Unlocks after Ch55 (True Ending) AND after the Lore Codex entry
+# :SUBJECT_ZERO has been discovered. Mewtwo is found in a hidden grotto
+# off the Astoria coastline (Map 49, set up by the Sanctuary Hub).
+#
+# Three resolution paths:
+#   - BATTLE  : standard catchable Lv 70 Mewtwo, fully trained
+#   - LISTEN  : let Subject Zero speak first; it offers itself voluntarily
+#               at Lv 75 with stronger custom moveset (requires the LISTEN
+#               path)
+#   - REFUSE  : refuse the catch — Subject Zero leaves a Mewtwonite-Y
+#               and walks into the sea. (Permadeath of the encounter.)
+#===============================================================================
+
+GameData::Cutscene.define :postgame_subject_zero do |scene|
+  scene.play_bgm 'Pokemon XY - Anistar City'
+
+  scene.message "\\i[The grotto smelled of old salt and ozone. Subject Zero was sitting on the rocks at the back, tail wrapped around itself, watching the tide.]"
+  scene.message "\\i[It did not move when you entered. It had been waiting.]"
+  scene.wait 30
+
+  scene.message "\\bSubject Zero\\b: *in your mind, gentler than before* ...Chosen-friend."
+  scene.message "\\bSubject Zero\\b: I have been thinking. — Three years of thinking. Lyra brought me books. Kael brought me silence. You brought me an ending I chose."
+  scene.wait 30
+
+  scene.message "\\bSubject Zero\\b: I have decided what comes next. — I have three doors. I want you to pick the one that closes me right."
+
+  scene.choice ["Battle me.", "Talk to me first.", "...Leave you in peace."] do |choice|
+    case choice
+    when 0  # BATTLE
+      pbMessage("\\bSubject Zero\\b: *standing, eyes glowing* ...the simple ending, then. The honest one.")
+      pbMessage("\\bSubject Zero\\b: Show me you are still worth the world Father bled for.")
+      scene.script {
+        result = pbWildBattle(:MEWTWO, 70, false, false) do |pkmn|
+          pkmn.moves = [Pokemon::Move.new(:PSYSTRIKE),
+                        Pokemon::Move.new(:AURASPHERE),
+                        Pokemon::Move.new(:RECOVER),
+                        Pokemon::Move.new(:CALMMIND)]
+          pkmn.ability = :PRESSURE
+          pkmn.item    = :LIFEORB
+          pkmn.iv      = { hp: 31, attack: 31, defense: 31, special_attack: 31, special_defense: 31, speed: 31 }
+        end
+        pbAchievement(:ach_caught_subject_zero) if defined?(pbAchievement) && result == 1
+      }
+    when 1  # LISTEN
+      pbMessage("\\bSubject Zero\\b: ...the kind ending. Hoopa would approve.")
+      pbMessage("\\bSubject Zero\\b: I was created to be a weapon. I have spent three years not being one. — But I am not built for *no purpose at all.* I want to come with you. As partner. Not as weapon.")
+      pbMessage("\\bSubject Zero\\b: Will you have me?")
+      if pbConfirmMessage("...take Subject Zero as a partner?")
+        scene.script {
+          pkmn = Pokemon.new(:MEWTWO, 75)
+          pkmn.moves = [Pokemon::Move.new(:PSYSTRIKE),
+                        Pokemon::Move.new(:AURASPHERE),
+                        Pokemon::Move.new(:RECOVER),
+                        Pokemon::Move.new(:NASTYPLOT)]
+          pkmn.ability   = :UNNERVE
+          pkmn.item      = :MEWTWONITEY rescue :LIFEORB
+          pkmn.name      = "Subject Zero"
+          pkmn.shiny     = true
+          pkmn.iv        = { hp: 31, attack: 0, defense: 31, special_attack: 31, special_defense: 31, speed: 31 }
+          pkmn.ev        = { hp: 4, special_attack: 252, speed: 252 }
+          pbAddPokemon(pkmn)
+          pbAchievement(:ach_listened_to_subject_zero) if defined?(pbAchievement)
+          codexDiscover(:SUBJECT_ZERO_PARTNER) if defined?(codexDiscover)
+        }
+        pbMessage("\\bSubject Zero\\b: ...thank you, partner.")
+      else
+        pbMessage("\\bSubject Zero\\b: ...I understand. The third door, then.")
+        pbMessage("\\bSubject Zero\\b: It is also good. It is also chosen.")
+        scene.script {
+          $bag.add(:MEWTWONITEY, 1) rescue $bag.add(:LIFEORB, 1)
+          codexDiscover(:SUBJECT_ZERO_PEACE) if defined?(codexDiscover)
+          pbAchievement(:ach_subject_zero_peace) if defined?(pbAchievement)
+        }
+      end
+    when 2  # REFUSE / PEACE
+      pbMessage("\\bSubject Zero\\b: ...the third door. The peace door.")
+      pbMessage("\\bSubject Zero\\b: I leave you a thing Father stole and never used. *It is yours now. It was always going to be yours.*")
+      pbMessage("\\i[Subject Zero set a small dark stone down on the rocks. Then it walked into the sea. The tide closed over it. It did not surface again.]")
+      pbMessage("\\b\\PN\\b: *quietly* ...go in peace, Father's child.")
+      scene.script {
+        $bag.add(:MEWTWONITEY, 1) rescue $bag.add(:LIFEORB, 1)
+        $bag.add(:MEWTWONITEX, 1) rescue $bag.add(:ASSAULTVEST, 1)
+        codexDiscover(:SUBJECT_ZERO_PEACE) if defined?(codexDiscover)
+        pbAchievement(:ach_subject_zero_peace) if defined?(pbAchievement)
+      }
+    end
+  end
+
+  scene.script {
+    $PokemonGlobal.sc_subject_zero_resolved = true if $PokemonGlobal.respond_to?(:sc_subject_zero_resolved=)
+  }
+end
+
+
+class PokemonGlobalMetadata
+  attr_accessor :sc_subject_zero_resolved
+end
+
+SaveData.register(:sc_subject_zero_resolved) do
+  save_value { $PokemonGlobal.sc_subject_zero_resolved || false }
+  load_value { |v| $PokemonGlobal.sc_subject_zero_resolved = v }
+  new_game_value { false }
+end
